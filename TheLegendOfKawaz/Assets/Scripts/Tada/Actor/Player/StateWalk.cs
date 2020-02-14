@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Actor;
-using Actor.NewPlayer;
+using Actor.Player;
 using TadaLib;
 
 /// <summary>
@@ -10,7 +10,7 @@ using TadaLib;
 /// 接地している時のみ
 /// </summary>
 
-namespace Actor.NewPlayer
+namespace Actor.Player
 {
     public partial class Player
     {

@@ -25,7 +25,7 @@ using System.Runtime.InteropServices;
 /// 
 /// </summary>
 
-namespace Actor.NewPlayer
+namespace Actor.Player
 {
     // 方向
     public enum eDir
@@ -70,7 +70,7 @@ namespace Actor.NewPlayer
             IsHead = false;
             IsLeft = false;
             IsRight = false;
-            ArialJumpNumMax = 3;
+            ArialJumpNumMax = 1;
             arial_jump_num_ = ArialJumpNumMax;
         }
 
@@ -177,7 +177,7 @@ namespace Actor.NewPlayer
             Move();
         }
 
-        // 座標を変更する
+        // 座標を変更する 汚いから見ないで
         private void Move()
         {
             // 壁にめり込まないように移動する x軸だけ 坂道にまったく対応できてない
@@ -197,6 +197,8 @@ namespace Actor.NewPlayer
             int mask = 1 << 8 | 1 << 9;
 
             data_.SetIsHead(false);
+            data_.SetIsRight(false);
+            data_.SetIsLeft(false);
 
             // まずはx軸方向
             if (d.x < 0)
@@ -210,7 +212,7 @@ namespace Actor.NewPlayer
                     //Debug.Log("左方向あたり");
                 }
                 if (hit_left) data_.SetIsLeft(true);
-                else data_.SetIsRight(false);
+
             }
             else if (d.x > 0)
             {
@@ -223,7 +225,6 @@ namespace Actor.NewPlayer
                     //Debug.Log("右方向あたり");
                 }
                 if (hit_right) data_.SetIsRight(true);
-                else data_.SetIsLeft(false);
             }
 
             // x軸移動

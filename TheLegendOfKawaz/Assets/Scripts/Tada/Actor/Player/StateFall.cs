@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Actor.NewPlayer;
+using Actor.Player;
 using TadaLib;
 
 /// <summary>
 /// プレイヤーの落下状態(ジャンプでの落下は別)を管理するステート
 /// </summary>
 
-namespace Actor.NewPlayer
+namespace Actor.Player
 {
     public partial class Player
     {
@@ -35,6 +35,7 @@ namespace Actor.NewPlayer
                 if(data == null) data = Parent.data_;
 
                 // 落下アニメーション開始
+                data.animator.Play("Fall");
 
             }
 

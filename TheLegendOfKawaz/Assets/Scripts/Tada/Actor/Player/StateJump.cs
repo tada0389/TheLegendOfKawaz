@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Actor.NewPlayer;
+using Actor.Player;
 using TadaLib;
 
 /// <summary>
 /// プレイヤーのジャンプ状態を管理するステート
 /// </summary>
 
-namespace Actor.NewPlayer
+namespace Actor.Player
 {
     public partial class Player
     {
@@ -22,6 +22,9 @@ namespace Actor.NewPlayer
             private float jump_power = 0.4f;
             [SerializeField]
             private float jump_input_time = 0.25f;
+
+            [SerializeField]
+            private float wall_thr = 0.05f;
 
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
@@ -59,8 +62,8 @@ namespace Actor.NewPlayer
                     return;
                 }
 
-                // 壁に沿っている
-                if(data.IsLeft || data.IsRight)
+                // 壁に沿っている ただし，速度が一定以下の時
+                if(data.velocity.y < wall_thr && (data.IsLeft || data.IsRight))
                 {
                     ChangeState((int)eState.Wall);
                 }

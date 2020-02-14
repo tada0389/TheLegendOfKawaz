@@ -4450,5 +4450,20 @@ PrefabInstance:
       propertyPath: wall_state_.Accel.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 993977802341368878, guid: 09a8ce0fbe3f7a3489402c5eabdf98e6,
+        type: 3}
+      propertyPath: wall_state_.Accel.y
+      value: -0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 993977802341368878, guid: 09a8ce0fbe3f7a3489402c5eabdf98e6,
+        type: 3}
+      propertyPath: fall_state_.MaxAbsSpeed.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 993977802341368878, guid: 09a8ce0fbe3f7a3489402c5eabdf98e6,
+        type: 3}
+      propertyPath: jump_state_.MaxAbsSpeed.y
+      value: 0.35
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09a8ce0fbe3f7a3489402c5eabdf98e6, type: 3}

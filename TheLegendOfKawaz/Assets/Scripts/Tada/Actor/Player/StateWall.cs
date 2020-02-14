@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Actor.NewPlayer;
+using Actor.Player;
 using TadaLib;
 
 /// <summary>
 /// プレイヤーが壁に密着しているときを管理するステート
 /// </summary>
 
-namespace Actor.NewPlayer
+namespace Actor.Player
 {
     public partial class Player
     {
