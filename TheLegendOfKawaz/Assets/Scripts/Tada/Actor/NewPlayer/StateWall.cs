@@ -19,15 +19,25 @@ namespace Actor.NewPlayer
             private Data data = null;
 
             [SerializeField]
-            private Vector2 max_speed = new Vector2(0.18f, 0.05f);
-            [SerializeField]
-            private Vector2 accel = new Vector2(0.01f, -0.015f);
+            private Vector2 kick_power_ = new Vector2(0.2f, 0.35f);
 
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
                 if (data == null) data = Parent.data_;
 
+                // アニメーション開始
+                data.animator.Play("Kabe");
+
+                // 壁に接しているほうを向く
+                if (data.IsRight)
+                {
+                    data.ChangeDirection(eDir.Right);
+                }
+                else
+                {
+                    data.ChangeDirection(eDir.Left);
+                }
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -39,30 +49,29 @@ namespace Actor.NewPlayer
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
+                // 接地したらステート変更
+                if (data.IsGround)
+                {
+                    ChangeState((int)eState.Walk);
+                    return;
+                }
+
                 // 壁に密着していなかったら落下ステートへ
-                if(!data.IsLeft && !data.IsRight)
+                if (!data.IsLeft && !data.IsRight)
                 {
                     ChangeState((int)eState.Fall);
                     return;
                 }
 
-                if (data.IsLeft)
+                // 壁ジャンプ
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        data.velocity = new Vector2(0.2f, 0.35f);
-                        ChangeState((int)eState.Jump);
-                        return;
-                    }
-                }
-                if (data.IsRight)
-                {
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        data.velocity = new Vector2(-0.2f, 0.35f);
-                        ChangeState((int)eState.Jump);
-                        return;
-                    }
+                    data.velocity = kick_power_;
+                    if (data.IsRight) data.velocity *= -1;
+                    ChangeState((int)eState.Jump);
+                    // 逆向きを向く
+                    data.ReverseFaceDirection();
+                    return;
                 }
 
                 // 移動している方向に速度を加える
@@ -70,14 +79,10 @@ namespace Actor.NewPlayer
                 if (Input.GetKey(KeyCode.LeftArrow)) dir = -1f;
                 else if (Input.GetKey(KeyCode.RightArrow)) dir = 1f;
 
-                ActorUtils.AddAccel(ref data.velocity, new Vector2(dir, 1f) * accel * Time.deltaTime * 60f, max_speed);
-
-                // 接地したらステート変更
-                if (data.IsGround)
-                {
-                    ChangeState((int)eState.Walk);
-                    return;
-                }
+                float accel_dir = 1.0f;
+                if (data.velocity.y < -MaxAbsSpeed.y) accel_dir = -1f;
+                // 加速度に応じて速度を変更する
+                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_dir) * Accel, MaxAbsSpeed);
             }
         }
     }

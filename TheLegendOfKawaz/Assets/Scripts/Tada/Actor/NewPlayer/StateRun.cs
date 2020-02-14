@@ -68,7 +68,7 @@ namespace Actor.NewPlayer
                     return;
                 }
 
-                ActorUtils.AddAccel(ref data.velocity, new Vector2(dir, 1f) * accel * Time.deltaTime * 60f, max_speed);
+                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, 1f) * accel * Time.deltaTime * 60f, max_speed);
             }
         }
     }

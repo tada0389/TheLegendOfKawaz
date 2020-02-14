@@ -18,10 +18,6 @@ namespace Actor.NewPlayer
             // ステート間で共有するデータのコピーインスタンス
             private Data data = null;
 
-            private float timer_;
-
-            private float saved_vx;
-
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -30,11 +26,8 @@ namespace Actor.NewPlayer
                 // 待機アニメーション開始
                 data.animator.Play("Idle");
 
-                saved_vx = data.velocity.x;
                 // 速度をゼロにする
                 data.velocity = Vector2.zero;
-
-                timer_ = 0.0f;
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -46,8 +39,6 @@ namespace Actor.NewPlayer
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
-                timer_ += Time.deltaTime;
-
                 // ジャンプ入力ならジャンプステートへ
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
@@ -64,16 +55,6 @@ namespace Actor.NewPlayer
                 // 左右に押したら歩くステートに変更
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
                 {
-                    if (timer_ < 0.2f && (PrevStateId == (int)eState.Walk || PrevStateId == (int)eState.Run))
-                    {
-                        // 前回移動した方向と同じか
-                        if (Input.GetKey(KeyCode.RightArrow) && saved_vx > 0f || Input.GetKey(KeyCode.LeftArrow) && saved_vx < 0f)
-                        {
-                            ChangeState((int)eState.Run);
-                            return;
-                        }
-                    }
-
                     ChangeState((int)eState.Walk);
                     return;
                 }

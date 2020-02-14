@@ -248,7 +248,7 @@ namespace Actor.Enemy
                 }
 
                 // 速度を変更
-                ActorUtils.AddAccel(ref Parent.velocity, Parent.accel * Time.deltaTime * 60f, Vector2.one * kMaxSpeed);
+                ActorUtils.ProcSpeed(ref Parent.velocity, Parent.accel * Time.deltaTime * 60f, Vector2.one * kMaxSpeed);
             }
         }
 
@@ -297,7 +297,7 @@ namespace Actor.Enemy
                 }
 
                 // 速度を変更
-                ActorUtils.AddAccel(ref Parent.velocity, Parent.accel * Time.deltaTime * 60f, Vector2.one * kMaxSpeed);
+                ActorUtils.ProcSpeed(ref Parent.velocity, Parent.accel * Time.deltaTime * 60f, Vector2.one * kMaxSpeed);
             }
         }
 
