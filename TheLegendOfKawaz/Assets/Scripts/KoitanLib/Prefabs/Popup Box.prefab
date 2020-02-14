@@ -65,8 +65,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Popup Message
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2588ba2c859e64936b86479d819bdd62, type: 2}
-  m_sharedMaterial: {fileID: -777592172505063374, guid: 2588ba2c859e64936b86479d819bdd62,
+  m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
+  m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

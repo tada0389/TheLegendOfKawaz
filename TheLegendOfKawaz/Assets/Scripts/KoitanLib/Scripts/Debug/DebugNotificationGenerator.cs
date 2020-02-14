@@ -23,6 +23,7 @@ public class DebugNotificationGenerator : MonoBehaviour
         textMesh = textBox.GetComponentInChildren<TextMeshProUGUI>();
         textBox.SetActive(false);
         //DebugTextManager.Display(() => "NotificationQueueCount:" + nQueue.Count.ToString() + "\n");
+        DebugNotificationGenerator.Notify("Qキーでデバッグの\n表示/非表示");
     }
 
     // Update is called once per frame

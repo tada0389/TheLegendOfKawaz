@@ -158,8 +158,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Debug Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 6a831902540194ff6b3254565c3b2628, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -651,13 +651,14 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+      objectReference: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8,
         type: 2}
     - target: {fileID: 429657519968748602, guid: 0b843c7aca2b14cdea11d2b9f97050a5,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
+        type: 2}
     - target: {fileID: 429657519968748602, guid: 0b843c7aca2b14cdea11d2b9f97050a5,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -818,13 +819,14 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee,
+      objectReference: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8,
         type: 2}
     - target: {fileID: 429657519968748602, guid: 0b843c7aca2b14cdea11d2b9f97050a5,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
+        type: 2}
     - target: {fileID: 429657519968748602, guid: 0b843c7aca2b14cdea11d2b9f97050a5,
         type: 3}
       propertyPath: m_textInfo.characterCount
