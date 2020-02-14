@@ -19,20 +19,20 @@ namespace Actor.NewPlayer
             private Data data = null;
 
             [SerializeField]
-            private Vector2 max_speed = new Vector2(0.18f, 0f);
-            [SerializeField]
-            private Vector2 accel = new Vector2(0.02f, 0f);
-            [SerializeField]
             private float can_jump_time = 0.15f;
 
-            private float timer;
+            // 壁に沿っている時の落下加速度
+            [SerializeField]
+            private float fall_accel_with_wall_ = -0.01f;
+            // 壁に沿っている時の落下最大速度
+            [SerializeField]
+            private float fall_max_abs_speed_with_wall_ = -0.15f;
+
 
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
                 if(data == null) data = Parent.data_;
-
-                timer = 0.0f;
 
                 // 落下アニメーション開始
 
@@ -47,17 +47,35 @@ namespace Actor.NewPlayer
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
-                timer += Time.deltaTime;
-                // 接地したらステート変更
-                if (data.IsGround)
+                // 空中ジャンプ
+                if (Input.GetKeyDown(KeyCode.Space) && data.RequestArialJump())
                 {
-                    // 前回のステートに応じて次のステートを決める
-                    if (PrevStateId == (int)eState.Run) ChangeState((int)eState.Run);
-                    else ChangeState((int)eState.Walk);
+                    ChangeState((int)eState.Jump);
                     return;
                 }
 
-                if(timer < can_jump_time && Input.GetKeyDown(KeyCode.Space))
+                // 接地したらステート変更
+                if (data.IsGround)
+                {
+                    ChangeState((int)eState.Walk);
+                    return;
+                }
+
+                // 落下開始の始めはジャンプができる (イライラ防止のため)
+                if (Timer < can_jump_time && Input.GetKeyDown(KeyCode.Space))
+                {
+                    ChangeState((int)eState.Jump);
+                    return;
+                }
+
+                // 壁に沿っている
+                if (data.IsLeft || data.IsRight)
+                {
+                    ChangeState((int)eState.Wall);
+                }
+
+                // 空中ジャンプ
+                if (Input.GetKeyDown(KeyCode.Space) && data.RequestArialJump())
                 {
                     ChangeState((int)eState.Jump);
                     return;
@@ -67,8 +85,10 @@ namespace Actor.NewPlayer
                 float dir = 0f;
                 if (Input.GetKey(KeyCode.LeftArrow)) dir = -1f;
                 else if (Input.GetKey(KeyCode.RightArrow)) dir = 1f;
+                if (dir < -0.5f) data.ChangeDirection(eDir.Left);
+                if (dir > 0.5f) data.ChangeDirection(eDir.Right);
 
-                ActorUtils.AddAccel(ref data.velocity, new Vector2(dir, 1f) * accel * Time.deltaTime * 60f, max_speed);
+                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed);
             }
         }
     }

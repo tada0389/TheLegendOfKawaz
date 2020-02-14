@@ -43,6 +43,7 @@ namespace TadaLib
             Assert.IsTrue(state_queue_.Count >= 1, "初期のステートが登録されていません");
 
             state_.Proc(); // ステートの状態を更新
+            state_.TimerUpdate(Time.deltaTime); // ステート経過時間を更新
 
             CheckState(); // ステートの変更要求があるか確かめる
         }
@@ -61,6 +62,7 @@ namespace TadaLib
             state_queue_.Enqueue(key);
             state_ = factory_[state_queue_.Peek()]; // 新しいステートに変更
             state_.OnStart(); // 新しいステートの初期化
+            state_.TimerReset(); // タイマーを再設定
         }
 
         // ステートの変更要求があるか確かめる
@@ -73,6 +75,7 @@ namespace TadaLib
                 state_.OnEnd(); // 現在のステートの終了処理
                 state_ = factory_[state_queue_.Peek()]; // 新しいステートに変更
                 state_.OnStart(); // 新しいステートの初期化
+                state_.TimerReset(); // タイマーを再設定
             }
         }
 
@@ -98,7 +101,17 @@ namespace TadaLib
             // 前回のステート
             protected int PrevStateId { get { return state_machine_.PrevStateId; } }
 
-            // ステートが始まった時に呼ばれるメソッド
+            // このステートが開始してからの時間
+            protected float Timer { private set; get; }
+
+            // ここに書くの良くないかもしれないけど．．．
+            // 速度の限界値 
+            [SerializeField]
+            protected Vector2 MaxAbsSpeed = new Vector2(0.50f, 0f);
+            // 基本の加速度
+            [SerializeField]
+            protected Vector2 Accel = new Vector2(0f, 0f);
+
             public virtual void OnStart()
             {
 
@@ -117,22 +130,20 @@ namespace TadaLib
             }
 
             // ステートを変更する 第一引数に変更後のステート，第二引数には・・・
-            protected void ChangeState(int new_state_id)
-            {
+            protected void ChangeState(int new_state_id) => 
                 state_machine_.state_queue_.Enqueue(new_state_id);
-            }
 
             // ステート開始のデバッグ出力をする これ蛇足・・・？
-            protected void DumpStartMsg(StateBase state)
-            {
+            protected void DumpStartMsg(StateBase state) => 
                 Debug.Log(state.GetType().Name + "開始");
-            }
 
             // ステート終了のデバッグ出力をする
-            protected void DumpEndMsg(StateBase state)
-            {
+            protected void DumpEndMsg(StateBase state) => 
                 Debug.Log(state.GetType().Name + "終了");
-            }
+
+            //=== 隠したい ========================================-
+            public void TimerReset() => Timer = 0.0f;
+            public void TimerUpdate(float delta_time) => Timer += delta_time;
         }
     }
 }

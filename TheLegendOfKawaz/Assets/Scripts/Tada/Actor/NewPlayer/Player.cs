@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TadaLib; // ステートマシンを使うため
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// キャラクターを動かす元となるクラス
@@ -26,11 +27,22 @@ using TadaLib; // ステートマシンを使うため
 
 namespace Actor.NewPlayer
 {
+    // 方向
+    public enum eDir
+    {
+        Left,
+        Right,
+    }
+
     // ステート間で共有するデータ
     public class Data
     {
         // プレイヤーの速度
         public Vector2 velocity = Vector2.zero;
+
+        // 向いている方向 1.0で右, -1.0で左
+        public eDir Dir { private set; get; }
+
         // 接地しているかどうか
         public bool IsGround { private set; get; }
         // 天井に頭がぶつかっているかどうか
@@ -40,6 +52,11 @@ namespace Actor.NewPlayer
         // 右方向にぶつかっている
         public bool IsRight { private set; get; }
 
+        // 空中ジャンプの最大回数
+        public int ArialJumpNumMax { private set; get; }
+        // 空中ジャンプ回数
+        private int arial_jump_num_;
+
         // アニメーター
         public Animator animator;
 
@@ -48,8 +65,13 @@ namespace Actor.NewPlayer
         // コンストラクタ
         public Data()
         {
+            Dir = eDir.Right;
             IsGround = false;
             IsHead = false;
+            IsLeft = false;
+            IsRight = false;
+            ArialJumpNumMax = 3;
+            arial_jump_num_ = ArialJumpNumMax;
         }
 
         // 以下，それぞれの変数を代入
@@ -57,6 +79,23 @@ namespace Actor.NewPlayer
         public void SetIsHead(bool is_head) { IsHead = is_head; }
         public void SetIsLeft(bool is_left) { IsLeft = is_left; }
         public void SetIsRight(bool is_right) { IsRight = is_right; }
+
+        // 空中ジャンプ回数をリセットする
+        public void ResetArialJump()
+        {
+            arial_jump_num_ = ArialJumpNumMax;
+        }
+
+        // 空中ジャンプができるか？
+        public bool RequestArialJump()
+        {
+            --arial_jump_num_;
+            return arial_jump_num_ >= 0;
+        }
+
+        // 向いている方向を反転する
+        public void ReverseFaceDirection() => Dir = (Dir == eDir.Left) ? eDir.Right : eDir.Left;
+        public void ChangeDirection(eDir dir) => Dir = dir;
     }
 
     // プレイヤークラス partialによりファイル間で分割してクラスを実装
@@ -69,7 +108,7 @@ namespace Actor.NewPlayer
         {
             Wait, // 待機中のステート アイドリング
             Walk, // 歩いているステート
-            Run, // 走っているステート
+            //Run, // 走っているステート
             Jump, // ジャンプ中のステート
             Fall, // 落下中のステート(ジャンプでの落下はこれじゃない)
             Wall, // 壁に密着しているステート
@@ -86,8 +125,8 @@ namespace Actor.NewPlayer
         private StateIdle idle_state_;
         [SerializeField]
         private StateWalk walk_state_;
-        [SerializeField]
-        private StateRun run_state_;
+        //[SerializeField]
+        //private StateRun run_state_;
         [SerializeField]
         private StateJump jump_state_;
         [SerializeField]
@@ -116,7 +155,7 @@ namespace Actor.NewPlayer
             // ステートを登録
             state_machine_.AddState((int)eState.Wait, idle_state_);
             state_machine_.AddState((int)eState.Walk, walk_state_);
-            state_machine_.AddState((int)eState.Run, run_state_);
+            //state_machine_.AddState((int)eState.Run, run_state_);
             state_machine_.AddState((int)eState.Jump, jump_state_);
             state_machine_.AddState((int)eState.Fall, fall_state_);
             state_machine_.AddState((int)eState.Wall, wall_state_);
@@ -168,7 +207,7 @@ namespace Actor.NewPlayer
                 if (hit_left)
                 {
                     d = new Vector2(-hit_left.distance + half_size.x / 2f, d.y);
-                    Debug.Log("左方向あたり");
+                    //Debug.Log("左方向あたり");
                 }
                 if (hit_left) data_.SetIsLeft(true);
                 else data_.SetIsRight(false);
@@ -181,7 +220,7 @@ namespace Actor.NewPlayer
                 if (hit_right)
                 {
                     d = new Vector2(hit_right.distance - half_size.x / 2f, d.y);
-                    Debug.Log("右方向あたり");
+                    //Debug.Log("右方向あたり");
                 }
                 if (hit_right) data_.SetIsRight(true);
                 else data_.SetIsLeft(false);
@@ -263,23 +302,26 @@ namespace Actor.NewPlayer
             }
 
             transform.position += (Vector3)d;
+
+            if (data_.IsGround)
+            {
+                // 空中ジャンプ回数をリセットする
+                data_.ResetArialJump();
+            }
         }
 
         // 方向転換するか確かめる
         private void CheckFaceDirChange()
         {
-            //// 速度がある方向を向く 速度が0の場合はそのまま
-            //if(data_.velocity.x < 0f)
-            if (Input.GetKey(KeyCode.LeftArrow))
+            // 浮動小数点型で==はあんまよくないけど・・・
+            if (data_.Dir == eDir.Left && transform.localEulerAngles.y != 180f)
             {
-                if (transform.localEulerAngles.y != 180f)
-                    transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 180f, transform.localEulerAngles.z);
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 180f, transform.localEulerAngles.z);
             }
             // else if(data_.velocity.x > 0f)
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else if (data_.Dir == eDir.Right && transform.localEulerAngles.y != 0f)
             {
-                if (transform.localEulerAngles.y != 0f) // 浮動小数点型で==はあんまよくないけど・・・
-                    transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
             }
         }
 

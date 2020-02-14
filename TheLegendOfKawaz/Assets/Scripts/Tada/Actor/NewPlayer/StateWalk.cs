@@ -20,11 +20,6 @@ namespace Actor.NewPlayer
             // ステート間で共有するデータのコピーインスタンス
             private Data data = null;
 
-            [SerializeField]
-            private Vector2 max_speed = new Vector2(0.12f, 0f);
-            [SerializeField]
-            private Vector2 accel = new Vector2(0.009f, 0f);
-
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -69,8 +64,10 @@ namespace Actor.NewPlayer
                     ChangeState((int)eState.Wait);
                     return;
                 }
+                if (dir < -0.5f) data.ChangeDirection(eDir.Left);
+                if (dir > 0.5f) data.ChangeDirection(eDir.Right);
 
-                ActorUtils.AddAccel(ref data.velocity, new Vector2(dir, 1f) * accel, max_speed);
+                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed);
             }
         }
     }
