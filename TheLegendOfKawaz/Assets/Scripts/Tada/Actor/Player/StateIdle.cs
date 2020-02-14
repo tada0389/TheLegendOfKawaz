@@ -40,7 +40,7 @@ namespace Actor.Player
             public override void Proc()
             {
                 // ジャンプ入力ならジャンプステートへ
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (ActionInput.GetButtonDown(ActionCode.Jump))
                 {
                     ChangeState((int)eState.Jump);
                     return;
@@ -53,7 +53,7 @@ namespace Actor.Player
                 }
 
                 // 左右に押したら歩くステートに変更
-                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow))
+                if (Mathf.Abs(ActionInput.GetAxis(AxisCode.Horizontal)) > 0.1f)
                 {
                     ChangeState((int)eState.Walk);
                     return;

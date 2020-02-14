@@ -49,7 +49,7 @@ namespace Actor.Player
             public override void Proc()
             {
                 // 空中ジャンプ
-                if (Input.GetKeyDown(KeyCode.Space) && data.RequestArialJump())
+                if (ActionInput.GetButtonDown(ActionCode.Jump) && data.RequestArialJump())
                 {
                     ChangeState((int)eState.Jump);
                     return;
@@ -63,7 +63,7 @@ namespace Actor.Player
                 }
 
                 // 落下開始の始めはジャンプができる (イライラ防止のため)
-                if (Timer < can_jump_time && Input.GetKeyDown(KeyCode.Space))
+                if (Timer < can_jump_time && ActionInput.GetButtonDown(ActionCode.Jump))
                 {
                     ChangeState((int)eState.Jump);
                     return;
@@ -76,16 +76,14 @@ namespace Actor.Player
                 }
 
                 // 空中ジャンプ
-                if (Input.GetKeyDown(KeyCode.Space) && data.RequestArialJump())
+                if (ActionInput.GetButtonDown(ActionCode.Jump) && data.RequestArialJump())
                 {
                     ChangeState((int)eState.Jump);
                     return;
                 }
 
                 // 移動している方向に速度を加える
-                float dir = 0f;
-                if (Input.GetKey(KeyCode.LeftArrow)) dir = -1f;
-                else if (Input.GetKey(KeyCode.RightArrow)) dir = 1f;
+                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
                 if (dir < -0.5f) data.ChangeDirection(eDir.Left);
                 if (dir > 0.5f) data.ChangeDirection(eDir.Right);
 

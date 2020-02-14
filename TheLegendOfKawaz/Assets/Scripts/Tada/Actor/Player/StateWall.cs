@@ -64,7 +64,7 @@ namespace Actor.Player
                 }
 
                 // 壁ジャンプ
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (ActionInput.GetButtonDown(ActionCode.Jump))
                 {
                     data.velocity = kick_power_;
                     if (data.IsRight) data.velocity *= -1;
@@ -75,9 +75,7 @@ namespace Actor.Player
                 }
 
                 // 移動している方向に速度を加える
-                float dir = 0f;
-                if (Input.GetKey(KeyCode.LeftArrow)) dir = -1f;
-                else if (Input.GetKey(KeyCode.RightArrow)) dir = 1f;
+                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
 
                 float accel_dir = 1.0f;
                 if (data.velocity.y < -MaxAbsSpeed.y) accel_dir = -1f;
