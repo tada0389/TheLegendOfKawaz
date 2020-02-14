@@ -42,7 +42,7 @@ namespace Actor.Player
             public override void Proc()
             {
                 // ジャンプ入力ならジャンプステートへ
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (ActionInput.GetButtonDown(ActionCode.Jump))
                 {
                     ChangeState((int)eState.Jump);
                     return;
@@ -55,11 +55,8 @@ namespace Actor.Player
                 }
 
                 // 移動している方向に速度を加える
-                float dir = 0f;
-                if (Input.GetKey(KeyCode.LeftArrow)) dir = -1f;
-                else if (Input.GetKey(KeyCode.RightArrow)) dir = 1f;
-                else
-                {
+                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
+                if(dir == 0.0f) { // 良くない
                     // 何も押していないならWait状態に
                     ChangeState((int)eState.Wait);
                     return;

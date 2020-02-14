@@ -48,9 +48,7 @@ namespace Actor.Player
             public override void Proc()
             {
                 // 移動している方向に速度を加える
-                float dir = 0f;
-                if (Input.GetKey(KeyCode.LeftArrow)) dir = -1f;
-                else if (Input.GetKey(KeyCode.RightArrow)) dir = 1f;
+                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
                 if (dir < -0.5f) data.ChangeDirection(eDir.Left);
                 if (dir > 0.5f) data.ChangeDirection(eDir.Right);
 
@@ -69,7 +67,7 @@ namespace Actor.Player
                 }
 
                 // 空中ジャンプ
-                if (Input.GetKeyDown(KeyCode.Space) && data.RequestArialJump())
+                if (ActionInput.GetButtonDown(ActionCode.Jump) && data.RequestArialJump())
                 {
                     ChangeState((int)eState.Jump);
                     return;
@@ -87,7 +85,7 @@ namespace Actor.Player
                 if (data.velocity.y < 0.15f) accel_rate_y = 0.5f;
                 ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed);
 
-                if (Timer < jump_input_time && Input.GetKey(KeyCode.Space)) data.velocity = new Vector2(data.velocity.x, jump_power);
+                if (Timer < jump_input_time && ActionInput.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
             }
         }
     }
