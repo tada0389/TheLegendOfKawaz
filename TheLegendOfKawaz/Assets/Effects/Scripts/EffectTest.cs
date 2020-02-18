@@ -36,7 +36,7 @@ public class EffectTest : MonoBehaviour
             hitEff.transform.position = tama.transform.position;
             hitEff.Play();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (ActionInput.GetButtonDown(ActionCode.Shot))
         {
             isActive = true;
             tama.SetActive(true);            

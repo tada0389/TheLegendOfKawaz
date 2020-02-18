@@ -67,6 +67,10 @@ public class ActionInput : MonoBehaviour
         DebugTextManager.Display(() => "JumpFlag:" + Instance.actionFlag[ActionCode.Jump].ToString() + "\n");
         DebugTextManager.Display(() => "oldJumpValue:" + Instance.oldActionValue[ActionCode.Jump].ToString() + "\n");
         DebugTextManager.Display(() => "JumpValue:" + Instance.actionValue[ActionCode.Jump].ToString() + "\n");
+        
+        DebugTextManager.Display(() => "Up:" + Instance.buttonValue[ButtonCode.Up].ToString() + "\n");
+        DebugTextManager.Display(() => "UpDown:" + GetButtonDown(ButtonCode.Up).ToString() + "\n");
+        DebugTextManager.Display(() => "UpUp:" + GetButtonUp(ButtonCode.Up).ToString() + "\n");
         */
     }
 
@@ -78,19 +82,19 @@ public class ActionInput : MonoBehaviour
             oldButtonValue[code] = buttonValue[code];
             buttonValue[code] = currentButtonValue(code);
         }
-        /*
+
         foreach (AxisCode code in Enum.GetValues(typeof(AxisCode)))
         {
-            axisValue.Add(code, 0);
-            oldAxisValue.Add(code, 0);
+            oldAxisValue[code] = axisValue[code];
+            axisValue[code] = currentAxisValue(code);
         }
-        */
+
         foreach (ActionCode code in Enum.GetValues(typeof(ActionCode)))
         {
             oldActionValue[code] = actionValue[code];
             actionValue[code] = currentButtonValue(code);
             actionFlag[code] = false;
-        }        
+        }
     }
 
 
@@ -130,25 +134,32 @@ public class ActionInput : MonoBehaviour
         switch (code)
         {
             case ButtonCode.Up:
-                break;
+                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y > 0;
             case ButtonCode.Down:
-                break;
+                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y < 0;
             case ButtonCode.Left:
-                break;
+                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x < 0;
             case ButtonCode.Right:
-                break;
+                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x > 0;
         }
         return false;
     }
 
     private bool currentButtonValue(ActionCode code)
     {
-        return input.PlatformAction.Jump.ReadValue<float>() > 0;
+        switch (code)
+        {
+            case ActionCode.Jump:
+                return input.PlatformAction.Jump.ReadValue<float>() > 0;
+            case ActionCode.Shot:
+                return input.PlatformAction.Shot.ReadValue<float>() > 0;
+        }
+        return false;
     }
 
-    public static float GetAxis(AxisCode code)
+    private float currentAxisValue(AxisCode code)
     {
-        switch(code)
+        switch (code)
         {
             case AxisCode.Horizontal:
                 return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x;
@@ -156,6 +167,11 @@ public class ActionInput : MonoBehaviour
                 return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y;
         }
         return 0;
+    }
+
+    public static float GetAxis(AxisCode code)
+    {
+        return Instance.axisValue[code];
     }
 
     /*

@@ -33,6 +33,14 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shot"",
+                    ""type"": ""Button"",
+                    ""id"": ""a8962f47-112f-496d-a3a4-a0ec0bed5b5b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -167,6 +175,28 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92f77ac2-1f45-49a4-be8f-09a281ce923d"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4bc3213f-00de-4112-a67e-4be59e055821"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -177,6 +207,7 @@ public class @PlayerAct : IInputActionCollection, IDisposable
         m_PlatformAction = asset.FindActionMap("PlatformAction", throwIfNotFound: true);
         m_PlatformAction_Move = m_PlatformAction.FindAction("Move", throwIfNotFound: true);
         m_PlatformAction_Jump = m_PlatformAction.FindAction("Jump", throwIfNotFound: true);
+        m_PlatformAction_Shot = m_PlatformAction.FindAction("Shot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -228,12 +259,14 @@ public class @PlayerAct : IInputActionCollection, IDisposable
     private IPlatformActionActions m_PlatformActionActionsCallbackInterface;
     private readonly InputAction m_PlatformAction_Move;
     private readonly InputAction m_PlatformAction_Jump;
+    private readonly InputAction m_PlatformAction_Shot;
     public struct PlatformActionActions
     {
         private @PlayerAct m_Wrapper;
         public PlatformActionActions(@PlayerAct wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlatformAction_Move;
         public InputAction @Jump => m_Wrapper.m_PlatformAction_Jump;
+        public InputAction @Shot => m_Wrapper.m_PlatformAction_Shot;
         public InputActionMap Get() { return m_Wrapper.m_PlatformAction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -249,6 +282,9 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnJump;
+                @Shot.started -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnShot;
+                @Shot.performed -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnShot;
+                @Shot.canceled -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnShot;
             }
             m_Wrapper.m_PlatformActionActionsCallbackInterface = instance;
             if (instance != null)
@@ -259,6 +295,9 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Shot.started += instance.OnShot;
+                @Shot.performed += instance.OnShot;
+                @Shot.canceled += instance.OnShot;
             }
         }
     }
@@ -267,5 +306,6 @@ public class @PlayerAct : IInputActionCollection, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnShot(InputAction.CallbackContext context);
     }
 }
