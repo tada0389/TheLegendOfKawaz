@@ -115,6 +115,17 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""58e26e4f-e5a9-4f2e-af1d-436d833958c9"",
+                    ""path"": ""<HID::My-Power CO.,LTD. JC-P301U>/hat"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4b879028-424d-48d9-8b33-0b7938362b52"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
@@ -139,6 +150,17 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""81568e41-5067-4686-8d49-58bfacd1885f"",
                     ""path"": ""<HID::HORI CO.,LTD  PAD A>/button2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f23b940e-0831-49ab-a1ef-c0842dc094c1"",
+                    ""path"": ""<HID::My-Power CO.,LTD. JC-P301U>/button3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

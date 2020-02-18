@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TadaLib; // ステートマシンを使うため
-using System.Runtime.InteropServices;
 
 /// <summary>
 /// キャラクターを動かす元となるクラス
@@ -37,6 +36,9 @@ namespace Actor.Player
     // ステート間で共有するデータ
     public class Data
     {
+        // 各種パラメータ情報
+        public List<Param> Params { private set; get; }
+
         // プレイヤーの速度
         public Vector2 velocity = Vector2.zero;
 
@@ -52,10 +54,11 @@ namespace Actor.Player
         // 右方向にぶつかっている
         public bool IsRight { private set; get; }
 
+
         // 空中ジャンプの最大回数
-        public int ArialJumpNumMax { private set; get; }
+        public int AirJumpNumMax { private set; get; }
         // 空中ジャンプ回数
-        private int arial_jump_num_;
+        private int air_jump_num_;
 
         // アニメーター
         public Animator animator;
@@ -70,8 +73,11 @@ namespace Actor.Player
             IsHead = false;
             IsLeft = false;
             IsRight = false;
-            ArialJumpNumMax = 1;
-            arial_jump_num_ = ArialJumpNumMax;
+
+            Params = ParamManager.Instance.Params;
+
+            AirJumpNumMax = Params[(int)eParam.AirJumpNum].Value;
+            air_jump_num_ = AirJumpNumMax;
         }
 
         // 以下，それぞれの変数を代入
@@ -83,14 +89,14 @@ namespace Actor.Player
         // 空中ジャンプ回数をリセットする
         public void ResetArialJump()
         {
-            arial_jump_num_ = ArialJumpNumMax;
+            air_jump_num_ = AirJumpNumMax;
         }
 
         // 空中ジャンプができるか？
         public bool RequestArialJump()
         {
-            --arial_jump_num_;
-            return arial_jump_num_ >= 0;
+            --air_jump_num_;
+            return air_jump_num_ >= 0;
         }
 
         // 向いている方向を反転する
@@ -178,6 +184,10 @@ namespace Actor.Player
 
             // 速度に応じて移動する
             Move();
+
+            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.V].wasPressedThisFrame){
+                UnityEngine.SceneManagement.SceneManager.LoadScene("ParametorTest");
+            }
         }
 
         // 座標を変更する 汚いから見ないで
