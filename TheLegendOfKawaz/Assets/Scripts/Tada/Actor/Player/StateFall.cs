@@ -69,8 +69,8 @@ namespace Actor.Player
                     return;
                 }
 
-                // 壁に沿っている
-                if (data.IsLeft || data.IsRight)
+                // 壁に沿っている 
+                if (data.CanWallKick && data.IsLeft || data.IsRight)
                 {
                     ChangeState((int)eState.Wall);
                 }
