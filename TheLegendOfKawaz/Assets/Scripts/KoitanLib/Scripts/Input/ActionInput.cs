@@ -62,12 +62,12 @@ public class ActionInput : MonoBehaviour
 
     void Start()
     {
-        
+        /*
         DebugTextManager.Display(() => "ReadValue:" + input.PlatformAction.Jump.ReadValue<float>().ToString() + "\n");
         DebugTextManager.Display(() => "JumpFlag:" + Instance.actionFlag[ActionCode.Jump].ToString() + "\n");
         DebugTextManager.Display(() => "oldJumpValue:" + Instance.oldActionValue[ActionCode.Jump].ToString() + "\n");
         DebugTextManager.Display(() => "JumpValue:" + Instance.actionValue[ActionCode.Jump].ToString() + "\n");
-        
+        */
     }
 
     private void Update()

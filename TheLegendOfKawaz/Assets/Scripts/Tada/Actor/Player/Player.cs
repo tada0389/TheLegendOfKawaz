@@ -164,7 +164,7 @@ namespace Actor.Player
             state_machine_.SetInitialState((int)eState.Fall);
 
             // デバッグ表示
-            DebugBoxManager.Display(this);
+            DebugBoxManager.Display(this).SetSize(new Vector2(400, 300)).SetOffset(new Vector2(0, -300));
         }
 
         // Update is called once per frame

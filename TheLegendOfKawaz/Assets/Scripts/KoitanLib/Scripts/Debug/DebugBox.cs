@@ -71,6 +71,7 @@ public class DebugBox : ButtonBase
         text.rectTransform.sizeDelta = size;
         image = GetComponent<Image>();
         text.gameObject.SetActive(false);
+        rectTransform.position = offset;
         onTouchEnter = () =>
         {
             if (!isAlwaysOpen)
@@ -129,7 +130,7 @@ public class DebugBox : ButtonBase
         }
         Vector3 pos = Camera.main.WorldToScreenPoint(parent.position);
         transform.position = pos;
-        //rectTransform.transform.localPosition += offset;
+        rectTransform.transform.localPosition += offset;
         if (openState == OpenState.Opened)
         {
             text.text = message();

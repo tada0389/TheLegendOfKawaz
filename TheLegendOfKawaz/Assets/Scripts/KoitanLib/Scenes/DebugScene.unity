@@ -632,7 +632,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+      objectReference: {fileID: 21300000, guid: 02d8ad62809014ddbb1786c33ed6d185,
+        type: 3}
     - target: {fileID: 1052666763588893800, guid: 0b843c7aca2b14cdea11d2b9f97050a5,
         type: 3}
       propertyPath: m_Type
@@ -903,6 +904,17 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1052666763588893800, guid: 0b843c7aca2b14cdea11d2b9f97050a5,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 1052666763588893800, guid: 0b843c7aca2b14cdea11d2b9f97050a5,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 02d8ad62809014ddbb1786c33ed6d185,
+        type: 3}
     - target: {fileID: 429657519968748602, guid: 0b843c7aca2b14cdea11d2b9f97050a5,
         type: 3}
       propertyPath: m_fontAsset
