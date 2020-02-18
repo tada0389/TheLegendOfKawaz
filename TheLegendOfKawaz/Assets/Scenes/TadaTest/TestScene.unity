@@ -250,8 +250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idle_state_:
-    MaxAbsSpeed: {x: 0.4, y: 0}
-    Accel: {x: 0, y: 0}
+    MaxAbsSpeed: {x: 0, y: 0}
+    Accel: {x: 0.05, y: 0}
   walk_state_:
     MaxAbsSpeed: {x: 0.27, y: 0}
     Accel: {x: 0.015, y: 0}
@@ -5150,8 +5150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idle_state_:
-    MaxAbsSpeed: {x: 0.5, y: 0}
-    Accel: {x: 0, y: 0}
+    MaxAbsSpeed: {x: 0, y: 0}
+    Accel: {x: 0.05, y: 0}
   walk_state_:
     MaxAbsSpeed: {x: 0.25, y: 0}
     Accel: {x: 0.013, y: 0}
