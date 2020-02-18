@@ -24,8 +24,8 @@ namespace test
 
         void Update()
         {
-            if (ActionInput.GetAxis(AxisCode.Vertical) == -1f) index_ = (index_ + 1) % param_.Params.Count;
-            if (ActionInput.GetAxis(AxisCode.Vertical) == 1f) index_ = (index_ - 1 + param_.Params.Count) % param_.Params.Count;
+            if (ActionInput.GetButtonDown(ButtonCode.Down)) index_ = (index_ + 1) % param_.Params.Count;
+            if (ActionInput.GetButtonDown(ButtonCode.Up)) index_ = (index_ - 1 + param_.Params.Count) % param_.Params.Count;
             if (ActionInput.GetButtonDown(ActionCode.Jump)) param_.Params[index_].LevelUp();
             Display();
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame){

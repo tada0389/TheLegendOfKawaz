@@ -211,7 +211,7 @@ namespace Actor.Player
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.V].wasPressedThisFrame){
                 UnityEngine.SceneManagement.SceneManager.LoadScene("ParametorTest");
             }
-            if (ActionInput.GetButtonDown(ActionCode.Jump))
+            if (ActionInput.GetButtonDown(ActionCode.Shot))
             {
                 float dir = (data_.Dir == eDir.Left)? -1f : 1f;
                 data_.bullet_spawer_.Shot(transform.position + new Vector3(dir, 0f, 0f), new Vector2(dir, 0f));

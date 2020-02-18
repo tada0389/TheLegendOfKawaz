@@ -184,6 +184,17 @@
                     "action": "Shot",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "25a6ebfd-d772-4146-a809-a3285d018ea6",
+                    "path": "<HID::My-Power CO.,LTD. JC-P301U>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
