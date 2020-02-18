@@ -44,9 +44,18 @@ namespace Bullet
         // 発射する
         public void Shot(Vector2 pos, Vector2 dir)
         {
-            bullets_[index_].gameObject.SetActive(true);
-            bullets_[index_].Init(pos, dir);
-            ++index_;
+            // もしすべて使っていたら撃たない 無駄な処理があるから直したい
+            for(int i = 0; i < max_shot_num_; ++i)
+            {
+                if (!bullets_[index_].gameObject.activeSelf)
+                {
+                    bullets_[index_].gameObject.SetActive(true);
+                    bullets_[index_].Init(pos, dir);
+                    index_ = (index_ + 1) % max_shot_num_;
+                    return;
+                }
+                index_ = (index_ + 1) % max_shot_num_;
+            }
         }
     }
 }

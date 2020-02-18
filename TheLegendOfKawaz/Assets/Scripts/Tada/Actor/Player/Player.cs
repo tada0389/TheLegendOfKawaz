@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TadaLib; // ステートマシンを使うため
+using Bullet;
 
 /// <summary>
 /// キャラクターを動かす元となるクラス
@@ -73,6 +74,8 @@ namespace Actor.Player
 
         // アニメーター
         public Animator animator;
+        // バレット
+        public BulletSpawner bullet_spawer_;
 
         // それぞれのステートのデータ
 
@@ -125,6 +128,7 @@ namespace Actor.Player
     // プレイヤークラス partialによりファイル間で分割してクラスを実装
     [RequireComponent(typeof(BoxCollider2D))] // BoxCollider2Dがアタッチされていないといけない
     [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(BulletSpawner))]
     public partial class Player : MonoBehaviour
     {
         // プレイヤーのステート一覧
@@ -168,9 +172,10 @@ namespace Actor.Player
         {
             data_ = new Data
             {
-                animator = GetComponent<Animator>()
+                animator = GetComponent<Animator>(),
+                bullet_spawer_ = GetComponent<BulletSpawner>()
             };
-
+            data_.bullet_spawer_.Init(data_.MaxShotNum);
      
             hit_box_ = GetComponent<BoxCollider2D>();
 
@@ -205,6 +210,11 @@ namespace Actor.Player
 
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.V].wasPressedThisFrame){
                 UnityEngine.SceneManagement.SceneManager.LoadScene("ParametorTest");
+            }
+            if (ActionInput.GetButtonDown(ActionCode.Jump))
+            {
+                float dir = (data_.Dir == eDir.Left)? -1f : 1f;
+                data_.bullet_spawer_.Shot(transform.position + new Vector3(dir, 0f, 0f), new Vector2(dir, 0f));
             }
         }
 
