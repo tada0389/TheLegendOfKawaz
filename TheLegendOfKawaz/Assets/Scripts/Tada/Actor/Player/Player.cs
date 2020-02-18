@@ -148,6 +148,7 @@ namespace Actor.Player
         // ステート間で共有するデータ
         private Data data_;
 
+        #region state class
         // 各ステートのインスタンス これで各ステートのフィールドをInspectorでいじれる 神
         [SerializeField]
         private StateIdle idle_state_;
@@ -161,6 +162,7 @@ namespace Actor.Player
         private StateFall fall_state_;
         [SerializeField]
         private StateWall wall_state_;
+#endregion
 
         // 当たり判定の範囲
         private BoxCollider2D hit_box_;
@@ -214,7 +216,7 @@ namespace Actor.Player
             if (ActionInput.GetButtonDown(ActionCode.Shot))
             {
                 float dir = (data_.Dir == eDir.Left)? -1f : 1f;
-                data_.bullet_spawer_.Shot(transform.position + new Vector3(dir, 0f, 0f), new Vector2(dir, 0f));
+                data_.bullet_spawer_.Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
             }
         }
 
