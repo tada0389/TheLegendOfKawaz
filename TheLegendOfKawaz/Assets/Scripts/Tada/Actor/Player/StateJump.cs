@@ -61,7 +61,7 @@ namespace Actor.Player
                 }
 
                 // 壁に沿っている ただし，速度が一定以下の時
-                if(data.velocity.y < wall_thr && (data.IsLeft || data.IsRight))
+                if(data.CanWallKick && data.velocity.y < wall_thr && (data.IsLeft || data.IsRight))
                 {
                     ChangeState((int)eState.Wall);
                 }

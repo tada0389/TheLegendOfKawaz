@@ -36,8 +36,25 @@ namespace Actor.Player
     // ステート間で共有するデータ
     public class Data
     {
-        // 各種パラメータ情報
-        public List<Param> Params { private set; get; }
+        // 体力
+        public int HP { private set; get; }
+        public int MaxHP { private set; get; }
+        // 攻撃力
+        public int Power { private set; get; }
+        // 基礎移動速度
+        public float InitSpeed { private set; get; }
+        // 壁蹴りできるか
+        public bool CanWallKick { private set; get; }
+        // 自動回復できるか
+        public bool CanAutoHeal { private set; get; }
+        // 弾の数
+        public int MaxShotNum { private set; get; }
+
+        // 空中ジャンプの最大回数
+        public int AirJumpNumMax { private set; get; }
+        // 空中ジャンプ回数
+        private int air_jump_num_;
+
 
         // プレイヤーの速度
         public Vector2 velocity = Vector2.zero;
@@ -54,12 +71,6 @@ namespace Actor.Player
         // 右方向にぶつかっている
         public bool IsRight { private set; get; }
 
-
-        // 空中ジャンプの最大回数
-        public int AirJumpNumMax { private set; get; }
-        // 空中ジャンプ回数
-        private int air_jump_num_;
-
         // アニメーター
         public Animator animator;
 
@@ -74,8 +85,15 @@ namespace Actor.Player
             IsLeft = false;
             IsRight = false;
 
-            Params = ParamManager.Instance.Params;
+            var Params = ParamManager.Instance.Params;
 
+            MaxHP = Params[(int)eParam.HP].Value;
+            HP = MaxHP;
+            Power = Params[(int)eParam.Attack].Value;
+            InitSpeed = Params[(int)eParam.Speed].Value / (float)100f;
+            CanWallKick = Params[(int)eParam.WallKick].Value != 0;
+            CanAutoHeal = Params[(int)eParam.AutoHeal].Value != 0;
+            MaxShotNum = Params[(int)eParam.ShotNum].Value;
             AirJumpNumMax = Params[(int)eParam.AirJumpNum].Value;
             air_jump_num_ = AirJumpNumMax;
         }
@@ -170,7 +188,7 @@ namespace Actor.Player
             state_machine_.SetInitialState((int)eState.Fall);
 
             // デバッグ表示
-            DebugBoxManager.Display(this).SetSize(new Vector2(400, 300)).SetOffset(new Vector2(0, -300));
+            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -300));
         }
 
         // Update is called once per frame
@@ -202,7 +220,7 @@ namespace Actor.Player
             Vector2 half_size = hit_box_.size * scale * 0.5f;
 
             // 移動量
-            Vector2 d = data_.velocity * Time.deltaTime * 60f;
+            Vector2 d = data_.InitSpeed * data_.velocity * Time.deltaTime * 60f;
 
             // レイキャストを飛ばす
             Vector2 origin = (Vector2)transform.position + offset;
@@ -349,7 +367,10 @@ namespace Actor.Player
 
         public override string ToString()
         {
-            return data_.velocity.ToString() + 
+            return "(" + data_.velocity.x.ToString("F2") + ", " + data_.velocity.y.ToString("F2") + ")" +
+                "\nHP : " + data_.HP.ToString() + "/" + data_.MaxHP.ToString() +
+                "\nSpeed : " + data_.InitSpeed.ToString() + 
+                "\nPower : " + data_.Power.ToString() + 
                 "\nState : " + state_machine_.ToString() + 
                 "\nIsGround : " + data_.IsGround.ToString();
         }
