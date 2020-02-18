@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 5818184782919871908}
   - component: {fileID: 5818184782919871909}
   - component: {fileID: 5818184782919871910}
+  - component: {fileID: 7689193656342303078}
   m_Layer: 0
   m_Name: SubayaiKawazTan
   m_TagString: Untagged
@@ -664,6 +665,19 @@ MonoBehaviour:
     m_Center: {x: 2.2133987, y: 0.1628747, z: 0}
     m_Extent: {x: 3.9254308, y: 4.215596, z: 0}
   m_UseBatching: 1
+--- !u!114 &7689193656342303078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5818184782919871911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a26abaed62ee1245adc2a27bfbe7c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0, type: 3}
 --- !u!1 &5818184783209271151
 GameObject:
   m_ObjectHideFlags: 0

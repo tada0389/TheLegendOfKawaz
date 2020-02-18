@@ -40,19 +40,37 @@ namespace Bullet
         public override void Init(Vector2 pos, Vector2 dir)
         {
             transform.position = (Vector3)pos;
+            move_body_.transform.position = (Vector3)pos;
             dir_ = dir;
             timer_.TimeReset();
-            //shot_effect_.Play();
+            CreateEffect(shot_effect_, transform.position);
         }
 
         protected override void Move()
         {
-            transform.position += (Vector3)dir_ * speed_ * 60f * Time.deltaTime;
-            if (timer_.IsTimeout())
-            {
-                //hit_effect_.Play();
-                gameObject.SetActive(false);
-            }
+            move_body_.transform.position += (Vector3)dir_ * speed_ * 60f * Time.deltaTime;
+            if (timer_.IsTimeout()) Dead();
+        }
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.tag != "Player") Dead();
+        }
+
+        private void Dead()
+        {
+            CreateEffect(hit_effect_, move_body_.transform.position);
+            gameObject.SetActive(false);
+        }
+
+        // エフェクトを生成する オブジェクトプール使いたいので仮
+        private void CreateEffect(ParticleSystem effect, Vector3 pos)
+        {
+            var eff = Instantiate(effect, pos, Quaternion.identity);
+            eff.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir_.x) * 90f - 90f, 0f);
+            eff.gameObject.SetActive(true);
+            eff.Play();
+            Destroy(eff.gameObject, 2.0f);
         }
     }
 }
