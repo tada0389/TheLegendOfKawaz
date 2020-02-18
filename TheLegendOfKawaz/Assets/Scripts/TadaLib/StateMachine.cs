@@ -91,6 +91,9 @@ namespace TadaLib
             state_.OnStart(); // 新しいステートの初期化
         }
 
+        // 現在のステート名を取得する
+        public override string ToString() => state_.ToString(state_);
+
         // 各ステートのベースとなる基底クラス
         public abstract class StateBase
         {
@@ -140,6 +143,8 @@ namespace TadaLib
             // ステート終了のデバッグ出力をする
             protected void DumpEndMsg(StateBase state) => 
                 Debug.Log(state.GetType().Name + "終了");
+
+            public string ToString(StateBase state) => state.GetType().Name;
 
             //=== 隠したい ========================================-
             public void TimerReset() => Timer = 0.0f;

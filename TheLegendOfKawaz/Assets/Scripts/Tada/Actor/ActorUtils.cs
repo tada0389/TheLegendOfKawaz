@@ -14,17 +14,11 @@ namespace Actor
         public static void ProcSpeed(ref Vector2 velocity, Vector2 accel, Vector2 max_abs_speed)
         {
             accel *= Time.deltaTime * 60f;
-            if (accel.x > 0 && velocity.x < max_abs_speed.x) velocity = new Vector2(Mathf.Min(velocity.x + accel.x, max_abs_speed.x), velocity.y);
-            else if(accel.x < 0 && velocity.x > -max_abs_speed.x) velocity = new Vector2(Mathf.Max(velocity.x + accel.x, -max_abs_speed.x), velocity.y);
+            if (accel.x > 0f && velocity.x < max_abs_speed.x) velocity.x = Mathf.Min(velocity.x + accel.x, max_abs_speed.x);
+            else if(accel.x < 0f && velocity.x > -max_abs_speed.x) velocity.x = Mathf.Max(velocity.x + accel.x, -max_abs_speed.x);
 
-            if (accel.y > 0 && velocity.y < max_abs_speed.y) velocity = new Vector2(velocity.x, Mathf.Min(velocity.y + accel.y, max_abs_speed.y));
-            else if (accel.y < 0 && velocity.y > -max_abs_speed.y) velocity = new Vector2(velocity.x, Mathf.Max(velocity.y + accel.y, -max_abs_speed.y));
-        }
-
-        // 壁キック
-        public static void WallKick()
-        {
-
+            if (accel.y > 0f && velocity.y < max_abs_speed.y) velocity.y = Mathf.Min(velocity.y + accel.y, max_abs_speed.y);
+            else if (accel.y < 0f && velocity.y > -max_abs_speed.y) velocity.y = Mathf.Max(velocity.y + accel.y, -max_abs_speed.y);
         }
     }
 }

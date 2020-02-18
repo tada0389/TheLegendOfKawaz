@@ -162,6 +162,9 @@ namespace Actor.Player
 
             // 始めのステートを設定
             state_machine_.SetInitialState((int)eState.Fall);
+
+            // デバッグ表示
+            DebugBoxManager.Display(this);
         }
 
         // Update is called once per frame
@@ -332,6 +335,13 @@ namespace Actor.Player
             RaycastHit2D hit = Physics2D.Linecast(from, to, layer_mask);
             Debug.DrawLine(from, (hit) ? to : to);
             return hit;
+        }
+
+        public override string ToString()
+        {
+            return data_.velocity.ToString() + 
+                "\nState : " + state_machine_.ToString() + 
+                "\nIsGround : " + data_.IsGround.ToString();
         }
     }
 }

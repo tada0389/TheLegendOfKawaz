@@ -27,7 +27,7 @@ namespace Actor.Player
                 data.animator.Play("Idle");
 
                 // 速度をゼロにする
-                data.velocity = Vector2.zero;
+                //data.velocity = Vector2.zero;
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -58,6 +58,8 @@ namespace Actor.Player
                     ChangeState((int)eState.Walk);
                     return;
                 }
+
+                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(Mathf.Sign(-data.velocity.x), 1f) * Accel, MaxAbsSpeed);
             }
         }
     }
