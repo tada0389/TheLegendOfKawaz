@@ -2413,6 +2413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4dd031c0cf0c94fa9da02c97fb047f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas_: {fileID: 1996384055}
   explonation_text_: {fileID: 35063734}
   price_text_: {fileID: 670965191}
   skill_prefab_: {fileID: 8116189548602559543, guid: 09f99c304a70bad489a8ae0bdced590e,
@@ -2428,9 +2429,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 562e523eb688aa541b8d2922537d39fd, type: 3}
   - {fileID: 21300000, guid: e20ee3d9364780a4482c63e077cd9959, type: 3}
   - {fileID: 21300000, guid: 562e523eb688aa541b8d2922537d39fd, type: 3}
-  skill_initial_pos_: {x: 150, y: 450, z: 0}
-  width_intervel_: 220
-  height_interval_: 200
+  skill_initial_pos_: {x: -700, y: 200, z: 0}
+  width_intervel_: 340
+  height_interval_: 340
   select_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}

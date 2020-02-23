@@ -35,7 +35,7 @@ namespace SkillItem
         private List<Image> skill_icons_;
 
         // 有効になった時にスキル情報を取得する
-        public void Init(int id, Sprite image)
+        public void Init(int id, Sprite image, Canvas canvas)
         {
             body_ = SkillManager.Instance.GetSkill(id);
             skill_icons_ = new List<Image>();
@@ -43,9 +43,10 @@ namespace SkillItem
             int current_level = body_.Level;
             for (int i = 0; i < body_.LevelLimit; ++i)
             {
-                Image icon = Instantiate(level_icon_prefab_,
-                    transform.position + level_icon_default_pos_ + new Vector3(level_icon_dist_ * i, 0f, 0f), Quaternion.identity);
+                Image icon = Instantiate(level_icon_prefab_, canvas.transform);
                 icon.transform.parent = transform;
+                icon.transform.localPosition = level_icon_default_pos_ + new Vector3(level_icon_dist_ * i, 0f, 0f);
+                //icon.transform.localScale = Vector3.one;
                 skill_icons_.Add(icon);
                 if (current_level <= i) skill_icons_[i].color = new Color(0.5f, 0.5f, 0.5f);
             }

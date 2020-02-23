@@ -29,6 +29,9 @@ namespace SkillItem
         private SkillManager skill_;
 
         [SerializeField]
+        private Canvas canvas_;
+
+        [SerializeField]
         private TextMeshProUGUI explonation_text_;
         [SerializeField]
         private TextMeshProUGUI price_text_;
@@ -99,18 +102,18 @@ namespace SkillItem
             // 並べる
             for(int i = 0; i < half_num; ++i)
             {
-                SkillItemController item = Instantiate(skill_prefab_, 
-                    skill_initial_pos_ + new Vector3(i * width_intervel_, 0f, 0f), Quaternion.identity);
-                item.gameObject.transform.parent = transform;
-                item.Init(i, skill_icons_[i]);
+                SkillItemController item = Instantiate(skill_prefab_, canvas_.transform);
+                item.transform.localPosition = skill_initial_pos_ + new Vector3(i * width_intervel_, 0f, 0f);
+                item.transform.parent = transform;
+                item.Init(i, skill_icons_[i], canvas_);
                 skills_.Add(item);
             }
             for (int i = half_num; i < skill_num; ++i)
             {
-                SkillItemController item = Instantiate(skill_prefab_,
-                    skill_initial_pos_ + new Vector3((i - half_num) * width_intervel_, -height_interval_, 0f), Quaternion.identity);
-                item.gameObject.transform.parent = transform;
-                item.Init(i, skill_icons_[i]);
+                SkillItemController item = Instantiate(skill_prefab_, canvas_.transform);
+                item.transform.localPosition = skill_initial_pos_ + new Vector3((i - half_num) * width_intervel_, -height_interval_, 0f);
+                item.transform.parent = transform;
+                item.Init(i, skill_icons_[i], canvas_);
                 skills_.Add(item);
             }
         }
