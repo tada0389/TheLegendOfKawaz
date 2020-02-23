@@ -37,6 +37,7 @@ public class AnimTest : MonoBehaviour
     [SerializeField]
     private float dashTimeMax = 1f;
     float dashTime = 0;
+    private float shotTime = 0;
     float dir = 1;
     [SerializeField]
     int mameMaxCount = 3;
@@ -55,14 +56,9 @@ public class AnimTest : MonoBehaviour
         oldPos = nowPos;
         if (ActionInput.GetButtonDown(ActionCode.Shot))
         {
-            if (animator.GetLayerWeight(1) == 0)
-            {
-                animator.SetLayerWeight(1, 1);
-            }
-            else
-            {
-                animator.SetLayerWeight(1, 0);
-            }
+            animator.SetLayerWeight(1, 1);
+            shotTime = 1;
+            animator.Play("Shot", 1, 0);
             shotEff.Play();
             mameTest m = GenerateMame();
             if (m != null)
@@ -70,6 +66,16 @@ public class AnimTest : MonoBehaviour
                 m.gameObject.SetActive(true);
                 m.Init(shotEff.transform.position, Vector3.right * dir);
             }
+        }
+
+        if (shotTime > 0)
+        {
+            animator.SetLayerWeight(1, 1);
+            shotTime -= Time.deltaTime;
+        }
+        else
+        {
+            animator.SetLayerWeight(1, 0);
         }
 
         //ダッシュ
