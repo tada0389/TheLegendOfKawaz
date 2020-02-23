@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/AnimationTest.unity
+    guid: d554a513ad3c445aebd27fd8025758b6
+  - enabled: 1
     path: Assets/Scenes/TadaTest/TestScene.unity
     guid: 5eebad01cc1e1164baf497de7ef2ee08
   - enabled: 1

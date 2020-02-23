@@ -153,6 +153,8 @@ public class ActionInput : MonoBehaviour
                 return input.PlatformAction.Jump.ReadValue<float>() > 0;
             case ActionCode.Shot:
                 return input.PlatformAction.Shot.ReadValue<float>() > 0;
+            case ActionCode.Dash:
+                return input.PlatformAction.Dash.ReadValue<float>() > 0;
         }
         return false;
     }
@@ -205,5 +207,6 @@ public enum AxisCode
 public enum ActionCode
 {
     Jump = 0,
-    Shot = 1
+    Shot = 1,
+    Dash = 2
 }
