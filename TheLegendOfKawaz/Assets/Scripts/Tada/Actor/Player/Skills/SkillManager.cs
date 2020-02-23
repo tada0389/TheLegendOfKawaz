@@ -10,7 +10,7 @@ using TadaLib;
 
 namespace Actor.Player
 {
-    public enum eParam
+    public enum eSkill
     {
         HP, // 体力
         Speed, // 基礎スピード
@@ -23,24 +23,28 @@ namespace Actor.Player
         ShotNum, // ショット数
     }
 
-    public class ParamManager : SingletonMonoBehaviour<ParamManager>
+    public class SkillManager : SingletonMonoBehaviour<SkillManager>
     {
         // パラメータ情報
-        public List<Param> Params { private set; get; }
+        public List<Skill> Skills { private set; get; }
+
+        // 使用するcsvファイル名
+        [SerializeField]
+        private string file_name_ = "PlayerSkills";
          
         protected override void Awake()
         {
             base.Awake();
 
             // パラメータを取得
-            Parametors reader = new Parametors("PlayerParams");
-            Params = new List<Param>(reader.Params);
+            PlayerSkills reader = new PlayerSkills(file_name_);
+            Skills = new List<Skill>(reader.Skills);
         }
 
         // 指定したパラメータを取得する
-        public Param GetParam(eParam id) => Params[(int)id];
+        public Skill GetSkill(int id) => Skills[id];
 
         // 指定したパラメータのレベルを上げる
-        public bool LevelUp(eParam id) => Params[(int)id].LevelUp();
+        public bool LevelUp(int id) => Skills[id].LevelUp();
     }
 } // namespace Actor.Player

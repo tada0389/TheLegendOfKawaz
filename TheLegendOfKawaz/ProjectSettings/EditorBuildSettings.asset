@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scripts/KoitanLib/Scenes/DebugScene.unity
     guid: 5f6834afa5218432c866eeb94c57cbdb
   - enabled: 1
-    path: Assets/Scenes/TadaTest/ParametorTest.unity
-    guid: a5d7a6403d4a0ff419457a9ceb68a620
+    path: Assets/Scenes/MainScenes/SkillGetScene.unity
+    guid: ff80ed5c9f3b32d4c9e7ecfc5a18b69c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: cef15f5a95d11294d83f6d5c988c8d91,
       type: 2}

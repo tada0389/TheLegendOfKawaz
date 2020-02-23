@@ -88,16 +88,16 @@ namespace Actor.Player
             IsLeft = false;
             IsRight = false;
 
-            var Params = ParamManager.Instance.Params;
+            var Skills = SkillManager.Instance.Skills;
 
-            MaxHP = Params[(int)eParam.HP].Value;
+            MaxHP = Skills[(int)eSkill.HP].Value;
             HP = MaxHP;
-            Power = Params[(int)eParam.Attack].Value;
-            InitSpeed = Params[(int)eParam.Speed].Value / (float)100f;
-            CanWallKick = Params[(int)eParam.WallKick].Value != 0;
-            CanAutoHeal = Params[(int)eParam.AutoHeal].Value != 0;
-            MaxShotNum = Params[(int)eParam.ShotNum].Value;
-            AirJumpNumMax = Params[(int)eParam.AirJumpNum].Value;
+            Power = Skills[(int)eSkill.Attack].Value;
+            InitSpeed = Skills[(int)eSkill.Speed].Value / (float)100f;
+            CanWallKick = Skills[(int)eSkill.WallKick].Value != 0;
+            CanAutoHeal = Skills[(int)eSkill.AutoHeal].Value != 0;
+            MaxShotNum = Skills[(int)eSkill.ShotNum].Value;
+            AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].Value;
             air_jump_num_ = AirJumpNumMax;
         }
 
@@ -211,7 +211,7 @@ namespace Actor.Player
             Move();
 
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.V].wasPressedThisFrame){
-                UnityEngine.SceneManagement.SceneManager.LoadScene("ParametorTest");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("SkillGetScene");
             }
             if (ActionInput.GetButtonDown(ActionCode.Shot))
             {

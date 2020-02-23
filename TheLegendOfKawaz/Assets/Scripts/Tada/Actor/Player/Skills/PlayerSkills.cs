@@ -13,20 +13,26 @@ using TadaLib;
 namespace Actor.Player
 { 
     // 一つのステータス
-    public class Param
+    public class Skill
     {
         // パラメータの名前
         public string Name { private set; get; }
+        // スキルの説明
+        public string Explonation { private set; get; }
         // 現在の能力値
         public int Value { private set; get; }
         // レベル
         public int Level { private set; get; }
+        // スキルの最大レベル
+        public int LevelLimit => Sheet.Count - 1;
+
         // レベルごとの能力値と必要なポイント Item1に能力値，Item2に必要なポイント
         public IReadOnlyList<System.Tuple<int, int>> Sheet { private set; get; }
 
-        public Param(string name, List<System.Tuple<int, int>> list)
+        public Skill(string name, string explonation, List<System.Tuple<int, int>> list)
         {
             Name = name;
+            Explonation = explonation;
             Sheet = list.AsReadOnly();
             Value = Sheet[0].Item1;
             Level = 0;
@@ -57,19 +63,19 @@ namespace Actor.Player
             " Value : " + Value.ToString();
     }
 
-    public class Parametors : MonoBehaviour
+    public class PlayerSkills : MonoBehaviour
     {
         // 各種パラメータ
-        public List<Param> Params { private set; get; }
+        public List<Skill> Skills { private set; get; }
 
-        public Parametors(string file_name = "PlayerParams")
+        public PlayerSkills(string file_name = "PlayerSkills")
         {
-            Params = new List<Param>();
-            LoadParametors(Params, file_name);
+            Skills = new List<Skill>();
+            LoadParametors(Skills, file_name);
         }
 
         // パラメータを読み込む
-        private void LoadParametors(List<Param> out_param, string file_name)
+        private void LoadParametors(List<Skill> out_param, string file_name)
         {
             List<string[]> raw_data = CSVReader.LoadCSVFile(file_name);
             int cnt = -1;
@@ -90,8 +96,9 @@ namespace Actor.Player
                     int need = int.Parse(data[j * 2 + 4]);
                     list.Add(new System.Tuple<int, int>(value, need));
                 }
+                string explonation = data[level_num * 2 + 3];
                 // パラメータ登録
-                out_param.Add(new Param(name, list));
+                out_param.Add(new Skill(name, explonation, list));
             }
         }
     }
