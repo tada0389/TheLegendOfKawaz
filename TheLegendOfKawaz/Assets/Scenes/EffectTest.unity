@@ -248,7 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotEff: {fileID: 1548854737}
   hitEff: {fileID: 37605436}
-  tama: {fileID: 1790499369097698444}
+  tama: {fileID: 940629670}
   lifeTime: 0.5
   vx: 10
 --- !u!4 &555883245
@@ -342,7 +342,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711570592}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -428,6 +428,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &940629670 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5605742028507916291, guid: 59c9c12523fc04138a8ca5317b73cbca,
+    type: 3}
+  m_PrefabInstance: {fileID: 5605742028495251173}
+  m_PrefabAsset: {fileID: 0}
 --- !u!198 &1548854737 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 3336352375171401916, guid: 1c49492e0d7b54292943f32719800598,
@@ -24218,7 +24224,7 @@ PrefabInstance:
     - target: {fileID: 3336352375171401890, guid: 1c49492e0d7b54292943f32719800598,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
         type: 3}
@@ -24327,7 +24333,7 @@ PrefabInstance:
     - target: {fileID: 5605742028507916291, guid: 59c9c12523fc04138a8ca5317b73cbca,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5605742028507916300, guid: 59c9c12523fc04138a8ca5317b73cbca,
         type: 3}
@@ -24406,7 +24412,7 @@ PrefabInstance:
     - target: {fileID: 7781110646141027841, guid: 9a717de7d96b34cca8c3f93a58b2206a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7781110646141027846, guid: 9a717de7d96b34cca8c3f93a58b2206a,
         type: 3}

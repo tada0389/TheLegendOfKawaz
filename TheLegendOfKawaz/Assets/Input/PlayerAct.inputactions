@@ -28,6 +28,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "cec807d6-14ef-413e-8688-f10f0f551991",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -56,7 +64,7 @@
                 {
                     "name": "up",
                     "id": "b86da34e-7f8f-4703-9262-6796751de0fb",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -67,7 +75,7 @@
                 {
                     "name": "down",
                     "id": "f28c6301-7166-4abc-9cc8-1ddbcbb1fe83",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -78,7 +86,7 @@
                 {
                     "name": "left",
                     "id": "bdf91ce6-672d-4a42-a7e6-86683342a9ae",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -89,7 +97,7 @@
                 {
                     "name": "right",
                     "id": "d2bf3064-db50-440e-a244-60e6818dc098",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -133,7 +141,7 @@
                 {
                     "name": "",
                     "id": "7a31b020-6350-4ce1-afac-37cd1dc49b71",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -177,7 +185,7 @@
                 {
                     "name": "",
                     "id": "4bc3213f-00de-4112-a67e-4be59e055821",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -193,6 +201,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fccc9c69-a5cb-439f-a168-e60cb35b5e45",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "34c1afd5-9349-491d-9e16-1a54cd7403e3",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
