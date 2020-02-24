@@ -26,7 +26,8 @@ namespace Actor.Player
                 if(data == null) data = Parent.data_;
 
                 // 歩きアニメーション開始
-                data.animator.Play("Walk");
+                //data.animator.Play("Walk");
+                data.animator.SetBool("isWalk", true);
 
                 // 移動している方向に速度を加える
                 data.velocity = new Vector2(data.velocity.x, 0f);
@@ -35,7 +36,7 @@ namespace Actor.Player
             // ステートが終了したときに呼ばれるメソッド
             public override void OnEnd()
             {
-
+                data.animator.SetBool("isWalk", false);
             }
 
             // 毎フレーム呼ばれる関数

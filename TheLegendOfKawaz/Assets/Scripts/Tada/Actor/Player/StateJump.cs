@@ -32,7 +32,7 @@ namespace Actor.Player
                 if(data == null) data = Parent.data_;
 
                 // ジャンプアニメーション開始
-                data.animator.Play("PlayerJump", 0, 0f);
+                data.animator.Play("Jump", 0, 0f);
 
                 // 上向きに速度を加える
                 data.velocity = new Vector2(data.velocity.x, jump_power);
