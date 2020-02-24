@@ -154,8 +154,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: 0}
-  m_SizeDelta: {x: 800, y: 200}
+  m_AnchoredPosition: {x: -400, y: 0}
+  m_SizeDelta: {x: 1000, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &35063734
 MonoBehaviour:
@@ -757,8 +757,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 500G
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
+  m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2440,7 +2441,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     pop_up_: {fileID: 544218527}
     popup_ease_: 9
-    appear_time_: 0.5
+    appear_time_: 0.3
     explonation_: {fileID: 748012865}
     skill_icon_: {fileID: 614032073}
     price_: {fileID: 492765695}
@@ -2450,4 +2451,4 @@ MonoBehaviour:
     levelup_icon_: {fileID: 1602952261}
     icon_back_: {fileID: 1808934325}
     levelup_ease_: 15
-    levelup_message_time_: 1
+    levelup_message_time_: 0.6

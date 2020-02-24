@@ -179,7 +179,8 @@ namespace SkillItem
                     Parent.skills_[before_index].ChangeFrameColor(Color.black);
 
                 Parent.explonation_text_.text = Parent.skills_[after_index].Explonation;
-                Parent.price_text_.text = Parent.skills_[after_index].NeedPoint.ToString() + "G";
+                if (Parent.skills_[after_index].ReachSkillLimit) Parent.price_text_.text = "<color=red>最大レベル</color>";
+                else Parent.price_text_.text = Parent.skills_[after_index].NeedPoint.ToString() + "G";
             }
         }
 
@@ -232,6 +233,15 @@ namespace SkillItem
             public override void OnStart()
             {
                 buyed = false;
+                // 購入できるか確かめる
+                if(Parent.skills_[Parent.select_index_].ReachSkillLimit || false)
+                {
+                    // SEを鳴らす
+
+                    ChangeState((int)eState.Select);
+                    return;
+                }
+
                 // デフォルトではいを赤く，いいえを白くする
                 watch_yes_ = true;
                 yes_text_.color = Color.red;

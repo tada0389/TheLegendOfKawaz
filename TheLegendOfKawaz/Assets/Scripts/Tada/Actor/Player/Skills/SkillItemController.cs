@@ -66,6 +66,8 @@ namespace SkillItem
 
         public string Name => body_.Name;
 
+        public bool ReachSkillLimit => body_.ReachLevelLimit;
+
         // スキルのレベルを上げる
         public void LevelUp()
         {
