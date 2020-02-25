@@ -5,8 +5,11 @@ using TadaLib;
 
 public class BossFlagManager : SingletonMonoBehaviour<BossFlagManager>
 {
+    //SingletonMonoBehavourを継承しているので実質全部staticになる
     [SerializeField]
-    private int bossRoomNum = 6;
+    private int bossRoomSum = 6;
+    [System.NonSerialized]
+    public int bossRoomNum;
 
     public List<bool> BossFlag { private set; get; }
 
@@ -15,12 +18,13 @@ public class BossFlagManager : SingletonMonoBehaviour<BossFlagManager>
         base.Awake();
 
         BossFlag = new List<bool>();
-        for (int i = 0; i < bossRoomNum; ++i) BossFlag.Add(false);
+        for (int i = 0; i < bossRoomSum; ++i) BossFlag.Add(false);
     }
 
     // Start is called before the first frame update
     void Start()
-    { 
+    {
+
     }
 
     // Update is called once per frame
