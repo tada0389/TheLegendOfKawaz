@@ -50,7 +50,7 @@ namespace Actor.Player
                 }
 
                 // ダッシュステート
-                if (ActionInput.GetButtonDown(ActionCode.Dash))
+                if (ActionInput.GetButtonDown(ActionCode.Dash) && data.CanDash())
                 {
                     ChangeState((int)eState.Dush);
                     return;

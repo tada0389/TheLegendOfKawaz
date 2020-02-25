@@ -4759,12 +4759,12 @@ PrefabInstance:
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: dush_state_.dush_speed_
-      value: 0.3
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: dush_state_.dush_time_
-      value: 0.15
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 2131037087285827298, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}

@@ -56,6 +56,9 @@ namespace Actor.Player
         // 空中ジャンプ回数
         private int air_jump_num_;
 
+        private bool is_dashed_;
+
+        private float prev_dash_time_;
 
         // プレイヤーの速度
         public Vector2 velocity = Vector2.zero;
@@ -99,6 +102,8 @@ namespace Actor.Player
             MaxShotNum = Skills[(int)eSkill.ShotNum].Value;
             AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].Value;
             air_jump_num_ = AirJumpNumMax;
+            is_dashed_ = false;
+            prev_dash_time_ = 0f;
         }
 
         // 以下，それぞれの変数を代入
@@ -106,6 +111,18 @@ namespace Actor.Player
         public void SetIsHead(bool is_head) { IsHead = is_head; }
         public void SetIsLeft(bool is_left) { IsLeft = is_left; }
         public void SetIsRight(bool is_right) { IsRight = is_right; }
+
+        // ダッシュできるか
+        public bool CanDash()
+        {
+            Debug.Log(Time.time - prev_dash_time_);
+            if (is_dashed_ || (IsGround && Time.time - prev_dash_time_ < 0.5f)) return false;
+            if(!IsGround) is_dashed_ = true;
+            prev_dash_time_ = Time.time;
+            return true;
+        }
+
+        public void ResetDash() => is_dashed_ = false;
 
         // 空中ジャンプ回数をリセットする
         public void ResetArialJump()
@@ -365,10 +382,12 @@ namespace Actor.Player
 
             transform.position += (Vector3)d;
 
+            data_.animator.SetBool("isGround", data_.IsGround);
             if (data_.IsGround)
             {
                 // 空中ジャンプ回数をリセットする
                 data_.ResetArialJump();
+                data_.ResetDash();
             }
         }
 
