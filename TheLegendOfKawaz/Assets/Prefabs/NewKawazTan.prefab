@@ -408,8 +408,8 @@ MonoBehaviour:
   dush_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    dush_time_: 1
-    dush_speed_: 0.4
+    dush_time_: 0.15
+    dush_speed_: 0.35
 --- !u!1 &2131037086636951405
 GameObject:
   m_ObjectHideFlags: 0

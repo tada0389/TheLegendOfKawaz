@@ -244,6 +244,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d10bb15f-18e2-43b9-8105-697b10ebc333",
+                    "path": "<HID::My-Power CO.,LTD. JC-P301U>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c1dec7ab-cbfc-40c2-9ba2-4d2d98f90250",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
