@@ -58,14 +58,30 @@ namespace CameraSpace
             // 指定ボーダー内に収める
             if (boader_ != null)
             {
-                // 左,下,右,上の順
-                float left = boader_.transform.position.x - boader_.offset.x;
-                float bottom = boader_.transform.position.y - boader_.offset.y;
-                float right = boader_.transform.position.x + boader_.offset.x;
-                float top = boader_.transform.position.y + boader_.offset.y;
+                // 画面の幅と高さ
+                float height = 10f * Mathf.Tan(cam_.fieldOfView * 0.5f * Mathf.Deg2Rad);
+                float width = height * cam_.aspect;
 
-                new_position.x = Mathf.Clamp(new_position.x, left, right);
-                new_position.y = Mathf.Clamp(new_position.y, bottom, top);
+                Vector2 origin = (Vector2)boader_.transform.position + boader_.offset * boader_.transform.localScale;
+                Vector2 size = boader_.size * boader_.transform.localScale / 2.0f;
+
+                // ボーダーの左,下,右,上の順
+                float left_limit = origin.x - size.x;
+                float bottom_limit = origin.y - size.y;
+                float right_limit = origin.x + size.x;
+                float top_limit = origin.y + size.y;
+
+                // 現在の左，下，右，上
+                float left_c = new_position.x - width;
+                float bottom_c = new_position.y - height;
+                float right_c = new_position.x + width;
+                float top_c = new_position.y + height;
+
+                if (left_c < left_limit) new_position.x -= left_c - left_limit;
+                else if(right_c > right_limit) new_position.x -= right_c - right_limit;
+
+                if(bottom_c < bottom_limit) new_position.y -= bottom_c - bottom_limit;
+                else if(top_c > top_limit) new_position.y -= top_c - top_limit;
             }
             transform.position = Vector3.SmoothDamp(transform.position, new_position, ref velocity, smooth_time_);
         }
