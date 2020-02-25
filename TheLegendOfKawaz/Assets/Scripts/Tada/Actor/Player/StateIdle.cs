@@ -46,6 +46,13 @@ namespace Actor.Player
                     return;
                 }
 
+                // ダッシュステート
+                if (ActionInput.GetButtonDown(ActionCode.Dash))
+                {
+                    ChangeState((int)eState.Dush);
+                    return;
+                }
+
                 // 地面から離れたらふぉるステートへ
                 if (!data.IsGround)
                 {

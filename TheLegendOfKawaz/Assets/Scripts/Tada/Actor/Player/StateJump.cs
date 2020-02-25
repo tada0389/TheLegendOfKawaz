@@ -73,6 +73,13 @@ namespace Actor.Player
                     return;
                 }
 
+                // ダッシュステート
+                if (ActionInput.GetButtonDown(ActionCode.Dash))
+                {
+                    ChangeState((int)eState.Dush);
+                    return;
+                }
+
                 // 天井に頭がついていたら落ちる
                 if (data.IsHead && data.velocity.y > 0f)
                 {

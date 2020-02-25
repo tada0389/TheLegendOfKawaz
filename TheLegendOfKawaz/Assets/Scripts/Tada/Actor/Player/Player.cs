@@ -140,6 +140,7 @@ namespace Actor.Player
             Jump, // ジャンプ中のステート
             Fall, // 落下中のステート(ジャンプでの落下はこれじゃない)
             Wall, // 壁に密着しているステート
+            Dush, // ダッシュしているステート
         }
 
         // ステートマシン
@@ -162,6 +163,8 @@ namespace Actor.Player
         private StateFall fall_state_;
         [SerializeField]
         private StateWall wall_state_;
+        [SerializeField]
+        private StateDush dush_state_;
 #endregion
 
         // 当たり判定の範囲
@@ -194,6 +197,7 @@ namespace Actor.Player
             state_machine_.AddState((int)eState.Jump, jump_state_);
             state_machine_.AddState((int)eState.Fall, fall_state_);
             state_machine_.AddState((int)eState.Wall, wall_state_);
+            state_machine_.AddState((int)eState.Dush, dush_state_);
 
             // 始めのステートを設定
             state_machine_.SetInitialState((int)eState.Fall);

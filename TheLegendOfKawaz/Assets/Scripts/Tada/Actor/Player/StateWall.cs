@@ -74,6 +74,14 @@ namespace Actor.Player
                     return;
                 }
 
+                // ダッシュステート
+                if (ActionInput.GetButtonDown(ActionCode.Dash))
+                {
+                    data.ReverseFaceDirection();
+                    ChangeState((int)eState.Dush);
+                    return;
+                }
+
                 // 移動している方向に速度を加える
                 float dir = ActionInput.GetAxis(AxisCode.Horizontal);
 
