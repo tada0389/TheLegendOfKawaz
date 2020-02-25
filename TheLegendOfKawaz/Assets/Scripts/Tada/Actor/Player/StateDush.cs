@@ -67,6 +67,13 @@ namespace Actor.Player
                     return;
                 }
 
+                // ジャンプ
+                if (data.IsGround && ActionInput.GetButtonDown(ActionCode.Jump))
+                {
+                    ChangeState((int)eState.Jump);
+                    return;
+                }
+
                 // 時間経過でステート以降
                 if(Timer > dush_time_)
                 {

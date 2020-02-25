@@ -15,8 +15,13 @@ namespace Actor
         {
             accel *= Time.deltaTime * 60f;
             velocity += accel;
-            velocity.x = Mathf.Clamp(velocity.x, -max_abs_speed.x, max_abs_speed.x);
-            velocity.y = Mathf.Clamp(velocity.y, -max_abs_speed.y, max_abs_speed.y);
+            float rate = Mathf.Pow(0.93f, Time.deltaTime / 0.016666f);
+            if (velocity.x > max_abs_speed.x) velocity.x = Mathf.Max(velocity.x * rate, max_abs_speed.x);
+            if (velocity.x < -max_abs_speed.x) velocity.x = Mathf.Min(velocity.x * rate, -max_abs_speed.x);
+            if (velocity.y > max_abs_speed.y) velocity.y = Mathf.Max(velocity.y * rate, max_abs_speed.y);
+            if (velocity.y < -max_abs_speed.y) velocity.y = Mathf.Min(velocity.y * rate, -max_abs_speed.y);
+            //velocity.x = Mathf.Clamp(velocity.x, -max_abs_speed.x, max_abs_speed.x);
+            //velocity.y = Mathf.Clamp(velocity.y, -max_abs_speed.y, max_abs_speed.y);
             //if (accel.x > 0f && velocity.x < max_abs_speed.x) velocity.x = Mathf.Min(velocity.x + accel.x, max_abs_speed.x);
             //else if(accel.x < 0f && velocity.x > -max_abs_speed.x) velocity.x = Mathf.Max(velocity.x + accel.x, -max_abs_speed.x);
 
