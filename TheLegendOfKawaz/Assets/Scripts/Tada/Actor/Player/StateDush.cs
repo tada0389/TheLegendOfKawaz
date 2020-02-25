@@ -5,7 +5,8 @@ using Actor.Player;
 using TadaLib;
 
 /// <summary>
-/// プレイヤーのアイドリング状態を管理するステート
+/// プレイヤーのダッシュ状態を管理するステート
+/// 地上ダッシュと空中ダッシュでステートわければよかった
 /// </summary>
 
 namespace Actor.Player
@@ -24,6 +25,8 @@ namespace Actor.Player
             [SerializeField]
             private float dush_speed_ = 0.4f;
 
+            private bool is_air_dash_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -32,6 +35,8 @@ namespace Actor.Player
                 // 待機アニメーション開始
                 data.animator.Play("Dash");
                 data.animator.SetBool("isDash", true);
+
+                is_air_dash_ = !data.IsGround;
 
                 data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
                 data.velocity.y = 0f;
@@ -42,7 +47,7 @@ namespace Actor.Player
             {
                 data.animator.SetBool("isDash", false);
                 // 急に落ちないように少し上昇する
-                if(!data.IsGround) data.velocity.y = 0.1f;
+                if(!data.IsGround) data.velocity.y += 0.1f;
             }
 
             // 毎フレーム呼ばれる関数
@@ -70,6 +75,7 @@ namespace Actor.Player
                     return;
                 }
 
+                if (!is_air_dash_) ActorUtils.ProcSpeed(ref data.velocity, new Vector2(0f, Accel.y), MaxAbsSpeed);
                 data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
                 //ActorUtils.ProcSpeed(ref data.velocity, new Vector2(Mathf.Sign(-data.velocity.x), 1f) * Accel, MaxAbsSpeed);
             }
