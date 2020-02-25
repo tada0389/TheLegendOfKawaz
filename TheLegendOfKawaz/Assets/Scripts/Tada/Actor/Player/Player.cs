@@ -169,9 +169,13 @@ namespace Actor.Player
 
         private const float kEpsilon = 0.001f;
 
+        private Timer timer_;
+
         // Start is called before the first frame update
         private void Start()
         {
+            timer_ = new Timer(0.3f);
+
             data_ = new Data
             {
                 animator = GetComponent<Animator>(),
@@ -215,9 +219,19 @@ namespace Actor.Player
             }
             if (ActionInput.GetButtonDown(ActionCode.Shot))
             {
+                if (data_.animator.GetLayerWeight(1) == 0)
+                {
+                    timer_.TimeReset();
+                    data_.animator.SetLayerWeight(1, 1);
+                }
+                else
+                {
+                    data_.animator.SetLayerWeight(1, 0);
+                }
                 float dir = (data_.Dir == eDir.Left)? -1f : 1f;
                 data_.bullet_spawer_.Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
             }
+            if (data_.animator.GetLayerWeight(1) == 1 && timer_.IsTimeout()) data_.animator.SetLayerWeight(1, 0);
         }
 
         // 座標を変更する 汚いから見ないで
