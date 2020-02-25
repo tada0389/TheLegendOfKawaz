@@ -71,7 +71,7 @@ public class ActionInput : MonoBehaviour
         DebugTextManager.Display(() => "Up:" + Instance.buttonValue[ButtonCode.Up].ToString() + "\n");
         DebugTextManager.Display(() => "UpDown:" + GetButtonDown(ButtonCode.Up).ToString() + "\n");
         DebugTextManager.Display(() => "UpUp:" + GetButtonUp(ButtonCode.Up).ToString() + "\n");
-        */
+        */        
     }
 
     private void Update()
@@ -94,7 +94,7 @@ public class ActionInput : MonoBehaviour
             oldActionValue[code] = actionValue[code];
             actionValue[code] = currentButtonValue(code);
             actionFlag[code] = false;
-        }
+        }        
     }
 
 
@@ -180,7 +180,7 @@ public class ActionInput : MonoBehaviour
         return Instance.axisValue[code];
     }
 
-    public static string GetActionSpriteCode(ActionCode code)
+    public static string GetSpriteCode(ActionCode code)
     {
         var gamePad = Gamepad.current;
         var joyStick = Joystick.current;
@@ -189,11 +189,11 @@ public class ActionInput : MonoBehaviour
             switch (code)
             {
                 case ActionCode.Jump:
-                    return "None";
+                    return "Zキー";
                 case ActionCode.Shot:
-                    return "None";
+                    return "Xキー";
                 case ActionCode.Dash:
-                    return "None";
+                    return "Cキー";
                 case ActionCode.Decide:
                     return "Zキー";
                 case ActionCode.Back:
@@ -205,17 +205,79 @@ public class ActionInput : MonoBehaviour
             switch (code)
             {
                 case ActionCode.Jump:
-                    return "None";
+                    return "<sprite=\"ps4\" index=26>";
                 case ActionCode.Shot:
-                    return "None";
+                    return "<sprite=\"ps4\" index=23>";
                 case ActionCode.Dash:
-                    return "None";
+                    return "<sprite=\"ps4\" index=15>";
                 case ActionCode.Decide:
                     return "<sprite=\"ps4\" index=25>";
                 case ActionCode.Back:
                     return "<sprite=\"ps4\" index=26>";
             }
         }        
+        return "None";
+    }
+
+    public static string GetSpriteCode(AxisCode code)
+    {
+        var gamePad = Gamepad.current;
+        var joyStick = Joystick.current;
+        if (gamePad == null && joyStick == null)
+        {
+            switch (code)
+            {
+                case AxisCode.Horizontal:
+                    return "←→";
+                case AxisCode.Vertical:
+                    return "↑↓";
+            }
+        }
+        else
+        {
+            switch (code)
+            {
+                case AxisCode.Horizontal:
+                    return "<sprite=\"ps4\" index=6>";
+                case AxisCode.Vertical:
+                    return "<sprite=\"ps4\" index=5>";
+            }
+        }
+        return "None";
+    }
+
+    public static string GetSpriteCode(ButtonCode code)
+    {
+        var gamePad = Gamepad.current;
+        var joyStick = Joystick.current;
+        if (gamePad == null && joyStick == null)
+        {
+            switch (code)
+            {
+                case ButtonCode.Up:
+                    return "↑";
+                case ButtonCode.Down:
+                    return "↓";
+                case ButtonCode.Left:
+                    return "→";
+                case ButtonCode.Right:
+                    return "←";
+            }
+        }
+        else
+        {
+            switch (code)
+            {
+                case ButtonCode.Up:
+                    return "<sprite=\"ps4\" index=2>";
+                case ButtonCode.Down:
+                    return "<sprite=\"ps4\" index=4>";
+                case ButtonCode.Left:
+                    return "<sprite=\"ps4\" index=1>";
+                case ButtonCode.Right:
+                    return "<sprite=\"ps4\" index=3>";
+            }
+        }
         return "None";
     }
 

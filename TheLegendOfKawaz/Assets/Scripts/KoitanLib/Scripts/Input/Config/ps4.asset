@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98d366eb0b5a4fb795a460c6fe47121, type: 3}
+  m_Name: ps4
+  m_EditorClassIdentifier: 
+  spriteName: ps4
+  dicedeIndex: 25
+  backIndex: 26
+  jumpIndex: 0
+  shotIndex: 0
+  dashIndex: 0

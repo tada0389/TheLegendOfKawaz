@@ -56,7 +56,7 @@ namespace Actor.Player
                 }
 
                 // ダッシュステート
-                if (ActionInput.GetButtonDown(ActionCode.Dash))
+                if (ActionInput.GetButtonDown(ActionCode.Dash) && data.CanDash())
                 {
                     ChangeState((int)eState.Dush);
                     return;
@@ -70,14 +70,14 @@ namespace Actor.Player
                 }
 
                 // 落下開始の始めはジャンプができる (イライラ防止のため)
-                if (Timer < can_jump_time && ActionInput.GetButtonDown(ActionCode.Jump))
+                if (PrevStateId == (int)eState.Walk && Timer < can_jump_time && ActionInput.GetButtonDown(ActionCode.Jump))
                 {
                     ChangeState((int)eState.Jump);
                     return;
                 }
 
                 // 壁に沿っている 
-                if (data.CanWallKick && data.IsLeft || data.IsRight)
+                if (data.CanWallKick && (data.IsLeft || data.IsRight))
                 {
                     ChangeState((int)eState.Wall);
                 }

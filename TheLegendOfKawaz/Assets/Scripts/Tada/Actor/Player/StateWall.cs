@@ -27,23 +27,24 @@ namespace Actor.Player
                 if (data == null) data = Parent.data_;
 
                 // アニメーション開始
-                data.animator.Play("Kabe");
+                data.animator.Play("Wall");
+                data.animator.SetBool("isWall", true);
 
-                // 壁に接しているほうを向く
+                // 壁に接していないほうを向く
                 if (data.IsRight)
                 {
-                    data.ChangeDirection(eDir.Right);
+                    data.ChangeDirection(eDir.Left);
                 }
                 else
                 {
-                    data.ChangeDirection(eDir.Left);
+                    data.ChangeDirection(eDir.Right);
                 }
             }
 
             // ステートが終了したときに呼ばれるメソッド
             public override void OnEnd()
             {
-
+                data.animator.SetBool("isWall", false);
             }
 
             // 毎フレーム呼ばれる関数
@@ -70,14 +71,14 @@ namespace Actor.Player
                     if (data.IsRight) data.velocity *= -1;
                     ChangeState((int)eState.Jump);
                     // 逆向きを向く
-                    data.ReverseFaceDirection();
+                    //data.ReverseFaceDirection();
                     return;
                 }
 
                 // ダッシュステート
                 if (ActionInput.GetButtonDown(ActionCode.Dash))
                 {
-                    data.ReverseFaceDirection();
+                    //data.ReverseFaceDirection();
                     ChangeState((int)eState.Dush);
                     return;
                 }

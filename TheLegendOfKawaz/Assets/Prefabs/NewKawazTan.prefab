@@ -406,10 +406,10 @@ MonoBehaviour:
     Accel: {x: 0, y: -0.02}
     kick_power_: {x: 0.13, y: 0.24}
   dush_state_:
-    MaxAbsSpeed: {x: 0.5, y: 0}
-    Accel: {x: 0, y: 0}
-    dush_time_: 1
-    dush_speed_: 0.4
+    MaxAbsSpeed: {x: 0.5, y: 0.2}
+    Accel: {x: 0, y: -0.005}
+    dush_time_: 0.25
+    dush_speed_: 0.27
 --- !u!1 &2131037086636951405
 GameObject:
   m_ObjectHideFlags: 0
