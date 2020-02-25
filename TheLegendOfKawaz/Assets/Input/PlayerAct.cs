@@ -49,6 +49,22 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Decide"",
+                    ""type"": ""Button"",
+                    ""id"": ""5ab6348d-1468-4856-935d-5a800acb5a45"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""c2a5d623-bd5f-415f-a5ce-5904551d750d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -238,6 +254,50 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1dec7ab-cbfc-40c2-9ba2-4d2d98f90250"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59f25310-0ca2-46a0-a72b-ac62cd3c7dae"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""370f712d-2668-4484-99a0-3268f35e4bcd"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64c189d0-df95-4cf6-a702-02ece79334bf"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -250,6 +310,8 @@ public class @PlayerAct : IInputActionCollection, IDisposable
         m_PlatformAction_Jump = m_PlatformAction.FindAction("Jump", throwIfNotFound: true);
         m_PlatformAction_Shot = m_PlatformAction.FindAction("Shot", throwIfNotFound: true);
         m_PlatformAction_Dash = m_PlatformAction.FindAction("Dash", throwIfNotFound: true);
+        m_PlatformAction_Decide = m_PlatformAction.FindAction("Decide", throwIfNotFound: true);
+        m_PlatformAction_Back = m_PlatformAction.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -303,6 +365,8 @@ public class @PlayerAct : IInputActionCollection, IDisposable
     private readonly InputAction m_PlatformAction_Jump;
     private readonly InputAction m_PlatformAction_Shot;
     private readonly InputAction m_PlatformAction_Dash;
+    private readonly InputAction m_PlatformAction_Decide;
+    private readonly InputAction m_PlatformAction_Back;
     public struct PlatformActionActions
     {
         private @PlayerAct m_Wrapper;
@@ -311,6 +375,8 @@ public class @PlayerAct : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_PlatformAction_Jump;
         public InputAction @Shot => m_Wrapper.m_PlatformAction_Shot;
         public InputAction @Dash => m_Wrapper.m_PlatformAction_Dash;
+        public InputAction @Decide => m_Wrapper.m_PlatformAction_Decide;
+        public InputAction @Back => m_Wrapper.m_PlatformAction_Back;
         public InputActionMap Get() { return m_Wrapper.m_PlatformAction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -332,6 +398,12 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                 @Dash.started -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnDash;
+                @Decide.started -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnDecide;
+                @Decide.performed -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnDecide;
+                @Decide.canceled -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnDecide;
+                @Back.started -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnBack;
+                @Back.performed -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnBack;
+                @Back.canceled -= m_Wrapper.m_PlatformActionActionsCallbackInterface.OnBack;
             }
             m_Wrapper.m_PlatformActionActionsCallbackInterface = instance;
             if (instance != null)
@@ -348,6 +420,12 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @Decide.started += instance.OnDecide;
+                @Decide.performed += instance.OnDecide;
+                @Decide.canceled += instance.OnDecide;
+                @Back.started += instance.OnBack;
+                @Back.performed += instance.OnBack;
+                @Back.canceled += instance.OnBack;
             }
         }
     }
@@ -358,5 +436,7 @@ public class @PlayerAct : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnShot(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnDecide(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }

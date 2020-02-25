@@ -155,6 +155,10 @@ public class ActionInput : MonoBehaviour
                 return input.PlatformAction.Shot.ReadValue<float>() > 0;
             case ActionCode.Dash:
                 return input.PlatformAction.Dash.ReadValue<float>() > 0;
+            case ActionCode.Decide:
+                return input.PlatformAction.Decide.ReadValue<float>() > 0;
+            case ActionCode.Back:
+                return input.PlatformAction.Back.ReadValue<float>() > 0;
         }
         return false;
     }
@@ -174,6 +178,45 @@ public class ActionInput : MonoBehaviour
     public static float GetAxis(AxisCode code)
     {
         return Instance.axisValue[code];
+    }
+
+    public static string GetActionSpriteCode(ActionCode code)
+    {
+        var gamePad = Gamepad.current;
+        var joyStick = Joystick.current;
+        if (gamePad == null && joyStick == null)
+        {
+            switch (code)
+            {
+                case ActionCode.Jump:
+                    return "None";
+                case ActionCode.Shot:
+                    return "None";
+                case ActionCode.Dash:
+                    return "None";
+                case ActionCode.Decide:
+                    return "Zキー";
+                case ActionCode.Back:
+                    return "Xキー";
+            }
+        }
+        else
+        {
+            switch (code)
+            {
+                case ActionCode.Jump:
+                    return "None";
+                case ActionCode.Shot:
+                    return "None";
+                case ActionCode.Dash:
+                    return "None";
+                case ActionCode.Decide:
+                    return "<sprite=\"ps4\" index=25>";
+                case ActionCode.Back:
+                    return "<sprite=\"ps4\" index=26>";
+            }
+        }        
+        return "None";
     }
 
     /*
@@ -208,5 +251,7 @@ public enum ActionCode
 {
     Jump = 0,
     Shot = 1,
-    Dash = 2
+    Dash = 2,
+    Decide,
+    Back
 }

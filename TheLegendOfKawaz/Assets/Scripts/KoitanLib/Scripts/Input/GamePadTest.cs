@@ -8,19 +8,20 @@ public class GamePadTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DebugTextManager.Display(() => "InputDevice:\n" + GetInputDevicesName());
+        DebugTextManager.Display(() => "Decide:" + ActionInput.GetActionSpriteCode(ActionCode.Decide) + "\n");
+        DebugTextManager.Display(() => "Back:" + ActionInput.GetActionSpriteCode(ActionCode.Back) + "\n");
         //DebugTextManager.Display(() => "GamePad:\n" + GetGamePadName());
     }
 
     // Update is called once per frame
     void Update()
     {
-        var gamepad = Gamepad.current;        
+        var gamepad = Gamepad.current;
         //　ゲームパッドが接続されていなければこれ以降
         if (gamepad == null)
         {
             return;
-        }       
+        }
     }
 
     string GetGamePadName()
@@ -38,10 +39,12 @@ public class GamePadTest : MonoBehaviour
     {
         string str = string.Empty;
         var devicesArray = InputSystem.devices;
+        /*
         for (int i = 0; i < devicesArray.Count; i++)
         {
             str += i.ToString() + ":" + devicesArray[i].name + "\n";
         }
+        */
         foreach (InputDevice device in devicesArray)
         {
             str += device.deviceId + ":" + device.displayName + "\n";
