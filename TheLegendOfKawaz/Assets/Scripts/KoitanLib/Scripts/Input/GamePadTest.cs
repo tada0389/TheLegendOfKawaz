@@ -38,10 +38,12 @@ public class GamePadTest : MonoBehaviour
     {
         string str = string.Empty;
         var devicesArray = InputSystem.devices;
+        /*
         for (int i = 0; i < devicesArray.Count; i++)
         {
             str += i.ToString() + ":" + devicesArray[i].name + "\n";
         }
+        */
         foreach (InputDevice device in devicesArray)
         {
             str += device.deviceId + ":" + device.displayName + "\n";
