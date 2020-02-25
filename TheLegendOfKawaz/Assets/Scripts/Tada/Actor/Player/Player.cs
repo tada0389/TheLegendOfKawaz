@@ -115,7 +115,6 @@ namespace Actor.Player
         // ダッシュできるか
         public bool CanDash()
         {
-            Debug.Log(Time.time - prev_dash_time_);
             if (is_dashed_ || (IsGround && Time.time - prev_dash_time_ < 0.5f)) return false;
             if(!IsGround) is_dashed_ = true;
             prev_dash_time_ = Time.time;

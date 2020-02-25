@@ -385,7 +385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idle_state_:
     MaxAbsSpeed: {x: 0, y: 0}
-    Accel: {x: 0.035, y: 0}
+    Accel: {x: 0, y: 0}
   walk_state_:
     MaxAbsSpeed: {x: 0.16, y: 0}
     Accel: {x: 0.01, y: 0}
