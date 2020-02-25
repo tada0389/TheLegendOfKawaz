@@ -8,9 +8,14 @@ public class GamePadTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DebugTextManager.Display(() => "Decide:" + ActionInput.GetActionSpriteCode(ActionCode.Decide) + "\n");
-        DebugTextManager.Display(() => "Back:" + ActionInput.GetActionSpriteCode(ActionCode.Back) + "\n");
-        //DebugTextManager.Display(() => "GamePad:\n" + GetGamePadName());
+        DebugTextManager.Display(() => "Decide:" + ActionInput.GetSpriteCode(ActionCode.Decide) + "\n");
+        DebugTextManager.Display(() => "Back:" + ActionInput.GetSpriteCode(ActionCode.Back) + "\n");
+        DebugTextManager.Display(() => "Jump:" + ActionInput.GetSpriteCode(ActionCode.Jump) + "\n");
+        DebugTextManager.Display(() => "Shot:" + ActionInput.GetSpriteCode(ActionCode.Shot) + "\n");
+        DebugTextManager.Display(() => "Dash:" + ActionInput.GetSpriteCode(ActionCode.Dash) + "\n");
+        DebugTextManager.Display(() => "Horizontal:" + ActionInput.GetSpriteCode(AxisCode.Horizontal) + "\n");
+        DebugTextManager.Display(() => "Down:" + ActionInput.GetSpriteCode(ButtonCode.Down) + "\n");
+        //DebugTextManager.Display(() => "GamePad:\n" + GetInputDevicesName());
     }
 
     // Update is called once per frame
@@ -39,15 +44,22 @@ public class GamePadTest : MonoBehaviour
     {
         string str = string.Empty;
         var devicesArray = InputSystem.devices;
+        var gamePadChildren = Gamepad.current.allControls;
         /*
         for (int i = 0; i < devicesArray.Count; i++)
         {
             str += i.ToString() + ":" + devicesArray[i].name + "\n";
         }
         */
+        /*
         foreach (InputDevice device in devicesArray)
         {
             str += device.deviceId + ":" + device.displayName + "\n";
+        }
+        */
+        for (int i = 0; i < gamePadChildren.Count; i++)
+        {
+            str += i.ToString() + ":" + gamePadChildren[i].name + "\n";
         }
         return str;
     }
