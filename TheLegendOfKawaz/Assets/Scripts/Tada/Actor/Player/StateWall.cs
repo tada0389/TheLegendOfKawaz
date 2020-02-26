@@ -70,6 +70,8 @@ namespace Actor.Player
                     data.velocity = kick_power_;
                     if (data.IsRight) data.velocity *= -1;
                     ChangeState((int)eState.Jump);
+                    // ダッシュ回数リセット
+                    data.ResetDash();
                     // 逆向きを向く
                     //data.ReverseFaceDirection();
                     return;

@@ -190,9 +190,24 @@ namespace Actor.Player
 
         private Timer timer_;
 
+        // 初期スキル
+        #region debug
+        [System.Serializable]
+        private class InitialSkill
+        {
+            public eSkill type_ = eSkill.WallKick;
+            public int level_ = 0;
+        }
+        [SerializeField]
+        private InitialSkill[] demo_skills_;
+        #endregion
+
         // Start is called before the first frame update
         private void Start()
         {
+            // デバッグ
+            GetSkillSet();
+
             timer_ = new Timer(0.3f);
 
             data_ = new Data
@@ -239,19 +254,26 @@ namespace Actor.Player
             }
             if (ActionInput.GetButtonDown(ActionCode.Shot))
             {
-                if (data_.animator.GetLayerWeight(1) == 0)
-                {
-                    timer_.TimeReset();
-                    data_.animator.SetLayerWeight(1, 1);
-                }
-                else
-                {
-                    data_.animator.SetLayerWeight(1, 0);
-                }
-                float dir = (data_.Dir == eDir.Left)? -1f : 1f;
-                data_.bullet_spawer_.Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
+                Shot();
             }
+            // ショット後のアニメーション変更
             if (data_.animator.GetLayerWeight(1) == 1 && timer_.IsTimeout()) data_.animator.SetLayerWeight(1, 0);
+        }
+
+        // 弾を撃つ
+        private void Shot()
+        {
+            if (data_.animator.GetLayerWeight(1) == 0)
+            {
+                timer_.TimeReset();
+                data_.animator.SetLayerWeight(1, 1);
+            }
+            else
+            {
+                data_.animator.SetLayerWeight(1, 0);
+            }
+            float dir = (data_.Dir == eDir.Left) ? -1f : 1f;
+            data_.bullet_spawer_.Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
         }
 
         // 座標を変更する 汚いから見ないで
@@ -411,6 +433,19 @@ namespace Actor.Player
             RaycastHit2D hit = Physics2D.Linecast(from, to, layer_mask);
             Debug.DrawLine(from, (hit) ? to : to);
             return hit;
+        }
+
+        // デバッグで最初から指定したスキルを持っている
+        private void GetSkillSet()
+        {
+            SkillManager instance = SkillManager.Instance;
+            foreach(InitialSkill skill in demo_skills_)
+            {
+                for(int i = 0; i < skill.level_; ++i)
+                {
+                    instance.LevelUp((int)skill.type_);
+                }
+            }
         }
 
         public override string ToString()

@@ -268,6 +268,11 @@ namespace SkillItem
                     Decide();
                     return;
                 }
+                if (ActionInput.GetButtonDown(ActionCode.Back))
+                {
+                    ChangeState((int)eState.Select);
+                    return;
+                }
 
                 if(ActionInput.GetButtonDown(ButtonCode.Left) || ActionInput.GetButtonDown(ButtonCode.Right))
                 {

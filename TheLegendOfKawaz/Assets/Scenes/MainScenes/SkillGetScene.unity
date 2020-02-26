@@ -2428,8 +2428,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 562e523eb688aa541b8d2922537d39fd, type: 3}
   - {fileID: 21300000, guid: e20ee3d9364780a4482c63e077cd9959, type: 3}
   - {fileID: 21300000, guid: 562e523eb688aa541b8d2922537d39fd, type: 3}
-  - {fileID: 21300000, guid: e20ee3d9364780a4482c63e077cd9959, type: 3}
-  - {fileID: 21300000, guid: 562e523eb688aa541b8d2922537d39fd, type: 3}
+  - {fileID: 21300000, guid: 6f06d7a98b3334444b71683127a7b297, type: 3}
   skill_initial_pos_: {x: -700, y: 200, z: 0}
   width_intervel_: 340
   height_interval_: 340
