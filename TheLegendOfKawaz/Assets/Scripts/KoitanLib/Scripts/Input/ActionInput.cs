@@ -159,6 +159,8 @@ public class ActionInput : MonoBehaviour
                 return input.PlatformAction.Decide.ReadValue<float>() > 0;
             case ActionCode.Back:
                 return input.PlatformAction.Back.ReadValue<float>() > 0;
+            case ActionCode.Pause:
+                return input.PlatformAction.Pause.ReadValue<float>() > 0;
         }
         return false;
     }
@@ -198,6 +200,8 @@ public class ActionInput : MonoBehaviour
                     return "Zキー";
                 case ActionCode.Back:
                     return "Xキー";
+                case ActionCode.Pause:
+                    return "Pキー";
             }
         }
         else
@@ -214,6 +218,8 @@ public class ActionInput : MonoBehaviour
                     return "<sprite=\"ps4\" index=25>";
                 case ActionCode.Back:
                     return "<sprite=\"ps4\" index=26>";
+                case ActionCode.Pause:
+                    return "<sprite=\"ps4\" index=28>";
             }
         }        
         return "None";
@@ -315,5 +321,6 @@ public enum ActionCode
     Shot = 1,
     Dash = 2,
     Decide,
-    Back
+    Back,
+    Pause
 }
