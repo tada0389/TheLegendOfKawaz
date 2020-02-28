@@ -30,7 +30,7 @@ public class BossDoor : MonoBehaviour
             //DOTweenでちょっと大きくする
             transform.DOScale(new Vector2(1.5f, 1.5f), 0.3f);
             //決定ボタン押したらシーン遷移
-            if (ActionInput.GetButtonDown(ActionCode.Decide))
+            if (ActionInput.GetButtonDown(ButtonCode.Up))
             {
                 bossFlag.bossRoomNum = doorNum;
                 Debug.Log("tag:" + col.tag + "/nGetButtonDown(ActionCode.Shot):" + ActionInput.GetButtonDown(ActionCode.Shot));
