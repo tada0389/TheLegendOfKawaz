@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+#if UNITY_EDITOR
+using UnityEditor;
+# endif
 
 public class GamePadTest : MonoBehaviour
 {
@@ -21,6 +24,13 @@ public class GamePadTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ポーズ
+#if UNITY_EDITOR
+        if (ActionInput.GetButtonDown(ActionCode.Pause))
+        {
+            UnityEditor.EditorApplication.isPaused = true;
+        }
+#endif
         var gamepad = Gamepad.current;
         //　ゲームパッドが接続されていなければこれ以降
         if (gamepad == null)
@@ -45,12 +55,12 @@ public class GamePadTest : MonoBehaviour
         string str = string.Empty;
         var devicesArray = InputSystem.devices;
         //var gamePadChildren = Gamepad.current.allControls;
-        
+
         for (int i = 0; i < devicesArray.Count; i++)
         {
             str += i.ToString() + ":" + devicesArray[i].name + "\n";
         }
-        
+
         /*
         foreach (InputDevice device in devicesArray)
         {
