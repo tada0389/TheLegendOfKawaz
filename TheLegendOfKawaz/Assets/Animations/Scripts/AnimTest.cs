@@ -13,9 +13,18 @@ public class AnimTest : MonoBehaviour
     [SerializeField]
     ParticleSystem shotEff;
     [SerializeField]
-    ParticleSystem hitEff;
+    ParticleSystem chargeShotEff;
     [SerializeField]
     GameObject tama;
+    [SerializeField]
+    GameObject chargeTama;
+    [SerializeField]
+    GameObject chargeStartEff;
+    [SerializeField]
+    GameObject chargeEndEff;
+    private float chargeTime;
+    [SerializeField]
+    private float chargeEndTime;
 
     [SerializeField]
     private float vxMax = 2;
@@ -42,6 +51,8 @@ public class AnimTest : MonoBehaviour
     [SerializeField]
     int mameMaxCount = 3;
     List<mameTest> mameList = new List<mameTest>();
+    [SerializeField]
+    private mameTest chargeMame;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +78,45 @@ public class AnimTest : MonoBehaviour
                 m.Init(shotEff.transform.position, Vector3.right * dir);
             }
         }
+
+        if (ActionInput.GetButton(ActionCode.Shot))
+        {
+            chargeTime += Time.deltaTime;
+        }
+
+        if (ActionInput.GetButtonUp(ActionCode.Shot))
+        {
+            if (chargeTime >= chargeEndTime)
+            {
+                animator.SetLayerWeight(1, 1);
+                shotTime = 1;
+                animator.Play("ChargeShot", 1, 0);
+                chargeShotEff.Play();
+                if (!chargeMame.gameObject.activeSelf)
+                {
+                    chargeMame.gameObject.SetActive(true);
+                    chargeMame.Init(chargeShotEff.transform.position, Vector3.right * dir);
+                }
+            }
+            chargeTime = 0;
+        }
+        if (chargeTime < chargeEndTime / 2)
+        {
+            chargeStartEff.SetActive(false);
+            chargeEndEff.SetActive(false);
+        }
+        else if (chargeTime < chargeEndTime)
+        {
+            chargeStartEff.SetActive(true);
+            chargeEndEff.SetActive(false);
+        }
+        else
+        {
+            chargeStartEff.SetActive(false);
+            chargeEndEff.SetActive(true);
+        }
+
+
 
         if (shotTime > 0)
         {
