@@ -2376,6 +2376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2099673088}
   - component: {fileID: 2099673089}
+  - component: {fileID: 2099673090}
   m_Layer: 5
   m_Name: SkillItemManager
   m_TagString: Untagged
@@ -2421,13 +2422,13 @@ MonoBehaviour:
     type: 3}
   skill_icons_:
   - {fileID: 21300000, guid: e20ee3d9364780a4482c63e077cd9959, type: 3}
+  - {fileID: 21300000, guid: e94b3be91e9793642914ddf614445dcd, type: 3}
   - {fileID: 21300000, guid: 562e523eb688aa541b8d2922537d39fd, type: 3}
-  - {fileID: 21300000, guid: e20ee3d9364780a4482c63e077cd9959, type: 3}
-  - {fileID: 21300000, guid: 562e523eb688aa541b8d2922537d39fd, type: 3}
-  - {fileID: 21300000, guid: e20ee3d9364780a4482c63e077cd9959, type: 3}
-  - {fileID: 21300000, guid: 562e523eb688aa541b8d2922537d39fd, type: 3}
-  - {fileID: 21300000, guid: e20ee3d9364780a4482c63e077cd9959, type: 3}
-  - {fileID: 21300000, guid: 562e523eb688aa541b8d2922537d39fd, type: 3}
+  - {fileID: 21300000, guid: abd35b09ca1053e449319ee4b35d2eff, type: 3}
+  - {fileID: 21300000, guid: 01d9d69d74976b64e889d603ad16f22c, type: 3}
+  - {fileID: 21300000, guid: d8f2534199a2d8f4d98180770f85cd7e, type: 3}
+  - {fileID: 21300000, guid: 56479563467282849b52f4b4dfc2acab, type: 3}
+  - {fileID: 21300000, guid: 0d797948ee61776408d6d2b824735395, type: 3}
   - {fileID: 21300000, guid: 6f06d7a98b3334444b71683127a7b297, type: 3}
   skill_initial_pos_: {x: -700, y: 200, z: 0}
   width_intervel_: 340
@@ -2451,3 +2452,102 @@ MonoBehaviour:
     icon_back_: {fileID: 1808934325}
     levelup_ease_: 15
     levelup_message_time_: 0.6
+  decide_se_: {fileID: 8300000, guid: fe7bfd2f2b7fa4428b424dae032ac536, type: 3}
+  cancel_se_: {fileID: 8300000, guid: 5b97853db0a6a4db1a84d426db6ba52d, type: 3}
+  buy_se_: {fileID: 8300000, guid: a81db186b2e9840c19e4907c3c799158, type: 3}
+--- !u!82 &2099673090
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099673087}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
