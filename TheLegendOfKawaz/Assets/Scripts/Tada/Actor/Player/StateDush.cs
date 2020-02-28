@@ -27,6 +27,9 @@ namespace Actor.Player
 
             private bool is_air_dash_;
 
+            [SerializeField]
+            private ParticleSystem dash_effect_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -41,6 +44,8 @@ namespace Actor.Player
                 data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
                 data.velocity.y = 0f;
                 data.velocity = new Vector2(0f, 0f);
+
+                ActorUtils.CreateEffect(dash_effect_, data.transform.position, new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f), 0.5f);
             }
 
             // ステートが終了したときに呼ばれるメソッド

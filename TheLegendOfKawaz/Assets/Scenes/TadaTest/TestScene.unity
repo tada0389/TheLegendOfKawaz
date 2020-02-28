@@ -5498,6 +5498,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: wall_state_.kick_effect_
+      value: 
+      objectReference: {fileID: 7814694034277984977, guid: 580613f80b626f04893c2a321c1392b7,
+        type: 3}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: dush_state_.dash_effect_
+      value: 
+      objectReference: {fileID: 3953492163206612339, guid: 6449bd64b924c4a4baa162c2f7788dc2,
+        type: 3}
     - target: {fileID: 2131037087285827298, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_Mesh

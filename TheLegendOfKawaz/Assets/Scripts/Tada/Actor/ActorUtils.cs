@@ -28,5 +28,15 @@ namespace Actor
             //if (accel.y > 0f && velocity.y < max_abs_speed.y) velocity.y = Mathf.Min(velocity.y + accel.y, max_abs_speed.y);
             //else if (accel.y < 0f && velocity.y > -max_abs_speed.y) velocity.y = Mathf.Max(velocity.y + accel.y, -max_abs_speed.y);
         }
+
+        // エフェクトを生成する オブジェクトプール使いたいので仮
+        public static void CreateEffect(ParticleSystem effect, Vector2 pos, Vector2 dir, float life_time)
+        {
+            var eff = Instantiate(effect, pos, Quaternion.identity);
+            eff.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir.x) * 90f - 90f, 0f);
+            //eff.gameObject.SetActive(true);
+            eff.Play();
+            Destroy(eff.gameObject, life_time);
+        }
     }
 }

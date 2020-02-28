@@ -21,6 +21,9 @@ namespace Actor.Player
             [SerializeField]
             private Vector2 kick_power_ = new Vector2(0.2f, 0.35f);
 
+            [SerializeField]
+            private ParticleSystem kick_effect_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -73,6 +76,8 @@ namespace Actor.Player
                 // 壁ジャンプ
                 if (ActionInput.GetButtonDown(ActionCode.Jump))
                 {
+                    ActorUtils.CreateEffect(kick_effect_, data.transform.position + new Vector3((data.Dir == eDir.Left)? 1.0f : -1.0f, 0f, 0f), new Vector2((data.Dir == eDir.Left)? -1.0f : 1.0f, 0f), 0.5f);
+
                     data.velocity = kick_power_;
                     if (data.IsRight) data.velocity *= -1;
                     ChangeState((int)eState.Jump);

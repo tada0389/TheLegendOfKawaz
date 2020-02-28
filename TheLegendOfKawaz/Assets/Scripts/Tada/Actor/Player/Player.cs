@@ -40,6 +40,8 @@ namespace Actor.Player
         // プレイヤーの物理演算
         private TadaRigidbody trb;
 
+        public Transform transform;
+
         // 体力
         public int HP { private set; get; }
         public int MaxHP { private set; get; }
@@ -91,6 +93,7 @@ namespace Actor.Player
         public Data(Player body)
         {
             Dir = eDir.Right;
+            transform = body.transform;
 
             animator = body.GetComponent<Animator>();
             bullet_spawners_ = body.GetComponents<BulletSpawner>();
