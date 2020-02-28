@@ -92,7 +92,8 @@ namespace Actor.Player
                 if (data.velocity.y < 0.15f) accel_rate_y = 0.5f;
                 ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed);
 
-                if (Timer < jump_input_time && ActionInput.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
+                // ある程度の時間はジャンプボタン長押しでジャンプ飛距離を伸ばせる
+                if (Timer < jump_input_time && !data.IsHead && ActionInput.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
             }
         }
     }
