@@ -50,6 +50,12 @@ namespace Actor.Player
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
+                // 壁に接しているほうを押さなかったら落下する
+                if(!(data.IsLeft && ActionInput.GetButton(ButtonCode.Left) || data.IsRight && ActionInput.GetButton(ButtonCode.Right))){
+                    ChangeState((int)eState.Fall);
+                    return;
+                }
+
                 // 接地したらステート変更
                 if (data.IsGround)
                 {

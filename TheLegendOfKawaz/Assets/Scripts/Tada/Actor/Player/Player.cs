@@ -164,6 +164,7 @@ namespace Actor.Player
             Fall, // 落下中のステート(ジャンプでの落下はこれじゃない)
             Wall, // 壁に密着しているステート
             Dush, // ダッシュしているステート
+            Damage, // ダメージを受けたときのステート
         }
 
         // ステートマシン
@@ -188,6 +189,8 @@ namespace Actor.Player
         private StateWall wall_state_;
         [SerializeField]
         private StateDush dush_state_;
+        [SerializeField]
+        private StateDamage damage_state_;
 #endregion
 
         // 当たり判定の範囲
@@ -236,6 +239,7 @@ namespace Actor.Player
             state_machine_.AddState((int)eState.Fall, fall_state_);
             state_machine_.AddState((int)eState.Wall, wall_state_);
             state_machine_.AddState((int)eState.Dush, dush_state_);
+            state_machine_.AddState((int)eState.Damage, damage_state_);
 
             // 始めのステートを設定
             state_machine_.SetInitialState((int)eState.Fall);
@@ -250,6 +254,11 @@ namespace Actor.Player
             // 接地しているかどうかなどで，状態を変更する
             RefectCollide();
 
+            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
+            {
+                state_machine_.ChangeState((int)eState.Damage);
+            }
+
             // 状態を更新する
             state_machine_.Proc();
 
@@ -260,9 +269,10 @@ namespace Actor.Player
             data_.ReflectVelocity();
 
             // デバッグ
-            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.V].wasPressedThisFrame){
+            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame){
                 UnityEngine.SceneManagement.SceneManager.LoadScene("SkillGetScene");
             }
+
 
             // 弾を撃つかどうか決める
             CheckShot();
@@ -302,6 +312,9 @@ namespace Actor.Player
         // 弾を撃つ
         private void Shot(bool is_charged)
         {
+            float dir = (data_.Dir == eDir.Left) ? -1f : 1f;
+            bool can_shot = data_.bullet_spawners_[(is_charged) ? 1 : 0].Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
+            if (!can_shot) return;
             if (data_.animator.GetLayerWeight(1) == 0)
             {
                 shot_anim_timer_.TimeReset();
@@ -313,9 +326,6 @@ namespace Actor.Player
             }
             if (is_charged) data_.animator.Play("ChargeShot", 1, 0);
             else data_.animator.Play("Shot", 1, 0);
-
-            float dir = (data_.Dir == eDir.Left) ? -1f : 1f;
-            data_.bullet_spawners_[(is_charged)? 1 : 0].Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
         }
 
         // コライド情報などで状態を更新する

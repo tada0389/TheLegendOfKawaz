@@ -77,7 +77,8 @@ namespace Actor.Player
                 }
 
                 // 壁に沿っている 
-                if (data.CanWallKick && (data.IsLeft || data.IsRight))
+                if (data.CanWallKick &&
+                    ((data.IsLeft && ActionInput.GetButton(ButtonCode.Left)) || (data.IsRight && ActionInput.GetButton(ButtonCode.Right))))
                 {
                     ChangeState((int)eState.Wall);
                 }
