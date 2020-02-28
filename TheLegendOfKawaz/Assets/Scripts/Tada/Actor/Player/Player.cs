@@ -53,6 +53,8 @@ namespace Actor.Player
         public bool CanAutoHeal { private set; get; }
         // 弾の数
         public int MaxShotNum { private set; get; }
+        // チャージ完了時間
+        public float ChargeEndTime { private set; get; }
 
         // 空中ジャンプの最大回数
         public int AirJumpNumMax { private set; get; }
@@ -80,8 +82,8 @@ namespace Actor.Player
 
         // アニメーター
         public Animator animator;
-        // バレット
-        public BulletSpawner bullet_spawer_;
+        // バレット 0が通常，1がチャージ
+        public BulletSpawner[] bullet_spawners_;
 
         // それぞれのステートのデータ
 
@@ -91,7 +93,7 @@ namespace Actor.Player
             Dir = eDir.Right;
 
             animator = body.GetComponent<Animator>();
-            bullet_spawer_ = body.GetComponent<BulletSpawner>();
+            bullet_spawners_ = body.GetComponents<BulletSpawner>();
             trb = body.GetComponent<TadaRigidbody>();
 
             var Skills = SkillManager.Instance.Skills;
@@ -103,12 +105,14 @@ namespace Actor.Player
             CanWallKick = Skills[(int)eSkill.WallKick].Value != 0;
             CanAutoHeal = Skills[(int)eSkill.AutoHeal].Value != 0;
             MaxShotNum = Skills[(int)eSkill.ShotNum].Value;
+            ChargeEndTime = 2.0f;
             AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].Value;
             air_jump_num_ = AirJumpNumMax;
             is_dashed_ = false;
             prev_dash_time_ = 0f;
 
-            bullet_spawer_.Init(MaxShotNum);
+            bullet_spawners_[0].Init(MaxShotNum);
+            bullet_spawners_[1].Init(2);
         }
 
         // ダッシュできるか
@@ -191,7 +195,14 @@ namespace Actor.Player
 
         private const float kEpsilon = 0.001f;
 
-        private Timer timer_;
+        private Timer shot_anim_timer_;
+        private float charge_timer_;
+
+        // もうしょうがない！
+        [SerializeField]
+        private GameObject charge_shot_pre_;
+        [SerializeField]
+        private GameObject charge_shot_end_;
 
         // 初期スキル
         #region debug
@@ -211,7 +222,7 @@ namespace Actor.Player
             // デバッグ
             GetSkillSet();
 
-            timer_ = new Timer(0.3f);
+            shot_anim_timer_ = new Timer(0.3f);
 
             data_ = new Data(this);
 
@@ -247,33 +258,64 @@ namespace Actor.Player
 
             // 速度に応じて移動する
             data_.ReflectVelocity();
-            //Move();
 
+            // デバッグ
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.V].wasPressedThisFrame){
                 UnityEngine.SceneManagement.SceneManager.LoadScene("SkillGetScene");
             }
+
+            // 弾を撃つかどうか決める
+            CheckShot();
+        }
+
+        // ショットするかをチェックする
+        private void CheckShot()
+        {
             if (ActionInput.GetButtonDown(ActionCode.Shot))
             {
-                Shot();
+                charge_timer_ = 0.0f;
             }
+            else if (ActionInput.GetButton(ActionCode.Shot))
+            {
+                charge_timer_ += Time.deltaTime;
+                if(charge_timer_ >= data_.ChargeEndTime / 4f && !charge_shot_pre_.activeSelf)
+                {
+                    charge_shot_pre_.SetActive(true);
+                }
+                if(charge_timer_ >= data_.ChargeEndTime && !charge_shot_end_.activeSelf)
+                {
+                    charge_shot_end_.SetActive(true);
+                }
+            }
+
+            if (ActionInput.GetButtonUp(ActionCode.Shot))
+            {
+                Shot(charge_timer_ >= data_.ChargeEndTime);
+                charge_shot_pre_.SetActive(false);
+                charge_shot_end_.SetActive(false);
+            }
+
             // ショット後のアニメーション変更
-            if (data_.animator.GetLayerWeight(1) == 1 && timer_.IsTimeout()) data_.animator.SetLayerWeight(1, 0);
+            if (data_.animator.GetLayerWeight(1) == 1 && shot_anim_timer_.IsTimeout()) data_.animator.SetLayerWeight(1, 0);
         }
 
         // 弾を撃つ
-        private void Shot()
+        private void Shot(bool is_charged)
         {
             if (data_.animator.GetLayerWeight(1) == 0)
             {
-                timer_.TimeReset();
+                shot_anim_timer_.TimeReset();
                 data_.animator.SetLayerWeight(1, 1);
             }
             else
             {
                 data_.animator.SetLayerWeight(1, 0);
             }
+            if (is_charged) data_.animator.Play("ChargeShot", 1, 0);
+            else data_.animator.Play("Shot", 1, 0);
+
             float dir = (data_.Dir == eDir.Left) ? -1f : 1f;
-            data_.bullet_spawer_.Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
+            data_.bullet_spawners_[(is_charged)? 1 : 0].Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
         }
 
         // コライド情報などで状態を更新する
@@ -286,142 +328,6 @@ namespace Actor.Player
                 data_.ResetArialJump();
                 data_.ResetDash();
             }
-        }
-
-        // 座標を変更する 汚いから見ないで
-        private void Move()
-        {
-            //// 壁にめり込まないように移動する x軸だけ 坂道にまったく対応できてない
-
-            //Vector2 scale = transform.localScale;
-
-            //// 当たり判定(矩形)のサイズと中心
-            //Vector2 offset = hit_box_.offset * scale;
-            //Vector2 half_size = hit_box_.size * scale * 0.5f;
-
-            //// 移動量
-            //Vector2 d = data_.InitSpeed * data_.velocity * Time.deltaTime * 60f;
-
-            //// レイキャストを飛ばす
-            //Vector2 origin = (Vector2)transform.position + offset;
-
-            //int mask = 1 << 8 | 1 << 9;
-
-            //data_.SetIsHead(false);
-            //data_.SetIsRight(false);
-            //data_.SetIsLeft(false);
-
-            //// まずはx軸方向
-            //if (d.x < 0)
-            //{
-            //    RaycastHit2D hit_left = Physics2D.BoxCast(origin, new Vector2(half_size.x, half_size.y * 0.6f), 0f, Vector2.left,
-            //        -d.x + half_size.x / 2f, mask);
-            //    Debug.DrawLine(origin, origin - new Vector2(half_size.x - d.x, 0f), Color.blue);
-            //    if (hit_left)
-            //    {
-            //        d = new Vector2(-hit_left.distance + half_size.x / 2f, d.y);
-            //        //Debug.Log("左方向あたり");
-            //    }
-            //    if (hit_left) data_.SetIsLeft(true);
-
-            //}
-            //else if (d.x > 0)
-            //{
-            //    RaycastHit2D hit_right = Physics2D.BoxCast(origin, new Vector2(half_size.x, half_size.y * 0.6f), 0f, Vector2.right,
-            //        d.x + half_size.x / 2f, mask);
-            //    Debug.DrawLine(origin, origin + new Vector2(half_size.x + d.x, 0f), Color.blue);
-            //    if (hit_right)
-            //    {
-            //        d = new Vector2(hit_right.distance - half_size.x / 2f, d.y);
-            //        //Debug.Log("右方向あたり");
-            //    }
-            //    if (hit_right) data_.SetIsRight(true);
-            //}
-
-            //// x軸移動
-            //origin += new Vector2(d.x, 0f);
-
-            //// 次にy軸方向 ここでは，3本の線を出す 坂道チェックもする
-            //// まずは下方向
-            //{
-            //    // ヒットした場合は一番高いのに合わせる
-            //    float new_d_y = d.y;
-            //    RaycastHit2D hit_down_center = LinecastWithGizmos(origin, origin + new Vector2(0f, -half_size.y + d.y - kEpsilon), mask);
-            //    float center_d_y = -100f;
-            //    if (hit_down_center)
-            //    {
-            //        center_d_y = -(hit_down_center.distance - half_size.y);
-            //        //Debug.Log("下方向あたり(center)");
-            //    }
-
-            //    Vector2 origin_left = origin + new Vector2(-half_size.x * 0.6f, 0f);
-            //    RaycastHit2D hit_down_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, -half_size.y + d.y - kEpsilon), mask);
-            //    float left_d_y = -100f;
-            //    if (hit_down_left)
-            //    {
-            //        left_d_y = -(hit_down_left.distance - half_size.y);
-            //        //Debug.Log("下方向あたり(left)");
-            //    }
-
-            //    Vector2 origin_right = origin + new Vector2(half_size.x * 0.6f, 0f);
-            //    RaycastHit2D hit_down_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, -half_size.y + d.y - kEpsilon), mask);
-            //    float right_d_y = -100f;
-            //    if (hit_down_right)
-            //    {
-            //        right_d_y = -(hit_down_right.distance - half_size.y);
-            //        //Debug.Log("下方向あたり(right)");
-            //    }
-
-            //    new_d_y = Mathf.Max(d.y, center_d_y, left_d_y, right_d_y);
-
-            //    d = new Vector2(d.x, new_d_y);
-
-            //    if (hit_down_center || hit_down_left || hit_down_right) data_.SetIsGround(true);
-            //    else data_.SetIsGround(false);
-            //}
-
-            //// 下向き方向にヒットしたならば，上向き方向は行わない
-            //if (!data_.IsGround)
-            //{
-            //    // ヒットした場合は一番高いのに合わせる
-            //    float new_d_y = d.y;
-            //    RaycastHit2D hit_up_center = LinecastWithGizmos(origin, origin + new Vector2(0f, half_size.y + d.y + kEpsilon), mask);
-            //    if (hit_up_center)
-            //    {
-            //        new_d_y = Mathf.Min(new_d_y, hit_up_center.distance - half_size.y);
-            //        //Debug.Log("上方向あたり(center)");
-            //    }
-
-            //    Vector2 origin_left = origin + new Vector2(-half_size.x * 0.6f, 0f);
-            //    RaycastHit2D hit_up_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, half_size.y + d.y + kEpsilon), mask);
-            //    if (hit_up_left)
-            //    {
-            //        new_d_y = Mathf.Min(new_d_y, hit_up_left.distance - half_size.y);
-            //        //Debug.Log("上方向あたり(left)");
-            //    }
-
-            //    Vector2 origin_right = origin + new Vector2(half_size.x * 0.6f, 0f);
-            //    RaycastHit2D hit_up_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, half_size.y + d.y + kEpsilon), mask);
-            //    if (hit_up_right)
-            //    {
-            //        new_d_y = Mathf.Min(new_d_y, hit_up_right.distance - half_size.y);
-            //        //Debug.Log("上方向あたり(right)");
-            //    }
-
-            //    d = new Vector2(d.x, new_d_y);
-
-            //    if (hit_up_center || hit_up_left || hit_up_right) data_.SetIsHead(true);
-            //}
-
-            //transform.position += (Vector3)d;
-
-            //data_.animator.SetBool("isGround", data_.IsGround);
-            //if (data_.IsGround)
-            //{
-            //    // 空中ジャンプ回数をリセットする
-            //    data_.ResetArialJump();
-            //    data_.ResetDash();
-            //}
         }
 
         // 方向転換するか確かめる
@@ -449,16 +355,10 @@ namespace Actor.Player
             {
                 for(int i = 0; i < skill.level_; ++i)
                 {
-                    instance.LevelUp((int)skill.type_);
+                    if(instance.GetSkill((int)skill.type_).Level < skill.level_)
+                        instance.LevelUp((int)skill.type_);
                 }
             }
-        }
-
-        RaycastHit2D LinecastWithGizmos(Vector2 from, Vector2 to, int layer_mask)
-        {
-            RaycastHit2D hit = Physics2D.Linecast(from, to, layer_mask);
-            Debug.DrawLine(from, (hit) ? to : to);
-            return hit;
         }
 
         public override string ToString()
