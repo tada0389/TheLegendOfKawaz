@@ -5438,6 +5438,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewKawazTan
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868350, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_LocalPosition.x
