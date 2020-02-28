@@ -395,11 +395,15 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.12, y: 0.1}
     Accel: {x: 0, y: -0.02}
     kick_power_: {x: 0.13, y: 0.24}
+    kick_effect_: {fileID: 7814694034277984977, guid: 580613f80b626f04893c2a321c1392b7,
+      type: 3}
   dush_state_:
     MaxAbsSpeed: {x: 0.5, y: 0.2}
     Accel: {x: 0, y: -0.005}
     dush_time_: 0.25
     dush_speed_: 0.27
+    dash_effect_: {fileID: 3953492163206612339, guid: 6449bd64b924c4a4baa162c2f7788dc2,
+      type: 3}
   damage_state_:
     MaxAbsSpeed: {x: 1, y: 1}
     Accel: {x: -0.001, y: -0.015}
