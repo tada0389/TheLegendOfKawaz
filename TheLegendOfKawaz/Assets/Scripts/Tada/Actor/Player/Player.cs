@@ -63,6 +63,9 @@ namespace Actor.Player
         // 空中ジャンプ回数
         private int air_jump_num_;
 
+        // すり抜ける床をすり抜けるか
+        public bool IsThrough { set { trb.IsThrough = value; } get { return trb.IsThrough; } }
+
         private bool is_dashed_;
 
         private float prev_dash_time_;
@@ -331,6 +334,8 @@ namespace Actor.Player
         // コライド情報などで状態を更新する
         private void RefectCollide()
         {
+            data_.IsThrough = (ActionInput.GetButton(ButtonCode.Down));
+
             data_.animator.SetBool("isGround", data_.IsGround);
             if (data_.IsGround)
             {

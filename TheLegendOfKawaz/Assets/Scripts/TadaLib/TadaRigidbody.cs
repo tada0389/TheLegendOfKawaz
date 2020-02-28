@@ -15,6 +15,10 @@ namespace TadaLib
         // 速度にかける倍率
         public float InitSpeed = 1.0f;
 
+        // すり抜ける床の判定を受けるかどうか
+        [System.NonSerialized]
+        public bool IsThrough = false;
+
         // 最大何度までの角度を登れるか
         [SerializeField]
         private float MaxClimbDegree = 45f;
@@ -73,7 +77,7 @@ namespace TadaLib
             float length_y = half_size.y + half_size.x * 1.5f;
 
             // 名前思いつかなかった・・・ すり抜ける床を含めないのはmask_1
-            int mask_0 = 1 << 8 | 1 << 9;
+            int mask_0 = (IsThrough || d.y > 0f)? 1 << 8 : 1 << 8 | 1 << 9;
             int mask_1 = 1 << 8;
 
             // 始めにy軸方向 3本の線を出す 坂道チェックもする

@@ -64,13 +64,14 @@ namespace Actor.Player
 
                 // 移動している方向に速度を加える
                 float dir = ActionInput.GetAxis(AxisCode.Horizontal);
-                if(dir == 0.0f) { // 良くない
+                if (Mathf.Abs(dir) < 0.2f) dir = 0f;
+                if (dir == 0.0f) { // 良くない
                     // 何も押していないならWait状態に
                     ChangeState((int)eState.Wait);
                     return;
                 }
-                if (dir < -0.5f) data.ChangeDirection(eDir.Left);
-                if (dir > 0.5f) data.ChangeDirection(eDir.Right);
+                if (dir < -0f) data.ChangeDirection(eDir.Left);
+                if (dir > 0f) data.ChangeDirection(eDir.Right);
 
                 ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed);
             }

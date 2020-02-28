@@ -60,7 +60,7 @@ namespace Actor.Player
                 }
 
                 // 左右に押したら歩くステートに変更
-                if (Mathf.Abs(ActionInput.GetAxis(AxisCode.Horizontal)) > 0.1f)
+                if (Mathf.Abs(ActionInput.GetAxis(AxisCode.Horizontal)) > 0.2f)
                 {
                     ChangeState((int)eState.Walk);
                     return;
