@@ -19202,7 +19202,7 @@ GameObject:
   - component: {fileID: 5162715574265957335}
   m_Layer: 0
   m_Name: NormalShot
-  m_TagString: Untagged
+  m_TagString: KawaztanShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

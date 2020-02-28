@@ -54,7 +54,7 @@ namespace Bullet
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.tag != "Player") Dead();
+            if (collider.tag != "Player" && collider.tag != "KawaztanShot") Dead();
         }
 
         private void Dead()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2131037086502031393}
   m_Layer: 0
   m_Name: leg_r
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 2131037086558945049}
   m_Layer: 0
   m_Name: body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 2131037086611743739}
   m_Layer: 0
   m_Name: head_1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -311,7 +311,6 @@ Transform:
   m_Children:
   - {fileID: 2131037087800481257}
   - {fileID: 2131037086723707116}
-  - {fileID: 6267374363896104297}
   - {fileID: 5178167681758080774}
   - {fileID: 5586593142362632426}
   m_Father: {fileID: 0}
@@ -465,7 +464,7 @@ GameObject:
   - component: {fileID: 2131037086636951407}
   m_Layer: 0
   m_Name: leg_l_lower
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -513,7 +512,7 @@ GameObject:
   - component: {fileID: 2131037086723707117}
   m_Layer: 0
   m_Name: kawaztan2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -558,7 +557,7 @@ GameObject:
   - component: {fileID: 2131037086732705186}
   m_Layer: 0
   m_Name: coat_l2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -606,7 +605,7 @@ GameObject:
   - component: {fileID: 2131037086848561206}
   m_Layer: 0
   m_Name: arm_l
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -712,7 +711,7 @@ GameObject:
   - component: {fileID: 2131037086869247648}
   m_Layer: 0
   m_Name: arm_r_lower
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -761,7 +760,7 @@ GameObject:
   - component: {fileID: 2131037086881605375}
   m_Layer: 0
   m_Name: coat_b
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -872,7 +871,7 @@ GameObject:
   - component: {fileID: 2131037086901341767}
   m_Layer: 0
   m_Name: head
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -974,7 +973,7 @@ GameObject:
   - component: {fileID: 2131037086915760776}
   m_Layer: 0
   m_Name: foot_l
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1022,7 +1021,7 @@ GameObject:
   - component: {fileID: 2131037086987366545}
   m_Layer: 0
   m_Name: hand_r
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1124,7 +1123,7 @@ GameObject:
   - component: {fileID: 2131037087082568078}
   m_Layer: 0
   m_Name: hand_r_1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1171,7 +1170,7 @@ GameObject:
   - component: {fileID: 2131037087181516029}
   m_Layer: 0
   m_Name: chest
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1224,7 +1223,7 @@ GameObject:
   - component: {fileID: 2131037087193119584}
   m_Layer: 0
   m_Name: hair_f
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1331,7 +1330,7 @@ GameObject:
   - component: {fileID: 2131037087285827298}
   m_Layer: 0
   m_Name: twin_r
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1441,7 +1440,7 @@ GameObject:
   - component: {fileID: 2131037087315803270}
   m_Layer: 0
   m_Name: twin_l4
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1489,7 +1488,7 @@ GameObject:
   - component: {fileID: 2131037087323550472}
   m_Layer: 0
   m_Name: hair_r
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1591,7 +1590,7 @@ GameObject:
   - component: {fileID: 2131037087367411197}
   m_Layer: 0
   m_Name: twin_r2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1639,7 +1638,7 @@ GameObject:
   - component: {fileID: 2131037087389686231}
   m_Layer: 0
   m_Name: coat_r2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1688,7 +1687,7 @@ GameObject:
   - component: {fileID: 2131037087389904389}
   m_Layer: 0
   m_Name: arm_r
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1795,7 +1794,7 @@ GameObject:
   - component: {fileID: 2131037087566697342}
   m_Layer: 0
   m_Name: hood
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1897,7 +1896,7 @@ GameObject:
   - component: {fileID: 2131037087580189359}
   m_Layer: 0
   m_Name: twin_r3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1945,7 +1944,7 @@ GameObject:
   - component: {fileID: 2131037087638062435}
   m_Layer: 0
   m_Name: chest_upper
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1996,7 +1995,7 @@ GameObject:
   - component: {fileID: 2131037087665641101}
   m_Layer: 0
   m_Name: mouse
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2098,7 +2097,7 @@ GameObject:
   - component: {fileID: 2131037087710543270}
   m_Layer: 0
   m_Name: foot_R
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2145,7 +2144,7 @@ GameObject:
   - component: {fileID: 2131037087797644883}
   m_Layer: 0
   m_Name: hand_l_1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2192,7 +2191,7 @@ GameObject:
   - component: {fileID: 2131037087800481258}
   m_Layer: 0
   m_Name: mesh
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2268,7 +2267,7 @@ GameObject:
   - component: {fileID: 2131037087804445095}
   m_Layer: 0
   m_Name: front_hair_l
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2315,7 +2314,7 @@ GameObject:
   - component: {fileID: 2131037087886861609}
   m_Layer: 0
   m_Name: twin_r4
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2363,7 +2362,7 @@ GameObject:
   - component: {fileID: 2131037087930505673}
   m_Layer: 0
   m_Name: arm_l_upper
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2411,7 +2410,7 @@ GameObject:
   - component: {fileID: 2131037087972871803}
   m_Layer: 0
   m_Name: twin_l_1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2459,7 +2458,7 @@ GameObject:
   - component: {fileID: 2131037087998600903}
   m_Layer: 0
   m_Name: front_hair_m
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2506,7 +2505,7 @@ GameObject:
   - component: {fileID: 2131037088047287009}
   m_Layer: 0
   m_Name: twin_r5
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2554,7 +2553,7 @@ GameObject:
   - component: {fileID: 2131037088092512770}
   m_Layer: 0
   m_Name: eyes
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2657,7 +2656,7 @@ GameObject:
   - component: {fileID: 2131037088112002453}
   m_Layer: 0
   m_Name: hand_l
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2759,7 +2758,7 @@ GameObject:
   - component: {fileID: 2131037088122622757}
   m_Layer: 0
   m_Name: arm_l_lower
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2807,7 +2806,7 @@ GameObject:
   - component: {fileID: 2131037088171485806}
   m_Layer: 0
   m_Name: coat_r3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2854,7 +2853,7 @@ GameObject:
   - component: {fileID: 2131037088172777847}
   m_Layer: 0
   m_Name: front_hair_r
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2901,7 +2900,7 @@ GameObject:
   - component: {fileID: 2131037088236381359}
   m_Layer: 0
   m_Name: arm_r_upper
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2950,7 +2949,7 @@ GameObject:
   - component: {fileID: 2131037088256447108}
   m_Layer: 0
   m_Name: leg_l
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3056,7 +3055,7 @@ GameObject:
   - component: {fileID: 2131037088288441698}
   m_Layer: 0
   m_Name: twin_r_1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3104,7 +3103,7 @@ GameObject:
   - component: {fileID: 2131037088298201326}
   m_Layer: 0
   m_Name: twin_l3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3153,7 +3152,7 @@ GameObject:
   - component: {fileID: 2131037088341578452}
   m_Layer: 0
   m_Name: twin_l
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3261,7 +3260,7 @@ GameObject:
   - component: {fileID: 2131037088357062106}
   m_Layer: 0
   m_Name: leg_R_ower
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3309,7 +3308,7 @@ GameObject:
   - component: {fileID: 2131037088364975714}
   m_Layer: 0
   m_Name: leg_l_upper
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3357,7 +3356,7 @@ GameObject:
   - component: {fileID: 2131037088411752553}
   m_Layer: 0
   m_Name: leg_R_upper
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3405,7 +3404,7 @@ GameObject:
   - component: {fileID: 2131037088536429519}
   m_Layer: 0
   m_Name: coat_r
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3453,7 +3452,7 @@ GameObject:
   - component: {fileID: 2131037088584704110}
   m_Layer: 0
   m_Name: chest_lower
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3501,7 +3500,7 @@ GameObject:
   - component: {fileID: 2131037088612252482}
   m_Layer: 0
   m_Name: coat_l
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3549,7 +3548,7 @@ GameObject:
   - component: {fileID: 2131037088634460585}
   m_Layer: 0
   m_Name: twin_l2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3599,6 +3598,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3832745616028675041, guid: 9164951ae22c54227a2aaccb4e669f24,
         type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832745616028675041, guid: 9164951ae22c54227a2aaccb4e669f24,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -3640,7 +3644,7 @@ PrefabInstance:
     - target: {fileID: 3832745616028675046, guid: 9164951ae22c54227a2aaccb4e669f24,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3832745616028675046, guid: 9164951ae22c54227a2aaccb4e669f24,
         type: 3}
@@ -3691,81 +3695,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8698479520593435404}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8698479521784237526
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2131037086634868351}
-    m_Modifications:
-    - target: {fileID: 3336352375171401890, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_Name
-      value: mame_shot
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.11
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.15999985
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1c49492e0d7b54292943f32719800598, type: 3}
---- !u!4 &6267374363896104297 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3336352375171401919, guid: 1c49492e0d7b54292943f32719800598,
-    type: 3}
-  m_PrefabInstance: {fileID: 8698479521784237526}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8698479522329153054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3777,6 +3706,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: charge_start
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569949775547949339, guid: 59595a94e5b6b49d49ef994d83515d69,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4569949775547949339, guid: 59595a94e5b6b49d49ef994d83515d69,
         type: 3}
@@ -3821,7 +3755,7 @@ PrefabInstance:
     - target: {fileID: 4569949775547949336, guid: 59595a94e5b6b49d49ef994d83515d69,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4569949775547949336, guid: 59595a94e5b6b49d49ef994d83515d69,
         type: 3}
@@ -3860,15 +3794,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59595a94e5b6b49d49ef994d83515d69, type: 3}
---- !u!4 &5178167681758080774 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4569949775547949336, guid: 59595a94e5b6b49d49ef994d83515d69,
-    type: 3}
-  m_PrefabInstance: {fileID: 8698479522329153054}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5178167681758080773 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4569949775547949339, guid: 59595a94e5b6b49d49ef994d83515d69,
+    type: 3}
+  m_PrefabInstance: {fileID: 8698479522329153054}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5178167681758080774 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4569949775547949336, guid: 59595a94e5b6b49d49ef994d83515d69,
     type: 3}
   m_PrefabInstance: {fileID: 8698479522329153054}
   m_PrefabAsset: {fileID: 0}

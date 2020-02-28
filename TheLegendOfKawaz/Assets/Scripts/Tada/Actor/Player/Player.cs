@@ -193,11 +193,6 @@ namespace Actor.Player
         private StateDamage damage_state_;
 #endregion
 
-        // 当たり判定の範囲
-        private BoxCollider2D hit_box_;
-
-        private const float kEpsilon = 0.001f;
-
         private Timer shot_anim_timer_;
         private float charge_timer_;
 
@@ -284,6 +279,7 @@ namespace Actor.Player
             if (ActionInput.GetButtonDown(ActionCode.Shot))
             {
                 charge_timer_ = 0.0f;
+                Shot(false);
             }
             else if (ActionInput.GetButton(ActionCode.Shot))
             {
@@ -300,7 +296,8 @@ namespace Actor.Player
 
             if (ActionInput.GetButtonUp(ActionCode.Shot))
             {
-                Shot(charge_timer_ >= data_.ChargeEndTime);
+                if(charge_timer_ >= data_.ChargeEndTime / 4f)
+                    Shot(charge_timer_ >= data_.ChargeEndTime);
                 charge_shot_pre_.SetActive(false);
                 charge_shot_end_.SetActive(false);
             }
