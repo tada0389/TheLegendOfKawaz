@@ -89,6 +89,7 @@ namespace TadaLib
             state_queue_.Enqueue(key);
             state_ = factory_[state_queue_.Peek()]; // 新しいステートに変更
             state_.OnStart(); // 新しいステートの初期化
+            state_.TimerReset(); // タイマーを再設定
         }
 
         // 現在のステート名を取得する

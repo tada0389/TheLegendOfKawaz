@@ -41,8 +41,8 @@ namespace Bullet
             }
         }
 
-        // 発射する
-        public void Shot(Vector2 pos, Vector2 dir)
+        // 発射する 弾を出せなかったらfalse
+        public bool Shot(Vector2 pos, Vector2 dir)
         {
             // もしすべて使っていたら撃たない 無駄な処理があるから直したい
             for(int i = 0; i < max_shot_num_; ++i)
@@ -52,10 +52,11 @@ namespace Bullet
                     bullets_[index_].gameObject.SetActive(true);
                     bullets_[index_].Init(pos, dir);
                     index_ = (index_ + 1) % max_shot_num_;
-                    return;
+                    return true;
                 }
                 index_ = (index_ + 1) % max_shot_num_;
             }
+            return false;
         }
     }
 }
