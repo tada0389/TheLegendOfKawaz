@@ -287,8 +287,9 @@ GameObject:
   - component: {fileID: 2131037086634868351}
   - component: {fileID: 2131037086634868344}
   - component: {fileID: 2131037086634868347}
-  - component: {fileID: 2131037086634868346}
   - component: {fileID: 2131037086634868345}
+  - component: {fileID: 2131037086634868346}
+  - component: {fileID: 4951405327245510928}
   m_Layer: 0
   m_Name: NewKawazTan
   m_TagString: Player
@@ -358,19 +359,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 3}
   m_EdgeRadius: 0
---- !u!114 &2131037086634868346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131037086634868350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a26abaed62ee1245adc2a27bfbe7c55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0, type: 3}
 --- !u!114 &2131037086634868345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,11 +398,39 @@ MonoBehaviour:
     Accel: {x: 0, y: -0.005}
     dush_time_: 0.25
     dush_speed_: 0.27
+  charge_shot_pre_: {fileID: 0}
+  charge_shot_end_: {fileID: 0}
   demo_skills_:
   - type_: 6
     level_: 1
   - type_: 3
     level_: 1
+--- !u!114 &2131037086634868346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131037086634868350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a26abaed62ee1245adc2a27bfbe7c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0, type: 3}
+--- !u!114 &4951405327245510928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131037086634868350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a26abaed62ee1245adc2a27bfbe7c55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0, type: 3}
 --- !u!1 &2131037086636951405
 GameObject:
   m_ObjectHideFlags: 0
