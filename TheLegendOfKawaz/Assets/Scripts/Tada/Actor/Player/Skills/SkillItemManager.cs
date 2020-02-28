@@ -64,9 +64,22 @@ namespace SkillItem
         [SerializeField]
         private DecideState decide_state_;
 
+        // オーディオソース
+        private AudioSource audio_;
+        // 決定音
+        [SerializeField]
+        private AudioClip decide_se_;
+        // キャンセル音
+        [SerializeField]
+        private AudioClip cancel_se_;
+        // 購入音
+        [SerializeField]
+        private AudioClip buy_se_;
+
         // Start is called before the first frame update
         void Start()
-        { 
+        {
+            audio_ = GetComponent<AudioSource>();
             skill_ = SkillManager.Instance;
 
             skills_ = new List<SkillItemController>();
@@ -140,6 +153,7 @@ namespace SkillItem
             {
                 if (ActionInput.GetButtonDown(ActionCode.Shot))
                 {
+                    Parent.audio_.PlayOneShot(Parent.decide_se_);
                     ChangeState((int)eState.Decide);
                     return;
                 }
@@ -237,7 +251,7 @@ namespace SkillItem
                 if(Parent.skills_[Parent.select_index_].ReachSkillLimit || false)
                 {
                     // SEを鳴らす
-
+                    Parent.audio_.PlayOneShot(Parent.cancel_se_);
                     ChangeState((int)eState.Select);
                     return;
                 }
@@ -299,6 +313,7 @@ namespace SkillItem
                 if (buyed) return;
                 if (watch_yes_)
                 {
+                    Parent.audio_.PlayOneShot(Parent.buy_se_);
                     buyed = true;
                     levelup_message_.localScale = Vector3.zero;
                     levelup_icon_.sprite = skill_icon_.sprite;
@@ -309,6 +324,7 @@ namespace SkillItem
                 }
                 else
                 {
+                    Parent.audio_.PlayOneShot(Parent.cancel_se_);
                     ChangeState((int)eState.Select);
                 }
                 //ChangeState((int)eState.Select);
