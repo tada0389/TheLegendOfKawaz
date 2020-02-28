@@ -40,6 +40,7 @@ namespace Actor.Player
 
                 data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
                 data.velocity.y = 0f;
+                data.velocity = new Vector2(0f, 0f);
             }
 
             // ステートが終了したときに呼ばれるメソッド

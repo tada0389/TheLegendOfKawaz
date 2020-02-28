@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TadaLib; // ステートマシンを使うため
+using TadaLib;
 using Bullet;
 
 /// <summary>
@@ -37,13 +37,16 @@ namespace Actor.Player
     // ステート間で共有するデータ
     public class Data
     {
+        // プレイヤーの物理演算
+        private TadaRigidbody trb;
+
         // 体力
         public int HP { private set; get; }
         public int MaxHP { private set; get; }
         // 攻撃力
         public int Power { private set; get; }
         // 基礎移動速度
-        public float InitSpeed { private set; get; }
+        public float InitSpeed { set { trb.InitSpeed = value; } get { return trb.InitSpeed; } }
         // 壁蹴りできるか
         public bool CanWallKick { private set; get; }
         // 自動回復できるか
@@ -61,19 +64,19 @@ namespace Actor.Player
         private float prev_dash_time_;
 
         // プレイヤーの速度
-        public Vector2 velocity = Vector2.zero;
-
+        public Vector2 velocity;
+        //public Vector2 velocity => rigidbody_.Velocity;
         // 向いている方向 1.0で右, -1.0で左
         public eDir Dir { private set; get; }
 
         // 接地しているかどうか
-        public bool IsGround { private set; get; }
+        public bool IsGround => trb.BottomCollide;
         // 天井に頭がぶつかっているかどうか
-        public bool IsHead { private set; get; } // 変数名が思いつかない
+        public bool IsHead => trb.TopCollide; // 変数名が思いつかない
         // 左方向にぶつかっている
-        public bool IsLeft { private set; get; }
+        public bool IsLeft => trb.LeftCollide;
         // 右方向にぶつかっている
-        public bool IsRight { private set; get; }
+        public bool IsRight => trb.RightCollide;
 
         // アニメーター
         public Animator animator;
@@ -83,13 +86,13 @@ namespace Actor.Player
         // それぞれのステートのデータ
 
         // コンストラクタ
-        public Data()
+        public Data(Player body)
         {
             Dir = eDir.Right;
-            IsGround = false;
-            IsHead = false;
-            IsLeft = false;
-            IsRight = false;
+
+            animator = body.GetComponent<Animator>();
+            bullet_spawer_ = body.GetComponent<BulletSpawner>();
+            trb = body.GetComponent<TadaRigidbody>();
 
             var Skills = SkillManager.Instance.Skills;
 
@@ -104,13 +107,9 @@ namespace Actor.Player
             air_jump_num_ = AirJumpNumMax;
             is_dashed_ = false;
             prev_dash_time_ = 0f;
-        }
 
-        // 以下，それぞれの変数を代入
-        public void SetIsGround(bool is_ground) { IsGround = is_ground; }
-        public void SetIsHead(bool is_head) { IsHead = is_head; }
-        public void SetIsLeft(bool is_left) { IsLeft = is_left; }
-        public void SetIsRight(bool is_right) { IsRight = is_right; }
+            bullet_spawer_.Init(MaxShotNum);
+        }
 
         // ダッシュできるか
         public bool CanDash()
@@ -136,13 +135,17 @@ namespace Actor.Player
             return air_jump_num_ >= 0;
         }
 
+        public void ReflectVelocity()
+        {
+            trb.Velocity = velocity;
+        }
+
         // 向いている方向を反転する
         public void ReverseFaceDirection() => Dir = (Dir == eDir.Left) ? eDir.Right : eDir.Left;
         public void ChangeDirection(eDir dir) => Dir = dir;
     }
 
     // プレイヤークラス partialによりファイル間で分割してクラスを実装
-    [RequireComponent(typeof(BoxCollider2D))] // BoxCollider2Dがアタッチされていないといけない
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BulletSpawner))]
     public partial class Player : MonoBehaviour
@@ -210,14 +213,7 @@ namespace Actor.Player
 
             timer_ = new Timer(0.3f);
 
-            data_ = new Data
-            {
-                animator = GetComponent<Animator>(),
-                bullet_spawer_ = GetComponent<BulletSpawner>()
-            };
-            data_.bullet_spawer_.Init(data_.MaxShotNum);
-     
-            hit_box_ = GetComponent<BoxCollider2D>();
+            data_ = new Data(this);
 
             // ステートマシンのメモリ確保 自分自身を渡す
             state_machine_ = new StateMachine<Player>(this);
@@ -240,6 +236,9 @@ namespace Actor.Player
         // Update is called once per frame
         private void Update()
         {
+            // 接地しているかどうかなどで，状態を変更する
+            RefectCollide();
+
             // 状態を更新する
             state_machine_.Proc();
 
@@ -247,7 +246,8 @@ namespace Actor.Player
             CheckFaceDirChange();
 
             // 速度に応じて移動する
-            Move();
+            data_.ReflectVelocity();
+            //Move();
 
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.V].wasPressedThisFrame){
                 UnityEngine.SceneManagement.SceneManager.LoadScene("SkillGetScene");
@@ -276,133 +276,9 @@ namespace Actor.Player
             data_.bullet_spawer_.Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
         }
 
-        // 座標を変更する 汚いから見ないで
-        private void Move()
+        // コライド情報などで状態を更新する
+        private void RefectCollide()
         {
-            // 壁にめり込まないように移動する x軸だけ 坂道にまったく対応できてない
-
-            Vector2 scale = transform.localScale;
-
-            // 当たり判定(矩形)のサイズと中心
-            Vector2 offset = hit_box_.offset * scale;
-            Vector2 half_size = hit_box_.size * scale * 0.5f;
-
-            // 移動量
-            Vector2 d = data_.InitSpeed * data_.velocity * Time.deltaTime * 60f;
-
-            // レイキャストを飛ばす
-            Vector2 origin = (Vector2)transform.position + offset;
-
-            int mask = 1 << 8 | 1 << 9;
-
-            data_.SetIsHead(false);
-            data_.SetIsRight(false);
-            data_.SetIsLeft(false);
-
-            // まずはx軸方向
-            if (d.x < 0)
-            {
-                RaycastHit2D hit_left = Physics2D.BoxCast(origin, new Vector2(half_size.x, half_size.y * 0.6f), 0f, Vector2.left,
-                    -d.x + half_size.x / 2f, mask);
-                Debug.DrawLine(origin, origin - new Vector2(half_size.x - d.x, 0f), Color.blue);
-                if (hit_left)
-                {
-                    d = new Vector2(-hit_left.distance + half_size.x / 2f, d.y);
-                    //Debug.Log("左方向あたり");
-                }
-                if (hit_left) data_.SetIsLeft(true);
-
-            }
-            else if (d.x > 0)
-            {
-                RaycastHit2D hit_right = Physics2D.BoxCast(origin, new Vector2(half_size.x, half_size.y * 0.6f), 0f, Vector2.right,
-                    d.x + half_size.x / 2f, mask);
-                Debug.DrawLine(origin, origin + new Vector2(half_size.x + d.x, 0f), Color.blue);
-                if (hit_right)
-                {
-                    d = new Vector2(hit_right.distance - half_size.x / 2f, d.y);
-                    //Debug.Log("右方向あたり");
-                }
-                if (hit_right) data_.SetIsRight(true);
-            }
-
-            // x軸移動
-            origin += new Vector2(d.x, 0f);
-
-            // 次にy軸方向 ここでは，3本の線を出す 坂道チェックもする
-            // まずは下方向
-            {
-                // ヒットした場合は一番高いのに合わせる
-                float new_d_y = d.y;
-                RaycastHit2D hit_down_center = LinecastWithGizmos(origin, origin + new Vector2(0f, -half_size.y + d.y - kEpsilon), mask);
-                float center_d_y = -100f;
-                if (hit_down_center)
-                {
-                    center_d_y = -(hit_down_center.distance - half_size.y);
-                    //Debug.Log("下方向あたり(center)");
-                }
-
-                Vector2 origin_left = origin + new Vector2(-half_size.x * 0.6f, 0f);
-                RaycastHit2D hit_down_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, -half_size.y + d.y - kEpsilon), mask);
-                float left_d_y = -100f;
-                if (hit_down_left)
-                {
-                    left_d_y = -(hit_down_left.distance - half_size.y);
-                    //Debug.Log("下方向あたり(left)");
-                }
-
-                Vector2 origin_right = origin + new Vector2(half_size.x * 0.6f, 0f);
-                RaycastHit2D hit_down_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, -half_size.y + d.y - kEpsilon), mask);
-                float right_d_y = -100f;
-                if (hit_down_right)
-                {
-                    right_d_y = -(hit_down_right.distance - half_size.y);
-                    //Debug.Log("下方向あたり(right)");
-                }
-
-                new_d_y = Mathf.Max(d.y, center_d_y, left_d_y, right_d_y);
-
-                d = new Vector2(d.x, new_d_y);
-
-                if (hit_down_center || hit_down_left || hit_down_right) data_.SetIsGround(true);
-                else data_.SetIsGround(false);
-            }
-
-            // 下向き方向にヒットしたならば，上向き方向は行わない
-            if (!data_.IsGround)
-            {
-                // ヒットした場合は一番高いのに合わせる
-                float new_d_y = d.y;
-                RaycastHit2D hit_up_center = LinecastWithGizmos(origin, origin + new Vector2(0f, half_size.y + d.y + kEpsilon), mask);
-                if (hit_up_center)
-                {
-                    new_d_y = Mathf.Min(new_d_y, hit_up_center.distance - half_size.y);
-                    //Debug.Log("上方向あたり(center)");
-                }
-
-                Vector2 origin_left = origin + new Vector2(-half_size.x * 0.6f, 0f);
-                RaycastHit2D hit_up_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, half_size.y + d.y + kEpsilon), mask);
-                if (hit_up_left)
-                {
-                    new_d_y = Mathf.Min(new_d_y, hit_up_left.distance - half_size.y);
-                    //Debug.Log("上方向あたり(left)");
-                }
-
-                Vector2 origin_right = origin + new Vector2(half_size.x * 0.6f, 0f);
-                RaycastHit2D hit_up_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, half_size.y + d.y + kEpsilon), mask);
-                if (hit_up_right)
-                {
-                    new_d_y = Mathf.Min(new_d_y, hit_up_right.distance - half_size.y);
-                    //Debug.Log("上方向あたり(right)");
-                }
-
-                d = new Vector2(d.x, new_d_y);
-
-                if (hit_up_center || hit_up_left || hit_up_right) data_.SetIsHead(true);
-            }
-
-            transform.position += (Vector3)d;
-
             data_.animator.SetBool("isGround", data_.IsGround);
             if (data_.IsGround)
             {
@@ -410,6 +286,142 @@ namespace Actor.Player
                 data_.ResetArialJump();
                 data_.ResetDash();
             }
+        }
+
+        // 座標を変更する 汚いから見ないで
+        private void Move()
+        {
+            //// 壁にめり込まないように移動する x軸だけ 坂道にまったく対応できてない
+
+            //Vector2 scale = transform.localScale;
+
+            //// 当たり判定(矩形)のサイズと中心
+            //Vector2 offset = hit_box_.offset * scale;
+            //Vector2 half_size = hit_box_.size * scale * 0.5f;
+
+            //// 移動量
+            //Vector2 d = data_.InitSpeed * data_.velocity * Time.deltaTime * 60f;
+
+            //// レイキャストを飛ばす
+            //Vector2 origin = (Vector2)transform.position + offset;
+
+            //int mask = 1 << 8 | 1 << 9;
+
+            //data_.SetIsHead(false);
+            //data_.SetIsRight(false);
+            //data_.SetIsLeft(false);
+
+            //// まずはx軸方向
+            //if (d.x < 0)
+            //{
+            //    RaycastHit2D hit_left = Physics2D.BoxCast(origin, new Vector2(half_size.x, half_size.y * 0.6f), 0f, Vector2.left,
+            //        -d.x + half_size.x / 2f, mask);
+            //    Debug.DrawLine(origin, origin - new Vector2(half_size.x - d.x, 0f), Color.blue);
+            //    if (hit_left)
+            //    {
+            //        d = new Vector2(-hit_left.distance + half_size.x / 2f, d.y);
+            //        //Debug.Log("左方向あたり");
+            //    }
+            //    if (hit_left) data_.SetIsLeft(true);
+
+            //}
+            //else if (d.x > 0)
+            //{
+            //    RaycastHit2D hit_right = Physics2D.BoxCast(origin, new Vector2(half_size.x, half_size.y * 0.6f), 0f, Vector2.right,
+            //        d.x + half_size.x / 2f, mask);
+            //    Debug.DrawLine(origin, origin + new Vector2(half_size.x + d.x, 0f), Color.blue);
+            //    if (hit_right)
+            //    {
+            //        d = new Vector2(hit_right.distance - half_size.x / 2f, d.y);
+            //        //Debug.Log("右方向あたり");
+            //    }
+            //    if (hit_right) data_.SetIsRight(true);
+            //}
+
+            //// x軸移動
+            //origin += new Vector2(d.x, 0f);
+
+            //// 次にy軸方向 ここでは，3本の線を出す 坂道チェックもする
+            //// まずは下方向
+            //{
+            //    // ヒットした場合は一番高いのに合わせる
+            //    float new_d_y = d.y;
+            //    RaycastHit2D hit_down_center = LinecastWithGizmos(origin, origin + new Vector2(0f, -half_size.y + d.y - kEpsilon), mask);
+            //    float center_d_y = -100f;
+            //    if (hit_down_center)
+            //    {
+            //        center_d_y = -(hit_down_center.distance - half_size.y);
+            //        //Debug.Log("下方向あたり(center)");
+            //    }
+
+            //    Vector2 origin_left = origin + new Vector2(-half_size.x * 0.6f, 0f);
+            //    RaycastHit2D hit_down_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, -half_size.y + d.y - kEpsilon), mask);
+            //    float left_d_y = -100f;
+            //    if (hit_down_left)
+            //    {
+            //        left_d_y = -(hit_down_left.distance - half_size.y);
+            //        //Debug.Log("下方向あたり(left)");
+            //    }
+
+            //    Vector2 origin_right = origin + new Vector2(half_size.x * 0.6f, 0f);
+            //    RaycastHit2D hit_down_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, -half_size.y + d.y - kEpsilon), mask);
+            //    float right_d_y = -100f;
+            //    if (hit_down_right)
+            //    {
+            //        right_d_y = -(hit_down_right.distance - half_size.y);
+            //        //Debug.Log("下方向あたり(right)");
+            //    }
+
+            //    new_d_y = Mathf.Max(d.y, center_d_y, left_d_y, right_d_y);
+
+            //    d = new Vector2(d.x, new_d_y);
+
+            //    if (hit_down_center || hit_down_left || hit_down_right) data_.SetIsGround(true);
+            //    else data_.SetIsGround(false);
+            //}
+
+            //// 下向き方向にヒットしたならば，上向き方向は行わない
+            //if (!data_.IsGround)
+            //{
+            //    // ヒットした場合は一番高いのに合わせる
+            //    float new_d_y = d.y;
+            //    RaycastHit2D hit_up_center = LinecastWithGizmos(origin, origin + new Vector2(0f, half_size.y + d.y + kEpsilon), mask);
+            //    if (hit_up_center)
+            //    {
+            //        new_d_y = Mathf.Min(new_d_y, hit_up_center.distance - half_size.y);
+            //        //Debug.Log("上方向あたり(center)");
+            //    }
+
+            //    Vector2 origin_left = origin + new Vector2(-half_size.x * 0.6f, 0f);
+            //    RaycastHit2D hit_up_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, half_size.y + d.y + kEpsilon), mask);
+            //    if (hit_up_left)
+            //    {
+            //        new_d_y = Mathf.Min(new_d_y, hit_up_left.distance - half_size.y);
+            //        //Debug.Log("上方向あたり(left)");
+            //    }
+
+            //    Vector2 origin_right = origin + new Vector2(half_size.x * 0.6f, 0f);
+            //    RaycastHit2D hit_up_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, half_size.y + d.y + kEpsilon), mask);
+            //    if (hit_up_right)
+            //    {
+            //        new_d_y = Mathf.Min(new_d_y, hit_up_right.distance - half_size.y);
+            //        //Debug.Log("上方向あたり(right)");
+            //    }
+
+            //    d = new Vector2(d.x, new_d_y);
+
+            //    if (hit_up_center || hit_up_left || hit_up_right) data_.SetIsHead(true);
+            //}
+
+            //transform.position += (Vector3)d;
+
+            //data_.animator.SetBool("isGround", data_.IsGround);
+            //if (data_.IsGround)
+            //{
+            //    // 空中ジャンプ回数をリセットする
+            //    data_.ResetArialJump();
+            //    data_.ResetDash();
+            //}
         }
 
         // 方向転換するか確かめる
@@ -427,13 +439,7 @@ namespace Actor.Player
             }
         }
 
-        // レイキャストを飛ばす(+ Debugの線を引く)
-        RaycastHit2D LinecastWithGizmos(Vector2 from, Vector2 to, int layer_mask)
-        {
-            RaycastHit2D hit = Physics2D.Linecast(from, to, layer_mask);
-            Debug.DrawLine(from, (hit) ? to : to);
-            return hit;
-        }
+
 
         // デバッグで最初から指定したスキルを持っている
         private void GetSkillSet()
@@ -448,6 +454,13 @@ namespace Actor.Player
             }
         }
 
+        RaycastHit2D LinecastWithGizmos(Vector2 from, Vector2 to, int layer_mask)
+        {
+            RaycastHit2D hit = Physics2D.Linecast(from, to, layer_mask);
+            Debug.DrawLine(from, (hit) ? to : to);
+            return hit;
+        }
+
         public override string ToString()
         {
             return "(" + data_.velocity.x.ToString("F2") + ", " + data_.velocity.y.ToString("F2") + ")" +
@@ -455,7 +468,8 @@ namespace Actor.Player
                 "\nSpeed : " + data_.InitSpeed.ToString() + 
                 "\nPower : " + data_.Power.ToString() + 
                 "\nState : " + state_machine_.ToString() + 
-                "\nIsGround : " + data_.IsGround.ToString();
+                "\nIsGround : " + data_.IsGround.ToString() + 
+                "\nIsHead : " + data_.IsHead.ToString();
         }
     }
 }
