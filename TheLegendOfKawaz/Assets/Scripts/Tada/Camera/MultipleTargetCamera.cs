@@ -8,26 +8,44 @@ using UnityEngine;
 
 namespace CameraSpace
 {
+    [System.Serializable]
+    public class CameraData
+    {
+        // カメラが進むことのできる境界線
+        [SerializeField]
+        private BoxCollider2D boader_;
+        public BoxCollider2D Boader => boader_;
+
+        // 追従する対象
+        [SerializeField]
+        private List<Transform> targets_;
+        public List<Transform> Targets => targets_;
+
+        [SerializeField]
+        private Vector3 offset_;
+        public Vector3 Offset => offset_;
+        [SerializeField]
+        private float smooth_time_ = 0.3f;
+        public float SmoothTime => smooth_time_;
+
+        [SerializeField]
+        private float min_zoom_ = 85f;
+        public float MinZoom => min_zoom_;
+        [SerializeField]
+        private float max_zoom_ = 75f;
+        public float MaxZoom => max_zoom_;
+        [SerializeField]
+        private float zoom_limiter_ = 60f;
+        public float ZoomLimiter => zoom_limiter_;
+    }
+
     [RequireComponent(typeof(Camera))]
     public class MultipleTargetCamera : MonoBehaviour
     {
         private Camera cam_;
-        [SerializeField]
-        private BoxCollider2D boader_;
-        [SerializeField]
-        private List<Transform> targets_;
 
         [SerializeField]
-        private Vector3 offset_;
-        [SerializeField]
-        private float smooth_time_ = 0.5f;
-
-        [SerializeField]
-        private float min_zoom_ = 40;
-        [SerializeField]
-        private float max_zoom_ = 10;
-        [SerializeField]
-        private float zoom_limiter_ = 50;
+        private CameraData data_;
 
         private Vector3 velocity;
 
@@ -38,32 +56,38 @@ namespace CameraSpace
 
         private void LateUpdate()
         {
-            if (targets_.Count == 0) return;
+            if (data_.Targets.Count == 0) return;
 
             Zoom();
             Move();
         }
 
+        // カメラのデータを変更する
+        public void ChangeData(CameraData data)
+        {
+            data_ = data;
+        }
+
         private void Zoom()
         {
-            var new_zoom = Mathf.Lerp(max_zoom_, min_zoom_, GetGreatestDistance() / zoom_limiter_);
+            var new_zoom = Mathf.Lerp(data_.MaxZoom, data_.MinZoom, GetGreatestDistance() / data_.ZoomLimiter);
             cam_.fieldOfView = Mathf.Lerp(cam_.fieldOfView, new_zoom, Time.deltaTime);
         }
 
         private void Move()
         {
             var center_point = GetCenterPoint();
-            var new_position = center_point + offset_;
+            var new_position = center_point + data_.Offset;
             new_position.z = -10f;
             // 指定ボーダー内に収める
-            if (boader_ != null)
+            if (data_.Boader != null)
             {
                 // 画面の幅と高さ
                 float height = 10f * Mathf.Tan(cam_.fieldOfView * 0.5f * Mathf.Deg2Rad);
                 float width = height * cam_.aspect;
 
-                Vector2 origin = (Vector2)boader_.transform.position + boader_.offset * boader_.transform.localScale;
-                Vector2 size = boader_.size * boader_.transform.localScale / 2.0f;
+                Vector2 origin = (Vector2)data_.Boader.transform.position + data_.Boader.offset * data_.Boader.transform.localScale;
+                Vector2 size = data_.Boader.size * data_.Boader.transform.localScale / 2.0f;
 
                 // ボーダーの左,下,右,上の順
                 float left_limit = origin.x - size.x;
@@ -83,16 +107,16 @@ namespace CameraSpace
                 if(bottom_c < bottom_limit) new_position.y -= bottom_c - bottom_limit;
                 else if(top_c > top_limit) new_position.y -= top_c - top_limit;
             }
-            transform.position = Vector3.SmoothDamp(transform.position, new_position, ref velocity, smooth_time_);
+            transform.position = Vector3.SmoothDamp(transform.position, new_position, ref velocity, data_.SmoothTime);
         }
 
         private float GetGreatestDistance()
         {
             int x = 0;
-            var bounds = new Bounds(targets_[0].position, Vector3.zero);
-            for (int i = 0; i < targets_.Count; i++)
+            var bounds = new Bounds(data_.Targets[0].position, Vector3.zero);
+            for (int i = 0; i < data_.Targets.Count; i++)
             {
-                bounds.Encapsulate(targets_[i].position);
+                bounds.Encapsulate(data_.Targets[i].position);
             }
             // x軸方向とy軸方向、差の大きい方を基準に全体のサイズを変更する
             return (bounds.size.x >= bounds.size.y) ? bounds.size.x : bounds.size.y; // ここ自分で変えた　神！！！！！
@@ -101,11 +125,11 @@ namespace CameraSpace
 
         private Vector3 GetCenterPoint()
         {
-            if (targets_.Count == 1) return targets_[0].position;
-            var bounds = new Bounds(targets_[0].position, Vector3.zero);
-            for (int i = 0; i < targets_.Count; i++)
+            if (data_.Targets.Count == 1) return data_.Targets[0].position;
+            var bounds = new Bounds(data_.Targets[0].position, Vector3.zero);
+            for (int i = 0; i < data_.Targets.Count; i++)
             {
-                bounds.Encapsulate(targets_[i].position);
+                bounds.Encapsulate(data_.Targets[i].position);
             }
             return bounds.center;
         }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Stage
   - KawaztanShot
+  - CameraTrigger
   layers:
   - Default
   - TransparentFX
