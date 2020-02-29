@@ -1,8 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TadaLib;
 
-
+/// <summary>
+/// 2D用の自作Rigidbody
+/// 壁，地面の埋め込みを防いだり，
+/// 坂道を歩くこと，すり抜ける床，移動する床
+/// に対応できる
+/// </summary>
 
 namespace TadaLib
 {
@@ -21,7 +27,7 @@ namespace TadaLib
 
         // 最大何度までの角度を登れるか
         [SerializeField]
-        private float MaxClimbDegree = 45f;
+        private float MaxClimbDegree = 90f;
 
         // 左でぶつかっている
         public bool LeftCollide { private set; get; }
@@ -30,11 +36,14 @@ namespace TadaLib
         // 上でぶつかっている
         public bool TopCollide { private set; get; }
         // 下でぶつかっている
-        public bool BottomCollide { private set; get; }
+        public bool ButtomCollide { private set; get; }
 
         private BoxCollider2D hit_box_;
 
         private const float kEpsilon = 0.001f;
+
+        // 現在載っている移動する床 一つだけ持つ
+        private Mover riding_mover_;
 
         private void Start()
         {
@@ -42,9 +51,11 @@ namespace TadaLib
             LeftCollide = false;
             RightCollide = false;
             TopCollide = false;
-            BottomCollide = false;
+            ButtomCollide = false;
 
             hit_box_ = GetComponent<BoxCollider2D>();
+
+            riding_mover_ = null;
         }
 
         private void LateUpdate()
@@ -58,7 +69,7 @@ namespace TadaLib
             LeftCollide = false;
             RightCollide = false;
             TopCollide = false;
-            BottomCollide = false;
+            ButtomCollide = false;
 
             Vector2 scale = transform.localScale;
 
@@ -69,6 +80,13 @@ namespace TadaLib
             // 移動量
             Vector2 d = InitSpeed * Velocity * Time.deltaTime * 60f;
 
+            // 移動する床の移動量
+            if (riding_mover_)
+            {
+                d += riding_mover_.Diff;
+                //transform.position += (Vector3)riding_mover_.Diff;
+                //Debug.Log(riding_mover_.Diff.x + " , " + riding_mover_.Diff.y + " 追加");
+            }
             // レイキャストを飛ばす中心
             Vector2 origin = (Vector2)transform.position + offset;
             // レイの長さ
@@ -77,8 +95,8 @@ namespace TadaLib
             float length_y = half_size.y + half_size.x * 1.5f;
 
             // 名前思いつかなかった・・・ すり抜ける床を含めないのはmask_1
-            int mask_0 = (IsThrough || d.y > 0f)? 1 << 8 : 1 << 8 | 1 << 9;
-            int mask_1 = 1 << 8;
+            int mask_0 = (IsThrough || d.y > 0f)? (1 << 8 | 1 << 10) : (1 << 8 | 1 << 9 | 1 << 10 | 1 << 11);
+            int mask_1 = 1 << 8 | 1 << 10;
 
             // 始めにy軸方向 3本の線を出す 坂道チェックもする
             {
@@ -91,12 +109,20 @@ namespace TadaLib
 
                 // めり込んでいる分は上に持ち上げる
                 float length = half_size.y; // 地面までの通常の距離
-                float tmp_d_y = -100f;
-                if (hit_down_left) tmp_d_y = Mathf.Max(tmp_d_y, length - hit_down_left.distance);
-                if (hit_down_center) tmp_d_y = Mathf.Max(tmp_d_y, length - hit_down_center.distance);
-                if (hit_down_right) tmp_d_y = Mathf.Max(tmp_d_y, length - hit_down_right.distance);
+                float tmp_d_y = d.y - kEpsilon;
+                bool hit = false;
+                RaycastHit2D most_top_hit = hit_down_left;
+                if (hit_down_left && tmp_d_y <= length - hit_down_left.distance) { tmp_d_y = length - hit_down_left.distance; hit = true; }
+                if (hit_down_center && tmp_d_y <= length - hit_down_center.distance) { tmp_d_y = length - hit_down_center.distance; most_top_hit = hit_down_center; hit = true; }
+                if (hit_down_right && tmp_d_y <= length - hit_down_right.distance) { tmp_d_y = length - hit_down_right.distance; most_top_hit = hit_down_right; hit = true; }
+
                 d.y = Mathf.Max(d.y, tmp_d_y);
-                BottomCollide |= (tmp_d_y >= (d.y - kEpsilon));
+                ButtomCollide = hit;
+
+                // 移動する床に載っているか確かめる
+                if (ButtomCollide && (most_top_hit.collider.gameObject.layer == 10 || most_top_hit.collider.gameObject.layer == 11))
+                    riding_mover_ = most_top_hit.collider.gameObject.GetComponent<Mover>();
+                else riding_mover_ = null;
 
                 // ヒットしているなら，それぞれの法線ベクトルを取得 坂道対応
                 if (Mathf.Abs(d.x) > kEpsilon)
@@ -134,21 +160,21 @@ namespace TadaLib
             }
 
             // 次に上方向 下向き方向にヒットしたならば，上向き方向はやらない
-            if(!BottomCollide){
+            if(!ButtomCollide){
                 // 左端，中央，右端の順に確かめる
                 Vector2 origin_left = origin + new Vector2(-half_size.x * 0.8f, 0f);
                 Vector2 origin_right = origin + new Vector2(half_size.x * 0.8f, 0f);
                 float length = half_size.y;
-                RaycastHit2D hit_down_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, length + d.y), mask_1);
-                RaycastHit2D hit_down_center = LinecastWithGizmos(origin, origin + new Vector2(0f, length + d.y), mask_1);
-                RaycastHit2D hit_down_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, length + d.y), mask_1);
+                RaycastHit2D hit_up_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, length + d.y), mask_1);
+                RaycastHit2D hit_up_center = LinecastWithGizmos(origin, origin + new Vector2(0f, length + d.y), mask_1);
+                RaycastHit2D hit_up_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, length + d.y), mask_1);
 
                 // めり込んでいる分は下に下げる
                 float len = half_size.y; // 地面までの通常の距離
                 float tmp_d_y = 100f;
-                if (hit_down_left) tmp_d_y = Mathf.Min(tmp_d_y, hit_down_left.distance - len);
-                if (hit_down_center) tmp_d_y = Mathf.Min(tmp_d_y, hit_down_center.distance - len);
-                if (hit_down_right) tmp_d_y = Mathf.Min(tmp_d_y, hit_down_right.distance - len);
+                if (hit_up_left) tmp_d_y = Mathf.Min(tmp_d_y, hit_up_left.distance - len);
+                if (hit_up_center) tmp_d_y = Mathf.Min(tmp_d_y, hit_up_center.distance - len);
+                if (hit_up_right) tmp_d_y = Mathf.Min(tmp_d_y, hit_up_right.distance - len);
                 d.y = Mathf.Min(d.y, tmp_d_y);
                 TopCollide |= (tmp_d_y <= (d.y + kEpsilon));
             }

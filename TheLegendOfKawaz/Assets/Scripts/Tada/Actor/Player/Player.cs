@@ -80,7 +80,7 @@ namespace Actor.Player
         public eDir Dir { private set; get; }
 
         // 接地しているかどうか
-        public bool IsGround => trb.BottomCollide;
+        public bool IsGround => trb.ButtomCollide;
         // 天井に頭がぶつかっているかどうか
         public bool IsHead => trb.TopCollide; // 変数名が思いつかない
         // 左方向にぶつかっている
