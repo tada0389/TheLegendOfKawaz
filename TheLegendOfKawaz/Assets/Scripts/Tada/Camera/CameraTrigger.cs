@@ -18,10 +18,8 @@ namespace CameraSpace
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            Debug.Log("hit_pre");
             if (collider.tag == "Player")
             {
-                Debug.Log("hit");
                 camera_.ChangeData(new_data_);
             }
         }

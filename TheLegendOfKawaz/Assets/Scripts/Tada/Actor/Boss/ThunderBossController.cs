@@ -4,16 +4,14 @@ using UnityEngine;
 using TadaLib;
 
 /// <summary>
-/// 全てのボスの基礎 これをコピペしてください
-/// ただし，BaseBossController => 〇〇〇BossController と書き換えること
-/// ファイル一つで済ませる
-/// 詳しくは，テストで作ったThunderBossControllerを見てください
+/// 電気属性のボス
+/// ボスクラスの書き方はBaseBossControlerを見てね
 /// </summary>
 
 namespace Actor.Enemy
 {
     [RequireComponent(typeof(TadaRigidbody))]
-    public class BaseBossController : MonoBehaviour
+    public class ThunderBossController : MonoBehaviour
     {
         // Bossのステート一覧
         private enum eState
@@ -31,7 +29,7 @@ namespace Actor.Enemy
         }
 
         // ステートマシン
-        private StateMachine<BaseBossController> state_machine_;
+        private StateMachine<ThunderBossController> state_machine_;
 
         // ステートのインスタンス
         #region state class
@@ -51,7 +49,7 @@ namespace Actor.Enemy
         private StateAction4 state_action4_;
         [SerializeField]
         private StateAction5 state_action5_;
-#endregion
+        #endregion
 
         // 物理演算 trb_.Velocityをいじって移動する
         private TadaRigidbody trb_;
@@ -61,7 +59,7 @@ namespace Actor.Enemy
             trb_ = GetComponent<TadaRigidbody>();
 
             // ステートマシンのメモリ確保 自分自身を渡す
-            state_machine_ = new StateMachine<BaseBossController>(this);
+            state_machine_ = new StateMachine<ThunderBossController>(this);
 
             // ステートを登録
             state_machine_.AddState((int)eState.Think, state_think_);
@@ -77,7 +75,7 @@ namespace Actor.Enemy
             state_machine_.SetInitialState((int)eState.Think);
 
             // デバッグ表示
-            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -300));
+            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400));
         }
 
         private void Update()
@@ -101,7 +99,7 @@ namespace Actor.Enemy
 
         // ChangeState(int key) ： ステートを変更するときに使う
         // Timer ： ステートが開始してからの経過時間を取得できる
-        // Parent ： ボスの本体クラスにアクセスできる (private でも)
+        // Parent ： ボスの本体クラスにアクセスできる
         //           例えば，Parent.trb_.Velocityをいじることで，移動ができる
 
         // Inspector について
@@ -112,12 +110,13 @@ namespace Actor.Enemy
 
         // 次の行動を思考するステート
         [System.Serializable]
-        private class StateThink : StateMachine<BaseBossController>.StateBase
+        private class StateThink : StateMachine<ThunderBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                if (Random.value > 0.5f) ChangeState((int)eState.Idle);
+                else ChangeState((int)eState.Action1);
             }
 
             // 毎フレーム呼ばれる
@@ -135,7 +134,7 @@ namespace Actor.Enemy
 
         // アイドリング状態
         [System.Serializable]
-        private class StateIdle : StateMachine<BaseBossController>.StateBase
+        private class StateIdle : StateMachine<ThunderBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
@@ -146,7 +145,7 @@ namespace Actor.Enemy
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-
+                if (Timer > 3.0f) ChangeState((int)eState.Think);
             }
 
             // 終了時に呼ばれる
@@ -158,7 +157,7 @@ namespace Actor.Enemy
 
         // ダメージを受けたときの状態
         [System.Serializable]
-        private class StateDamage : StateMachine<BaseBossController>.StateBase
+        private class StateDamage : StateMachine<ThunderBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
@@ -169,7 +168,7 @@ namespace Actor.Enemy
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-
+                if (Timer > 3.0f) ChangeState((int)eState.Think);
             }
 
             // 終了時に呼ばれる
@@ -181,7 +180,7 @@ namespace Actor.Enemy
 
         // 行動1状態
         [System.Serializable]
-        private class StateAction1 : StateMachine<BaseBossController>.StateBase
+        private class StateAction1 : StateMachine<ThunderBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
@@ -192,7 +191,7 @@ namespace Actor.Enemy
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-
+                if (Timer > 3.0f) ChangeState((int)eState.Action2);
             }
 
             // 終了時に呼ばれる
@@ -204,7 +203,7 @@ namespace Actor.Enemy
 
         // 行動2状態
         [System.Serializable]
-        private class StateAction2 : StateMachine<BaseBossController>.StateBase
+        private class StateAction2 : StateMachine<ThunderBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
@@ -215,7 +214,7 @@ namespace Actor.Enemy
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-
+                if (Timer > 3.0f) ChangeState((int)eState.Think);
             }
 
             // 終了時に呼ばれる
@@ -227,7 +226,7 @@ namespace Actor.Enemy
 
         // 行動3状態
         [System.Serializable]
-        private class StateAction3 : StateMachine<BaseBossController>.StateBase
+        private class StateAction3 : StateMachine<ThunderBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
@@ -250,7 +249,7 @@ namespace Actor.Enemy
 
         // 行動4状態
         [System.Serializable]
-        private class StateAction4 : StateMachine<BaseBossController>.StateBase
+        private class StateAction4 : StateMachine<ThunderBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
@@ -273,7 +272,7 @@ namespace Actor.Enemy
 
         // 行動5状態
         [System.Serializable]
-        private class StateAction5 : StateMachine<BaseBossController>.StateBase
+        private class StateAction5 : StateMachine<ThunderBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
