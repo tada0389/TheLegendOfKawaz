@@ -14,7 +14,7 @@ using Bullet;
 namespace Actor.Enemy
 {
     [RequireComponent(typeof(TadaRigidbody))]
-    public class TestBossController : MonoBehaviour
+    public class TestBossController : BaseActorController
     {
         // Bossのステート一覧
         private enum eState
@@ -66,9 +66,6 @@ namespace Actor.Enemy
 
         // 現在見ている方向
         private float dir_ = 1f;
-
-        // HP
-        public int HP { private set; get; }
 
         // プレイヤーの座標
         [SerializeField]
@@ -124,6 +121,13 @@ namespace Actor.Enemy
             }
         }
 
+        // ダメージを受ける
+        public override void Damage(int damage)
+        {
+            HP = Mathf.Max(0, HP - damage);
+            if (HP == 0) Debug.Log("Defeated");
+        }
+
         public override string ToString()
         {
             return "(" + trb_.Velocity.x.ToString("F2") + ", " + trb_.Velocity.y.ToString("F2") + ")" +
@@ -167,7 +171,7 @@ namespace Actor.Enemy
             {
                 if(Timer > think_time_)
                 {
-                    if (Random.value > 0.75f) ChangeState((int)eState.Shot);
+                    if (Random.value > 0.6f) ChangeState((int)eState.Shot);
                     else ChangeState((int)eState.PreDash);
                     return;
                 }
@@ -271,7 +275,7 @@ namespace Actor.Enemy
                     Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
                     Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y 
                         + shot_offset_.y * ((shot_cnt_ % 2 == 0)? -1f : 1f)),
-                        new Vector2(dir, 0f));
+                        new Vector2(dir, 0f), "Player");
 
                     if(shot_cnt_ >= shot_num_)
                     {

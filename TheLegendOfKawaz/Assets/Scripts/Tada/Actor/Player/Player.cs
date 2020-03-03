@@ -159,12 +159,14 @@ namespace Actor.Player
         // 向いている方向を反転する
         public void ReverseFaceDirection() => Dir = (Dir == eDir.Left) ? eDir.Right : eDir.Left;
         public void ChangeDirection(eDir dir) => Dir = dir;
+
+        public void SetHP(int hp) => HP = hp;
     }
 
     // プレイヤークラス partialによりファイル間で分割してクラスを実装
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BulletSpawner))]
-    public partial class Player : MonoBehaviour
+    public partial class Player : BaseActorController
     {
         // プレイヤーのステート一覧
         private enum eState
@@ -235,6 +237,7 @@ namespace Actor.Player
             shot_anim_timer_ = new Timer(0.3f);
 
             data_ = new Data(this);
+            HP = data_.HP;
 
             // ステートマシンのメモリ確保 自分自身を渡す
             state_machine_ = new StateMachine<Player>(this);
@@ -322,7 +325,7 @@ namespace Actor.Player
         private void Shot(bool is_charged)
         {
             float dir = (data_.Dir == eDir.Left) ? -1f : 1f;
-            bool can_shot = data_.bullet_spawners_[(is_charged) ? 1 : 0].Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f));
+            bool can_shot = data_.bullet_spawners_[(is_charged) ? 1 : 0].Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f), "Enemy");
             if (!can_shot) return;
             if (data_.animator.GetLayerWeight(1) == 0)
             {
@@ -366,7 +369,13 @@ namespace Actor.Player
             }
         }
 
-
+        // ダメージを受ける
+        public override void Damage(int damage)
+        {
+            HP = Mathf.Max(0, HP - damage);
+            data_.SetHP(HP);
+            if (HP == 0) Debug.Log("Defeated");
+        }
 
         // デバッグで最初から指定したスキルを持っている
         private void GetSkillSet()

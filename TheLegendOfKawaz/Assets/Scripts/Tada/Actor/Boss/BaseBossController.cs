@@ -13,7 +13,7 @@ using TadaLib;
 namespace Actor.Enemy
 {
     [RequireComponent(typeof(TadaRigidbody))]
-    public class BaseBossController : MonoBehaviour
+    public class BaseBossController : BaseActorController
     {
         // Bossのステート一覧
         private enum eState
@@ -105,6 +105,13 @@ namespace Actor.Enemy
             {
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
             }
+        }
+
+        // ダメージを受ける
+        public override void Damage(int damage)
+        {
+            HP = Mathf.Max(0, HP - damage);
+            if (HP == 0) Debug.Log("Defeated");
         }
 
         public override string ToString()

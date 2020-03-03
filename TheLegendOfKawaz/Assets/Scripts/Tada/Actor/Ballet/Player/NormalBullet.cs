@@ -27,6 +27,9 @@ namespace Bullet
 
         private Timer timer_;
 
+        private string opponent_tag_;
+        private int damage_;
+
         private void Update()
         {
             Move();
@@ -37,11 +40,13 @@ namespace Bullet
             timer_ = new Timer(life_time_);
         }
 
-        public override void Init(Vector2 pos, Vector2 dir)
+        public override void Init(Vector2 pos, Vector2 dir, int damage, string opponent_tag = "Player")
         {
             transform.position = (Vector3)pos;
             move_body_.transform.position = (Vector3)pos;
             dir_ = dir;
+            damage_ = damage;
+            opponent_tag_ = opponent_tag;
             timer_.TimeReset();
             CreateEffect(shot_effect_, transform.position);
         }
@@ -54,7 +59,11 @@ namespace Bullet
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.tag == "Stage" || collider.tag == "Enemy") Dead();
+            if (collider.tag == "Stage" || collider.tag == opponent_tag_)
+            {
+                if (collider.tag == opponent_tag_) collider.GetComponent<Actor.BaseActorController>().Damage(damage_);
+                Dead();
+            }
         }
 
         private void Dead()
