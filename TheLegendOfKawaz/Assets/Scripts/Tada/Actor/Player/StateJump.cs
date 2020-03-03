@@ -26,6 +26,11 @@ namespace Actor.Player
             [SerializeField]
             private float wall_thr = 0.05f;
 
+            [SerializeField]
+            private AudioClip jump_se_1;
+            [SerializeField]
+            private AudioClip jump_se_2;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -33,6 +38,13 @@ namespace Actor.Player
 
                 // ジャンプアニメーション開始
                 data.animator.Play("Jump", 0, 0f);
+
+                // 音を鳴らす
+                if (PrevStateId == (int)eState.Wall)
+                {
+                }
+                else if (data.IsGround) data.audio.PlayOneShot(jump_se_1);
+                else data.audio.PlayOneShot(jump_se_2);
 
                 // 上向きに速度を加える
                 data.velocity = new Vector2(data.velocity.x, jump_power);
