@@ -29,8 +29,9 @@ public class ButtonBase : MonoBehaviour
         mousePosOnCanvas = mousePos * 1920 / Screen.width;
         float scale = Screen.width / 1920f;
         Vector2 pos = rectTransform.position;
-        Rect rect = rectTransform.rect;      
-        if (mousePos.x > pos.x - rect.width / 2 * scale && mousePos.x < pos.x + rect.width / 2 * scale && mousePos.y > pos.y - rect.height / 2 * scale && mousePos.y < pos.y + rect.height / 2 * scale)
+        Rect rect = rectTransform.rect;
+        //ピボットをずらすとずれる?
+        if (mousePos.x > pos.x - rect.width / 2 * scale && mousePos.x < pos.x + rect.width / 2 * scale && mousePos.y > pos.y - rect.height * scale && mousePos.y < pos.y)
         {
             if (isTouching)
             {
