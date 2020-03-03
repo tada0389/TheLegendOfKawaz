@@ -114,6 +114,15 @@ namespace Actor.Enemy
             if (HP == 0) Debug.Log("Defeated");
         }
 
+        // このボスにぶつかるとダメージを受ける
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if(collider.tag == "Player")
+            {
+                collider.GetComponent<BaseActorController>().Damage(3);
+            }
+        }
+
         public override string ToString()
         {
             return "(" + trb_.Velocity.x.ToString("F2") + ", " + trb_.Velocity.y.ToString("F2") + ")" +

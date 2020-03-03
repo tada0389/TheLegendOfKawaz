@@ -372,6 +372,8 @@ namespace Actor.Player
         // ダメージを受ける
         public override void Damage(int damage)
         {
+            if (state_machine_.CurrentStateId == (int)eState.Damage) return;
+            state_machine_.ChangeState((int)eState.Damage);
             HP = Mathf.Max(0, HP - damage);
             data_.SetHP(HP);
             if (HP == 0) Debug.Log("Defeated");

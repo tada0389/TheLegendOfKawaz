@@ -27,6 +27,8 @@ namespace TadaLib
 
         // 前回のステート
         public int PrevStateId { private set; get; }
+        // 現在のステート
+        public int CurrentStateId { private set; get; }
 
 
         // コンストラクタ
@@ -63,6 +65,7 @@ namespace TadaLib
             state_ = factory_[state_queue_.Peek()]; // 新しいステートに変更
             state_.OnStart(); // 新しいステートの初期化
             state_.TimerReset(); // タイマーを再設定
+            CurrentStateId = key;
         }
 
         // ステートの変更要求があるか確かめる
@@ -76,6 +79,7 @@ namespace TadaLib
                 state_ = factory_[state_queue_.Peek()]; // 新しいステートに変更
                 state_.OnStart(); // 新しいステートの初期化
                 state_.TimerReset(); // タイマーを再設定
+                CurrentStateId = state_queue_.Peek();
             }
         }
 
@@ -90,6 +94,7 @@ namespace TadaLib
             state_ = factory_[state_queue_.Peek()]; // 新しいステートに変更
             state_.OnStart(); // 新しいステートの初期化
             state_.TimerReset(); // タイマーを再設定
+            CurrentStateId = state_queue_.Peek();
         }
 
         // 現在のステート名を取得する
