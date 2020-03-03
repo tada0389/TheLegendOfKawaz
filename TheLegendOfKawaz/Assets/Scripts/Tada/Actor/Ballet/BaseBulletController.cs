@@ -14,7 +14,7 @@ namespace Bullet
         [SerializeField]
         protected GameObject move_body_;
         // 初期化する 発射位置と方向を得る
-        public abstract void Init(Vector2 pos, Vector2 dir);
+        public abstract void Init(Vector2 pos, Vector2 dir, int damage, string opponent_tag);
         // 移動する
         protected abstract void Move();
     }

@@ -16,6 +16,10 @@ namespace Bullet
         [SerializeField]
         private BaseBulletController bullet_;
 
+        // ダメージ量
+        [SerializeField]
+        private int damage_ = 2;
+
         // 発射できる最大数
         private int max_shot_num_;
 
@@ -42,7 +46,7 @@ namespace Bullet
         }
 
         // 発射する 弾を出せなかったらfalse
-        public bool Shot(Vector2 pos, Vector2 dir)
+        public bool Shot(Vector2 pos, Vector2 dir, string opponent_tag)
         {
             // もしすべて使っていたら撃たない 無駄な処理があるから直したい
             for(int i = 0; i < max_shot_num_; ++i)
@@ -50,7 +54,7 @@ namespace Bullet
                 if (!bullets_[index_].gameObject.activeSelf)
                 {
                     bullets_[index_].gameObject.SetActive(true);
-                    bullets_[index_].Init(pos, dir);
+                    bullets_[index_].Init(pos, dir, damage_, opponent_tag);
                     index_ = (index_ + 1) % max_shot_num_;
                     return true;
                 }
