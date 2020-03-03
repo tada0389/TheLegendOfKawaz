@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 2131037086634868346}
   - component: {fileID: 4951405327245510928}
   - component: {fileID: 69060419}
+  - component: {fileID: 1421661576}
   m_Layer: 0
   m_Name: NewKawazTan
   m_TagString: Player
@@ -385,6 +386,8 @@ MonoBehaviour:
     jump_power: 0.23
     jump_input_time: 0.25
     wall_thr: 0.05
+    jump_se_1: {fileID: 8300000, guid: 146da4b8bebfb42bbbd74612d92bfcfe, type: 3}
+    jump_se_2: {fileID: 8300000, guid: 7ac5fdf38a07a4a018c0691d2c398bf5, type: 3}
   fall_state_:
     MaxAbsSpeed: {x: 0.16, y: 0.28}
     Accel: {x: 0.01, y: -0.04}
@@ -416,6 +419,8 @@ MonoBehaviour:
     level_: 1
   - type_: 3
     level_: 1
+  - type_: 4
+    level_: 1
 --- !u!114 &2131037086634868346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,6 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0, type: 3}
+  damage_: 1
 --- !u!114 &4951405327245510928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,6 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_: {fileID: 4628252163955358299, guid: f9f39f5c4a86769489b8218c4f31bc23, type: 3}
+  damage_: 3
 --- !u!114 &69060419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,6 +463,102 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitSpeed: 1
   MaxClimbDegree: 90
+--- !u!82 &1421661576
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131037086634868350}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2131037086636951405
 GameObject:
   m_ObjectHideFlags: 0
@@ -3675,12 +3778,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 3832745615172397866, guid: 9164951ae22c54227a2aaccb4e669f24,
+    - target: {fileID: 4373248624384023771, guid: 9164951ae22c54227a2aaccb4e669f24,
         type: 3}
       propertyPath: m_SortingOrder
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 4373248624384023771, guid: 9164951ae22c54227a2aaccb4e669f24,
+    - target: {fileID: 3832745615172397866, guid: 9164951ae22c54227a2aaccb4e669f24,
         type: 3}
       propertyPath: m_SortingOrder
       value: 20
@@ -3786,12 +3889,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 4569949774745644201, guid: 59595a94e5b6b49d49ef994d83515d69,
+    - target: {fileID: 4569949776021631417, guid: 59595a94e5b6b49d49ef994d83515d69,
         type: 3}
       propertyPath: m_SortingOrder
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 4569949776021631417, guid: 59595a94e5b6b49d49ef994d83515d69,
+    - target: {fileID: 4569949774745644201, guid: 59595a94e5b6b49d49ef994d83515d69,
         type: 3}
       propertyPath: m_SortingOrder
       value: 20

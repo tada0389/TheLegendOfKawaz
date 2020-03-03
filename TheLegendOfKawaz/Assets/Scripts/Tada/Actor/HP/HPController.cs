@@ -17,10 +17,10 @@ namespace Actor
         private List<BaseActorController> actors_;
 
         [SerializeField]
-        private Vector3 left_bar_pos_;
+        private RectTransform left_bar_pos_;
 
         [SerializeField]
-        private Vector3 right_bar_pos_;
+        private RectTransform right_bar_pos_;
 
         private List<HPBar> hp_bars_;
 
@@ -33,15 +33,15 @@ namespace Actor
             if(actors_.Count == 1)
             {
                 HPBar bar = Instantiate(hp_bar_prefab_, canvas_.transform);
-                bar.transform.position = left_bar_pos_;
+                bar.transform.position = left_bar_pos_.position;
                 hp_bars_.Add(bar);
             }
             else if(actors_.Count >= 2)
             {
                 HPBar bar_l = Instantiate(hp_bar_prefab_, canvas_.transform);
                 HPBar bar_r = Instantiate(hp_bar_prefab_, canvas_.transform);
-                bar_l.transform.position = left_bar_pos_;
-                bar_r.transform.position = right_bar_pos_;
+                bar_l.transform.position = left_bar_pos_.position;
+                bar_r.transform.position = right_bar_pos_.position;
                 hp_bars_.Add(bar_l);
                 hp_bars_.Add(bar_r);
             }
