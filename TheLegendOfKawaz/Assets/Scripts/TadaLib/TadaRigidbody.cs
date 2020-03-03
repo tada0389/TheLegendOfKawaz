@@ -80,6 +80,11 @@ namespace TadaLib
             // 移動量
             Vector2 d = InitSpeed * Velocity * Time.deltaTime * 60f;
 
+            // 名前思いつかなかった・・・ すり抜ける床を含めないのはmask_1
+            bool through = IsThrough || d.y > 0f; // 床をすり抜けるかどうか 上から来た場合はfalse 下から来た場合はtrue
+            int mask_0 = (through) ? (1 << 8 | 1 << 10) : (1 << 8 | 1 << 9 | 1 << 10 | 1 << 11);
+            int mask_1 = 1 << 8 | 1 << 10;
+
             // 移動する床の移動量
             if (riding_mover_)
             {
@@ -93,10 +98,6 @@ namespace TadaLib
             float length_x = half_size.x / 2f;
             // y軸は少し余分に取る
             float length_y = half_size.y + half_size.x * 1.5f;
-
-            // 名前思いつかなかった・・・ すり抜ける床を含めないのはmask_1
-            int mask_0 = (IsThrough || d.y > 0f)? (1 << 8 | 1 << 10) : (1 << 8 | 1 << 9 | 1 << 10 | 1 << 11);
-            int mask_1 = 1 << 8 | 1 << 10;
 
             // 始めにy軸方向 3本の線を出す 坂道チェックもする
             {
