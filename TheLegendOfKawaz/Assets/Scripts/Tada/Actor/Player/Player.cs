@@ -343,7 +343,7 @@ namespace Actor.Player
         // コライド情報などで状態を更新する
         private void RefectCollide()
         {
-            data_.IsThrough = (ActionInput.GetButton(ButtonCode.Down));
+            data_.IsThrough = (ActionInput.GetAxis(AxisCode.Vertical) < -0.5f);
 
             data_.animator.SetBool("isGround", data_.IsGround);
             if (data_.IsGround)

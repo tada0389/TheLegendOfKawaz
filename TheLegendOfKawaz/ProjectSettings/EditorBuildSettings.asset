@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TadaTest/AtractionScene.unity
     guid: bc3bd831856cec4459613d065f6fa5d6
+  - enabled: 1
+    path: Assets/Scenes/TadaTest/TestSceneCopy.unity
+    guid: e27ac52f0000f5a4abccace39269f0e8
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: cef15f5a95d11294d83f6d5c988c8d91,
       type: 2}

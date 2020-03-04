@@ -113,9 +113,13 @@ namespace TadaLib
                 float tmp_d_y = d.y - kEpsilon;
                 bool hit = false;
                 RaycastHit2D most_top_hit = hit_down_left;
-                if (hit_down_left && tmp_d_y <= length - hit_down_left.distance) { tmp_d_y = length - hit_down_left.distance; hit = true; }
-                if (hit_down_center && tmp_d_y <= length - hit_down_center.distance) { tmp_d_y = length - hit_down_center.distance; most_top_hit = hit_down_center; hit = true; }
-                if (hit_down_right && tmp_d_y <= length - hit_down_right.distance) { tmp_d_y = length - hit_down_right.distance; most_top_hit = hit_down_right; hit = true; }
+                //if (hit_down_left && tmp_d_y <= length - hit_down_left.distance) { tmp_d_y = length - hit_down_left.distance; hit = true; }
+                //if (hit_down_center && tmp_d_y <= length - hit_down_center.distance) { tmp_d_y = length - hit_down_center.distance; most_top_hit = hit_down_center; hit = true; }
+                //if (hit_down_right && tmp_d_y <= length - hit_down_right.distance) { tmp_d_y = length - hit_down_right.distance; most_top_hit = hit_down_right; hit = true; }
+
+                hit |= CheckButtonCollide(ref tmp_d_y, ref most_top_hit, hit_down_left, length, through);
+                hit |= CheckButtonCollide(ref tmp_d_y, ref most_top_hit, hit_down_center, length, through);
+                hit |= CheckButtonCollide(ref tmp_d_y, ref most_top_hit, hit_down_right, length, through);
 
                 d.y = Mathf.Max(d.y, tmp_d_y);
                 ButtomCollide = hit;
@@ -220,6 +224,32 @@ namespace TadaLib
             RaycastHit2D hit = Physics2D.Linecast(from, to, layer_mask);
             Debug.DrawLine(from, (hit) ? to : to);
             return hit;
+        }
+
+        // 下向き方向に飛ばしたレイの結果を反映する 接地しているときはtrueを返す
+        private bool CheckButtonCollide(ref float new_d_y, ref RaycastHit2D most_top_ray, RaycastHit2D ray, float length, bool through)
+        {
+            if (!ray) return false;
+            if (new_d_y > length - ray.distance) return false;
+
+            if (!through) // すり抜ける床の可能性があるときはカウントしないときもある
+            {
+                int layer = ray.collider.gameObject.layer;
+                // 対象のオブジェクトより下にいるときはカウントしない
+                // 移動しないすり抜ける床の時
+                if (layer == 9 && transform.position.y - length < ray.point.y - kEpsilon) return false;
+                if(layer == 11) // 移動するすり抜ける床の時
+                {
+                    float added_y = ray.collider.gameObject.GetComponent<Mover>().Diff.y;
+                    if (transform.position.y - length + added_y < ray.point.y - kEpsilon) return false;
+                }
+            }
+
+            // 更新する
+            new_d_y = length - ray.distance;
+            most_top_ray = ray;
+
+            return true;
         }
     }
 }

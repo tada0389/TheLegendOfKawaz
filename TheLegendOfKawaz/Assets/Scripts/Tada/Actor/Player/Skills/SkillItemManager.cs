@@ -102,7 +102,7 @@ namespace SkillItem
         {
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("TestScene");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("TestSceneCopy");
             }
             state_machine_.Proc();
         }
