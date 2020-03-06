@@ -6952,6 +6952,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868347, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.47724807
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868347, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.8455038
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
 --- !u!1001 &8783105767629753497
@@ -7026,6 +7036,16 @@ PrefabInstance:
       propertyPath: player_
       value: 
       objectReference: {fileID: 7288447048017794771}
+    - target: {fileID: 7062334306921869607, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
+        type: 3}
+      propertyPath: state_action1_.shot_offset_.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062334306921869607, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
+        type: 3}
+      propertyPath: state_action1_.shot_num_
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7062334306499615161, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
         type: 3}
       propertyPath: m_Mesh
