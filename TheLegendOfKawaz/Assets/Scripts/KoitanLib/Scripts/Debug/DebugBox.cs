@@ -18,6 +18,10 @@ public class DebugBox : ButtonBase
     private Vector3 offset;
     Sequence seq = DOTween.Sequence();
     private GameObject parentObj;
+    private bool isTracing;
+    private Vector3 prevPos;
+    public static List<DebugBox> boxes = new List<DebugBox>();
+    public int id;
 
     public DebugBox(Func<string> m, Transform t)
     {
@@ -29,13 +33,13 @@ public class DebugBox : ButtonBase
     {
         message = m;
         parent = t;
-        text = GetComponentInChildren<TextMeshProUGUI>();        
+        text = GetComponentInChildren<TextMeshProUGUI>();
         return this;
-    }    
+    }
 
     public DebugBox SetSize(Vector2 s)
     {
-        size = s;        
+        size = s;
         return this;
     }
 
@@ -57,14 +61,15 @@ public class DebugBox : ButtonBase
     }
 
     public DebugBox SetDefaultOpen()
-    {        
+    {
         return this;
     }
 
     protected override void Start()
     {
         base.Start();
-        parentObj = parent.gameObject;        
+        isTracing = true;
+        parentObj = parent.gameObject;
         //offset = new Vector3(0, -100);
         rectTransform.sizeDelta = new Vector2(100, 100);
         text = GetComponentInChildren<TextMeshProUGUI>();
@@ -128,12 +133,55 @@ public class DebugBox : ButtonBase
             Destroy(gameObject);
             return;
         }
-        Vector3 pos = Camera.main.WorldToScreenPoint(parent.position);
-        transform.position = pos;
-        rectTransform.transform.localPosition += offset;
+
+        if (isTracing)
+        {
+            Vector3 pos = Camera.main.WorldToScreenPoint(parent.position);
+            transform.position = pos;
+            rectTransform.transform.localPosition += offset;
+        }
+        else
+        {
+            //実装がやばい
+            float xsum = 0;
+            float xmax = 0;
+            float ysum = 0;
+            for (int i = 0; i < id; i++)
+            {
+                xmax = Mathf.Max(xmax, boxes[i].rectTransform.sizeDelta.x);
+                ysum += boxes[i].rectTransform.sizeDelta.y;
+                if (ysum + size.y > 1080)
+                {
+                    ysum = 0;
+                    xsum += xmax;
+                    xmax = 0;
+                }
+            }
+            rectTransform.transform.localPosition = new Vector2(960 - rectTransform.sizeDelta.x / 2 - xsum, 540 - ysum);
+        }
+
         if (openState == OpenState.Opened)
         {
             text.text = message();
+        }
+
+        if (isTouching && Input.GetMouseButtonDown(1))
+        {
+            if (isTracing)
+            {
+                isTracing = false;
+                id = boxes.Count;
+                boxes.Add(this);
+            }
+            else
+            {
+                isTracing = true;
+                boxes.RemoveAt(id);
+                for (int i = id; id < boxes.Count; i++)
+                {
+                    boxes[i].id--;
+                }
+            }
         }
     }
 

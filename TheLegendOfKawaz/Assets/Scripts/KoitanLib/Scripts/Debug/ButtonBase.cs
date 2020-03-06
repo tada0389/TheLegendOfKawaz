@@ -14,7 +14,7 @@ public class ButtonBase : MonoBehaviour
     protected Action onTouchEnter;
     protected Action onTouchStay;
     protected Action onTouchExit;
-    private bool isTouching;
+    protected bool isTouching;
 
     // Start is called before the first frame update
     virtual protected void Start()
