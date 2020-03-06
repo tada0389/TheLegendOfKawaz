@@ -22,13 +22,14 @@ namespace Actor.Enemy
             Think, // 次の行動を考えるステート
             Idle, // 待機中のステート アイドリング
             Damage, // ダメージを受けたときのステート
+            Fall,
 
             // 以下，任意の行動 それぞれのボスに合わせて実装する
             Shot,
             PreDash,
             Dash,
-            DashEnd,
-            Action5,
+            Jump,
+            SuperShot,
         }
 
         // 向いている方向
@@ -50,15 +51,17 @@ namespace Actor.Enemy
         [SerializeField]
         private StateDamage state_damage_;
         [SerializeField]
-        private StateAction1 state_action1_;
+        private StateFall state_fall_;
         [SerializeField]
-        private StateAction2 state_action2_;
+        private StateShot state_shot_;
         [SerializeField]
-        private StateAction3 state_action3_;
+        private StatePreDash state_predash_;
         [SerializeField]
-        private StateAction4 state_action4_;
+        private StateDash state_dash_;
         [SerializeField]
-        private StateAction5 state_action5_;
+        private StateJump state_jump_;
+        [SerializeField]
+        private StateSuperShot state_supershot_;
         #endregion
 
         // 物理演算 trb_.Velocityをいじって移動する
@@ -86,14 +89,15 @@ namespace Actor.Enemy
             state_machine_.AddState((int)eState.Think, state_think_);
             state_machine_.AddState((int)eState.Idle, state_idle_);
             state_machine_.AddState((int)eState.Damage, state_damage_);
-            state_machine_.AddState((int)eState.Shot, state_action1_);
-            state_machine_.AddState((int)eState.PreDash, state_action2_);
-            state_machine_.AddState((int)eState.Dash, state_action3_);
-            state_machine_.AddState((int)eState.DashEnd, state_action4_);
-            state_machine_.AddState((int)eState.Action5, state_action5_);
+            state_machine_.AddState((int)eState.Fall, state_fall_);
+            state_machine_.AddState((int)eState.Shot, state_shot_);
+            state_machine_.AddState((int)eState.PreDash, state_predash_);
+            state_machine_.AddState((int)eState.Dash, state_dash_);
+            state_machine_.AddState((int)eState.Jump, state_jump_);
+            state_machine_.AddState((int)eState.SuperShot, state_supershot_);
 
             // 初期ステートを設定
-            state_machine_.SetInitialState((int)eState.Think);
+            state_machine_.SetInitialState((int)eState.Fall);
 
             // デバッグ表示
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -300));
@@ -239,9 +243,38 @@ namespace Actor.Enemy
             }
         }
 
+        // 落下状態
+        [System.Serializable]
+        private class StateFall : StateMachine<TestBossController>.StateBase
+        {
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                // 地面に接地したら次のステートへ
+                if (Parent.trb_.ButtomCollide)
+                {
+                    ChangeState((int)eState.Think);
+                }
+
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(Parent.dir_, 1f) * Accel, MaxAbsSpeed);
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+
+            }
+        }
+
         // 行動1状態 弾を撃つ
         [System.Serializable]
-        private class StateAction1 : StateMachine<TestBossController>.StateBase
+        private class StateShot : StateMachine<TestBossController>.StateBase
         {
             // 撃つ量
             [SerializeField]
@@ -319,7 +352,7 @@ namespace Actor.Enemy
 
         // ダッシュの予備動作 少し後ろに下がる
         [System.Serializable]
-        private class StateAction2 : StateMachine<TestBossController>.StateBase
+        private class StatePreDash : StateMachine<TestBossController>.StateBase
         {
             [SerializeField]
             private float charge_time_ = 1.0f;
@@ -349,7 +382,7 @@ namespace Actor.Enemy
 
         // ダッシュする
         [System.Serializable]
-        private class StateAction3 : StateMachine<TestBossController>.StateBase
+        private class StateDash : StateMachine<TestBossController>.StateBase
         {
             [SerializeField]
             private float dash_time_ = 2.0f;
@@ -375,20 +408,30 @@ namespace Actor.Enemy
             }
         }
 
-        // 行動4状態
+        // 空中に浮遊して上昇するステート 左右に揺れながら上昇する
         [System.Serializable]
-        private class StateAction4 : StateMachine<TestBossController>.StateBase
+        private class StateJump : StateMachine<TestBossController>.StateBase
         {
+            // 左右に揺れる周期
+            [SerializeField]
+            private float period_ = 0.5f;
+
+            // 上昇する時間
+            [SerializeField]
+            private float duration_ = 2.0f;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                // 速度をゼロにする
+                Parent.trb_.Velocity = Vector2.zero;
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-
+                // 上向きの正弦波
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(Parent.dir_, 1f) * Accel, MaxAbsSpeed);
             }
 
             // 終了時に呼ばれる
@@ -398,9 +441,9 @@ namespace Actor.Enemy
             }
         }
 
-        // 行動5状態
+        // 周囲に何発も弾を発射するステート
         [System.Serializable]
-        private class StateAction5 : StateMachine<TestBossController>.StateBase
+        private class StateSuperShot : StateMachine<TestBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
