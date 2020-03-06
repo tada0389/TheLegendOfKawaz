@@ -100,7 +100,7 @@ namespace Actor.Enemy
             state_machine_.SetInitialState((int)eState.Fall);
 
             // デバッグ表示
-            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -300));
+            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 00));
         }
 
         private void Update()
@@ -184,8 +184,10 @@ namespace Actor.Enemy
             {
                 if(Timer > think_time_)
                 {
-                    if (Random.value > 0.6f) ChangeState((int)eState.Shot);
-                    else ChangeState((int)eState.PreDash);
+                    float value = Random.value;
+                    if (value > 0.66f) ChangeState((int)eState.Shot);
+                    else if (value > 0.33f) ChangeState((int)eState.PreDash);
+                    else ChangeState((int)eState.Jump);
                     return;
                 }
             }
@@ -396,8 +398,11 @@ namespace Actor.Enemy
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if (Timer > dash_time_) ChangeState((int)eState.Think);
-
+                if (Timer > dash_time_)
+                {
+                    ChangeState((int)eState.Think);
+                    return;
+                }
                 ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(Parent.dir_, 1f) * Accel, MaxAbsSpeed);
             }
 
@@ -423,6 +428,10 @@ namespace Actor.Enemy
             // 開始時に呼ばれる
             public override void OnStart()
             {
+                // 敵の方向を見る
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+
                 // 速度をゼロにする
                 Parent.trb_.Velocity = Vector2.zero;
             }
@@ -430,14 +439,21 @@ namespace Actor.Enemy
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                if(Timer > duration_)
+                {
+                    ChangeState((int)eState.SuperShot);
+                    return;
+                }
+
+                float dir = Mathf.Sign(Mathf.Cos(Timer / period_ * Mathf.PI));
                 // 上向きの正弦波
-                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(Parent.dir_, 1f) * Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed);
             }
 
             // 終了時に呼ばれる
             public override void OnEnd()
             {
-
+                Parent.trb_.Velocity = Vector2.zero;
             }
         }
 
@@ -445,16 +461,51 @@ namespace Actor.Enemy
         [System.Serializable]
         private class StateSuperShot : StateMachine<TestBossController>.StateBase
         {
+            [SerializeField]
+            private float charge_time_ = 2.0f;
+
+            [SerializeField]
+            private float rot_interval_ = 30f;
+
+            [SerializeField]
+            private float delay_time_ = 0.25f;
+
+            [SerializeField]
+            private int shot_num_ = 5;
+
+            private int shot_cnt_ = 0;
+            private int num_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                num_ = (int)(360f / rot_interval_ + 0.5f);
+                Parent.bullet_spawner_.Init(num_ * 5);
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                if (Timer < charge_time_) return;
 
+                if (Timer - charge_time_ > (shot_cnt_ + 1) * delay_time_)
+                {
+                    ++shot_cnt_;
+                    for (int i = 0; i < num_; ++i)
+                    {
+                        float each_dir = i * rot_interval_;
+                        if (shot_cnt_ % 2 == 0) each_dir += rot_interval_ / 2f;
+                        Vector2 dir = new Vector2(Mathf.Cos(each_dir * Mathf.Deg2Rad), Mathf.Sin(each_dir * Mathf.Deg2Rad));
+                        Parent.bullet_spawner_.Shot(Parent.transform.position, dir, "Player");
+                    }
+
+                    if (shot_cnt_ >= shot_num_)
+                    {
+                        shot_cnt_ = 0;
+                        ChangeState((int)eState.Fall);
+                        return;
+                    }
+                }
             }
 
             // 終了時に呼ばれる

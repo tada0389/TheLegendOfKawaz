@@ -31778,29 +31778,38 @@ MonoBehaviour:
   state_damage_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-  state_action1_:
+  state_fall_:
+    MaxAbsSpeed: {x: 0.5, y: 0.2}
+    Accel: {x: 0, y: -0.02}
+  state_shot_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    shot_num_: 5
+    shot_num_: 2
     shot_scale_: 1
     shot_interval_: 0.2
     trial_num_: 3
     delay_time_: 0.5
-    shot_offset_: {x: 1, y: 0.5}
-  state_action2_:
-    MaxAbsSpeed: {x: 0.05, y: 0}
+    shot_offset_: {x: 1, y: 0}
+  state_predash_:
+    MaxAbsSpeed: {x: 0.1, y: 0}
     Accel: {x: 0.01, y: 0}
-    charge_time_: 1
-  state_action3_:
-    MaxAbsSpeed: {x: 0.4, y: 0}
+    charge_time_: 0.5
+  state_dash_:
+    MaxAbsSpeed: {x: 0.3, y: 0}
     Accel: {x: 0.05, y: 0}
-    dash_time_: 0.8
-  state_action4_:
+    dash_time_: 0.6
+  state_jump_:
+    MaxAbsSpeed: {x: 0.5, y: 0.05}
+    Accel: {x: 0.015, y: 0.005}
+    period_: 0.5
+    duration_: 2
+  state_supershot_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-  state_action5_:
-    MaxAbsSpeed: {x: 0.5, y: 0}
-    Accel: {x: 0, y: 0}
+    charge_time_: 2
+    rot_interval_: 45
+    delay_time_: 0.6
+    shot_num_: 5
   player_: {fileID: 0}
 --- !u!50 &7062334306921869606
 Rigidbody2D:
