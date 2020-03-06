@@ -360,6 +360,58 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &585581189 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7062334306921869605, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 8783105767629753497}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &585581195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585581189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696d2501b72e04c16bd3642fb914b207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state_think_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    think_time_: 1
+  state_idle_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  state_damage_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  state_action1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    shot_num_: 1
+    shot_scale_: 1
+    shot_interval_: 0.2
+    trial_num_: 3
+    delay_time_: 0.5
+    shot_offset_: {x: 1, y: 0}
+  state_action2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: -0.01, y: 0}
+    charge_time_: 1
+  state_action3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0.01, y: 0}
+    dash_time_: 2
+  state_action4_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  state_action5_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  player_: {fileID: 7288447048017794771}
 --- !u!1 &666024708
 GameObject:
   m_ObjectHideFlags: 0
@@ -6569,18 +6621,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8783105767629753497}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2009079921550327230 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7062334306921869607, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
-    type: 3}
-  m_PrefabInstance: {fileID: 8783105767629753497}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a62a078a8f6305e40bc37ca037bacd40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6768959149187910150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6796,7 +6836,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actors_.Array.data[1]
       value: 
-      objectReference: {fileID: 2009079921550327230}
+      objectReference: {fileID: 585581195}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2b0470bfcba7174db9a3a469be65278, type: 3}
 --- !u!4 &7288447048017794771 stripped
@@ -6820,12 +6860,12 @@ PrefabInstance:
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 87
+      value: 81
       objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.8
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
@@ -7126,5 +7166,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7062334305907497651, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7062334306921869607, guid: 1b2d9d7055d04f74e8c67d9fa34568ad, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1b2d9d7055d04f74e8c67d9fa34568ad, type: 3}
