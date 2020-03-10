@@ -115,9 +115,9 @@ namespace Actor.Enemy
         }
 
         // このボスにぶつかるとダメージを受ける
-        private void OnTriggerEnter2D(Collider2D collider)
+        private void OnTriggerStay2D(Collider2D collider)
         {
-            if(collider.tag == "Player")
+            if (collider.tag == "Player")
             {
                 collider.GetComponent<BaseActorController>().Damage(3);
             }

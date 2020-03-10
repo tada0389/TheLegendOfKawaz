@@ -856,6 +856,16 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: mesh_
+      value: 
+      objectReference: {fileID: 469150893}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: muteki_time_
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
 --- !u!4 &443616217 stripped
@@ -876,6 +886,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b29ac43615ea641abbdec8e8cbe0c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &469150893 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2131037087800481256, guid: 185d8f59bce6ce0409df1fca3665c769,
+    type: 3}
+  m_PrefabInstance: {fileID: 443616216}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &507311754
 GameObject:
   m_ObjectHideFlags: 0

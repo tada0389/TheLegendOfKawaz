@@ -216,6 +216,12 @@ namespace Actor.Player
         [SerializeField]
         private GameObject charge_shot_end_;
 
+        [SerializeField]
+        private float muteki_time_ = 2.0f;
+        [SerializeField]
+        private GameObject mesh_;
+        private Timer muteki_timer_;
+
         // 初期スキル
         #region debug
         [System.Serializable]
@@ -235,6 +241,7 @@ namespace Actor.Player
             GetSkillSet();
 
             shot_anim_timer_ = new Timer(0.3f);
+            muteki_timer_ = new Timer(muteki_time_);
 
             data_ = new Data(this);
             HP = data_.HP;
@@ -372,11 +379,28 @@ namespace Actor.Player
         // ダメージを受ける
         public override void Damage(int damage)
         {
+            if (!muteki_timer_.IsTimeout()) return;
             if (state_machine_.CurrentStateId == (int)eState.Damage) return;
             state_machine_.ChangeState((int)eState.Damage);
             HP = Mathf.Max(0, HP - damage);
             data_.SetHP(HP);
             if (HP == 0) Debug.Log("Defeated");
+
+            muteki_timer_.TimeReset();
+            StartCoroutine(Tenmetu());
+        }
+
+        //点滅
+        private IEnumerator Tenmetu()
+        {
+            mesh_.SetActive(false);
+            yield return new WaitForSeconds(0.05f);
+            mesh_.SetActive(true);
+            yield return new WaitForSeconds(0.05f);
+            if (!muteki_timer_.IsTimeout())
+            {
+                StartCoroutine(Tenmetu());
+            }
         }
 
         // デバッグで最初から指定したスキルを持っている
