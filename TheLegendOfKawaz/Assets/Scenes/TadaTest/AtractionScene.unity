@@ -151,14 +151,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae76dad5392cd9f45be3202415ddaaa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boader_: {fileID: 0}
-  targets_:
-  - {fileID: 2093493227}
-  offset_: {x: 0, y: 0, z: 0}
-  smooth_time_: 0.3
-  min_zoom_: 60
-  max_zoom_: 75
-  zoom_limiter_: 60
+  data_:
+    boader_: {fileID: 0}
+    targets_: []
+    offset_: {x: 0, y: 0, z: 0}
+    smooth_time_: 0.3
+    min_zoom_: 85
+    max_zoom_: 75
+    zoom_limiter_: 60
 --- !u!81 &43897772
 AudioListener:
   m_ObjectHideFlags: 0
@@ -856,6 +856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0, type: 3}
+  damage_: 2
 --- !u!1 &728784580
 GameObject:
   m_ObjectHideFlags: 0
@@ -10044,12 +10045,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
---- !u!4 &2093493227 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
-    type: 3}
-  m_PrefabInstance: {fileID: 2093493226}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2109941126
 GameObject:
   m_ObjectHideFlags: 0
