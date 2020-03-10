@@ -496,7 +496,7 @@ namespace Actor.Enemy
                         float each_dir = i * rot_interval_;
                         if (shot_cnt_ % 2 == 0) each_dir += rot_interval_ / 2f;
                         Vector2 dir = new Vector2(Mathf.Cos(each_dir * Mathf.Deg2Rad), Mathf.Sin(each_dir * Mathf.Deg2Rad));
-                        Parent.bullet_spawner_.Shot(Parent.transform.position, dir, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.transform.position, dir, "Player", 0.7f, 6.0f);
                     }
 
                     if (shot_cnt_ >= shot_num_)

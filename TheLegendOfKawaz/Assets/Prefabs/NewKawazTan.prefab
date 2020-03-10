@@ -409,9 +409,9 @@ MonoBehaviour:
       type: 3}
   damage_state_:
     MaxAbsSpeed: {x: 1, y: 1}
-    Accel: {x: -0.001, y: -0.015}
-    power_: {x: 0.01, y: 0.3}
-    rigidity_time_: 0.8
+    Accel: {x: -0.0005, y: -0.0075}
+    power_: {x: 0.005, y: 0.15}
+    rigidity_time_: 0.4
   charge_shot_pre_: {fileID: 5178167681758080773}
   charge_shot_end_: {fileID: 5586593142362632429}
   demo_skills_:
