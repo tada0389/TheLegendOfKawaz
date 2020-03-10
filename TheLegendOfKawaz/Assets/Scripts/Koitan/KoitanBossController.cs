@@ -162,10 +162,20 @@ namespace Actor.Enemy
         //点滅
         private IEnumerator Tenmetu()
         {
-            mesh.SetActive(false);
-            yield return new WaitForSeconds(0.05f);
-            mesh.SetActive(true);
-            yield return new WaitForSeconds(0.05f);
+            if (mutekiTime < 1f)
+            {
+                mesh.SetActive(false);
+                yield return new WaitForEndOfFrame();
+                mesh.SetActive(true);
+                yield return new WaitForEndOfFrame();
+            }
+            else
+            {
+                mesh.SetActive(false);
+                yield return new WaitForSeconds(0.05f);
+                mesh.SetActive(true);
+                yield return new WaitForSeconds(0.05f);
+            }
             if (mutekiTime > 0)
             {
                 StartCoroutine(Tenmetu());
