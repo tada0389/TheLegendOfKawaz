@@ -20,7 +20,9 @@ namespace Actor.Enemy
         {
             Think, // 次の行動を考えるステート
             Idle, // 待機中のステート アイドリング
+            Fall, // 落下中のステート
             Damage, // ダメージを受けたときのステート
+            Dead, // 死亡したときのステート
 
             // 以下，任意の行動 それぞれのボスに合わせて実装する
             Action1,
@@ -47,7 +49,11 @@ namespace Actor.Enemy
         [SerializeField]
         private StateIdle state_idle_;
         [SerializeField]
+        private StateFall state_fall_;
+        [SerializeField]
         private StateDamage state_damage_;
+        [SerializeField]
+        private StateDead state_dead_;
         [SerializeField]
         private StateAction1 state_action1_;
         [SerializeField]
@@ -63,6 +69,13 @@ namespace Actor.Enemy
         // 物理演算 trb_.Velocityをいじって移動する
         private TadaRigidbody trb_;
 
+        // 現在見ている方向
+        private float dir_ = 1f;
+
+        // プレイヤーの座標
+        [SerializeField]
+        private Transform player_;
+
         private void Start()
         {
             trb_ = GetComponent<TadaRigidbody>();
@@ -73,7 +86,9 @@ namespace Actor.Enemy
             // ステートを登録
             state_machine_.AddState((int)eState.Think, state_think_);
             state_machine_.AddState((int)eState.Idle, state_idle_);
+            state_machine_.AddState((int)eState.Fall, state_fall_);
             state_machine_.AddState((int)eState.Damage, state_damage_);
+            state_machine_.AddState((int)eState.Dead, state_dead_);
             state_machine_.AddState((int)eState.Action1, state_action1_);
             state_machine_.AddState((int)eState.Action2, state_action2_);
             state_machine_.AddState((int)eState.Action3, state_action3_);
@@ -84,7 +99,7 @@ namespace Actor.Enemy
             state_machine_.SetInitialState((int)eState.Think);
 
             // デバッグ表示
-            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -300));
+            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 0));
         }
 
         private void Update()
@@ -98,11 +113,13 @@ namespace Actor.Enemy
             // 浮動小数点型で==はあんまよくないけど・・・
             if (dir == eDir.Left && transform.localEulerAngles.y != 180f)
             {
+                dir_ = -1f;
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 180f, transform.localEulerAngles.z);
             }
             // else if(data_.velocity.x > 0f)
             else if (dir == eDir.Right && transform.localEulerAngles.y != 0f)
             {
+                dir_ = 1f;
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
             }
         }
@@ -194,9 +211,61 @@ namespace Actor.Enemy
             }
         }
 
+        // 落下状態
+        [System.Serializable]
+        private class StateFall : StateMachine<BaseBossController>.StateBase
+        {
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                if (Parent.trb_.ButtomCollide)
+                {
+                    ChangeState((int)eState.Think);
+                    return;
+                }
+
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, Accel, MaxAbsSpeed);
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+
+            }
+        }
+
         // ダメージを受けたときの状態
         [System.Serializable]
         private class StateDamage : StateMachine<BaseBossController>.StateBase
+        {
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+
+            }
+        }
+
+        // 死亡したときの状態
+        [System.Serializable]
+        private class StateDead : StateMachine<BaseBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()

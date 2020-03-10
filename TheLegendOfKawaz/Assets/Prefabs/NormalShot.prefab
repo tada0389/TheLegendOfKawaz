@@ -19334,7 +19334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move_body_: {fileID: 6441579040997332809}
-  speed_: 0.3
+  init_speed_: 0.3
   life_time_: 1
   shot_effect_: {fileID: 239519194196552510}
   hit_effect_: {fileID: 9146841483023608034}
@@ -19346,7 +19346,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2810330064252820525}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

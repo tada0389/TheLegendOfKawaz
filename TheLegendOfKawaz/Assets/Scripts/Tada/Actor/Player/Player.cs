@@ -178,6 +178,7 @@ namespace Actor.Player
             Fall, // 落下中のステート(ジャンプでの落下はこれじゃない)
             Wall, // 壁に密着しているステート
             Dush, // ダッシュしているステート
+            DashJump, // ダッシュジャンプ
             Damage, // ダメージを受けたときのステート
         }
 
@@ -203,6 +204,8 @@ namespace Actor.Player
         private StateWall wall_state_;
         [SerializeField]
         private StateDush dush_state_;
+        [SerializeField]
+        private StateDashJump dashjump_state_;
         [SerializeField]
         private StateDamage damage_state_;
 #endregion
@@ -256,6 +259,7 @@ namespace Actor.Player
             state_machine_.AddState((int)eState.Fall, fall_state_);
             state_machine_.AddState((int)eState.Wall, wall_state_);
             state_machine_.AddState((int)eState.Dush, dush_state_);
+            state_machine_.AddState((int)eState.DashJump, dashjump_state_);
             state_machine_.AddState((int)eState.Damage, damage_state_);
 
             // 始めのステートを設定

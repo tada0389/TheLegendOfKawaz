@@ -10,7 +10,7 @@ using TadaLib;
 
 namespace Bullet
 {
-    public class NormalBullet : BaseBulletController
+    public class HomingBullet : BaseBulletController
     {
         [SerializeField]
         private float init_speed_ = 0.3f;
@@ -23,6 +23,11 @@ namespace Bullet
         [SerializeField]
         private ParticleSystem hit_effect_;
 
+        [SerializeField, Range(0, 1)]
+        private float homing_power_ = 0.5f;
+
+        private Transform target_;
+
         private Vector2 dir_;
 
         private Timer timer_;
@@ -30,6 +35,7 @@ namespace Bullet
         private string opponent_tag_;
         private int damage_;
         private float speed_;
+        private float prev_target_angle_;
 
         private void Update()
         {
@@ -48,7 +54,9 @@ namespace Bullet
             dir_ = dir;
             damage_ = damage;
             opponent_tag_ = opponent_tag;
+            target_ = target;
             speed_ = init_speed_ * init_speed;
+            prev_target_angle_ = Mathf.Atan2(dir.y, dir.x);
             if (life_time > 0f) life_time_ = life_time;
             timer_.TimeReset();
             CreateEffect(shot_effect_, transform.position);
@@ -56,8 +64,27 @@ namespace Bullet
 
         protected override void Move()
         {
-            move_body_.transform.position += (Vector3)dir_ * speed_ * 60f * Time.deltaTime;
             if (timer_.IsTimeout()) Dead();
+
+            if (target_ == null)
+            {
+                move_body_.transform.position += (Vector3)dir_ * speed_ * 60f * Time.deltaTime;
+            }
+            else
+            {
+                Vector3 next = target_.position;
+                Vector3 now = transform.position;
+                // 目的となる角度を取得する
+                Vector3 d = next - now;
+                float angle = Mathf.Atan2(d.y, d.x);
+                // アングルを前の移動アングルとの補間にする
+                angle = angle * homing_power_ + prev_target_angle_ * (1f - homing_power_);
+                prev_target_angle_ = angle;
+
+                Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+
+                move_body_.transform.position += (Vector3)dir * speed_ * 60f * Time.deltaTime;
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
