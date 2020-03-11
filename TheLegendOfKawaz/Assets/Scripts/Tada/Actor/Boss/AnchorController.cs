@@ -127,11 +127,13 @@ namespace Actor.Enemy
             Destroy(effect.gameObject);
         }
 
+        // 壁に当たったら止まる
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.tag == "Stage" || collider.tag == opponent_tag_)
             {
                 if (collider.tag == opponent_tag_) collider.GetComponent<Actor.BaseActorController>().Damage(damage_);
+                if (collider.tag == "Stage") Stop();
             }
         }
 

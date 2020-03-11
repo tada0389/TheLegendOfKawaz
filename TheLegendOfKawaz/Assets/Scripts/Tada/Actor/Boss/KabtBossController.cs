@@ -224,17 +224,21 @@ namespace Actor.Enemy
             {
                 float value = Random.value;
 
-                if (value < 0.25f)
+                if (value < 0.2f)
                 {
                     ChangeState((int)eState.Tackle1);
                 }
-                else if (value < 0.5f)
+                else if (value < 0.4f)
                 {
                     ChangeState((int)eState.PlasmaMini);
                 }
-                else if (value < 0.75f)
+                else if (value < 0.6f)
                 {
                     ChangeState((int)eState.PlasmaBig1);
+                }
+                else if(value < 0.8f)
+                {
+                    ChangeState((int)eState.Anchor1);
                 }
                 else
                 {
@@ -346,7 +350,7 @@ namespace Actor.Enemy
             }
         }
 
-        // 行動1状態
+        // 少し宙に浮いて突っ込む準備をする
         [System.Serializable]
         private class StateTackle1 : StateMachine<KabtBossController>.StateBase
         {
@@ -382,7 +386,7 @@ namespace Actor.Enemy
 
             }
         }
-        // 行動1状態
+        // 突っ込む
         [System.Serializable]
         private class StateTackle2 : StateMachine<KabtBossController>.StateBase
         {
@@ -421,7 +425,7 @@ namespace Actor.Enemy
 
             }
         }
-        // 行動1状態
+        // 突っ込んだ反動で後退する
         [System.Serializable]
         private class StateTackle3 : StateMachine<KabtBossController>.StateBase
         {
@@ -441,7 +445,7 @@ namespace Actor.Enemy
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if(Timer > rigidy_time_)
+                if(Timer > rigidy_time_ && Parent.trb_.ButtomCollide)
                 {
                     ChangeState((int)eState.Fall);
                     return;
@@ -459,22 +463,35 @@ namespace Actor.Enemy
         }
 
 
-        // 行動2状態
+        // 敵の方向にアンカーを飛ばす
         [System.Serializable]
         private class StateAnchor1 : StateMachine<KabtBossController>.StateBase
         {
             [SerializeField]
             private float delay_ = 1.5f;
 
+            // 発火するまでの時間
+            [SerializeField]
+            private float flush_time_ = 0.5f;
+            private int flush_cnt_;
+
+            // 飛ばした後の待ち時間
+            [SerializeField]
+            private float rigity_time_ = 0.5f;
+
             private int shot_cnt_;
 
             [SerializeField]
             private List<AnchorController> anchors_;
 
+            private Vector2 target_dir_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
                 shot_cnt_ = 0;
+                flush_cnt_ = 0;
+                target_dir_ = Vector2.zero;
 
                 // その場でとどまる
                 Parent.trb_.Velocity = Vector2.zero;
@@ -483,23 +500,29 @@ namespace Actor.Enemy
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if (Timer > shot_cnt_ * delay_ + delay_)
+                // アンカーを飛ばす
+                if (Timer > shot_cnt_ * delay_ + delay_ && shot_cnt_ != 2)
                 {
+                    ShotAnchor();
                     ++shot_cnt_;
-                    Vector3 next = Parent.player_.position;
-                    Vector3 now = Parent.transform.position;
-                    // 目的となる角度を取得する
-                    Vector3 d = next - now;
-                    float angle = Mathf.Atan2(d.y, d.x);
-                    
-                    //Parent.bullet_spawners_[0].Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * Parent.dir_, Parent.transform.position.y
-                    //     + shot_offset_.y), new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.player_, 1.0f, 10.0f);
+                }
 
-                    //if (shot_cnt_ >= shot_num_)
-                    //{
-                    //    ChangeState((int)eState.Fall);
-                    //    return;
-                    //}
+                // 飛ばしたアンカーの軌道を発光させる
+                if (flush_cnt_ < shot_cnt_ && Timer > flush_cnt_ * delay_ + delay_ + flush_time_)
+                {
+                    anchors_[flush_cnt_].Flush();
+                    anchors_[flush_cnt_].Stop();
+                    ++flush_cnt_;
+                }
+
+                // 終了
+                if (Timer > 2f * delay_ + flush_time_ + rigity_time_)
+                {
+                    anchors_[0].Finish();
+                    anchors_[1].Finish();
+                    // 飛ばす方向をあらかじめ与えておく しかたない
+                    Parent.trb_.Velocity = target_dir_.normalized;
+                    ChangeState((int)eState.Anchor2);
                 }
             }
 
@@ -508,22 +531,54 @@ namespace Actor.Enemy
             {
 
             }
+
+            // アンカーを飛ばす
+            private void ShotAnchor()
+            {
+                // 敵の方向をむく
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+
+                Vector3 next = Parent.player_.position;
+                Vector3 now = Parent.transform.position;
+
+                // 目的となる角度を取得する
+                Vector3 d = next - now;
+                float angle = Mathf.Atan2(d.y, d.x);
+                Vector2 dir_vec = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                target_dir_ += dir_vec / 2f;
+                anchors_[shot_cnt_].Init(Parent.transform.position,
+                    dir_vec, 3, "Player", Parent.player_);
+            }
         }
 
-        // 行動2状態
+        // 飛ばした2つのアンカーの真ん中へ突っ込む
         [System.Serializable]
         private class StateAnchor2 : StateMachine<KabtBossController>.StateBase
         {
+            [SerializeField]
+            private float init_speed_ = 0.4f;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
+                Parent.trb_.Velocity *= init_speed_;
 
+                // 飛ぶ方向を向く
+                Parent.SetDirection((Parent.trb_.Velocity.x < 0f) ? eDir.Left : eDir.Right);
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                if(Parent.trb_.LeftCollide || Parent.trb_.RightCollide || Parent.trb_.TopCollide)
+                {
+                    // 使いまわし
+                    ChangeState((int)eState.Tackle3);
+                    return;
+                }
 
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, Accel, MaxAbsSpeed);
             }
 
             // 終了時に呼ばれる
@@ -533,7 +588,7 @@ namespace Actor.Enemy
             }
         }
 
-        // 行動3状態
+        // ホーミング弾を放つ
         [System.Serializable]
         private class StatePlasmaMini : StateMachine<KabtBossController>.StateBase
         {
@@ -601,7 +656,7 @@ namespace Actor.Enemy
             }
         }
 
-        // 行動4状態
+        // 画面中央にジャンプして次の攻撃の準備をする
         [System.Serializable]
         private class StatePlasmaBig1 : StateMachine<KabtBossController>.StateBase
         {
@@ -641,7 +696,7 @@ namespace Actor.Enemy
             }
         }
 
-        // 行動4状態
+        // 4方向にアンカーを飛ばしてホーミング弾を放つ
         [System.Serializable]
         private class StatePlasmaBig2 : StateMachine<KabtBossController>.StateBase
         {
@@ -682,21 +737,14 @@ namespace Actor.Enemy
                 // 4方向にアンカーを伸ばす
                 for(int i = 0; i < shot_offset_list_.Count; ++i)
                 {
-                    // 目的となる角度を取得する
-                    Vector3 d = (Vector3)shot_offset_list_[i];
-                    float angle = Mathf.Atan2(d.y, d.x);
-
-                    float init_speed = d.magnitude;
-                    if (charge_time_ > 0.1f) init_speed *= (0.3f / charge_time_);
-
-                    anchors_[i].Init(Parent.transform.position,
-                        new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), 3, "Player", Parent.player_, init_speed * 0.2f);
+                    ShotAnchor(i);
                 }
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                // 飛ばしたアンカーの軌道を発光させる
                 if(Timer > charge_time_ && !charged_)
                 {
                     charged_ = true;
@@ -708,15 +756,10 @@ namespace Actor.Enemy
                     }
                 }
 
+                // 弾を撃つ
                 if (Timer > shot_cnt_ * delay_ + delay_ + charge_time_ && shot_cnt_ != shot_offset_list_.Count)
                 {
-                    Vector3 next = Parent.player_.position;
-                    Vector3 now = Parent.transform.position;
-                    // 目的となる角度を取得する
-                    Vector3 d = next - now;
-                    float angle = Mathf.Atan2(d.y, d.x);
-                    bullet_spawner_.Shot(Parent.transform.position + (Vector3)shot_offset_list_[shot_cnt_], 
-                        new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.player_, 1.0f, 10.0f);
+                    Shot();
 
                     ++shot_cnt_;
                 }
@@ -736,6 +779,32 @@ namespace Actor.Enemy
                 {
                     anchors_[i].Finish();
                 }
+            }
+
+            // アンカーを飛ばす
+            private void ShotAnchor(int index)
+            {
+                // 目的となる角度を取得する
+                Vector3 d = (Vector3)shot_offset_list_[index];
+                float angle = Mathf.Atan2(d.y, d.x);
+
+                float init_speed = d.magnitude;
+                if (charge_time_ > 0.1f) init_speed *= (0.3f / charge_time_);
+
+                anchors_[index].Init(Parent.transform.position,
+                    new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), 3, "Player", Parent.player_, init_speed * 0.2f);
+            }
+
+            // 弾を打つ
+            private void Shot()
+            {
+                Vector3 next = Parent.player_.position;
+                Vector3 now = Parent.transform.position;
+                // 目的となる角度を取得する
+                Vector3 d = next - now;
+                float angle = Mathf.Atan2(d.y, d.x);
+                bullet_spawner_.Shot(Parent.transform.position + (Vector3)shot_offset_list_[shot_cnt_],
+                    new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.player_, 1.0f, 10.0f);
             }
         }
 

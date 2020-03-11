@@ -180,6 +180,7 @@ namespace Actor.Player
             Dush, // ダッシュしているステート
             DashJump, // ダッシュジャンプ
             Damage, // ダメージを受けたときのステート
+            Dead, // 死亡ステート
         }
 
         // ステートマシン
@@ -208,6 +209,8 @@ namespace Actor.Player
         private StateDashJump dashjump_state_;
         [SerializeField]
         private StateDamage damage_state_;
+        [SerializeField]
+        private StateDead dead_state_;
 #endregion
 
         private Timer shot_anim_timer_;
@@ -261,6 +264,7 @@ namespace Actor.Player
             state_machine_.AddState((int)eState.Dush, dush_state_);
             state_machine_.AddState((int)eState.DashJump, dashjump_state_);
             state_machine_.AddState((int)eState.Damage, damage_state_);
+            state_machine_.AddState((int)eState.Dead, dead_state_);
 
             // 始めのステートを設定
             state_machine_.SetInitialState((int)eState.Fall);
@@ -388,8 +392,11 @@ namespace Actor.Player
             state_machine_.ChangeState((int)eState.Damage);
             HP = Mathf.Max(0, HP - damage);
             data_.SetHP(HP);
-            if (HP == 0) Debug.Log("Defeated");
-
+            if (HP == 0)
+            {
+                state_machine_.ChangeState((int)eState.Dead);
+                Debug.Log("Defeated");
+            }
             muteki_timer_.TimeReset();
             StartCoroutine(Tenmetu());
         }

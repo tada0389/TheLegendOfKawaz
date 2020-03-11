@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3043645560741860}
   - component: {fileID: 6044741844653785467}
   - component: {fileID: 4601130563077378238}
+  - component: {fileID: 5134327217840306017}
   m_Layer: 0
   m_Name: AnchorPoint
   m_TagString: Untagged
@@ -95,6 +96,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body_: {fileID: 8388650080884138623}
+--- !u!50 &5134327217840306017
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2607691406681188736}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &7832702571790473634
 GameObject:
   m_ObjectHideFlags: 0
@@ -14365,6 +14387,7 @@ GameObject:
   - component: {fileID: 8388650080884138622}
   - component: {fileID: 8388650080884138623}
   - component: {fileID: 8388650080884138608}
+  - component: {fileID: 5744082076161848401}
   m_Layer: 0
   m_Name: charge_mame
   m_TagString: Untagged
@@ -19111,6 +19134,22 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!58 &5744082076161848401
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8388650080884138609}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.8
 --- !u!1 &8388650081386911743
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,5 +21,14 @@ namespace Actor.Enemy
         {
             body_.gameObject.SetActive(false);
         }
+
+        // このボスにぶつかるとダメージを受ける
+        private void OnTriggerStay2D(Collider2D collider)
+        {
+            if (collider.tag == "Player")
+            {
+                collider.GetComponent<BaseActorController>().Damage(2);
+            }
+        }
     }
 }

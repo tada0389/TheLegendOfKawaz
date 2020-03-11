@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4788564474332811903}
   - component: {fileID: 4254184008618098556}
   - component: {fileID: 1436968670176436495}
+  - component: {fileID: 4800497936331997097}
+  - component: {fileID: 3683722178449845786}
   m_Layer: 0
   m_Name: AnchorController
   m_TagString: Untagged
@@ -98,3 +100,41 @@ MonoBehaviour:
     type: 3}
   effect_interval_length_: 1
   init_speed_: 0.3
+  init_back_speed_: 1.5
+--- !u!50 &4800497936331997097
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7087732865757931780}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!58 &3683722178449845786
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7087732865757931780}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
