@@ -7,7 +7,7 @@ using TadaLib;
 /// 全てのボスの基礎 これをコピペしてください
 /// ただし，BaseBossController => 〇〇〇BossController と書き換えること
 /// ファイル一つで済ませる
-/// 詳しくは，テストで作ったThunderBossControllerを見てください
+/// 詳しくは，テストで作ったKabtBossControllerを見てください
 /// </summary>
 
 namespace Actor.Enemy

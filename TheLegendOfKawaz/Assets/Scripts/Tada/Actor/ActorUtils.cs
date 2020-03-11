@@ -14,7 +14,14 @@ namespace Actor
         public static void ProcSpeed(ref Vector2 velocity, Vector2 accel, Vector2 max_abs_speed)
         {
             accel *= Time.deltaTime * 60f;
+            // 加速度を加算するか
+            //if (accel.x > 0f) velocity.x = Mathf.Min(velocity.x + accel.x, max_abs_speed.x); 
+            //if (accel.x < 0f) velocity.x = Mathf.Max(velocity.x + accel.x, -max_abs_speed.x); 
+            //if (accel.x > 0f) velocity.y = Mathf.Min(velocity.y + accel.y, max_abs_speed.y); 
+            //if (accel.x < 0f) velocity.y = Mathf.Max(velocity.y + accel.y, -max_abs_speed.y);
+
             velocity += accel;
+
             float rate = Mathf.Pow(0.93f, Time.deltaTime / 0.016666f);
             if (velocity.x > max_abs_speed.x) velocity.x = Mathf.Max(velocity.x * rate, max_abs_speed.x);
             if (velocity.x < -max_abs_speed.x) velocity.x = Mathf.Min(velocity.x * rate, -max_abs_speed.x);

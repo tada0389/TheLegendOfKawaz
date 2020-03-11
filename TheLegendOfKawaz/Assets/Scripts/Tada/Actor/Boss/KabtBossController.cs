@@ -25,9 +25,12 @@ namespace Actor.Enemy
             Tackle1, // ビートタックル 準備
             Tackle2, // ビートタックル 移動
             Tackle3, // ビートタックル 衝突後
-            Anchor, // ビートアンカー
+            Anchor1, // ビートアンカー 準備
+            Anchor2, // ビートアンカー 移動
             PlasmaMini, // ビートプラズマ (小)
-            PlasmaBig, // ビートプラズマ (大)
+            PlasmaBig1, // ビートプラズマ (大) 準備
+            PlasmaBig2, // ビートプラズマ (大) 発射
+            Jump, // ジャンプでプレイヤーの方向に飛んでいく
         }
 
         // 向いている方向
@@ -59,11 +62,17 @@ namespace Actor.Enemy
         [SerializeField]
         private StateTackle3 state_tackle3_;
         [SerializeField]
-        private StateAnchor state_anchor_;
+        private StateAnchor1 state_anchor1_;
+        [SerializeField]
+        private StateAnchor2 state_anchor2_;
         [SerializeField]
         private StatePlasmaMini state_plasma_mini_;
         [SerializeField]
-        private StatePlasmaBig state_plasma_big_;
+        private StatePlasmaBig1 state_plasma_big1_;
+        [SerializeField]
+        private StatePlasmaBig2 state_plasma_big2_;
+        [SerializeField]
+        private StateJump state_jump_;
         #endregion
 
         // 物理演算 trb_.Velocityをいじって移動する
@@ -76,20 +85,14 @@ namespace Actor.Enemy
         [SerializeField]
         private Transform player_;
 
-        // 死亡時の爆発のエフェクト
-        [SerializeField]
-        private ParticleSystem explosion_effect_;
-
-        private BulletSpawner bullet_spawner_;
-        private bool bullet_inited_;
+        // タックルする方向
+        private float tackle_angle_;
 
         private void Start()
         {
             HP = 20;
 
             trb_ = GetComponent<TadaRigidbody>();
-            bullet_spawner_ = GetComponent<BulletSpawner>();
-            bullet_inited_ = false;
 
             // ステートマシンのメモリ確保 自分自身を渡す
             state_machine_ = new StateMachine<KabtBossController>(this);
@@ -103,9 +106,12 @@ namespace Actor.Enemy
             state_machine_.AddState((int)eState.Tackle1, state_tackle1_);
             state_machine_.AddState((int)eState.Tackle2, state_tackle2_);
             state_machine_.AddState((int)eState.Tackle3, state_tackle3_);
-            state_machine_.AddState((int)eState.Anchor, state_anchor_);
+            state_machine_.AddState((int)eState.Anchor1, state_anchor1_);
+            state_machine_.AddState((int)eState.Anchor2, state_anchor2_);
             state_machine_.AddState((int)eState.PlasmaMini, state_plasma_mini_);
-            state_machine_.AddState((int)eState.PlasmaBig, state_plasma_big_);
+            state_machine_.AddState((int)eState.PlasmaBig1, state_plasma_big1_);
+            state_machine_.AddState((int)eState.PlasmaBig2, state_plasma_big2_);
+            state_machine_.AddState((int)eState.Jump, state_jump_);
 
             // 初期ステートを設定
             state_machine_.SetInitialState((int)eState.Fall);
@@ -142,7 +148,6 @@ namespace Actor.Enemy
             HP = Mathf.Max(0, HP - damage);
             if (HP == 0)
             {
-                explosion_effect_.gameObject.SetActive(true);
                 state_machine_.ChangeState((int)eState.Dead);
                 Debug.Log("Defeated");
             }
@@ -153,7 +158,7 @@ namespace Actor.Enemy
         {
             if (collider.tag == "Player")
             {
-                collider.GetComponent<BaseActorController>().Damage(3);
+                collider.GetComponent<BaseActorController>().Damage(4);
             }
         }
 
@@ -195,7 +200,7 @@ namespace Actor.Enemy
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                Parent.trb_.Velocity = Vector2.zero;
             }
 
             // 毎フレーム呼ばれる
@@ -219,13 +224,21 @@ namespace Actor.Enemy
             {
                 float value = Random.value;
 
-                if(value < 0.1f)
+                if (value < 0.25f)
                 {
                     ChangeState((int)eState.Tackle1);
                 }
-                else
+                else if (value < 0.5f)
                 {
                     ChangeState((int)eState.PlasmaMini);
+                }
+                else if (value < 0.75f)
+                {
+                    ChangeState((int)eState.PlasmaBig1);
+                }
+                else
+                {
+                    ChangeState((int)eState.Jump);
                 }
             }
         }
@@ -309,10 +322,15 @@ namespace Actor.Enemy
         [System.Serializable]
         private class StateDead : StateMachine<KabtBossController>.StateBase
         {
+            // 死亡時の爆発のエフェクト
+            [SerializeField]
+            private ParticleSystem explosion_effect_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                Parent.trb_.Velocity = Vector2.zero;
+                explosion_effect_.gameObject.SetActive(true);
             }
 
             // 毎フレーム呼ばれる
@@ -443,7 +461,58 @@ namespace Actor.Enemy
 
         // 行動2状態
         [System.Serializable]
-        private class StateAnchor : StateMachine<KabtBossController>.StateBase
+        private class StateAnchor1 : StateMachine<KabtBossController>.StateBase
+        {
+            [SerializeField]
+            private float delay_ = 1.5f;
+
+            private int shot_cnt_;
+
+            [SerializeField]
+            private List<AnchorController> anchors_;
+
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                shot_cnt_ = 0;
+
+                // その場でとどまる
+                Parent.trb_.Velocity = Vector2.zero;
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                if (Timer > shot_cnt_ * delay_ + delay_)
+                {
+                    ++shot_cnt_;
+                    Vector3 next = Parent.player_.position;
+                    Vector3 now = Parent.transform.position;
+                    // 目的となる角度を取得する
+                    Vector3 d = next - now;
+                    float angle = Mathf.Atan2(d.y, d.x);
+                    
+                    //Parent.bullet_spawners_[0].Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * Parent.dir_, Parent.transform.position.y
+                    //     + shot_offset_.y), new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.player_, 1.0f, 10.0f);
+
+                    //if (shot_cnt_ >= shot_num_)
+                    //{
+                    //    ChangeState((int)eState.Fall);
+                    //    return;
+                    //}
+                }
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+
+            }
+        }
+
+        // 行動2状態
+        [System.Serializable]
+        private class StateAnchor2 : StateMachine<KabtBossController>.StateBase
         {
             // 開始時に呼ばれる
             public override void OnStart()
@@ -479,6 +548,10 @@ namespace Actor.Enemy
 
             private int shot_cnt_;
 
+            [SerializeField]
+            private BulletSpawner bullet_spawner_;
+            private bool bullet_inited_ = false;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
@@ -487,8 +560,16 @@ namespace Actor.Enemy
                 // その場でとどまる
                 Parent.trb_.Velocity = Vector2.zero;
 
+                // 敵の方向をむく
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+
                 // 弾のプーリングの初期化
-                if (!Parent.bullet_inited_) Parent.bullet_spawner_.Init(shot_num_);
+                if (!bullet_inited_)
+                {
+                    bullet_spawner_.Init(shot_num_);
+                    bullet_inited_ = true;
+                }
             }
 
             // 毎フレーム呼ばれる
@@ -497,13 +578,12 @@ namespace Actor.Enemy
                 if(Timer > shot_cnt_ * delay_ + delay_)
                 {
                     ++shot_cnt_;
-                    // ホーミング弾
                     Vector3 next = Parent.player_.position;
                     Vector3 now = Parent.transform.position;
                     // 目的となる角度を取得する
                     Vector3 d = next - now;
                     float angle = Mathf.Atan2(d.y, d.x);
-                    Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * Parent.dir_, Parent.transform.position.y
+                    bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * Parent.dir_, Parent.transform.position.y
                          + shot_offset_.y), new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.player_, 1.0f, 10.0f);
 
                     if(shot_cnt_ >= shot_num_)
@@ -523,18 +603,181 @@ namespace Actor.Enemy
 
         // 行動4状態
         [System.Serializable]
-        private class StatePlasmaBig : StateMachine<KabtBossController>.StateBase
+        private class StatePlasmaBig1 : StateMachine<KabtBossController>.StateBase
         {
+            // 移動先
+            [SerializeField]
+            private Vector3 target_pos_ = Vector2.zero;
+
+            [SerializeField]
+            private float move_time_ = 2.0f;
+
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                Vector2 d = target_pos_ - Parent.transform.position;
+                float t = move_time_ * 60f;
+                Parent.trb_.Velocity.x = d.x / t;
+                Parent.trb_.Velocity.y = d.y / t - Accel.y * t / 2f;
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(0f, Accel.y), Vector2.one * 10f);
 
+                if(Timer > move_time_)
+                {
+                    ChangeState((int)eState.PlasmaBig2);
+                    return;
+                }
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+                Parent.trb_.Velocity = Vector2.zero;
+            }
+        }
+
+        // 行動4状態
+        [System.Serializable]
+        private class StatePlasmaBig2 : StateMachine<KabtBossController>.StateBase
+        {
+            [SerializeField]
+            private List<Vector2> shot_offset_list_;
+
+            [SerializeField]
+            private float delay_ = 0.3f;
+            [SerializeField]
+            private float rigity_time_ = 0.3f;
+
+            [SerializeField]
+            private float charge_time_ = 0.3f;
+
+            private int shot_cnt_;
+            private bool charged_;
+
+            [SerializeField]
+            private List<AnchorController> anchors_;
+
+            [SerializeField]
+            private BulletSpawner bullet_spawner_;
+            private bool bullet_inited_ = false;
+
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                shot_cnt_ = 0;
+                charged_ = false;
+
+                // 弾のプーリングの初期化
+                if (!bullet_inited_)
+                {
+                    bullet_spawner_.Init(shot_offset_list_.Count);
+                    bullet_inited_ = true;
+                }
+
+                // 4方向にアンカーを伸ばす
+                for(int i = 0; i < shot_offset_list_.Count; ++i)
+                {
+                    // 目的となる角度を取得する
+                    Vector3 d = (Vector3)shot_offset_list_[i];
+                    float angle = Mathf.Atan2(d.y, d.x);
+
+                    float init_speed = d.magnitude;
+                    if (charge_time_ > 0.1f) init_speed *= (0.3f / charge_time_);
+
+                    anchors_[i].Init(Parent.transform.position,
+                        new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), 3, "Player", Parent.player_, init_speed * 0.2f);
+                }
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                if(Timer > charge_time_ && !charged_)
+                {
+                    charged_ = true;
+                    for (int i = 0; i < shot_offset_list_.Count; ++i)
+                    {
+                        // 電撃を発生させる
+                        anchors_[i].Flush();
+                        anchors_[i].Stop();
+                    }
+                }
+
+                if (Timer > shot_cnt_ * delay_ + delay_ + charge_time_ && shot_cnt_ != shot_offset_list_.Count)
+                {
+                    Vector3 next = Parent.player_.position;
+                    Vector3 now = Parent.transform.position;
+                    // 目的となる角度を取得する
+                    Vector3 d = next - now;
+                    float angle = Mathf.Atan2(d.y, d.x);
+                    bullet_spawner_.Shot(Parent.transform.position + (Vector3)shot_offset_list_[shot_cnt_], 
+                        new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.player_, 1.0f, 10.0f);
+
+                    ++shot_cnt_;
+                }
+
+                // 終了
+                if (Timer > shot_offset_list_.Count * delay_ + charge_time_ + rigity_time_)
+                {
+                    ChangeState((int)eState.Fall);
+                    return;
+                }
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+                for (int i = 0; i < shot_offset_list_.Count; ++i)
+                {
+                    anchors_[i].Finish();
+                }
+            }
+        }
+
+        // ジャンプで飛んでいくの状態
+        [System.Serializable]
+        private class StateJump : StateMachine<KabtBossController>.StateBase
+        {
+            [SerializeField]
+            private float jump_power_ = 0.3f;
+
+            // どれくらいプレイヤーの先へ進むか
+            [SerializeField]
+            private float over_dx_ = 0.5f;
+
+
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                // 敵の方向をむく
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+
+                // 上向きに速度を加える
+                Parent.trb_.Velocity.y = jump_power_;
+
+                // x軸方向の速度はプレイヤーの位置によって変える
+                // 着陸予定時間時間
+                float t = 2 * (jump_power_ / Mathf.Abs(Accel.y));
+                float dx = Parent.player_.position.x - Parent.transform.position.x + over_dx_ * Parent.dir_;
+                Parent.trb_.Velocity.x = dx / t;
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                if (Parent.trb_.ButtomCollide)
+                {
+                    ChangeState((int)eState.Think);
+                    return;
+                }
+
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, Accel, MaxAbsSpeed);
             }
 
             // 終了時に呼ばれる

@@ -36,11 +36,6 @@ namespace Bullet
             Move();
         }
 
-        private void Awake()
-        {
-            timer_ = new Timer(life_time_);
-        }
-
         public override void Init(Vector2 pos, Vector2 dir, int damage, string opponent_tag = "Player", Transform target = null, float init_speed = 1.0f, float life_time = -1.0f)
         {
             transform.position = (Vector3)pos;
@@ -50,6 +45,7 @@ namespace Bullet
             opponent_tag_ = opponent_tag;
             speed_ = init_speed_ * init_speed;
             if (life_time > 0f) life_time_ = life_time;
+            timer_ = new Timer(life_time_);
             timer_.TimeReset();
             CreateEffect(shot_effect_, transform.position);
         }
