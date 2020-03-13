@@ -88,7 +88,7 @@ namespace Actor.Player
                 }
 
                 // ダッシュステート
-                if (ActionInput.GetButtonDown(ActionCode.Dash) && data.CanDash())
+                if (ActionInput.GetButtonDown(ActionCode.Dash) && data.CanGroundDash())
                 {
                     ChangeState((int)eState.Dush);
                     return;

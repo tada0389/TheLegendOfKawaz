@@ -64,7 +64,7 @@ namespace Actor.Player
         private int air_jump_num_;
 
         // ダッシュできるかどうか
-        public bool CanDashMove { private set; get; }
+        public bool CanAirDashMove { private set; get; }
 
         // すり抜ける床をすり抜けるか
         public bool IsThrough { set { trb.IsThrough = value; } get { return trb.IsThrough; } }
@@ -120,7 +120,7 @@ namespace Actor.Player
             ChargeEndTime = Skills[(int)eSkill.ChargeShot].Value / 10f;
             AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].Value;
             air_jump_num_ = AirJumpNumMax;
-            CanDashMove = Skills[(int)eSkill.AirDushNum].Value != 0;
+            CanAirDashMove = Skills[(int)eSkill.AirDushNum].Value != 0;
             prev_dash_time_ = 0f;
 
             bullet_spawners_[0].Init(MaxShotNum);
@@ -128,10 +128,21 @@ namespace Actor.Player
         }
 
         // ダッシュできるか
-        public bool CanDash()
+        public bool CanGroundDash()
         {
-            if (!CanDashMove || is_dashed_ || (IsGround && Time.time - prev_dash_time_ < 0.5f)) return false;
+            if (!IsGround) return false;
+            if (is_dashed_ || (IsGround && Time.time - prev_dash_time_ < 0.5f)) return false;
             if(!IsGround) is_dashed_ = true;
+            prev_dash_time_ = Time.time;
+            return true;
+        }
+
+        // 空中ダッシュできるか
+        public bool CanAirDash()
+        {
+            if (IsGround) return false;
+            if (!CanAirDashMove || is_dashed_) return false;
+            is_dashed_ = true;
             prev_dash_time_ = Time.time;
             return true;
         }

@@ -486,7 +486,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 500G
+  m_text: 500SP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -555,7 +555,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 492765695}
-    characterCount: 4
+    characterCount: 5
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -755,7 +755,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 500G
+  m_text: '500SP
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
   m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
@@ -825,9 +827,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 670965191}
-    characterCount: 4
+    characterCount: 6
     spriteCount: 0
-    spaceCount: 0
+    spaceCount: 1
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -1406,7 +1408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<size=64>\u6240\u6301\u30DD\u30A4\u30F3\u30C8</size>500G"
+  m_text: "<size=64>\u6240\u6301\u30DD\u30A4\u30F3\u30C8</size>500SP"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
   m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
@@ -1476,7 +1478,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1553424604}
-    characterCount: 10
+    characterCount: 11
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -2416,6 +2418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas_: {fileID: 1996384055}
+  skill_point_text_: {fileID: 1553424604}
   explonation_text_: {fileID: 35063734}
   price_text_: {fileID: 670965191}
   skill_prefab_: {fileID: 8116189548602559543, guid: 09f99c304a70bad489a8ae0bdced590e,

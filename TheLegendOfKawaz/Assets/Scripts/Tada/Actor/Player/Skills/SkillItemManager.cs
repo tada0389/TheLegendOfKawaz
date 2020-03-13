@@ -32,6 +32,9 @@ namespace SkillItem
         private Canvas canvas_;
 
         [SerializeField]
+        private TextMeshProUGUI skill_point_text_;
+
+        [SerializeField]
         private TextMeshProUGUI explonation_text_;
         [SerializeField]
         private TextMeshProUGUI price_text_;
@@ -85,6 +88,7 @@ namespace SkillItem
             skills_ = new List<SkillItemController>();
 
             select_index_ = 0;
+            skill_point_text_.text = SkillManager.Instance.SkillPoint.ToString() + "SP";
 
             CreateSkillItem();
 
@@ -194,7 +198,7 @@ namespace SkillItem
 
                 Parent.explonation_text_.text = Parent.skills_[after_index].Explonation;
                 if (Parent.skills_[after_index].ReachSkillLimit) Parent.price_text_.text = "<color=red>最大レベル</color>";
-                else Parent.price_text_.text = Parent.skills_[after_index].NeedPoint.ToString() + "G";
+                else Parent.price_text_.text = Parent.skills_[after_index].NeedPoint.ToString() + "SP";
             }
         }
 
@@ -248,7 +252,7 @@ namespace SkillItem
             {
                 buyed = false;
                 // 購入できるか確かめる
-                if(Parent.skills_[Parent.select_index_].ReachSkillLimit || SkillManager.Instance.SpendSkillPoint(Parent.skills_[Parent.select_index_].NeedPoint))
+                if(Parent.skills_[Parent.select_index_].ReachSkillLimit || SkillManager.Instance.SkillPoint < Parent.skills_[Parent.select_index_].NeedPoint)
                 {
                     // SEを鳴らす
                     Parent.audio_.PlayOneShot(Parent.cancel_se_);
@@ -263,7 +267,7 @@ namespace SkillItem
 
                 // 説明を埋める
                 explonation_.text = Parent.skills_[Parent.select_index_].Name;
-                price_.text = Parent.skills_[Parent.select_index_].NeedPoint.ToString() + "G";
+                price_.text = Parent.skills_[Parent.select_index_].NeedPoint.ToString() + "SP";
 
                 skill_icon_.sprite = Parent.skills_[Parent.select_index_].Image;
 
@@ -320,7 +324,10 @@ namespace SkillItem
                     //icon_back_.sprite = skill_icon_.sprite;
                     levelup_message_.DOScale(Vector3.one, levelup_message_time_).SetEase(levelup_ease_).OnComplete(
                         () => { levelup_message_.DOScale(Vector3.zero, levelup_message_time_ / 2f); ChangeState((int)eState.Select); });
+                    SkillManager.Instance.SpendSkillPoint(Parent.skills_[Parent.select_index_].NeedPoint);
                     Parent.skills_[Parent.select_index_].LevelUp();
+                    if(SkillManager.Instance.SkillPoint == 0) Parent.skill_point_text_.text = "<color=red>" + SkillManager.Instance.SkillPoint.ToString() + "SP</color>";
+                    else Parent.skill_point_text_.text = SkillManager.Instance.SkillPoint.ToString() + "SP";
                 }
                 else
                 {
