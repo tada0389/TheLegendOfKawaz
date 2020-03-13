@@ -28,7 +28,8 @@ namespace Actor.Enemy
             PreDash,
             Dash,
             Bite,
-            Action5,
+            DashEnd,
+            ShotSwamp
         }
 
         // 向いている方向
@@ -59,6 +60,8 @@ namespace Actor.Enemy
         private StateAction4 state_action4_;
         [SerializeField]
         private StateAction5 state_action5_;
+        [SerializeField]
+        private StateAction6 state_action6_;
         #endregion
 
         // 物理演算 trb_.Velocityをいじって移動する
@@ -110,7 +113,8 @@ namespace Actor.Enemy
             state_machine_.AddState((int)eState.PreDash, state_action2_);
             state_machine_.AddState((int)eState.Dash, state_action3_);
             state_machine_.AddState((int)eState.Bite, state_action4_);
-            state_machine_.AddState((int)eState.Action5, state_action5_);
+            state_machine_.AddState((int)eState.DashEnd, state_action5_);
+            state_machine_.AddState((int)eState.ShotSwamp, state_action6_);
 
             // 初期ステートを設定
             state_machine_.SetInitialState((int)eState.Think);
@@ -469,9 +473,9 @@ namespace Actor.Enemy
                 {
                     ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(Parent.dir_, 1f) * Accel, MaxAbsSpeed);
                 }
-                else if (Timer > startup_time + active_time + recovery_time)
+                else if (Timer > startup_time + active_time)
                 {
-                    ChangeState((int)eState.Think);
+                    ChangeState((int)eState.DashEnd);
                 }
             }
 
@@ -482,20 +486,55 @@ namespace Actor.Enemy
             }
         }
 
-        // 行動5状態
+        // 止まる
         [System.Serializable]
         private class StateAction5 : StateMachine<KoitanBossController>.StateBase
         {
+            [SerializeField]
+            private float break_time_ = 1.0f;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                //動き
+                Parent.animator.SetBool(hashIsMove, false);
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                if (Timer > break_time_) ChangeState((int)eState.Think);
 
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(-Parent.dir_, 1f) * Accel, MaxAbsSpeed);
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+
+            }
+        }
+
+        // 止まる
+        [System.Serializable]
+        private class StateAction6 : StateMachine<KoitanBossController>.StateBase
+        {
+            [SerializeField]
+            private float break_time_ = 1.0f;
+
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                //動き
+                Parent.animator.SetBool(hashIsMove, false);
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                if (Timer > break_time_) ChangeState((int)eState.Think);
+
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(-Parent.dir_, 1f) * Accel, MaxAbsSpeed);
             }
 
             // 終了時に呼ばれる
