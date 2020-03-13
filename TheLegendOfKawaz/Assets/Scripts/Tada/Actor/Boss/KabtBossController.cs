@@ -94,10 +94,6 @@ namespace Actor.Enemy
         // タックルする方向
         private float tackle_angle_;
 
-        // スキルのUI 本当はスキルポイントマネージャーを通したい
-        [SerializeField]
-        private SkillUI.GetSkillPointUI ui_;
-
         private void Start()
         {
             muteki_timer_ = new Timer(muteki_time_);
@@ -283,7 +279,7 @@ namespace Actor.Enemy
                 }
                 else
                 {
-                    if (distance < 14f) ChangeState((int)eState.Anchor1);
+                    if (distance < 12f) ChangeState((int)eState.Anchor1);
                     else ChangeState((int)eState.PlasmaMini);
                 }
             }
@@ -387,7 +383,7 @@ namespace Actor.Enemy
                 if(Timer > 2.0f && !a)
                 {
                     a = true;
-                    Parent.ui_.GainSkillPoint(1000, Parent.transform.position);
+                    Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
                 }
             }
 
@@ -566,8 +562,6 @@ namespace Actor.Enemy
                 // 終了
                 if (Timer > 2f * delay_ + flush_time_ + rigity_time_)
                 {
-                    anchors_[0].Finish();
-                    anchors_[1].Finish();
                     // 飛ばす方向をあらかじめ与えておく しかたない
                     Parent.trb_.Velocity = target_dir_.normalized;
                     ChangeState((int)eState.Anchor2);
@@ -577,7 +571,8 @@ namespace Actor.Enemy
             // 終了時に呼ばれる
             public override void OnEnd()
             {
-
+                anchors_[0].Finish();
+                anchors_[1].Finish();
             }
 
             // アンカーを飛ばす

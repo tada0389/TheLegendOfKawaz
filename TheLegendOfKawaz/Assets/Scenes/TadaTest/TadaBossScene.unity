@@ -652,62 +652,6 @@ Transform:
   m_Father: {fileID: 7062334307113485315}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &522382127
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 522382129}
-  - component: {fileID: 522382128}
-  m_Layer: 0
-  m_Name: GetSkillPointController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &522382128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522382127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d11fc2b6df9e86444a632bf1c30ac4a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas_: {fileID: 361109866}
-  cam_: {fileID: 657471836}
-  point_icon_: {fileID: 2010467362}
-  point_text_: {fileID: 140205406}
-  icon_per_point_: 10
-  icon_get_duration_: 2
-  icon_appear_power_: 200
-  icon_appear_duration: 0.25
-  icon_move_duration_: 0.5
-  feed_wait_time_: 1.5
-  feed_duration_: 1
-  icon_appear_ease_: 13
-  icon_move_ease_: 7
---- !u!4 &522382129
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 522382127}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &547737979
 GameObject:
   m_ObjectHideFlags: 0
@@ -1422,36 +1366,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21df4ee23ad35754e96a104de2f9a229, type: 3}
---- !u!1 &1425345715
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1425345716}
-  m_Layer: 0
-  m_Name: SKillPointManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1425345716
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1425345715}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1441608435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4788564474332811903, guid: 21df4ee23ad35754e96a104de2f9a229,
@@ -37291,7 +37205,6 @@ MonoBehaviour:
   player_: {fileID: 1586145139}
   muteki_time_: 1
   mesh_: {fileID: 7062334305980641172}
-  ui_: {fileID: 522382128}
 --- !u!61 &7062334307113485319
 BoxCollider2D:
   m_ObjectHideFlags: 0
