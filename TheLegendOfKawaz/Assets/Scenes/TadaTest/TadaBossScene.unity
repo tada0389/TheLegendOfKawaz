@@ -1050,12 +1050,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
+      propertyPath: demo_skills_.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
       propertyPath: mesh_
       value: 
       objectReference: {fileID: 1016127662}
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: muteki_time_
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[0].type_
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: jump_state_.jump_power
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4951405327245510928, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: damage_
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -36865,8 +36885,8 @@ MonoBehaviour:
   state_anchor1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    delay_: 1.2
-    flush_time_: 1.2
+    delay_: 0.8
+    flush_time_: 0.7
     rigity_time_: 0.5
     anchors_:
     - {fileID: 1436968668736899209}
@@ -36910,6 +36930,8 @@ MonoBehaviour:
     jump_power_: 0.5
     over_dx_: 1
   player_: {fileID: 1586145139}
+  muteki_time_: 1
+  mesh_: {fileID: 7062334305980641172}
 --- !u!61 &7062334307113485319
 BoxCollider2D:
   m_ObjectHideFlags: 0

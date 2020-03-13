@@ -121,7 +121,6 @@ namespace Actor.Player
                     data.velocity = new Vector2(data.velocity.x, 0f);
                 }
 
-
                 // ただし，頂点付近だと加速度を弱める
                 float accel_rate_y = 1.0f;
                 if (data.velocity.y < 0.15f) accel_rate_y = 0.5f;

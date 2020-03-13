@@ -85,11 +85,19 @@ namespace Actor.Enemy
         [SerializeField]
         private Transform player_;
 
+        [SerializeField]
+        private float muteki_time_ = 1.0f;
+        private Timer muteki_timer_;
+        [SerializeField]
+        private GameObject mesh_;
+
         // タックルする方向
         private float tackle_angle_;
 
         private void Start()
         {
+            muteki_timer_ = new Timer(muteki_time_);
+
             HP = 20;
 
             trb_ = GetComponent<TadaRigidbody>();
@@ -145,7 +153,10 @@ namespace Actor.Enemy
         // ダメージを受ける
         public override void Damage(int damage)
         {
+            if (!muteki_timer_.IsTimeout()) return;
             HP = Mathf.Max(0, HP - damage);
+            muteki_timer_.TimeReset();
+            StartCoroutine(Tenmetu());
             if (HP == 0)
             {
                 state_machine_.ChangeState((int)eState.Dead);
@@ -159,6 +170,29 @@ namespace Actor.Enemy
             if (collider.tag == "Player")
             {
                 collider.GetComponent<BaseActorController>().Damage(4);
+            }
+        }
+
+        //点滅
+        private IEnumerator Tenmetu()
+        {
+            if (muteki_timer_.GetTime() < muteki_time_ / 2f)
+            {
+                mesh_.SetActive(false);
+                yield return new WaitForEndOfFrame();
+                mesh_.SetActive(true);
+                yield return new WaitForEndOfFrame();
+            }
+            else
+            {
+                mesh_.SetActive(false);
+                yield return new WaitForSeconds(0.05f);
+                mesh_.SetActive(true);
+                yield return new WaitForSeconds(0.05f);
+            }
+            if (!muteki_timer_.IsTimeout())
+            {
+                StartCoroutine(Tenmetu());
             }
         }
 
