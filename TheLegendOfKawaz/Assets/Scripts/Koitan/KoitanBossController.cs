@@ -27,7 +27,7 @@ namespace Actor.Enemy
             Shot,
             PreDash,
             Dash,
-            DashEnd,
+            Bite,
             Action5,
         }
 
@@ -79,12 +79,25 @@ namespace Actor.Enemy
         //メッシュ
         private GameObject mesh;
 
+        //アニメーター
+        private Animator animator;
+
+        private static readonly int hashIdle = Animator.StringToHash("Idle");
+        private static readonly int hashIsMove = Animator.StringToHash("isMove");
+        private static readonly int hashAttack1 = Animator.StringToHash("Attack1");
+        private static readonly int hashAttack2 = Animator.StringToHash("Attack2");
+        private static readonly int hashAttack3 = Animator.StringToHash("Attack3");
+
         private void Start()
         {
             HP = 20;
             trb_ = GetComponent<TadaRigidbody>();
             bullet_spawner_ = GetComponent<BulletSpawner>();
             mesh = transform.GetChild(0).gameObject;//危険!
+            animator = GetComponent<Animator>();
+
+            animator.Play("Idle");
+
 
             // ステートマシンのメモリ確保 自分自身を渡す
             state_machine_ = new StateMachine<KoitanBossController>(this);
@@ -96,7 +109,7 @@ namespace Actor.Enemy
             state_machine_.AddState((int)eState.Shot, state_action1_);
             state_machine_.AddState((int)eState.PreDash, state_action2_);
             state_machine_.AddState((int)eState.Dash, state_action3_);
-            state_machine_.AddState((int)eState.DashEnd, state_action4_);
+            state_machine_.AddState((int)eState.Bite, state_action4_);
             state_machine_.AddState((int)eState.Action5, state_action5_);
 
             // 初期ステートを設定
@@ -212,6 +225,7 @@ namespace Actor.Enemy
             public override void OnStart()
             {
                 Parent.trb_.Velocity = Vector2.zero;
+                Parent.animator.Play(hashIdle);
             }
 
             // 毎フレーム呼ばれる
@@ -219,8 +233,11 @@ namespace Actor.Enemy
             {
                 if (Timer > think_time_)
                 {
-                    if (Random.value > 0.6f) ChangeState((int)eState.Shot);
+                    float r = Random.value;
+                    if (r < 0.3f) ChangeState((int)eState.Shot);
+                    else if (r < 0.6f) ChangeState((int)eState.Bite);
                     else ChangeState((int)eState.PreDash);
+
                     return;
                 }
             }
@@ -239,7 +256,7 @@ namespace Actor.Enemy
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                Parent.animator.Play(hashIdle);
             }
 
             // 毎フレーム呼ばれる
@@ -310,20 +327,26 @@ namespace Actor.Enemy
             // 開始時に呼ばれる
             public override void OnStart()
             {
-                Parent.bullet_spawner_.Init(shot_num_);
+                Parent.bullet_spawner_.Init(shot_num_ * 3);
+                Parent.animator.Play(hashAttack2);
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if (!end_ && Timer > (shot_cnt_ + 1) * shot_interval_)
+                if (!end_ && Timer > (shot_cnt_) * shot_interval_ + delay_time_)
                 {
                     ++shot_cnt_;
                     float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                     Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
                     Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y * ((shot_cnt_ % 2 == 0) ? -1f : 1f)),
-                        new Vector2(dir, 0f), "Player");
+                        + shot_offset_.y), new Vector2(dir, 0f), "Player");
+                    Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector2(dir, 0.5f), "Player");
+                    Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector2(dir, 1f), "Player");
 
                     if (shot_cnt_ >= shot_num_)
                     {
@@ -342,7 +365,7 @@ namespace Actor.Enemy
                     }
                 }
 
-                if (Timer > shot_num_ * shot_interval_ + delay_time_)
+                if (Timer > shot_num_ * shot_interval_ + delay_time_ * 2)
                 {
                     ChangeState((int)eState.Shot);
                     return;
@@ -369,6 +392,8 @@ namespace Actor.Enemy
                 // 敵の方向を見る
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                //動き
+                Parent.animator.SetBool(hashIsMove, true);
             }
 
             // 毎フレーム呼ばれる
@@ -410,24 +435,44 @@ namespace Actor.Enemy
             // 終了時に呼ばれる
             public override void OnEnd()
             {
-
+                Parent.animator.SetBool(hashIsMove, false);
             }
         }
 
-        // 行動4状態
+        // かみつきこうげき
         [System.Serializable]
         private class StateAction4 : StateMachine<KoitanBossController>.StateBase
         {
+            [SerializeField]
+            private float startup_time = 1;
+            [SerializeField]
+            private float active_time = 1;
+            [SerializeField]
+            private float recovery_time = 1;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                Parent.animator.Play(hashAttack1);
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                if (Timer < startup_time)
+                {
 
+                }
+                else if (Timer < startup_time + active_time)
+                {
+                    ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(Parent.dir_, 1f) * Accel, MaxAbsSpeed);
+                }
+                else if (Timer > startup_time + active_time + recovery_time)
+                {
+                    ChangeState((int)eState.Think);
+                }
             }
 
             // 終了時に呼ばれる
