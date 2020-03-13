@@ -795,7 +795,8 @@ MonoBehaviour:
     recovery_time: 0.6
   state_action5_:
     MaxAbsSpeed: {x: 0.5, y: 0}
-    Accel: {x: 0, y: 0}
+    Accel: {x: 0.005, y: 0}
+    break_time_: 1
   player_: {fileID: 8403825860016296579}
 --- !u!114 &701097171
 MonoBehaviour:
@@ -36401,6 +36402,7 @@ MonoBehaviour:
     wall_thr: 0.05
     jump_se_1: {fileID: 8300000, guid: 146da4b8bebfb42bbbd74612d92bfcfe, type: 3}
     jump_se_2: {fileID: 8300000, guid: 7ac5fdf38a07a4a018c0691d2c398bf5, type: 3}
+    kick_wait_time_: 0.2
   fall_state_:
     MaxAbsSpeed: {x: 0.16, y: 0.28}
     Accel: {x: 0.01, y: -0.04}
@@ -36433,6 +36435,9 @@ MonoBehaviour:
     Accel: {x: -0.0005, y: -0.0075}
     power_: {x: 0.005, y: 0.15}
     rigidity_time_: 0.4
+  dead_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
   charge_shot_pre_: {fileID: 3381668935594640377}
   charge_shot_end_: {fileID: 2645026083617299473}
   muteki_time_: 2
