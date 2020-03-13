@@ -48,11 +48,22 @@ namespace Actor.Player
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
-                // 空中ジャンプ
-                if (ActionInput.GetButtonDown(ActionCode.Jump) && data.RequestArialJump())
+                // ジャンプ
+                if (ActionInput.GetButtonDown(ActionCode.Jump))
                 {
-                    ChangeState((int)eState.Jump);
-                    return;
+                    // 壁キック
+                    if(data.CanWallKick && (data.IsLeft || data.IsRight))
+                    {
+                        ChangeState((int)eState.Wall);
+                        return;
+                    }
+
+                    // 空中ジャンプ
+                    if (data.RequestArialJump())
+                    {
+                        ChangeState((int)eState.Jump);
+                        return;
+                    }
                 }
 
                 // ダッシュステート

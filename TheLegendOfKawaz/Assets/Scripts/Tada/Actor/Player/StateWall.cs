@@ -42,6 +42,13 @@ namespace Actor.Player
                 {
                     data.ChangeDirection(eDir.Right);
                 }
+
+                // 即ジャンプする場合もある (落下状態から壁ジャンプなど)
+                if (ActionInput.GetButtonDown(ActionCode.Jump))
+                {
+                    WallKick();
+                    return;
+                }
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -76,15 +83,7 @@ namespace Actor.Player
                 // 壁ジャンプ
                 if (ActionInput.GetButtonDown(ActionCode.Jump))
                 {
-                    ActorUtils.CreateEffect(kick_effect_, data.transform.position + new Vector3((data.Dir == eDir.Left)? 1.0f : -1.0f, 0f, 0f), new Vector2((data.Dir == eDir.Left)? -1.0f : 1.0f, 0f), 0.5f);
-
-                    data.velocity = kick_power_;
-                    if (data.IsRight) data.velocity *= -1;
-                    ChangeState((int)eState.Jump);
-                    // ダッシュ回数リセット
-                    data.ResetDash();
-                    // 逆向きを向く
-                    //data.ReverseFaceDirection();
+                    WallKick();
                     return;
                 }
 
@@ -103,6 +102,17 @@ namespace Actor.Player
                 if (data.velocity.y < -MaxAbsSpeed.y) accel_dir = -1f;
                 // 加速度に応じて速度を変更する
                 ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_dir) * Accel, MaxAbsSpeed);
+            }
+
+            private void WallKick()
+            {
+                ActorUtils.CreateEffect(kick_effect_, data.transform.position + new Vector3((data.Dir == eDir.Left) ? 1.0f : -1.0f, 0f, 0f), new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f), 0.5f);
+
+                data.velocity = kick_power_;
+                if (data.IsRight) data.velocity *= -1;
+                ChangeState((int)eState.Jump);
+                // ダッシュ回数リセット
+                data.ResetDash();
             }
         }
     }
