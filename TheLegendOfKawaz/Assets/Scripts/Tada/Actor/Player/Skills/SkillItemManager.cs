@@ -248,7 +248,7 @@ namespace SkillItem
             {
                 buyed = false;
                 // 購入できるか確かめる
-                if(Parent.skills_[Parent.select_index_].ReachSkillLimit || false)
+                if(Parent.skills_[Parent.select_index_].ReachSkillLimit || SkillManager.Instance.SpendSkillPoint(Parent.skills_[Parent.select_index_].NeedPoint))
                 {
                     // SEを鳴らす
                     Parent.audio_.PlayOneShot(Parent.cancel_se_);

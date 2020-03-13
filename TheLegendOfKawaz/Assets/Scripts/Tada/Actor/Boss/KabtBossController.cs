@@ -94,6 +94,10 @@ namespace Actor.Enemy
         // タックルする方向
         private float tackle_angle_;
 
+        // スキルのUI 本当はスキルポイントマネージャーを通したい
+        [SerializeField]
+        private SkillUI.GetSkillPointUI ui_;
+
         private void Start()
         {
             muteki_timer_ = new Timer(muteki_time_);
@@ -368,6 +372,8 @@ namespace Actor.Enemy
             [SerializeField]
             private ParticleSystem explosion_effect_;
 
+            private bool a = false;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
@@ -378,7 +384,11 @@ namespace Actor.Enemy
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-
+                if(Timer > 2.0f && !a)
+                {
+                    a = true;
+                    Parent.ui_.GainSkillPoint(1000, Parent.transform.position);
+                }
             }
 
             // 終了時に呼ばれる

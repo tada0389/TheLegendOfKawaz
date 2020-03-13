@@ -27,6 +27,11 @@ namespace Actor.Player
     {
         // パラメータ情報
         public List<Skill> Skills { private set; get; }
+        public int SkillPoint { private set; get; }
+
+        // スキルポイントを管理するクラス
+        [SerializeField]
+        private SkillUI.GetSkillPointUI skill_point_ctrl_;
 
         // 使用するcsvファイル名
         [SerializeField]
@@ -35,6 +40,8 @@ namespace Actor.Player
         protected override void Awake()
         {
             base.Awake();
+            // ポイントをゼロに
+            SkillPoint = 0;
 
             // パラメータを取得
             PlayerSkills reader = new PlayerSkills(file_name_);
@@ -46,5 +53,20 @@ namespace Actor.Player
 
         // 指定したパラメータのレベルを上げる
         public bool LevelUp(int id) => Skills[id].LevelUp();
+
+        // スキルポイントを獲得する
+        public void GainSkillPoint(int point, Vector3 point_spawner_pos)
+        {
+            skill_point_ctrl_.GainSkillPoint(point, point_spawner_pos);
+            SkillPoint += point;
+        }
+
+        // スキルポイントを消費する できないならfalse
+        public bool SpendSkillPoint(int point)
+        {
+            if (SkillPoint < point) return false;
+            SkillPoint -= point;
+            return true;
+        }
     }
 } // namespace Actor.Player
