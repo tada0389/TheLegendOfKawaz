@@ -29,6 +29,9 @@ namespace Actor.Player
         public List<Skill> Skills { private set; get; }
         public int SkillPoint { private set; get; }
 
+        [SerializeField]
+        private int initial_skill_point_ = 500;
+
         // スキルポイントを管理するクラス
         [SerializeField]
         private SkillUI.GetSkillPointUI skill_point_ctrl_;
@@ -41,7 +44,7 @@ namespace Actor.Player
         {
             base.Awake();
             // ポイントをゼロに
-            SkillPoint = 0;
+            SkillPoint = initial_skill_point_;
 
             // パラメータを取得
             PlayerSkills reader = new PlayerSkills(file_name_);

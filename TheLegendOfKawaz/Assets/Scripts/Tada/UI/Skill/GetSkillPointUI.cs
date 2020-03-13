@@ -12,7 +12,7 @@ namespace SkillUI
     {
         [SerializeField]
         private Canvas canvas_;
-        [SerializeField]
+        //[SerializeField]
         private Camera cam_;
 
         [SerializeField]
@@ -88,6 +88,7 @@ namespace SkillUI
         // ポイントの取得を開始する
         public void GainSkillPoint(int point, Vector3 point_spawner_pos)
         {
+            cam_ = Camera.main;
             point_ = Actor.Player.SkillManager.Instance.SkillPoint;
             Vector3 pos = cam_.WorldToScreenPoint(point_spawner_pos);
             StartCoroutine(GetFlow(point, pos));
