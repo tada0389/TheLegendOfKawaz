@@ -31,23 +31,27 @@ namespace Bullet
         private int damage_;
         private float speed_;
 
+        private Transform owner_;
+
         private void Update()
         {
             Move();
         }
 
-        public override void Init(Vector2 pos, Vector2 dir, int damage, string opponent_tag = "Player", Transform target = null, float init_speed = 1.0f, float life_time = -1.0f)
+        public override void Init(Vector2 pos, Vector2 dir, int damage, string opponent_tag = "Player", Transform owner = null, float init_speed = 1.0f, float life_time = -1.0f, float damage_rate = 1f)
         {
             transform.position = (Vector3)pos;
             move_body_.transform.position = (Vector3)pos;
             dir_ = dir;
-            damage_ = damage;
+            damage_ = (int)(damage * damage_rate);
             opponent_tag_ = opponent_tag;
             speed_ = init_speed_ * init_speed;
             if (life_time > 0f) life_time_ = life_time;
             timer_ = new Timer(life_time_);
             timer_.TimeReset();
-            CreateEffect(shot_effect_, transform.position);
+            owner_ = owner;
+            // 発射エフェクト
+            CreateEffect(shot_effect_, transform.position, owner);
         }
 
         protected override void Move()
@@ -72,9 +76,10 @@ namespace Bullet
         }
 
         // エフェクトを生成する オブジェクトプール使いたいので仮
-        private void CreateEffect(ParticleSystem effect, Vector3 pos)
+        private void CreateEffect(ParticleSystem effect, Vector3 pos, Transform owner = null)
         {
             var eff = Instantiate(effect, pos, Quaternion.identity);
+            eff.transform.parent = owner;
             eff.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir_.x) * 90f - 90f, 0f);
             eff.gameObject.SetActive(true);
             eff.Play();
