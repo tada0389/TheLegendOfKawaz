@@ -47,7 +47,7 @@ namespace Bullet
             timer_ = new Timer(life_time_);
         }
 
-        public override void Init(Vector2 pos, Vector2 dir, int damage, string opponent_tag = "Player", Transform target = null, float init_speed = 1.0f, float life_time = -1.0f)
+        public override void Init(Vector2 pos, Vector2 dir, int damage, string opponent_tag = "Player", Transform target = null, float init_speed = 1.0f, float life_time = -1.0f, float damage_rate = 1f)
         {
             transform.position = (Vector3)pos;
             move_body_.transform.position = (Vector3)pos;

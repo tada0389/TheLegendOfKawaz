@@ -256,27 +256,31 @@ namespace Actor.Enemy
             // 次の行動を決める
             private void DecideNextAction()
             {
+                // 敵との距離
+                float distance = (Parent.player_.position - Parent.transform.position).magnitude;
+                Debug.Log(distance);
+
                 float value = Random.value;
 
-                if (value < 0.2f)
+                // 敵と遠いかったらホーミング弾
+                // 敵と近かったらアンカーショット
+
+                if (value < 0.23f)
                 {
                     ChangeState((int)eState.Tackle1);
                 }
-                else if (value < 0.4f)
+                else if (value < 0.46f)
                 {
-                    ChangeState((int)eState.PlasmaMini);
+                    ChangeState((int)eState.Jump);
                 }
-                else if (value < 0.6f)
+                else if (value < 0.69f)
                 {
                     ChangeState((int)eState.PlasmaBig1);
                 }
-                else if(value < 0.8f)
-                {
-                    ChangeState((int)eState.Anchor1);
-                }
                 else
                 {
-                    ChangeState((int)eState.Jump);
+                    if (distance < 14f) ChangeState((int)eState.Anchor1);
+                    else ChangeState((int)eState.PlasmaMini);
                 }
             }
         }
@@ -569,9 +573,12 @@ namespace Actor.Enemy
             // アンカーを飛ばす
             private void ShotAnchor()
             {
-                // 敵の方向をむく
-                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
-                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                // 敵の方向をむく 1回目だけ
+                if (target_dir_.magnitude < 0.01f)
+                {
+                    float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                    Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                }
 
                 Vector3 next = Parent.player_.position;
                 Vector3 now = Parent.transform.position;
@@ -580,6 +587,11 @@ namespace Actor.Enemy
                 Vector3 d = next - now;
                 float angle = Mathf.Atan2(d.y, d.x);
                 Vector2 dir_vec = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                // 前回の方向と同じ方向にする
+                if(target_dir_.magnitude > 0.01f && Mathf.Sign(dir_vec.x) != Mathf.Sign(target_dir_.x))
+                {
+                    dir_vec = Vector2.up;
+                }
                 target_dir_ += dir_vec / 2f;
                 anchors_[shot_cnt_].Init(Parent.transform.position,
                     dir_vec, 3, "Player", Parent.player_);
@@ -593,10 +605,17 @@ namespace Actor.Enemy
             [SerializeField]
             private float init_speed_ = 0.4f;
 
+            [SerializeField]
+            private float accel_ = 0.02f;
+
+            private Vector2 add_speed_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
                 Parent.trb_.Velocity *= init_speed_;
+
+                add_speed_ = Parent.trb_.Velocity * accel_;
 
                 // 飛ぶ方向を向く
                 Parent.SetDirection((Parent.trb_.Velocity.x < 0f) ? eDir.Left : eDir.Right);
@@ -612,7 +631,7 @@ namespace Actor.Enemy
                     return;
                 }
 
-                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, add_speed_, MaxAbsSpeed);
             }
 
             // 終了時に呼ばれる
@@ -673,7 +692,7 @@ namespace Actor.Enemy
                     Vector3 d = next - now;
                     float angle = Mathf.Atan2(d.y, d.x);
                     bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * Parent.dir_, Parent.transform.position.y
-                         + shot_offset_.y), new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.player_, 1.0f, 10.0f);
+                         + shot_offset_.y), new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.transform, 1.0f, 10.0f);
 
                     if(shot_cnt_ >= shot_num_)
                     {
@@ -838,7 +857,7 @@ namespace Actor.Enemy
                 Vector3 d = next - now;
                 float angle = Mathf.Atan2(d.y, d.x);
                 bullet_spawner_.Shot(Parent.transform.position + (Vector3)shot_offset_list_[shot_cnt_],
-                    new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.player_, 1.0f, 10.0f);
+                    new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.transform, 1.0f, 10.0f);
             }
         }
 

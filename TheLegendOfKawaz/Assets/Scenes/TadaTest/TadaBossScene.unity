@@ -1051,7 +1051,7 @@ PrefabInstance:
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: demo_skills_.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
@@ -1072,6 +1072,11 @@ PrefabInstance:
         type: 3}
       propertyPath: jump_state_.jump_power
       value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[1].type_
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4951405327245510928, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
@@ -4743,8 +4748,8 @@ MonoBehaviour:
   effect_prefab_: {fileID: 4601130563077378238, guid: 157a1cf4da0118442b015b8e4446bd0b,
     type: 3}
   effect_interval_length_: 1
-  init_speed_: 0.3
-  init_back_speed_: 4
+  init_speed_: 0.25
+  init_back_speed_: 5
 --- !u!114 &1436968669011860127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4761,8 +4766,8 @@ MonoBehaviour:
   effect_prefab_: {fileID: 4601130563077378238, guid: 157a1cf4da0118442b015b8e4446bd0b,
     type: 3}
   effect_interval_length_: 1
-  init_speed_: 0.3
-  init_back_speed_: 4
+  init_speed_: 0.25
+  init_back_speed_: 5
 --- !u!82 &3435212610753449459
 AudioSource:
   m_ObjectHideFlags: 0
@@ -36880,21 +36885,22 @@ MonoBehaviour:
   state_tackle3_:
     MaxAbsSpeed: {x: 0, y: 0.4}
     Accel: {x: 0.003, y: -0.03}
-    power_: {x: -0.5, y: 0.4}
+    power_: {x: -0.7, y: 0.4}
     rigidy_time_: 0.5
   state_anchor1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    delay_: 0.8
-    flush_time_: 0.7
+    delay_: 0.7
+    flush_time_: 0.8
     rigity_time_: 0.5
     anchors_:
     - {fileID: 1436968668736899209}
     - {fileID: 1436968669011860127}
   state_anchor2_:
-    MaxAbsSpeed: {x: 0.5, y: 0.5}
+    MaxAbsSpeed: {x: 0.7, y: 0.7}
     Accel: {x: 0, y: 0}
-    init_speed_: 0.4
+    init_speed_: 0.5
+    accel_: 0.02
   state_plasma_mini_:
     MaxAbsSpeed: {x: 0, y: 0}
     Accel: {x: 0, y: 0}

@@ -222,6 +222,10 @@ namespace Actor.Player
         [SerializeField]
         private GameObject charge_shot_end_;
 
+        // プレイヤーが反転しても右側を向き続けるオブジェクト
+        [SerializeField]
+        private Transform not_reverse_;
+
         [SerializeField]
         private float muteki_time_ = 2.0f;
         [SerializeField]
@@ -340,7 +344,9 @@ namespace Actor.Player
         private void Shot(bool is_charged)
         {
             float dir = (data_.Dir == eDir.Left) ? -1f : 1f;
-            bool can_shot = data_.bullet_spawners_[(is_charged) ? 1 : 0].Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f), "Enemy");
+            bool dashed = (state_machine_.CurrentStateId == (int)eState.Dush);
+            float speed = (dashed) ? 1.5f : 1.0f;
+            bool can_shot = data_.bullet_spawners_[(is_charged) ? 1 : 0].Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f), "Enemy", not_reverse_, speed, -1, speed);
             if (!can_shot) return;
             if (data_.animator.GetLayerWeight(1) == 0)
             {
@@ -376,11 +382,13 @@ namespace Actor.Player
             if (data_.Dir == eDir.Left && transform.localEulerAngles.y != 180f)
             {
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 180f, transform.localEulerAngles.z);
+                if(not_reverse_) not_reverse_.localEulerAngles = new Vector3(not_reverse_.localEulerAngles.x, 180f, not_reverse_.localEulerAngles.z);
             }
             // else if(data_.velocity.x > 0f)
             else if (data_.Dir == eDir.Right && transform.localEulerAngles.y != 0f)
             {
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
+                if (not_reverse_) not_reverse_.localEulerAngles = new Vector3(not_reverse_.localEulerAngles.x, 0f, not_reverse_.localEulerAngles.z);
             }
         }
 
