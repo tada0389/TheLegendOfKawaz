@@ -15,7 +15,7 @@ public class AnimTest : MonoBehaviour
     [SerializeField]
     ParticleSystem chargeShotEff;
     [SerializeField]
-    GameObject tama;
+    mameTest tama;
     [SerializeField]
     GameObject chargeTama;
     [SerializeField]
@@ -54,11 +54,15 @@ public class AnimTest : MonoBehaviour
     [SerializeField]
     private mameTest chargeMame;
 
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         oldPos = nowPos = transform.position;
+
+        //オブジェクト登録
+        ObjectPoolManager.Init("b", tama, 3);
     }
 
     // Update is called once per frame
@@ -71,12 +75,16 @@ public class AnimTest : MonoBehaviour
             shotTime = 1;
             animator.Play("Shot", 1, 0);
             shotEff.Play();
-            mameTest m = GenerateMame();
+
+
+
+            mameTest m = ObjectPoolManager.GetInstance<mameTest>("b");
             if (m != null)
             {
                 m.gameObject.SetActive(true);
                 m.Init(shotEff.transform.position, Vector3.right * dir);
             }
+
         }
 
         if (ActionInput.GetButton(ActionCode.Shot))

@@ -237,11 +237,13 @@ namespace Actor.Enemy
             {
                 if (Timer > think_time_)
                 {
-                    float r = Random.value;
-                    if (r < 0.3f) ChangeState((int)eState.Shot);
-                    else if (r < 0.6f) ChangeState((int)eState.Bite);
+                    float r = Random.Range(0f, 100f);
+                    Debug.Log("random:" + r);
+                    if (r < 30f) ChangeState((int)eState.Shot);
+                    else if (r < 60f) ChangeState((int)eState.Bite);
                     else ChangeState((int)eState.PreDash);
 
+                    //ChangeState((int)eState.Shot);
                     return;
                 }
             }
