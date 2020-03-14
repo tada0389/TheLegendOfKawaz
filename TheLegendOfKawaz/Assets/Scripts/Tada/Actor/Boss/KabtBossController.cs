@@ -231,6 +231,14 @@ namespace Actor.Enemy
             [SerializeField]
             private float think_time_ = 1.0f;
 
+            // 驚くぐらい強引
+            [SerializeField]
+            private float stage_left_x = 0f;
+            [SerializeField]
+            private float stage_right_x = 7f;
+            [SerializeField]
+            private float anchor_min_length = 4f;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
@@ -258,7 +266,6 @@ namespace Actor.Enemy
             {
                 // 敵との距離
                 float distance = (Parent.player_.position - Parent.transform.position).magnitude;
-                Debug.Log(distance);
 
                 float value = Random.value;
 
@@ -279,8 +286,24 @@ namespace Actor.Enemy
                 }
                 else
                 {
-                    if (distance < 12f) ChangeState((int)eState.Anchor1);
+                    if (CanAnchorShot()) ChangeState((int)eState.Anchor1);
                     else ChangeState((int)eState.PlasmaMini);
+                }
+            }
+
+            private bool CanAnchorShot()
+            {
+                // プレイヤーの方向
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                if(dir < 0f)
+                {
+                    float dist_to_wall = Parent.transform.position.x - stage_left_x;
+                    return (dist_to_wall < anchor_min_length);
+                }
+                else
+                {
+                    float dist_to_wall = stage_right_x - Parent.transform.position.x;
+                    return (dist_to_wall < anchor_min_length);
                 }
             }
         }
@@ -375,6 +398,7 @@ namespace Actor.Enemy
             {
                 Parent.trb_.Velocity = Vector2.zero;
                 explosion_effect_.gameObject.SetActive(true);
+                Time.timeScale = 0.5f;
             }
 
             // 毎フレーム呼ばれる
@@ -382,6 +406,7 @@ namespace Actor.Enemy
             {
                 if(Timer > 2.0f && !a)
                 {
+                    Time.timeScale = 1.0f;
                     a = true;
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
                 }

@@ -60,15 +60,15 @@ namespace SkillUI
 
         private void Update()
         {
-            // デバッグ
-            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame)
-            {
-                GainSkillPoint(500, Vector3.one * 100f);
-            }
-            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.C].wasPressedThisFrame)
-            {
-                GainSkillPoint(1000, Vector3.zero);
-            }
+            //// デバッグ
+            //if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame)
+            //{
+            //    GainSkillPoint(500, Vector3.one * 100f);
+            //}
+            //if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.C].wasPressedThisFrame)
+            //{
+            //    GainSkillPoint(1000, Vector3.zero);
+            //}
             // "し"ょ"う"が"な"い"!
             AddPointToText(added_point_);
             added_point_ = 0;

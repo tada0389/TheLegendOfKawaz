@@ -52,7 +52,7 @@ namespace Actor.Player
         // 壁蹴りできるか
         public bool CanWallKick { private set; get; }
         // 自動回復できるか
-        public bool CanAutoHeal { private set; get; }
+        public float AutoHealInterval { private set; get; }
         // 弾の数
         public int MaxShotNum { private set; get; }
         // チャージ完了時間
@@ -115,7 +115,7 @@ namespace Actor.Player
             Power = Skills[(int)eSkill.Attack].Value;
             InitSpeed = Skills[(int)eSkill.Speed].Value / (float)100f;
             CanWallKick = Skills[(int)eSkill.WallKick].Value != 0;
-            CanAutoHeal = Skills[(int)eSkill.AutoHeal].Value != 0;
+            AutoHealInterval = Skills[(int)eSkill.AutoHeal].Value;
             MaxShotNum = Skills[(int)eSkill.ShotNum].Value;
             ChargeEndTime = Skills[(int)eSkill.ChargeShot].Value / 10f;
             AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].Value;
@@ -171,7 +171,7 @@ namespace Actor.Player
         public void ReverseFaceDirection() => Dir = (Dir == eDir.Left) ? eDir.Right : eDir.Left;
         public void ChangeDirection(eDir dir) => Dir = dir;
 
-        public void SetHP(int hp) => HP = hp;
+        public void SetHP(int new_hp) => HP = Mathf.Clamp(new_hp, 0, MaxHP);
     }
 
     // プレイヤークラス partialによりファイル間で分割してクラスを実装
@@ -233,6 +233,10 @@ namespace Actor.Player
         [SerializeField]
         private GameObject charge_shot_end_;
 
+        // 自動回復のオブジェクト
+        [SerializeField]
+        private AutoHealController heal_ctrl_;
+
         // プレイヤーが反転しても右側を向き続けるオブジェクト
         [SerializeField]
         private Transform not_reverse_;
@@ -266,6 +270,7 @@ namespace Actor.Player
 
             data_ = new Data(this);
             HP = data_.HP;
+            if(data_.AutoHealInterval > 0.01f) heal_ctrl_.Init(data_.AutoHealInterval);
 
             // ステートマシンのメモリ確保 自分自身を渡す
             state_machine_ = new StateMachine<Player>(this);
@@ -291,6 +296,8 @@ namespace Actor.Player
         // Update is called once per frame
         private void Update()
         {
+            if (state_machine_.CurrentStateId == (int)eState.Dead) return; // 本当はダメなので変える
+
             // 接地しているかどうかなどで，状態を変更する
             RefectCollide();
 
@@ -311,6 +318,12 @@ namespace Actor.Player
             // デバッグ
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame){
                 UnityEngine.SceneManagement.SceneManager.LoadScene("SkillGetScene");
+            }
+            if (data_.AutoHealInterval > 0.01f && heal_ctrl_.CanHeal())
+            {
+                data_.SetHP(data_.HP + 1);
+                HP = data_.HP;
+                heal_ctrl_.PlayHealEffect();
             }
 
 
@@ -409,8 +422,8 @@ namespace Actor.Player
             if (!muteki_timer_.IsTimeout()) return;
             if (state_machine_.CurrentStateId == (int)eState.Damage) return;
             state_machine_.ChangeState((int)eState.Damage);
-            HP = Mathf.Max(0, HP - damage);
-            data_.SetHP(HP);
+            data_.SetHP(HP - damage);
+            HP = data_.HP;
             if (HP == 0)
             {
                 state_machine_.ChangeState((int)eState.Dead);

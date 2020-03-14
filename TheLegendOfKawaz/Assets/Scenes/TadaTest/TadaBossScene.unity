@@ -37128,6 +37128,9 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     think_time_: 0.5
+    stage_left_x: -10
+    stage_right_x: 15
+    anchor_min_length: 14
   state_idle_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -37157,8 +37160,8 @@ MonoBehaviour:
   state_anchor1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    delay_: 0.7
-    flush_time_: 0.8
+    delay_: 0.65
+    flush_time_: 0.9
     rigity_time_: 0.2
     anchors_:
     - {fileID: 1436968668736899209}
