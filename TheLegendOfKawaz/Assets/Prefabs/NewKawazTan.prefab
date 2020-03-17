@@ -367,7 +367,6 @@ GameObject:
   - component: {fileID: 2131037086634868347}
   - component: {fileID: 2131037086634868345}
   - component: {fileID: 2131037086634868346}
-  - component: {fileID: 4951405327245510928}
   - component: {fileID: 69060419}
   - component: {fileID: 1421661576}
   m_Layer: 0
@@ -505,14 +504,18 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
   charge_shot_pre_: {fileID: 5178167681758080773}
   charge_shot_end_: {fileID: 5586593142362632429}
+  normal_bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0,
+    type: 3}
+  charge_bullet_: {fileID: 4628252163955358299, guid: f9f39f5c4a86769489b8218c4f31bc23,
+    type: 3}
   heal_ctrl_: {fileID: 1161882050}
   not_reverse_: {fileID: 819803753}
   muteki_time_: 2
   mesh_: {fileID: 2131037087800481256}
   demo_skills_:
-  - type_: 6
-    level_: 1
   - type_: 3
+    level_: 1
+  - type_: 6
     level_: 1
   - type_: 5
     level_: 1
@@ -528,22 +531,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a26abaed62ee1245adc2a27bfbe7c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0, type: 3}
-  damage_: 1
---- !u!114 &4951405327245510928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131037086634868350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a26abaed62ee1245adc2a27bfbe7c55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet_: {fileID: 4628252163955358299, guid: f9f39f5c4a86769489b8218c4f31bc23, type: 3}
-  damage_: 3
+  pre_pooled_bullets_:
+  - bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0,
+      type: 3}
+    max_num_: 3
+  - bullet_: {fileID: 4628252163955358299, guid: f9f39f5c4a86769489b8218c4f31bc23,
+      type: 3}
+    max_num_: 2
 --- !u!114 &69060419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3797,11 +3791,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Heal_always
-      objectReference: {fileID: 0}
-    - target: {fileID: 6850620256162399259, guid: 50d7a42776b8a4f92885ff1eedc12443,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6850620256161912891, guid: 50d7a42776b8a4f92885ff1eedc12443,
         type: 3}

@@ -248,10 +248,6 @@ namespace Actor.Player
         private GameObject mesh_;
         private Timer muteki_timer_;
 
-        // 弾の生成器
-        [SerializeField]
-        private BulletSpawner bullet_spawner_;
-
         // 初期スキル
         #region debug
         [System.Serializable]
@@ -376,7 +372,7 @@ namespace Actor.Player
             bool dashed = (state_machine_.CurrentStateId == (int)eState.Dush);
             float speed = (dashed) ? 1.5f : 1.0f;
             NormalBullet bullet = (is_charged) ? charge_bullet_ : normal_bullet_;
-            bool can_shot = data_.bullet_spawner_.Shot(normal_bullet_, transform.position + new Vector3(dir * 1.5f, 0f, 0f),
+            bool can_shot = data_.bullet_spawner_.Shot(bullet, transform.position + new Vector3(dir * 1.5f, 0f, 0f),
                 new Vector2(dir, 0f), "Enemy", not_reverse_, speed, -1, speed);
             if (!can_shot) return;
             if (data_.animator.GetLayerWeight(1) == 0)
