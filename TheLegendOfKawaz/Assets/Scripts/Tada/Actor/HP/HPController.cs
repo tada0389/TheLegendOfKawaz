@@ -24,6 +24,8 @@ namespace Actor
 
         private List<HPBar> hp_bars_;
 
+        private bool initied_ = false;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -50,6 +52,18 @@ namespace Actor
         // Update is called once per frame
         void Update()
         {
+            if (!initied_)
+            {
+                initied_ = true;
+                for (int i = 0; i < actors_.Count; ++i)
+                {
+                    if (actors_[i] != null && hp_bars_[i] != null)
+                    {
+                        hp_bars_[i].Init(actors_[i].HP);
+     
+                    }
+                }
+            }
             for(int i = 0; i < actors_.Count; ++i)
             {
                 if(actors_[i] != null && hp_bars_[i] != null)

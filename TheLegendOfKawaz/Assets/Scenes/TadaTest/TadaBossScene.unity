@@ -4799,6 +4799,16 @@ PrefabInstance:
       propertyPath: actors_.Array.data[1]
       value: 
       objectReference: {fileID: 7062334307113485317}
+    - target: {fileID: 6860222096848671347, guid: e2b0470bfcba7174db9a3a469be65278,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -250
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860222095994575858, guid: e2b0470bfcba7174db9a3a469be65278,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -250
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2b0470bfcba7174db9a3a469be65278, type: 3}
 --- !u!1 &2010467359
@@ -37130,7 +37140,7 @@ MonoBehaviour:
     think_time_: 0.5
     stage_left_x: -10
     stage_right_x: 15
-    anchor_min_length: 14
+    anchor_min_length: 13
   state_idle_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}

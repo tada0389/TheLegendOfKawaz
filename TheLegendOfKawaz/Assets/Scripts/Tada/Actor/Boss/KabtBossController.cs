@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TadaLib;
+using KoitanLib;
 using Bullet;
 
 /// <summary>
@@ -98,7 +99,7 @@ namespace Actor.Enemy
         {
             muteki_timer_ = new Timer(muteki_time_);
 
-            HP = 20;
+            HP = 32;
 
             trb_ = GetComponent<TadaRigidbody>();
 
@@ -398,7 +399,7 @@ namespace Actor.Enemy
             {
                 Parent.trb_.Velocity = Vector2.zero;
                 explosion_effect_.gameObject.SetActive(true);
-                Time.timeScale = 0.5f;
+                if(!a) Time.timeScale = 0.3f;
             }
 
             // 毎フレーム呼ばれる
