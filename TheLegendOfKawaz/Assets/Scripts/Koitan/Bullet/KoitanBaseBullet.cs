@@ -33,7 +33,7 @@ public class KoitanBaseBullet : BaseBulletController
     private Timer timer;
 
 
-    public override void Init(Vector2 pos, Vector2 dir, int damage, string opponent_tag, Transform target = null, float speed_rate = 1, float life_time = -1, float damage_rate = 1)
+    public override void Init(Vector2 pos, Vector2 dir, string opponent_tag, Transform target = null, float speed_rate = 1, float life_time = -1, float damage_rate = 1)
     {
         timer = new Timer(lifeTime);
         timer.TimeReset();
