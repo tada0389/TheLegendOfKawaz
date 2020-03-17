@@ -7,12 +7,17 @@ namespace KoitanLib
 {
     public class ObjectPoolManager : SingletonMonoBehaviour<ObjectPoolManager>
     {
-        private static Dictionary<string, PoolMonoElement> monoPoolList = new Dictionary<string, PoolMonoElement>();
-        private static Dictionary<string, PoolObjElement> objectPoolList = new Dictionary<string, PoolObjElement>();
+        private static Dictionary<int, PoolMonoElement> monoPoolList = new Dictionary<int, PoolMonoElement>();
 
-
-        public static void Init(string key, MonoBehaviour o, int MaxNum = 1)
+        /// <summary>
+        /// 絶対にコンポーネントをつけたGameObjectを登録すること!
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="MaxNum"></param>
+        public static void Init(MonoBehaviour o, int MaxNum = 1)
         {
+            int key = o.gameObject.GetInstanceID();
+            //Debug.Log(o.name + o.GetInstanceID());
             if (!monoPoolList.ContainsKey(key))
             {
                 PoolMonoElement elem = new PoolMonoElement(o, MaxNum);
@@ -20,19 +25,9 @@ namespace KoitanLib
             }
         }
 
-        /*
-        public static void Init(string key, GameObject o, int MaxNum = 1)
+        public static T GetInstance<T>(MonoBehaviour o) where T : MonoBehaviour
         {
-            if (!objectPoolList.ContainsKey(key))
-            {
-                PoolObjElement elem = new PoolObjElement(o, MaxNum);
-                objectPoolList.Add(key, elem);
-            }
-        }
-        */
-
-        public static T GetInstance<T>(string key) where T : MonoBehaviour
-        {
+            int key = o.gameObject.GetInstanceID();
             if (monoPoolList.ContainsKey(key))
             {
                 return monoPoolList[key].GetInstance<T>();
@@ -40,8 +35,9 @@ namespace KoitanLib
             return null;
         }
 
-        public static GameObject GetInstanceObj(string key)
+        public static GameObject GetInstance(MonoBehaviour o)
         {
+            int key = o.gameObject.GetInstanceID();
             if (monoPoolList.ContainsKey(key))
             {
                 return monoPoolList[key].GetInstanceObj();
@@ -49,8 +45,9 @@ namespace KoitanLib
             return null;
         }
 
-        public static void Release(string key)
+        public static void Release(MonoBehaviour o)
         {
+            int key = o.gameObject.GetInstanceID();
             if (monoPoolList.ContainsKey(key))
             {
                 monoPoolList[key].Clear();
@@ -100,48 +97,6 @@ namespace KoitanLib
                     {
                         elem.gameObject.SetActive(true);
                         return elem.gameObject;
-                    }
-                }
-                return null;
-            }
-
-            public void Clear()
-            {
-                for (int i = maxNum - 1; i >= 0; i--)
-                {
-                    Destroy(poolList[i].gameObject);
-                }
-            }
-        }
-
-        public class PoolObjElement
-        {
-            public int maxNum;
-            public GameObject original;
-            List<GameObject> poolList;
-
-            public PoolObjElement(GameObject o, int max)
-            {
-                maxNum = max;
-                original = o;
-                poolList = new List<GameObject>(max);
-                for (int i = 0; i < maxNum; i++)
-                {
-                    GameObject m = Instantiate(original);
-                    m.SetActive(false);
-                    poolList.Add(m);
-                }
-            }
-
-            //足りないときはnullを返す
-            public GameObject GetInstanceObj()
-            {
-                foreach (GameObject elem in poolList)
-                {
-                    if (!elem.activeSelf)
-                    {
-                        elem.SetActive(true);
-                        return elem;
                     }
                 }
                 return null;

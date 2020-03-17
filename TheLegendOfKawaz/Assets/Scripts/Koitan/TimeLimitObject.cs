@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeDestroyer : MonoBehaviour
+public class TimeLimitObject : MonoBehaviour
 {
     public float lifeTime;
     private float time = 0;

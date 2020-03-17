@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TadaLib;
 using Bullet;
+using KoitanLib;
 
 /// <summary>
 /// 全てのボスの基礎 これをコピペしてください
@@ -91,6 +92,15 @@ namespace Actor.Enemy
         private static readonly int hashAttack2 = Animator.StringToHash("Attack2");
         private static readonly int hashAttack3 = Animator.StringToHash("Attack3");
 
+        //オブジェクトプール
+        [SerializeField]
+        VenomBullet venomBullet;
+        [SerializeField]
+        TimeLimitObject shotEff;
+        [SerializeField]
+        TimeLimitObject hitEff;
+
+
         private void Start()
         {
             HP = 20;
@@ -118,6 +128,11 @@ namespace Actor.Enemy
 
             // 初期ステートを設定
             state_machine_.SetInitialState((int)eState.Think);
+
+            //オブジェクトプール
+            ObjectPoolManager.Init(venomBullet, 6);
+            ObjectPoolManager.Init(shotEff, 6);
+            ObjectPoolManager.Init(hitEff, 6);
 
             // デバッグ表示
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -300));
@@ -229,7 +244,7 @@ namespace Actor.Enemy
             public override void OnStart()
             {
                 Parent.trb_.Velocity = Vector2.zero;
-                Parent.animator.Play(hashIdle);
+                //Parent.animator.Play(hashIdle);
             }
 
             // 毎フレーム呼ばれる
@@ -321,6 +336,10 @@ namespace Actor.Enemy
             [SerializeField]
             private float delay_time_ = 0.5f;
 
+            //玉の速さ
+            [SerializeField]
+            private float speed = 3;
+
             private int shot_cnt_ = 0;
             private int trial_cnt_ = 0;
 
@@ -330,12 +349,14 @@ namespace Actor.Enemy
             [SerializeField]
             private Vector2 shot_offset_ = new Vector2(1.0f, 0.0f);
 
+            private float dir;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
-                Parent.bullet_spawner_.Init(shot_num_ * 3);
+                //Parent.bullet_spawner_.Init(shot_num_ * 3);
                 Parent.animator.Play(hashAttack2);
-                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
             }
 
@@ -345,14 +366,36 @@ namespace Actor.Enemy
                 if (!end_ && Timer > (shot_cnt_) * shot_interval_ + delay_time_)
                 {
                     ++shot_cnt_;
-                    float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
-                    Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                    //float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                    //Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                    /*
                     Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
                         + shot_offset_.y), new Vector2(dir, 0f), "Player");
                     Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
                         + shot_offset_.y), new Vector2(dir, 0.5f), "Player");
                     Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
                         + shot_offset_.y), new Vector2(dir, 1f), "Player");
+
+                    */
+
+                    VenomBullet vb = ObjectPoolManager.GetInstance<VenomBullet>(Parent.venomBullet);
+                    if (vb != null)
+                    {
+                        vb.Init(new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector3(dir, 0f) * speed);
+                    }
+                    vb = ObjectPoolManager.GetInstance<VenomBullet>(Parent.venomBullet);
+                    if (vb != null)
+                    {
+                        vb.Init(new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector3(dir, 0.5f) * speed);
+                    }
+                    vb = ObjectPoolManager.GetInstance<VenomBullet>(Parent.venomBullet);
+                    if (vb != null)
+                    {
+                        vb.Init(new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector3(dir, 1f) * speed);
+                    }
 
                     if (shot_cnt_ >= shot_num_)
                     {

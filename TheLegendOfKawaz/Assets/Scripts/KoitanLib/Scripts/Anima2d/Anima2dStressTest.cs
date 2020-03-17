@@ -10,13 +10,13 @@ public class Anima2dStressTest : MonoBehaviour
     [SerializeField]
     private GameObject rightObj;
     [SerializeField]
-    private TimeDestroyer eff;
+    private TimeLimitObject eff;
     private RaycastHit2D hit;
     private List<GameObject> objList = new List<GameObject>();
 
     private void Start()
     {
-        ObjectPoolManager.Init("Eff", eff, 10);
+        ObjectPoolManager.Init(eff, 10);
     }
 
     // Update is called once per frame
@@ -29,7 +29,7 @@ public class Anima2dStressTest : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             //GameObject obj = Instantiate(leftObj, pos, Quaternion.identity);
-            TimeDestroyer obj = ObjectPoolManager.GetInstance<TimeDestroyer>("Eff");
+            TimeLimitObject obj = ObjectPoolManager.GetInstance<TimeLimitObject>(eff);
             if (obj != null)
             {
                 obj.Init(pos);

@@ -22,13 +22,13 @@ public class PoolTest : MonoBehaviour
         //オブジェクト登録
         if (Input.GetKeyDown(KeyCode.I))
         {
-            ObjectPoolManager.Init("bullet", bullet, maxNum);
+            ObjectPoolManager.Init(bullet, maxNum);
         }
 
         //オブジェクト表示
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GravityBullet g = ObjectPoolManager.GetInstance<GravityBullet>("bullet");
+            GravityBullet g = ObjectPoolManager.GetInstance<GravityBullet>(bullet);
             g.transform.position = transform.position;
             Debug.Log(g.gameObject.name);
         }
@@ -36,7 +36,7 @@ public class PoolTest : MonoBehaviour
         //オブジェクト破棄
         if (Input.GetKeyDown(KeyCode.R))
         {
-            ObjectPoolManager.Release("bullet");
+            ObjectPoolManager.Release(bullet);
         }
     }
 }
