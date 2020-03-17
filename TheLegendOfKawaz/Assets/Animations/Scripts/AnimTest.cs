@@ -62,7 +62,7 @@ public class AnimTest : MonoBehaviour
         oldPos = nowPos = transform.position;
 
         //オブジェクト登録
-        ObjectPoolManager.Init(tama, 3);
+        ObjectPoolManager.Init(tama, this, 3);
     }
 
     // Update is called once per frame

@@ -7,30 +7,52 @@ namespace KoitanLib
 {
     public class ObjectPoolManager : SingletonMonoBehaviour<ObjectPoolManager>
     {
-        private static Dictionary<int, PoolMonoElement> monoPoolList = new Dictionary<int, PoolMonoElement>();
+        private static Dictionary<int, PoolMonoElement> poolDic = new Dictionary<int, PoolMonoElement>();
+
+        private void Update()
+        {
+            foreach (var pool in poolDic)
+            {
+                for (int i = pool.Value.parents.Count - 1; i >= 0; --i)
+                {
+                    if (pool.Value.parents[i] == null)
+                    {
+                        pool.Value.parents.RemoveAt(i);
+                    }
+                }
+                if (pool.Value.parents.Count == 0)
+                {
+                    pool.Value.Clear();
+                }
+            }
+        }
 
         /// <summary>
         /// 絶対にコンポーネントをつけたGameObjectを登録すること!
         /// </summary>
         /// <param name="o"></param>
-        /// <param name="MaxNum"></param>
-        public static void Init(MonoBehaviour o, int MaxNum = 1)
+        /// <param name="maxNum"></param>
+        public static void Init(MonoBehaviour o, MonoBehaviour p, int maxNum)
         {
             int key = o.gameObject.GetInstanceID();
             //Debug.Log(o.name + o.GetInstanceID());
-            if (!monoPoolList.ContainsKey(key))
+            if (poolDic.ContainsKey(key))
             {
-                PoolMonoElement elem = new PoolMonoElement(o, MaxNum);
-                monoPoolList.Add(key, elem);
+                poolDic[key].parents.Add(p);
+            }
+            else
+            {
+                PoolMonoElement elem = new PoolMonoElement(o, p, maxNum);
+                poolDic.Add(key, elem);
             }
         }
 
         public static T GetInstance<T>(MonoBehaviour o) where T : MonoBehaviour
         {
             int key = o.gameObject.GetInstanceID();
-            if (monoPoolList.ContainsKey(key))
+            if (poolDic.ContainsKey(key))
             {
-                return monoPoolList[key].GetInstance<T>();
+                return poolDic[key].GetInstance<T>();
             }
             return null;
         }
@@ -38,9 +60,9 @@ namespace KoitanLib
         public static GameObject GetInstance(MonoBehaviour o)
         {
             int key = o.gameObject.GetInstanceID();
-            if (monoPoolList.ContainsKey(key))
+            if (poolDic.ContainsKey(key))
             {
-                return monoPoolList[key].GetInstanceObj();
+                return poolDic[key].GetInstance();
             }
             return null;
         }
@@ -48,55 +70,68 @@ namespace KoitanLib
         public static void Release(MonoBehaviour o)
         {
             int key = o.gameObject.GetInstanceID();
-            if (monoPoolList.ContainsKey(key))
+            if (poolDic.ContainsKey(key))
             {
-                monoPoolList[key].Clear();
-                monoPoolList.Remove(key);
+                poolDic[key].Clear();
+                poolDic.Remove(key);
             }
         }
 
         public class PoolMonoElement
         {
-            public int maxNum;
+            public int maxNum = 0;
             public MonoBehaviour original;
-            List<MonoBehaviour> poolList;
+            Queue<MonoBehaviour> monoQue;
+            public List<MonoBehaviour> parents = new List<MonoBehaviour>();
 
-            public PoolMonoElement(MonoBehaviour o, int max)
+            public PoolMonoElement(MonoBehaviour o, MonoBehaviour p, int max)
             {
-                maxNum = max;
                 original = o;
-                poolList = new List<MonoBehaviour>(max);
-                for (int i = 0; i < maxNum; i++)
+                monoQue = new Queue<MonoBehaviour>(max);
+                Init(p, max);
+            }
+
+            public void Init(MonoBehaviour p, int max)
+            {
+                maxNum = Mathf.Max(maxNum, max);
+                parents.Add(p);
+                for (int i = 0, n = maxNum - monoQue.Count; i < n; i++)
                 {
                     MonoBehaviour m = Instantiate(original);
                     m.gameObject.SetActive(false);
-                    poolList.Add(m);
+                    monoQue.Enqueue(m);
+                    //if (monoQue.Count >= maxNum) break;
                 }
             }
 
             //足りないときはnullを返す
             public T GetInstance<T>() where T : MonoBehaviour
             {
-                foreach (T elem in poolList)
+                for (int i = 0; i < maxNum; i++)
                 {
-                    if (!elem.gameObject.activeSelf)
+                    T m = (T)monoQue.Dequeue();
+                    monoQue.Enqueue(m);
+                    if (m.gameObject.activeSelf == false)
                     {
-                        elem.gameObject.SetActive(true);
-                        return elem;
+                        m.gameObject.SetActive(true);
+                        return m;
                     }
                 }
                 return null;
             }
 
             //足りないときはnullを返す
-            public GameObject GetInstanceObj()
+
+            public GameObject GetInstance()
             {
-                foreach (MonoBehaviour elem in poolList)
+                for (int i = 0; i < maxNum; i++)
                 {
-                    if (!elem.gameObject.activeSelf)
+                    MonoBehaviour m = monoQue.Dequeue();
+                    monoQue.Enqueue(m);
+                    if (m.gameObject.activeSelf == false)
                     {
-                        elem.gameObject.SetActive(true);
-                        return elem.gameObject;
+                        m.gameObject.SetActive(true);
+                        return m.gameObject;
                     }
                 }
                 return null;
@@ -104,10 +139,15 @@ namespace KoitanLib
 
             public void Clear()
             {
-                for (int i = maxNum - 1; i >= 0; i--)
+                while (monoQue.Count > 0)
                 {
-                    Destroy(poolList[i].gameObject);
+                    MonoBehaviour m = monoQue.Dequeue();
+                    if (m != null)
+                    {
+                        Destroy(m.gameObject);
+                    }
                 }
+                maxNum = 0;
             }
         }
     }
