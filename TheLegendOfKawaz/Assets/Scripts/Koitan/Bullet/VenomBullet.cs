@@ -12,7 +12,7 @@ public class VenomBullet : MonoBehaviour
     float lifeTime = 3;
 
     [SerializeField]
-    float gravity = -1f;
+    Vector3 gravity = Vector3.down;
 
     private float time = 0;
 
@@ -50,7 +50,7 @@ public class VenomBullet : MonoBehaviour
 
     private void Move()
     {
-        velocity.y += gravity * Time.deltaTime;
+        velocity += gravity * Time.deltaTime;
         transform.position += velocity * Time.deltaTime;
     }
 
