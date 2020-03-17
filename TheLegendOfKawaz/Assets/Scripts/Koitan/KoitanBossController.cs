@@ -96,6 +96,8 @@ namespace Actor.Enemy
         [SerializeField]
         VenomBullet venomBullet;
         [SerializeField]
+        GravityBullet swampBullet;
+        [SerializeField]
         TimeLimitObject shotEff;
         [SerializeField]
         TimeLimitObject hitEff;
@@ -131,6 +133,7 @@ namespace Actor.Enemy
 
             //オブジェクトプール
             ObjectPoolManager.Init(venomBullet, this, 6);
+            ObjectPoolManager.Init(swampBullet, this, 2);
             ObjectPoolManager.Init(shotEff, this, 6);
             ObjectPoolManager.Init(hitEff, this, 6);
 
@@ -252,13 +255,15 @@ namespace Actor.Enemy
             {
                 if (Timer > think_time_)
                 {
+                    /*
                     float r = Random.Range(0f, 100f);
                     Debug.Log("random:" + r);
                     if (r < 30f) ChangeState((int)eState.Shot);
                     else if (r < 60f) ChangeState((int)eState.Bite);
                     else ChangeState((int)eState.PreDash);
+                    */
 
-                    //ChangeState((int)eState.Shot);
+                    ChangeState((int)eState.Shot);
                     return;
                 }
             }

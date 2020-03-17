@@ -38,7 +38,7 @@ namespace KoitanLib
             //Debug.Log(o.name + o.GetInstanceID());
             if (poolDic.ContainsKey(key))
             {
-                poolDic[key].parents.Add(p);
+                poolDic[key].Init(p, maxNum);
             }
             else
             {

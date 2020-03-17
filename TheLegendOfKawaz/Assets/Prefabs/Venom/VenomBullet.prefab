@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   lifeTime: 4
-  gravity: 0
+  gravity: {x: 0, y: -10, z: 0}
   shotEff: {fileID: 7956539869703678606, guid: fdf0f8ce0da6b46bc971302322cff80a, type: 3}
   hitEff: {fileID: 4706858232718288485, guid: 35a96ff3104174ccea2fef463f8e398b, type: 3}
 --- !u!1 &7106363020500416237
