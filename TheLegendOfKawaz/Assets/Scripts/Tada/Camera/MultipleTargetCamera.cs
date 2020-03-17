@@ -19,7 +19,7 @@ namespace CameraSpace
         // 追従する対象
         [SerializeField]
         private List<Transform> targets_;
-        public List<Transform> Targets => targets_;
+        public List<Transform> Targets { set { targets_ = value; } get { return targets_; } }
 
         [SerializeField]
         private Vector3 offset_;
@@ -56,10 +56,23 @@ namespace CameraSpace
 
         private void LateUpdate()
         {
+            CheckTargetsDestroyed();
             if (data_.Targets.Count == 0) return;
 
             Zoom();
             Move();
+        }
+
+        // 削除されたターゲットをリストから削除する
+        private void CheckTargetsDestroyed()
+        {
+            for(int i = data_.Targets.Count - 1; i >= 0; --i)
+            {
+                if(data_.Targets[i] == null)
+                {
+                    data_.Targets.RemoveAt(i);
+                }
+            }
         }
 
         // カメラのデータを変更する
@@ -110,6 +123,7 @@ namespace CameraSpace
             transform.position = Vector3.SmoothDamp(transform.position, new_position, ref velocity, data_.SmoothTime);
         }
 
+        // 縦横ともに考慮して最も長い方を返す
         private float GetGreatestDistance()
         {
             int x = 0;
@@ -119,7 +133,7 @@ namespace CameraSpace
                 bounds.Encapsulate(data_.Targets[i].position);
             }
             // x軸方向とy軸方向、差の大きい方を基準に全体のサイズを変更する
-            return (bounds.size.x >= bounds.size.y) ? bounds.size.x : bounds.size.y; // ここ自分で変えた　神！！！！！
+            return (bounds.size.x >= bounds.size.y) ? bounds.size.x : bounds.size.y;
 
         }
 
