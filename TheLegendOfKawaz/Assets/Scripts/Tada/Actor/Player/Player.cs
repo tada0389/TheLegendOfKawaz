@@ -90,8 +90,6 @@ namespace Actor.Player
 
         // アニメーター
         public Animator animator;
-        // バレット 0が通常，1がチャージ
-        public BulletSpawner[] bullet_spawners_;
         // オーディオソース
         public AudioSource audio;
 
@@ -104,7 +102,6 @@ namespace Actor.Player
             transform = body.transform;
 
             animator = body.GetComponent<Animator>();
-            bullet_spawners_ = body.GetComponents<BulletSpawner>();
             audio = body.GetComponent<AudioSource>();
             trb = body.GetComponent<TadaRigidbody>();
 
@@ -122,9 +119,6 @@ namespace Actor.Player
             air_jump_num_ = AirJumpNumMax;
             CanAirDashMove = Skills[(int)eSkill.AirDushNum].Value != 0;
             prev_dash_time_ = 0f;
-
-            bullet_spawners_[0].Init(MaxShotNum);
-            bullet_spawners_[1].Init(2);
         }
 
         // ダッシュできるか
@@ -233,6 +227,11 @@ namespace Actor.Player
         [SerializeField]
         private GameObject charge_shot_end_;
 
+        [SerializeField]
+        private NormalBullet normal_bullet_;
+        [SerializeField]
+        private NormalBullet charge_bullet_;
+
         // 自動回復のオブジェクト
         [SerializeField]
         private AutoHealController heal_ctrl_;
@@ -246,6 +245,10 @@ namespace Actor.Player
         [SerializeField]
         private GameObject mesh_;
         private Timer muteki_timer_;
+
+        // 弾の生成器
+        [SerializeField]
+        private BulletSpawner bullet_spawner_;
 
         // 初期スキル
         #region debug
@@ -370,7 +373,9 @@ namespace Actor.Player
             float dir = (data_.Dir == eDir.Left) ? -1f : 1f;
             bool dashed = (state_machine_.CurrentStateId == (int)eState.Dush);
             float speed = (dashed) ? 1.5f : 1.0f;
-            bool can_shot = data_.bullet_spawners_[(is_charged) ? 1 : 0].Shot(transform.position + new Vector3(dir * 1.5f, 0f, 0f), new Vector2(dir, 0f), "Enemy", not_reverse_, speed, -1, speed);
+            NormalBullet bullet = (is_charged) ? charge_bullet_ : normal_bullet_;
+            bool can_shot = data_.bullet_spawner_.Shot(normal_bullet_, transform.position + new Vector3(dir * 1.5f, 0f, 0f),
+                new Vector2(dir, 0f), "Enemy", not_reverse_, speed, -1, speed);
             if (!can_shot) return;
             if (data_.animator.GetLayerWeight(1) == 0)
             {

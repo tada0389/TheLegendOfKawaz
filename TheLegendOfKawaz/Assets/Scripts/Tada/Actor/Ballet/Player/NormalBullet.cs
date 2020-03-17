@@ -14,6 +14,8 @@ namespace Bullet
     {
         [SerializeField]
         private float init_speed_ = 0.3f;
+        [SerializeField]
+        private int init_damage_ = 2;
         // 寿命
         [SerializeField]
         private float life_time_ = 3.0f;
@@ -38,12 +40,12 @@ namespace Bullet
             Move();
         }
 
-        public override void Init(Vector2 pos, Vector2 dir, int damage, string opponent_tag = "Player", Transform owner = null, float init_speed = 1.0f, float life_time = -1.0f, float damage_rate = 1f)
+        public override void Init(Vector2 pos, Vector2 dir, string opponent_tag = "Player", Transform owner = null, float init_speed = 1.0f, float life_time = -1.0f, float damage_rate = 1f)
         {
             transform.position = (Vector3)pos;
             move_body_.transform.position = (Vector3)pos;
             dir_ = dir;
-            damage_ = (int)(damage * damage_rate);
+            damage_ = (int)(init_damage_ * damage_rate);
             opponent_tag_ = opponent_tag;
             speed_ = init_speed_ * init_speed;
             if (life_time > 0f) life_time_ = life_time;

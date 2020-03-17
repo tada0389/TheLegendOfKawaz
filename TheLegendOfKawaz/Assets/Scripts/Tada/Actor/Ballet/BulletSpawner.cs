@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Bullet;
+using KoitanLib;
 
 /// <summary>
 /// 弾を生成するクラス
@@ -10,67 +11,72 @@ using Bullet;
 
 namespace Bullet
 {
-    public class BulletSpawner : MonoBehaviour
+    [System.Serializable]
+    public class BulletPrefab
     {
-        // 発射する弾のプレハブ
+        // 弾のプレハブ
         [SerializeField]
         private BaseBulletController bullet_;
+        public BaseBulletController Bullet => bullet_;
 
-        // ダメージ量
+        // いくつプーリングするか
         [SerializeField]
-        private int damage_ = 2;
+        private int max_num_;
+        public int MaxNum => max_num_;
+    }
 
-        // 発射できる最大数
-        private int max_shot_num_;
+    public class BulletSpawner : MonoBehaviour
+    {
+        // あらかじめプーリングしておく弾たち
+        [SerializeField]
+        private List<BulletPrefab> pre_pooled_bullets_;
 
-        // 弾のオブジェクトプール
+        // オブジェクトプールで登録済みの弾
         private List<BaseBulletController> bullets_;
 
-        // 現在見ている弾のインデックス
-        private int index_;
-
-        // 初期化する ここで何発まで発射できるか決める
-        public void Init(int max_shot_num)
+        private void Awake()
         {
-            index_ = 0;
-            max_shot_num_ = max_shot_num;
-
-            // オブジェクトプールの作成
             bullets_ = new List<BaseBulletController>();
-            for(int i = 0; i < max_shot_num; ++i)
+            foreach(var bullet in pre_pooled_bullets_)
             {
-                BaseBulletController bullet = Instantiate(bullet_);
-                bullet.gameObject.SetActive(false);
-                bullets_.Add(bullet);
+                CreateBulletPool(bullet.Bullet, bullet.MaxNum);
             }
         }
 
-        // 発射する 弾を出せなかったらfalse
-        public bool Shot(Vector2 pos, Vector2 dir, string opponent_tag, Transform owner = null, float speed_rate = 1.0f, float life_time = -1f, float damage_rate = 1f)
+        // 弾のオブジェクトプールを生成する
+        public void CreateBulletPool(BaseBulletController bullet, int max_num)
         {
-            // もしすべて使っていたら撃たない 無駄な処理があるから直したい
-            for(int i = 0; i < max_shot_num_; ++i)
+            ObjectPoolManager.Init(bullet, this, max_num);
+        }
+
+        // 発射する 弾を出せなかったらfalse
+        public bool Shot (BaseBulletController bullet, Vector2 pos, Vector2 dir, string opponent_tag, Transform owner = null,
+            float speed_rate = 1.0f, float life_time = -1f, float damage_rate = 1f)
+        {
+            // オブジェクトプールから新しい弾を生成する
+            BaseBulletController new_bullet = ObjectPoolManager.GetInstance<BaseBulletController>(bullet);
+            if(new_bullet != null)
             {
-                if (!bullets_[index_].gameObject.activeSelf)
-                {
-                    bullets_[index_].gameObject.SetActive(true);
-                    bullets_[index_].Init(pos, dir, damage_, opponent_tag, owner, speed_rate, life_time, damage_rate);
-                    index_ = (index_ + 1) % max_shot_num_;
-                    return true;
-                }
-                index_ = (index_ + 1) % max_shot_num_;
+                new_bullet.Init(pos, dir, opponent_tag, owner, speed_rate, life_time, damage_rate);
+                return true;
             }
             return false;
         }
 
-        // オブジェクトを開放する
+        // 指定した弾を開放する
+        public void Release(BaseBulletController bullet)
+        {
+            ObjectPoolManager.Release(bullet);
+            bullets_.Remove(bullet);
+        }
+
+        // 全ての弾を開放する
         public void Release()
         {
             foreach(var bullet in bullets_)
             {
-                Destroy(bullet.gameObject);
+                Release(bullet);
             }
-            bullets_.Clear();
         }
     }
 }

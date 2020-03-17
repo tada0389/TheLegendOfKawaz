@@ -76,6 +76,9 @@ namespace Actor.Enemy
         private StateJump state_jump_;
         #endregion
 
+        [SerializeField]
+        private BulletSpawner bullet_spawner_;
+
         // 物理演算 trb_.Velocityをいじって移動する
         private TadaRigidbody trb_;
 
@@ -688,8 +691,7 @@ namespace Actor.Enemy
             private int shot_cnt_;
 
             [SerializeField]
-            private BulletSpawner bullet_spawner_;
-            private bool bullet_inited_ = false;
+            private BaseBulletController bullet_;
 
             // 開始時に呼ばれる
             public override void OnStart()
@@ -702,13 +704,6 @@ namespace Actor.Enemy
                 // 敵の方向をむく
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
-
-                // 弾のプーリングの初期化
-                if (!bullet_inited_)
-                {
-                    bullet_spawner_.Init(shot_num_);
-                    bullet_inited_ = true;
-                }
             }
 
             // 毎フレーム呼ばれる
@@ -722,7 +717,7 @@ namespace Actor.Enemy
                     // 目的となる角度を取得する
                     Vector3 d = next - now;
                     float angle = Mathf.Atan2(d.y, d.x);
-                    bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * Parent.dir_, Parent.transform.position.y
+                    Parent.bullet_spawner_.Shot(bullet_, new Vector2(Parent.transform.position.x + shot_offset_.x * Parent.dir_, Parent.transform.position.y
                          + shot_offset_.y), new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.transform, 1.0f, 10.0f);
 
                     if(shot_cnt_ >= shot_num_)
@@ -802,7 +797,7 @@ namespace Actor.Enemy
             private List<AnchorController> anchors_;
 
             [SerializeField]
-            private BulletSpawner bullet_spawner_;
+            private BaseBulletController bullet_;
             private bool bullet_inited_ = false;
 
             // 開始時に呼ばれる
@@ -810,13 +805,6 @@ namespace Actor.Enemy
             {
                 shot_cnt_ = 0;
                 charged_ = false;
-
-                // 弾のプーリングの初期化
-                if (!bullet_inited_)
-                {
-                    bullet_spawner_.Init(shot_offset_list_.Count);
-                    bullet_inited_ = true;
-                }
 
                 // 4方向にアンカーを伸ばす
                 for(int i = 0; i < shot_offset_list_.Count; ++i)
@@ -887,7 +875,7 @@ namespace Actor.Enemy
                 // 目的となる角度を取得する
                 Vector3 d = next - now;
                 float angle = Mathf.Atan2(d.y, d.x);
-                bullet_spawner_.Shot(Parent.transform.position + (Vector3)shot_offset_list_[shot_cnt_],
+                Parent.bullet_spawner_.Shot(bullet_, Parent.transform.position + (Vector3)shot_offset_list_[shot_cnt_],
                     new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)), "Player", Parent.transform, 1.0f, 10.0f);
             }
         }
