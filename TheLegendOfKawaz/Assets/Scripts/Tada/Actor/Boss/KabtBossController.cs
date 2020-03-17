@@ -76,7 +76,6 @@ namespace Actor.Enemy
         private StateJump state_jump_;
         #endregion
 
-        [SerializeField]
         private BulletSpawner bullet_spawner_;
 
         // 物理演算 trb_.Velocityをいじって移動する
@@ -105,6 +104,7 @@ namespace Actor.Enemy
             HP = 32;
 
             trb_ = GetComponent<TadaRigidbody>();
+            bullet_spawner_ = GetComponent<BulletSpawner>();
 
             // ステートマシンのメモリ確保 自分自身を渡す
             state_machine_ = new StateMachine<KabtBossController>(this);

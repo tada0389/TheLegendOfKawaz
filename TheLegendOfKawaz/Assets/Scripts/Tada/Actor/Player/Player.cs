@@ -92,6 +92,7 @@ namespace Actor.Player
         public Animator animator;
         // オーディオソース
         public AudioSource audio;
+        public BulletSpawner bullet_spawner_;
 
         // それぞれのステートのデータ
 
@@ -104,6 +105,7 @@ namespace Actor.Player
             animator = body.GetComponent<Animator>();
             audio = body.GetComponent<AudioSource>();
             trb = body.GetComponent<TadaRigidbody>();
+            bullet_spawner_ = body.GetComponent<BulletSpawner>();
 
             var Skills = SkillManager.Instance.Skills;
 
