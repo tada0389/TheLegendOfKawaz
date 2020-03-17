@@ -130,9 +130,9 @@ namespace Actor.Enemy
             state_machine_.SetInitialState((int)eState.Think);
 
             //オブジェクトプール
-            ObjectPoolManager.Init(venomBullet, 6);
-            ObjectPoolManager.Init(shotEff, 6);
-            ObjectPoolManager.Init(hitEff, 6);
+            ObjectPoolManager.Init(venomBullet, this, 6);
+            ObjectPoolManager.Init(shotEff, this, 6);
+            ObjectPoolManager.Init(hitEff, this, 6);
 
             // デバッグ表示
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -300));

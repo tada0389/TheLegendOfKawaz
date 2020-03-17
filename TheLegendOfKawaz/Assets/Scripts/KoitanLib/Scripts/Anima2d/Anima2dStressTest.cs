@@ -16,7 +16,7 @@ public class Anima2dStressTest : MonoBehaviour
 
     private void Start()
     {
-        ObjectPoolManager.Init(eff, 10);
+        ObjectPoolManager.Init(eff, this, 10);
     }
 
     // Update is called once per frame

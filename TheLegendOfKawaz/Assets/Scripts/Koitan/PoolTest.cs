@@ -22,7 +22,7 @@ public class PoolTest : MonoBehaviour
         //オブジェクト登録
         if (Input.GetKeyDown(KeyCode.I))
         {
-            ObjectPoolManager.Init(bullet, maxNum);
+            ObjectPoolManager.Init(bullet, this, maxNum);
         }
 
         //オブジェクト表示
