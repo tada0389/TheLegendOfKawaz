@@ -62,7 +62,7 @@ public class AnimTest : MonoBehaviour
         oldPos = nowPos = transform.position;
 
         //オブジェクト登録
-        ObjectPoolManager.Init("b", tama, 3);
+        ObjectPoolManager.Init(tama, 3);
     }
 
     // Update is called once per frame
@@ -78,7 +78,7 @@ public class AnimTest : MonoBehaviour
 
 
 
-            mameTest m = ObjectPoolManager.GetInstance<mameTest>("b");
+            mameTest m = ObjectPoolManager.GetInstance<mameTest>(tama);
             if (m != null)
             {
                 m.gameObject.SetActive(true);

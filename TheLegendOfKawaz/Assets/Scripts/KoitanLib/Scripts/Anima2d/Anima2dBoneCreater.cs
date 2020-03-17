@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Anima2D;
+using UnityEngine.Experimental.U2D.Animation;
 
 public class Anima2dBoneCreater : MonoBehaviour
 {
     public Transform rootBone;
+    Sprite sprite;
 
     [ContextMenu("CreateBone")]
     public void CreateBoneRoot()
-    {
+    {        
         CreateBone(rootBone);
         SetBoneChild(rootBone);
     }
