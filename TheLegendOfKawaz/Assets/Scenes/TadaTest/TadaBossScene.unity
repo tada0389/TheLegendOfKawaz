@@ -1191,6 +1191,45 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: wall_state_.kick_effect_
+      value: 
+      objectReference: {fileID: 1761271175557756266, guid: ddbd8bb5f42b5d848b1eaa6e0f52823f,
+        type: 3}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: dush_state_.dash_effect_
+      value: 
+      objectReference: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
+        type: 3}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_effects_.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_effects_.Array.data[4].effect_
+      value: 
+      objectReference: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
+        type: 3}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_effects_.Array.data[4].max_num_
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_effects_.Array.data[5].effect_
+      value: 
+      objectReference: {fileID: 1761271175557756266, guid: ddbd8bb5f42b5d848b1eaa6e0f52823f,
+        type: 3}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_effects_.Array.data[5].max_num_
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
 --- !u!4 &1387907353 stripped
@@ -37107,6 +37146,13 @@ MonoBehaviour:
   - bullet_: {fileID: 4628252163955358299, guid: f9f39f5c4a86769489b8218c4f31bc23,
       type: 3}
     max_num_: 4
+  pre_pooled_effects_:
+  - effect_: {fileID: 5628106980228439543, guid: db9712828099688458d0916ae102e419,
+      type: 3}
+    max_num_: 8
+  - effect_: {fileID: 4568768137911539381, guid: 48b5016e700161842a39c2b2ab580cbf,
+      type: 3}
+    max_num_: 8
 --- !u!61 &7062334307113485319
 BoxCollider2D:
   m_ObjectHideFlags: 0

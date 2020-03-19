@@ -146,15 +146,5 @@ namespace Actor.Enemy
             setted_effects_.Clear();
             gameObject.SetActive(false);
         }
-
-        // エフェクトを生成する オブジェクトプール使いたいので仮
-        private void CreateEffect(ParticleSystem effect, Vector3 pos)
-        {
-            var eff = Instantiate(effect, pos, Quaternion.identity);
-            eff.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir_.x) * 90f - 90f, 0f);
-            eff.gameObject.SetActive(true);
-            eff.Play();
-            Destroy(eff.gameObject, 2.0f);
-        }
     }
 }

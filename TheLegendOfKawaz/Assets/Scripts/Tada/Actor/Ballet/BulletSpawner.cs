@@ -25,11 +25,27 @@ namespace Bullet
         public int MaxNum => max_num_;
     }
 
+    [System.Serializable]
+    public class EffectPrefab
+    {
+        // エフェクトのプレハブ
+        [SerializeField]
+        private BaseParticle effect_;
+        public BaseParticle Effect => effect_;
+
+        // いくつプーリングするか
+        [SerializeField]
+        private int max_num_;
+        public int MaxNum => max_num_;
+    }
+
     public class BulletSpawner : MonoBehaviour
     {
         // あらかじめプーリングしておく弾たち
         [SerializeField]
         private List<BulletPrefab> pre_pooled_bullets_;
+        [SerializeField]
+        private List<EffectPrefab> pre_pooled_effects_;
 
         // オブジェクトプールで登録済みの弾
         private List<BaseBulletController> bullets_;
@@ -40,6 +56,10 @@ namespace Bullet
             foreach(var bullet in pre_pooled_bullets_)
             {
                 CreateBulletPool(bullet.Bullet, bullet.MaxNum);
+            }
+            foreach(var effect in pre_pooled_effects_)
+            {
+                ObjectPoolManager.Init(effect.Effect, this, effect.MaxNum);
             }
         }
 

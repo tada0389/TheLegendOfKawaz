@@ -22,7 +22,7 @@ namespace Actor.Player
             private Vector2 kick_power_ = new Vector2(0.2f, 0.35f);
 
             [SerializeField]
-            private ParticleSystem kick_effect_;
+            private BaseParticle kick_effect_;
 
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
@@ -106,7 +106,7 @@ namespace Actor.Player
 
             private void WallKick()
             {
-                ActorUtils.CreateEffect(kick_effect_, data.transform.position + new Vector3((data.Dir == eDir.Left) ? 1.0f : -1.0f, 0f, 0f), new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f), 0.5f);
+                EffectPlayer.Play(kick_effect_, data.transform.position + new Vector3((data.Dir == eDir.Left) ? 1.0f : -1.0f, 0f, 0f), new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f));
 
                 data.velocity = kick_power_;
                 if (data.IsRight) data.velocity *= -1;

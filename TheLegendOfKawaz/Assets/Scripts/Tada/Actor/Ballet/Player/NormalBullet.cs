@@ -21,9 +21,9 @@ namespace Bullet
         private float life_time_ = 3.0f;
 
         [SerializeField]
-        private ParticleSystem shot_effect_;
+        private BaseParticle shot_effect_;
         [SerializeField]
-        private ParticleSystem hit_effect_;
+        private BaseParticle hit_effect_;
 
         private Vector2 dir_;
 
@@ -53,7 +53,7 @@ namespace Bullet
             timer_.TimeReset();
             owner_ = owner;
             // 発射エフェクト
-            CreateEffect(shot_effect_, transform.position, owner);
+            EffectPlayer.Play(shot_effect_, move_body_.transform.position, new Vector3(0f, dir_.x, 0f), owner);
         }
 
         protected override void Move()
@@ -73,19 +73,8 @@ namespace Bullet
 
         private void Dead()
         {
-            CreateEffect(hit_effect_, move_body_.transform.position);
+            EffectPlayer.Play(hit_effect_, move_body_.transform.position, new Vector3(0f, dir_.x, 0f));
             gameObject.SetActive(false);
-        }
-
-        // エフェクトを生成する オブジェクトプール使いたいので仮
-        private void CreateEffect(ParticleSystem effect, Vector3 pos, Transform owner = null)
-        {
-            var eff = Instantiate(effect, pos, Quaternion.identity);
-            eff.transform.parent = owner;
-            eff.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir_.x) * 90f - 90f, 0f);
-            eff.gameObject.SetActive(true);
-            eff.Play();
-            Destroy(eff.gameObject, 2.0f);
         }
     }
 }

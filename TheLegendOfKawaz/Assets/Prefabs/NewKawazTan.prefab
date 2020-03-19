@@ -477,14 +477,14 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.12, y: 0.1}
     Accel: {x: 0, y: -0.02}
     kick_power_: {x: 0.13, y: 0.24}
-    kick_effect_: {fileID: 7814694034277984977, guid: 580613f80b626f04893c2a321c1392b7,
+    kick_effect_: {fileID: 1761271175557756266, guid: ddbd8bb5f42b5d848b1eaa6e0f52823f,
       type: 3}
   dush_state_:
     MaxAbsSpeed: {x: 0.5, y: 0.2}
     Accel: {x: 0, y: -0.005}
     dush_time_: 0.25
     dush_speed_: 0.27
-    dash_effect_: {fileID: 3953492163206612339, guid: 6449bd64b924c4a4baa162c2f7788dc2,
+    dash_effect_: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
       type: 3}
   dashjump_state_:
     MaxAbsSpeed: {x: 0.25, y: 0.28}
@@ -536,6 +536,25 @@ MonoBehaviour:
       type: 3}
     max_num_: 3
   - bullet_: {fileID: 4628252163955358299, guid: f9f39f5c4a86769489b8218c4f31bc23,
+      type: 3}
+    max_num_: 2
+  pre_pooled_effects_:
+  - effect_: {fileID: 5628106980228439543, guid: db9712828099688458d0916ae102e419,
+      type: 3}
+    max_num_: 2
+  - effect_: {fileID: 4568768137911539381, guid: 48b5016e700161842a39c2b2ab580cbf,
+      type: 3}
+    max_num_: 2
+  - effect_: {fileID: 7389638420637238532, guid: 87d9dfc975f7d3e408a42c7a02b4d1ed,
+      type: 3}
+    max_num_: 5
+  - effect_: {fileID: -5165703982448799403, guid: efb357c6260a4484a964ad6ca1873aa4,
+      type: 3}
+    max_num_: 5
+  - effect_: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
+      type: 3}
+    max_num_: 2
+  - effect_: {fileID: 1761271175557756266, guid: ddbd8bb5f42b5d848b1eaa6e0f52823f,
       type: 3}
     max_num_: 2
 --- !u!114 &69060419
