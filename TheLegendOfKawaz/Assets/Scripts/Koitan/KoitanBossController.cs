@@ -94,9 +94,9 @@ namespace Actor.Enemy
 
         //オブジェクトプール
         [SerializeField]
-        VenomBullet venomBullet;
+        BaseBulletController venomBullet;
         [SerializeField]
-        GravityBullet swampBullet;
+        BaseBulletController swampBullet;
         [SerializeField]
         TimeLimitObject shotEff;
         [SerializeField]
@@ -132,10 +132,12 @@ namespace Actor.Enemy
             state_machine_.SetInitialState((int)eState.Think);
 
             //オブジェクトプール
+            /*
             ObjectPoolManager.Init(venomBullet, this, 6);
-            ObjectPoolManager.Init(swampBullet, this, 2);
+            //ObjectPoolManager.Init(swampBullet, this, 2);
             ObjectPoolManager.Init(shotEff, this, 6);
             ObjectPoolManager.Init(hitEff, this, 6);
+            */
 
             // デバッグ表示
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -300));
@@ -255,15 +257,13 @@ namespace Actor.Enemy
             {
                 if (Timer > think_time_)
                 {
-                    /*
+                    
                     float r = Random.Range(0f, 100f);
                     Debug.Log("random:" + r);
-                    if (r < 30f) ChangeState((int)eState.Shot);
-                    else if (r < 60f) ChangeState((int)eState.Bite);
-                    else ChangeState((int)eState.PreDash);
-                    */
-
-                    ChangeState((int)eState.Shot);
+                    if (r < 20f) ChangeState((int)eState.Shot);
+                    else if (r < 40f) ChangeState((int)eState.Bite);
+                    else if (r < 60f) ChangeState((int)eState.PreDash);
+                    else ChangeState((int)eState.ShotSwamp);
                     return;
                 }
             }
@@ -371,36 +371,13 @@ namespace Actor.Enemy
                 if (!end_ && Timer > (shot_cnt_) * shot_interval_ + delay_time_)
                 {
                     ++shot_cnt_;
-                    //float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
-                    //Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
-                    /*
-                    Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector2(dir, 0f), "Player");
-                    Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector2(dir, 0.5f), "Player");
-                    Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector2(dir, 1f), "Player");
 
-                    */
-
-                    VenomBullet vb = ObjectPoolManager.GetInstance<VenomBullet>(Parent.venomBullet);
-                    if (vb != null)
-                    {
-                        vb.Init(new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector3(dir, 0f) * speed);
-                    }
-                    vb = ObjectPoolManager.GetInstance<VenomBullet>(Parent.venomBullet);
-                    if (vb != null)
-                    {
-                        vb.Init(new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector3(dir, 0.5f) * speed);
-                    }
-                    vb = ObjectPoolManager.GetInstance<VenomBullet>(Parent.venomBullet);
-                    if (vb != null)
-                    {
-                        vb.Init(new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector3(dir, 1f) * speed);
-                    }
+                    Parent.bullet_spawner_.Shot(Parent.venomBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector3(dir, 0f) * speed, "Player");
+                    Parent.bullet_spawner_.Shot(Parent.venomBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector3(dir, 0.5f) * speed, "Player");
+                    Parent.bullet_spawner_.Shot(Parent.venomBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector3(dir, 1f) * speed, "Player");
 
                     if (shot_cnt_ >= shot_num_)
                     {
@@ -565,26 +542,57 @@ namespace Actor.Enemy
             }
         }
 
-        // 止まる
+        // 沼を作る
         [System.Serializable]
         private class StateAction6 : StateMachine<KoitanBossController>.StateBase
         {
             [SerializeField]
-            private float break_time_ = 1.0f;
+            private float startup_time = 1;
+            [SerializeField]
+            private float active_time = 1;
+            [SerializeField]
+            private float recovery_time = 1;
+
+            [SerializeField]
+            private Vector2 shot_offset_ = new Vector2(1.0f, 0.0f);
+
+            private float dir;
+
+            //玉の速さ
+            [SerializeField]
+            private float speed = 3;
+
+            private bool isShot;
 
             // 開始時に呼ばれる
             public override void OnStart()
             {
-                //動き
-                Parent.animator.SetBool(hashIsMove, false);
+                Parent.animator.Play(hashAttack3);
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if (Timer > break_time_) ChangeState((int)eState.Think);
+                if (Timer < startup_time)
+                {
 
-                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(-Parent.dir_, 1f) * Accel, MaxAbsSpeed);
+                }
+                else if (Timer < startup_time + active_time && !isShot)
+                {
+                    isShot = true;
+                    Parent.bullet_spawner_.Shot(Parent.swampBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector3(dir, 0f) * speed, "Player");
+                    Parent.bullet_spawner_.Shot(Parent.swampBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector3(dir, 0.5f) * speed, "Player");
+                    Parent.bullet_spawner_.Shot(Parent.swampBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), new Vector3(dir, 1f) * speed, "Player");
+                }
+                else if (Timer > startup_time + active_time)
+                {
+                    ChangeState((int)eState.Think);
+                }
             }
 
             // 終了時に呼ばれる

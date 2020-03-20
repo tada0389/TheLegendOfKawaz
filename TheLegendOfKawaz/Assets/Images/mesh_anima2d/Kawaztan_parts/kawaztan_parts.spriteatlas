@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: kawaztan_parts
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 1e56998f557a94edd9e5db3676f1dfd3, type: 3}
+    - {fileID: 2800000, guid: ba6a8075fbb374259a4cda79b6d387aa, type: 3}
+    - {fileID: 2800000, guid: 3e4e6999fd0d34202a7d4b6a58d36281, type: 3}
+    - {fileID: 2800000, guid: 5593a90ef592e4ebe9e4298513c6429b, type: 3}
+    - {fileID: 2800000, guid: cdadccda5a44a4e539307a8cf7321079, type: 3}
+    - {fileID: 2800000, guid: e4480ef15dbe542c1b67a7e8aabbc78a, type: 3}
+    - {fileID: 2800000, guid: b35c0571b348a49f8a290d8d3491636c, type: 3}
+    - {fileID: 2800000, guid: 71abdb307af3040029f266245d6d6830, type: 3}
+    - {fileID: 2800000, guid: 40411e6643f1b4964863c3014bea5231, type: 3}
+    - {fileID: 2800000, guid: 1e467d0362e7a4424abf8ff21bd7389d, type: 3}
+    - {fileID: 2800000, guid: b4ef9a4de476a4104b737088b4b3ad68, type: 3}
+    - {fileID: 2800000, guid: 028540d7cc9874b39b5d3f410e07f0b2, type: 3}
+    - {fileID: 2800000, guid: f987e84de1f4b4a9b9cd6e4165478b8c, type: 3}
+    - {fileID: 2800000, guid: 22f21ae30bf7c4d0a8cb853faa632591, type: 3}
+    - {fileID: 2800000, guid: c98e146e740fd41a192635f5e891eb43, type: 3}
+    - {fileID: 2800000, guid: 7c49597a2591c4cd0a3007f8307ab667, type: 3}
+    totalSpriteSurfaceArea: 4000000
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 71abdb307af3040029f266245d6d6830, type: 3}
+  - {fileID: 21300000, guid: b35c0571b348a49f8a290d8d3491636c, type: 3}
+  - {fileID: 21300000, guid: e4480ef15dbe542c1b67a7e8aabbc78a, type: 3}
+  - {fileID: 21300000, guid: 1e467d0362e7a4424abf8ff21bd7389d, type: 3}
+  - {fileID: 21300000, guid: 22f21ae30bf7c4d0a8cb853faa632591, type: 3}
+  - {fileID: 21300000, guid: ba6a8075fbb374259a4cda79b6d387aa, type: 3}
+  - {fileID: 21300000, guid: 40411e6643f1b4964863c3014bea5231, type: 3}
+  - {fileID: 21300000, guid: 028540d7cc9874b39b5d3f410e07f0b2, type: 3}
+  - {fileID: 21300000, guid: 3e4e6999fd0d34202a7d4b6a58d36281, type: 3}
+  - {fileID: 21300000, guid: 7c49597a2591c4cd0a3007f8307ab667, type: 3}
+  - {fileID: 21300000, guid: cdadccda5a44a4e539307a8cf7321079, type: 3}
+  - {fileID: 21300000, guid: f987e84de1f4b4a9b9cd6e4165478b8c, type: 3}
+  - {fileID: 21300000, guid: b4ef9a4de476a4104b737088b4b3ad68, type: 3}
+  - {fileID: 21300000, guid: 5593a90ef592e4ebe9e4298513c6429b, type: 3}
+  - {fileID: 21300000, guid: c98e146e740fd41a192635f5e891eb43, type: 3}
+  - {fileID: 21300000, guid: 1e56998f557a94edd9e5db3676f1dfd3, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - hair_r
+  - hair_f
+  - eyes
+  - hand_r
+  - mouse
+  - head
+  - hand_l
+  - leg_l
+  - arm_l
+  - twin_r
+  - coat_b
+  - leg_r
+  - hood
+  - arm_r
+  - twin_l
+  - body
+  m_Tag: kawaztan_parts
+  m_IsVariant: 0

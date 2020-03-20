@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1073244869921415403}
   - component: {fileID: 6360758105967148683}
-  - component: {fileID: 8447470675102152742}
+  - component: {fileID: 366738011581893803}
   m_Layer: 0
   m_Name: VenomBullet
   m_TagString: KawaztanShot
@@ -54,7 +54,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8447470675102152742
+--- !u!114 &366738011581893803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,14 +63,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4098304181189192049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41fbd41617fc845bb96ba8c5b0ec026e, type: 3}
+  m_Script: {fileID: 11500000, guid: db3d90d05a75948a994dd872723d63b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  lifeTime: 4
-  gravity: {x: 0, y: -10, z: 0}
-  shotEff: {fileID: 7956539869703678606, guid: fdf0f8ce0da6b46bc971302322cff80a, type: 3}
-  hitEff: {fileID: 4706858232718288485, guid: 35a96ff3104174ccea2fef463f8e398b, type: 3}
+  move_body_: {fileID: 7106363020500416237}
+  init_speed_: 1
+  life_time_: 3
+  gravity: 0
+  shot_effect_: {fileID: 4041304573576173180, guid: fdf0f8ce0da6b46bc971302322cff80a,
+    type: 3}
+  hit_effect_: {fileID: 5801833029711484733, guid: 35a96ff3104174ccea2fef463f8e398b,
+    type: 3}
 --- !u!1 &7106363020500416237
 GameObject:
   m_ObjectHideFlags: 0
