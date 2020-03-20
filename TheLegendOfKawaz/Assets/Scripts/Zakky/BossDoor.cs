@@ -23,7 +23,6 @@ public class BossDoor : MonoBehaviour
     {
 
     }
-
     void OnTriggerStay2D(Collider2D col)
     {
         
@@ -46,6 +45,7 @@ public class BossDoor : MonoBehaviour
         
     }
 
+    //ドアから離れたらドアを縮める
     void OnTriggerExit2D(Collider2D col)
     {
         if (col.tag == "Player")
