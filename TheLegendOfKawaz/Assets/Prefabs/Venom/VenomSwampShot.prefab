@@ -32905,8 +32905,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move_body_: {fileID: 2359603820572395548}
-  init_speed_: 6
-  life_time_: 6
-  gravity: -3
+  init_speed_: 1
+  life_time_: 3
+  gravity: -9
   shot_effect_: {fileID: 942577356478872237}
   hit_effect_: {fileID: 70661429758266707}
