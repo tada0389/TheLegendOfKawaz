@@ -303,10 +303,13 @@ namespace Actor.Enemy
             [SerializeField]
             private Vector2 shot_offset_ = new Vector2(1.0f, 0.0f);
 
+            [SerializeField]
+            private BaseBulletController bullet_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
-                Parent.bullet_spawner_.Init(shot_num_);
+                //Parent.bullet_spawner_.Init(shot_num_);
             }
 
             // 毎フレーム呼ばれる
@@ -317,7 +320,7 @@ namespace Actor.Enemy
                     ++shot_cnt_;
                     float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                     Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
-                    Parent.bullet_spawner_.Shot(new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                    Parent.bullet_spawner_.Shot(bullet_, new Vector2(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
                         + shot_offset_.y * ((shot_cnt_ % 2 == 0) ? -1f : 1f)),
                         new Vector2(dir, 0f), "Player");
 
@@ -476,11 +479,14 @@ namespace Actor.Enemy
             private int shot_cnt_ = 0;
             private int num_;
 
+            [SerializeField]
+            private BaseBulletController bullet_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
                 num_ = (int)(360f / rot_interval_ + 0.5f);
-                Parent.bullet_spawner_.Init(num_ * 5);
+                //Parent.bullet_spawner_.Init(num_ * 5);
             }
 
             // 毎フレーム呼ばれる
@@ -496,7 +502,7 @@ namespace Actor.Enemy
                         float each_dir = i * rot_interval_;
                         if (shot_cnt_ % 2 == 0) each_dir += rot_interval_ / 2f;
                         Vector2 dir = new Vector2(Mathf.Cos(each_dir * Mathf.Deg2Rad), Mathf.Sin(each_dir * Mathf.Deg2Rad));
-                        Parent.bullet_spawner_.Shot(Parent.transform.position, dir, "Player");
+                        Parent.bullet_spawner_.Shot(bullet_, Parent.transform.position, dir, "Player");
                     }
 
                     if (shot_cnt_ >= shot_num_)
