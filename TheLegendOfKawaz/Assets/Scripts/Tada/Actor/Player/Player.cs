@@ -316,10 +316,6 @@ namespace Actor.Player
             // 速度に応じて移動する
             data_.ReflectVelocity();
 
-            // デバッグ
-            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame){
-                UnityEngine.SceneManagement.SceneManager.LoadScene("SkillGetScene");
-            }
             if (data_.AutoHealInterval > 0.01f && heal_ctrl_.CanHeal())
             {
                 data_.SetHP(data_.HP + 1);

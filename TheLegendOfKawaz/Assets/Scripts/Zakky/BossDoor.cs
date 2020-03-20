@@ -9,6 +9,9 @@ public class BossDoor : MonoBehaviour
 
     BossFlagManager bossFlag;
 
+    [SerializeField]
+    private string next_scene_ = "TadaBossScene";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +39,7 @@ public class BossDoor : MonoBehaviour
                 Debug.Log("tag:" + col.tag + "/nGetButtonDown(ActionCode.Shot):" + ActionInput.GetButtonDown(ActionCode.Shot));
                 Debug.Log(bossFlag.bossRoomNum);
                 //Scene読み込み
-                SceneManager.LoadScene("ZakkyScene");
+                SceneManager.LoadScene(next_scene_);
 
             }
         }

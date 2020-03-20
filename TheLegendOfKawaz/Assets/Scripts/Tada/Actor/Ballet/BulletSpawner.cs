@@ -63,6 +63,18 @@ namespace Bullet
             }
         }
 
+        private void OnDestroy()
+        {
+            foreach(var bullet in pre_pooled_bullets_)
+            {
+                ObjectPoolManager.Release(bullet.Bullet);
+            }
+            foreach(var effect in pre_pooled_effects_)
+            {
+                ObjectPoolManager.Release(effect.Effect);
+            }
+        }
+
         // 弾のオブジェクトプールを生成する
         public void CreateBulletPool(BaseBulletController bullet, int max_num)
         {

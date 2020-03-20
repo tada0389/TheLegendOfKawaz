@@ -414,6 +414,10 @@ namespace Actor.Enemy
                     a = true;
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
                 }
+                if(Timer > 6.0f)
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("ZakkyScene");
+                }
             }
 
             // 終了時に呼ばれる

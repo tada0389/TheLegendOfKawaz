@@ -29,7 +29,7 @@ namespace test
             if (ActionInput.GetButtonDown(ActionCode.Jump)) skills_.Skills[index_].LevelUp();
             Display();
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame){
-                UnityEngine.SceneManagement.SceneManager.LoadScene("TestScene");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("ZakkyScene");
             }
         }
 

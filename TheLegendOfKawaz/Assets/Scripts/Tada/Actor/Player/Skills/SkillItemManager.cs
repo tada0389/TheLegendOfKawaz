@@ -106,7 +106,7 @@ namespace SkillItem
         {
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("TestSceneCopy");
+                UnityEngine.SceneManagement.SceneManager.LoadScene("ZakkyScene");
             }
             state_machine_.Proc();
         }
