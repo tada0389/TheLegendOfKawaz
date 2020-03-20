@@ -30,7 +30,7 @@ namespace SkillUI
         private float icon_get_duration_ = 3.0f;
         // アイコンがはじける距離
         [SerializeField]
-        private float icon_appear_power_ = 1f;
+        private Vector2 icon_appear_power_ = new Vector2(80f, 150f);
         // アイコンがはじける時間
         [SerializeField]
         private float icon_appear_duration = 0.25f;
@@ -163,7 +163,7 @@ namespace SkillUI
             for (int i = 0; i < num; ++i)
             {
                 float angle = Random.Range(0f, 2f * Mathf.PI);
-                Vector2 target = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * icon_appear_power_;
+                Vector2 target = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * Random.Range(icon_appear_power_.x, icon_appear_power_.y);
                 Image icon = icons_[start_index + i];
                 icon.gameObject.SetActive(true);
                 icon.rectTransform.position = point_spawner_pos;

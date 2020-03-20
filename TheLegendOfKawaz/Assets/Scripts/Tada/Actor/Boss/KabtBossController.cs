@@ -134,6 +134,9 @@ namespace Actor.Enemy
 
         private void Update()
         {
+            // 即死コマンド
+            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.K].wasPressedThisFrame) state_machine_.ChangeState((int)eState.Dead);
+
             state_machine_.Proc();
         }
 
