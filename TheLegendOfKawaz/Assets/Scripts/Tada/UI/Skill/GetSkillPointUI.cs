@@ -90,7 +90,7 @@ namespace SkillUI
         {
             cam_ = Camera.main;
             point_ = Actor.Player.SkillManager.Instance.SkillPoint;
-            point_text_.text = point.ToString();
+            point_text_.text = point_.ToString();
             Vector3 pos = cam_.WorldToScreenPoint(point_spawner_pos);
             StartCoroutine(GetFlow(point, pos));
         }
