@@ -30,6 +30,10 @@ public class BossFlagManager : SingletonMonoBehaviour<BossFlagManager>
     // Update is called once per frame
     void Update()
     {
-        
+        // デバッグ
+        if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.B].wasPressedThisFrame)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("SkillGetScene");
+        }
     }
 }
