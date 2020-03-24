@@ -23,7 +23,7 @@ namespace KoitanLib
         private Texture[] masks;
 
         public static RawImage image;
-        private static bool is_fading = false;
+        public static bool is_fading { private set; get; }
 
         private void Awake()
         {
@@ -53,12 +53,12 @@ namespace KoitanLib
 
         public static void FadeIn(float duration, string next_scene_name, int maskNum = 0)
         {
+            is_fading = true;
             Instance.fadeImage.UpdateMaskTexture(Instance.masks[maskNum]);
             var async = SceneManager.LoadSceneAsync(next_scene_name);
             Sequence seq = DOTween.Sequence();
             seq.AppendCallback(() =>
             {
-                is_fading = true;
                 async.allowSceneActivation = false;
                 DOTween.To(
                 () => Instance.fadeImage.Range = 0,          // 何を対象にするのか
