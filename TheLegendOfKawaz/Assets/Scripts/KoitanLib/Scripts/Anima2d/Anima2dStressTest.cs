@@ -16,7 +16,7 @@ public class Anima2dStressTest : MonoBehaviour
 
     private void Start()
     {
-        //ObjectPoolManager.Init(eff, this, 10);
+        //ObjectPoolManager.Init(eff, this, 10);        
     }
 
     // Update is called once per frame
@@ -42,6 +42,7 @@ public class Anima2dStressTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            DebugPopupManager.ShowPopup(() => "消した数" + objList.Count.ToString());
             foreach (GameObject o in objList)
             {
                 Destroy(o);

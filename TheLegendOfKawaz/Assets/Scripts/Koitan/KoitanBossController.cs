@@ -30,7 +30,8 @@ namespace Actor.Enemy
             Dash,
             Bite,
             DashEnd,
-            ShotSwamp
+            ShotSwamp,
+            Start
         }
 
         // 向いている方向
@@ -63,6 +64,8 @@ namespace Actor.Enemy
         private StateAction5 state_action5_;
         [SerializeField]
         private StateAction6 state_action6_;
+        [SerializeField]
+        private StateStart state_start_;
         #endregion
 
         // 物理演算 trb_.Velocityをいじって移動する
@@ -91,6 +94,7 @@ namespace Actor.Enemy
         private static readonly int hashAttack1 = Animator.StringToHash("Attack1");
         private static readonly int hashAttack2 = Animator.StringToHash("Attack2");
         private static readonly int hashAttack3 = Animator.StringToHash("Attack3");
+        private static readonly int hashStart = Animator.StringToHash("Start");
 
         //オブジェクトプール
         [SerializeField]
@@ -111,7 +115,7 @@ namespace Actor.Enemy
             mesh = transform.GetChild(0).gameObject;//危険!
             animator = GetComponent<Animator>();
 
-            animator.Play("Idle");
+            //animator.Play("Idle");
 
 
             // ステートマシンのメモリ確保 自分自身を渡す
@@ -127,9 +131,10 @@ namespace Actor.Enemy
             state_machine_.AddState((int)eState.Bite, state_action4_);
             state_machine_.AddState((int)eState.DashEnd, state_action5_);
             state_machine_.AddState((int)eState.ShotSwamp, state_action6_);
+            state_machine_.AddState((int)eState.Start, state_start_);
 
             // 初期ステートを設定
-            state_machine_.SetInitialState((int)eState.Think);
+            state_machine_.SetInitialState((int)eState.Start);
 
             //オブジェクトプール
             /*
@@ -257,7 +262,7 @@ namespace Actor.Enemy
             {
                 if (Timer > think_time_)
                 {
-                    
+
                     float r = Random.Range(0f, 100f);
                     Debug.Log("random:" + r);
                     if (r < 20f) ChangeState((int)eState.Shot);
@@ -599,6 +604,37 @@ namespace Actor.Enemy
             public override void OnEnd()
             {
 
+            }
+        }
+
+        // 沼を作る
+        [System.Serializable]
+        private class StateStart : StateMachine<KoitanBossController>.StateBase
+        {
+            [SerializeField]
+            private float start_time_ = 3.0f;
+
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                Parent.animator.Play(hashStart);
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                if (Timer > start_time_)
+                {
+                    ChangeState((int)eState.Think);
+                }
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+                Parent.animator.Play(hashIdle);
             }
         }
     }
