@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using KoitanLib;
+
 public class BossDoor : MonoBehaviour
 {
     public int doorNum;
@@ -25,7 +27,7 @@ public class BossDoor : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D col)
     {
-        
+
         //Debug.Log("Called");
         if (col.tag == "Player")
         {
@@ -38,11 +40,13 @@ public class BossDoor : MonoBehaviour
                 Debug.Log("tag:" + col.tag + "/nGetButtonDown(ActionCode.Shot):" + ActionInput.GetButtonDown(ActionCode.Shot));
                 Debug.Log(bossFlag.bossRoomNum);
                 //Scene読み込み
-                SceneManager.LoadScene(next_scene_);
+                //SceneManager.LoadScene(next_scene_);
+                //koitan追加
+                FadeManager.FadeIn(0.5f, next_scene_, 0);
 
             }
         }
-        
+
     }
 
     //ドアから離れたらドアを縮める
