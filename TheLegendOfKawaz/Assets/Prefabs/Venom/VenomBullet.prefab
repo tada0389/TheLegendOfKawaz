@@ -70,9 +70,9 @@ MonoBehaviour:
   init_speed_: 1
   life_time_: 3
   gravity: 0
-  shot_effect_: {fileID: 4041304573576173180, guid: fdf0f8ce0da6b46bc971302322cff80a,
+  shot_effect_: {fileID: 4342972259807984120, guid: fdf0f8ce0da6b46bc971302322cff80a,
     type: 3}
-  hit_effect_: {fileID: 5801833029711484733, guid: 35a96ff3104174ccea2fef463f8e398b,
+  hit_effect_: {fileID: 3213681669621644596, guid: 35a96ff3104174ccea2fef463f8e398b,
     type: 3}
 --- !u!1 &7106363020500416237
 GameObject:

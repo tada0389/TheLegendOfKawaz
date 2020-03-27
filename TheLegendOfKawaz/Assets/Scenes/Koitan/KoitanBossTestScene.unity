@@ -3823,8 +3823,6 @@ MonoBehaviour:
     type: 3}
   swampBullet: {fileID: 9205976797270046497, guid: e2d5a9fbdfc1d46788314521bf3ec701,
     type: 3}
-  shotEff: {fileID: 7956539869703678606, guid: fdf0f8ce0da6b46bc971302322cff80a, type: 3}
-  hitEff: {fileID: 4706858232718288485, guid: 35a96ff3104174ccea2fef463f8e398b, type: 3}
 --- !u!114 &701097171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4474,11 +4472,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 156820138238292206, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: demo_skills_.Array.size
@@ -4502,6 +4495,11 @@ PrefabInstance:
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: demo_skills_.Array.data[1].level_
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 156820138238292206, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4619,6 +4617,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6860222095631847160}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1571437413 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+    type: 3}
+  m_PrefabInstance: {fileID: 1414022617}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b29ac43615ea641abbdec8e8cbe0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1710728832
 GameObject:
   m_ObjectHideFlags: 0
@@ -5819,7 +5829,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actors_.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1571437413}
     - target: {fileID: 6860222096686865938, guid: e2b0470bfcba7174db9a3a469be65278,
         type: 3}
       propertyPath: actors_.Array.data[1]
@@ -6205,8 +6215,6 @@ MonoBehaviour:
     type: 3}
   swampBullet: {fileID: 9205976797270046497, guid: e2d5a9fbdfc1d46788314521bf3ec701,
     type: 3}
-  shotEff: {fileID: 7956539869703678606, guid: fdf0f8ce0da6b46bc971302322cff80a, type: 3}
-  hitEff: {fileID: 4706858232718288485, guid: 35a96ff3104174ccea2fef463f8e398b, type: 3}
 --- !u!114 &8415324323408457965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6226,7 +6234,13 @@ MonoBehaviour:
   - bullet_: {fileID: 9205976797270046497, guid: e2d5a9fbdfc1d46788314521bf3ec701,
       type: 3}
     max_num_: 6
-  pre_pooled_effects_: []
+  pre_pooled_effects_:
+  - effect_: {fileID: 4342972259807984120, guid: fdf0f8ce0da6b46bc971302322cff80a,
+      type: 3}
+    max_num_: 6
+  - effect_: {fileID: 3213681669621644596, guid: 35a96ff3104174ccea2fef463f8e398b,
+      type: 3}
+    max_num_: 6
 --- !u!61 &8415324323408457966
 BoxCollider2D:
   m_ObjectHideFlags: 0

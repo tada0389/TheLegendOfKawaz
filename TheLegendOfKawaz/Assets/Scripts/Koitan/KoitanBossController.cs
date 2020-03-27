@@ -101,15 +101,11 @@ namespace Actor.Enemy
         BaseBulletController venomBullet;
         [SerializeField]
         BaseBulletController swampBullet;
-        [SerializeField]
-        TimeLimitObject shotEff;
-        [SerializeField]
-        TimeLimitObject hitEff;
 
 
         private void Start()
         {
-            HP = 20;
+            HP = 20;            
             trb_ = GetComponent<TadaRigidbody>();
             bullet_spawner_ = GetComponent<BulletSpawner>();
             mesh = transform.GetChild(0).gameObject;//危険!
@@ -262,7 +258,7 @@ namespace Actor.Enemy
             {
                 if (Timer > think_time_)
                 {
-
+                    /*
                     float r = Random.Range(0f, 100f);
                     Debug.Log("random:" + r);
                     if (r < 20f) ChangeState((int)eState.Shot);
@@ -270,6 +266,8 @@ namespace Actor.Enemy
                     else if (r < 60f) ChangeState((int)eState.PreDash);
                     else ChangeState((int)eState.ShotSwamp);
                     return;
+                    */
+                    ChangeState((int)eState.Shot);
                 }
             }
 

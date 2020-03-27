@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4041304573556773694}
   - component: {fileID: 4041304573576173180}
   - component: {fileID: 4041304573576146908}
-  - component: {fileID: 7956539869703678606}
+  - component: {fileID: 4342972259807984120}
   m_Layer: 0
   m_Name: PoisonShot
   m_TagString: Untagged
@@ -4776,7 +4776,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &7956539869703678606
+--- !u!114 &4342972259807984120
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4785,7 +4785,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4041304573556870942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77db3c0a169e942d882f2e7949130ede, type: 3}
+  m_Script: {fileID: 11500000, guid: 42687fece50710346bb2f4b44e616d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 1
+  life_time_: 0.5

@@ -9697,7 +9697,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -9750,7 +9750,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -9803,7 +9803,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -9856,7 +9856,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -18850,7 +18850,7 @@ GameObject:
   - component: {fileID: 5801833029730882173}
   - component: {fileID: 5801833029711484733}
   - component: {fileID: 5801833029711523485}
-  - component: {fileID: 4706858232718288485}
+  - component: {fileID: 3213681669621644596}
   m_Layer: 0
   m_Name: PoisonHit
   m_TagString: Untagged
@@ -23557,7 +23557,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &4706858232718288485
+--- !u!114 &3213681669621644596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23566,10 +23566,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5801833029730782813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77db3c0a169e942d882f2e7949130ede, type: 3}
+  m_Script: {fileID: 11500000, guid: 42687fece50710346bb2f4b44e616d0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 1.5
+  life_time_: 1.5
 --- !u!1 &5801833029730782815
 GameObject:
   m_ObjectHideFlags: 0
