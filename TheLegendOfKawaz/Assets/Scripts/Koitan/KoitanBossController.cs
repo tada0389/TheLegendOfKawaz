@@ -258,7 +258,7 @@ namespace Actor.Enemy
             {
                 if (Timer > think_time_)
                 {
-                    /*
+
                     float r = Random.Range(0f, 100f);
                     Debug.Log("random:" + r);
                     if (r < 20f) ChangeState((int)eState.Shot);
@@ -266,8 +266,8 @@ namespace Actor.Enemy
                     else if (r < 60f) ChangeState((int)eState.PreDash);
                     else ChangeState((int)eState.ShotSwamp);
                     return;
-                    */
-                    ChangeState((int)eState.Shot);
+
+                    //ChangeState((int)eState.Shot);
                 }
             }
 
@@ -613,6 +613,11 @@ namespace Actor.Enemy
             private string[] message;
             private int index = 0;
 
+            [SerializeField]
+            private BaseParticle par;
+            [SerializeField]
+            private Transform parPos;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
@@ -620,6 +625,8 @@ namespace Actor.Enemy
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
                 MessageManager.OpenMessageWindow(message[0]);
+                ObjectPoolManager.Init(par, Parent, 1);
+                EffectPlayer.Play(par, parPos.position, Vector3.zero, parPos);
             }
 
             // 毎フレーム呼ばれる
@@ -634,17 +641,21 @@ namespace Actor.Enemy
                     }
                     else
                     {
-                        MessageManager.CloseMessageWindow();
-                        Parent.animator.Play(hashStart);
                         ChangeState((int)eState.Think);
                     }
-                }                
+                }
+
+                if (ActionInput.GetButtonDown(ActionCode.Dash))
+                {
+                    ChangeState((int)eState.Think);
+                }
             }
 
             // 終了時に呼ばれる
             public override void OnEnd()
             {
-                Parent.animator.Play(hashIdle);
+                MessageManager.CloseMessageWindow();
+                //Parent.animator.Play(hashStart);
             }
         }
     }
