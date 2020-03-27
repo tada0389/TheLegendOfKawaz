@@ -10,7 +10,9 @@ namespace Actor
 {
     public abstract class BaseActorController : MonoBehaviour
     {
-        public int HP { protected set; get; }
+        [SerializeField]
+        private int hp_ = 20;
+        public int HP { protected set { hp_ = value; } get { return hp_; } }
 
         // ダメージを受ける
         public abstract void Damage(int damage);
