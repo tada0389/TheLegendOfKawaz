@@ -9,7 +9,7 @@ public class MessageWindow : MonoBehaviour
 {
     public Image windowImage;
     public Image narratorImage;
-    public TextMeshProUGUI messageTextMesh;    
+    public TextMeshProUGUI messageTextMesh;
     public string text;
     private AudioSource audioSource;
     public int intervalFrame = 1;
@@ -18,11 +18,17 @@ public class MessageWindow : MonoBehaviour
     public Ease ease;
     public float duration;
     public bool isSending { private set; get; }
+    public bool isOpening { private set; get; }
+    public Vector2 initDeltaSize;
+    private Vector2 targetDeltaSize;
+
+    private Sequence seq = DOTween.Sequence();
 
 
     // Start is called before the first frame update
     void Start()
     {
+        targetDeltaSize = windowImage.rectTransform.sizeDelta;
         audioSource = GetComponent<AudioSource>();
         WindowInit();
     }
@@ -38,10 +44,17 @@ public class MessageWindow : MonoBehaviour
         {
             isSending = false;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        /*
+        if (Input.GetKeyDown(KeyCode.O))
         {
-            MessageStart();
+            WindowOpen();
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            WindowClose();
+        }
+        */
     }
 
     public void WindowInit()
@@ -49,39 +62,60 @@ public class MessageWindow : MonoBehaviour
         messageTextMesh.maxVisibleCharacters = 0;
         currentFrame = 0;
         isSending = false;
-        windowImage.rectTransform.sizeDelta = new Vector2(0, 400);
-        //windowImage.color = new Color(1, 1, 1, 0);
-        //narratorImage.color = new Color(1, 1, 1, 0);
-       
+        windowImage.enabled = true;
+        windowImage.rectTransform.sizeDelta = initDeltaSize;
+
         messageTextMesh.enabled = false;
-        narratorImage.enabled = false;
+        if (narratorImage != null) narratorImage.enabled = false;
     }
 
-    public void MessageStart()
+    public void WindowOpen()
     {
         WindowInit();
-        Sequence seq = DOTween.Sequence()
+        isOpening = true;
+        seq.Kill();
+        seq = DOTween.Sequence()
             //.Append(windowImage.DOFade(1,duration))
             //.Join(narratorImage.DOFade(1, duration))
-            .Append(windowImage.rectTransform.DOSizeDelta(new Vector2(1800, 400), duration)).SetEase(ease)
+            .Append(windowImage.rectTransform.DOSizeDelta(targetDeltaSize, duration)).SetEase(ease)
             //.Join(windowImage.rectTransform.DORotate(new Vector3(0, 0, 360), duration).SetRelative())
             .AppendCallback(() =>
             {
                 messageTextMesh.enabled = true;
-                narratorImage.enabled = true;
+                if (narratorImage != null) narratorImage.enabled = true;
                 isSending = true;
+            });
+    }
+
+    public void WindowOpen(string textStr)
+    {                
+        messageTextMesh.text = textStr;
+        WindowOpen();
+    }
+
+    public void WindowOpen(string textStr, Image image)
+    {
+        narratorImage = image;
+        WindowOpen(textStr);
+    }
+
+    public void WindowClose()
+    {        
+        messageTextMesh.enabled = false;
+        if (narratorImage != null) narratorImage.enabled = false;
+        seq.Kill();
+        seq = DOTween.Sequence()
+            //.Append(windowImage.DOFade(1,duration))
+            //.Join(narratorImage.DOFade(1, duration))
+            .Append(windowImage.rectTransform.DOSizeDelta(initDeltaSize, duration)).SetEase(ease)
+            //.Join(windowImage.rectTransform.DORotate(new Vector3(0, 0, 360), duration).SetRelative())
+            .AppendCallback(() =>
+            {
+                windowImage.enabled = false;
+                isOpening = false;
             });
 
 
-    }
-
-    public void MessageStart(string textStr, float pitch = 1.0f)
-    {
-        text = textStr;
-        messageTextMesh.text = textStr;
-        messageTextMesh.maxVisibleCharacters = 0;
-        audioSource.pitch = pitch;
-        currentFrame = 0;
     }
 
     private void MessageUpdate()
