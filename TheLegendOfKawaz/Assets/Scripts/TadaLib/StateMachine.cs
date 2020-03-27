@@ -55,6 +55,7 @@ namespace TadaLib
         {
             factory_.Add(key, value);
             value.state_machine_ = this; // ステートにマシンのデータを渡す ここ天才
+            value.OnInit();
         }
 
         public void SetInitialState(int key)
@@ -105,6 +106,7 @@ namespace TadaLib
         {
             // このステートが所属するステートマシン
             public StateMachine<T> state_machine_; // これもっと隠したいな
+
             // ステートマシンのインスタンス
             protected T Parent { get { return state_machine_.parent; } }
             // 前回のステート
@@ -121,6 +123,7 @@ namespace TadaLib
             [SerializeField]
             protected Vector2 Accel = new Vector2(0f, 0f);
 
+            // ステートが開始したときに呼ばれるメソッド
             public virtual void OnStart()
             {
 
@@ -137,6 +140,18 @@ namespace TadaLib
             {
 
             }
+
+            // ステートが開始する前に初期化する (ステートを登録した時点で呼び出す)
+            public virtual void OnInit()
+            {
+
+            }
+
+            //// ステートが完全に終了したときに呼ばれるメソッド (StateMachineが破棄されたときに呼ばれる)
+            //public virtual void OnFinish()
+            //{
+
+            //}
 
             // ステートを変更する 第一引数に変更後のステート，第二引数には・・・
             protected void ChangeState(int new_state_id) => 
