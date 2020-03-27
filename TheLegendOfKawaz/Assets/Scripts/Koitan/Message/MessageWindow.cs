@@ -22,7 +22,7 @@ public class MessageWindow : MonoBehaviour
     public Vector2 initDeltaSize;
     private Vector2 targetDeltaSize;
 
-    private Sequence seq = DOTween.Sequence();
+    private Sequence seq;
 
 
     // Start is called before the first frame update
@@ -59,6 +59,7 @@ public class MessageWindow : MonoBehaviour
 
     public void WindowInit()
     {
+        seq = DOTween.Sequence();
         messageTextMesh.maxVisibleCharacters = 0;
         currentFrame = 0;
         isSending = false;
