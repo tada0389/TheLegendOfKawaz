@@ -14,6 +14,9 @@ public class BossDoor : MonoBehaviour
     [SerializeField]
     private string next_scene_ = "TadaBossScene";
 
+    [SerializeField,Multiline(5)]
+    private string message;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,17 @@ public class BossDoor : MonoBehaviour
     {
 
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+
+        //Debug.Log("Called");
+        if (col.tag == "Player")
+        {
+            MessageManager.OpenKanbanWindow(message);
+        }
+    }
+
     void OnTriggerStay2D(Collider2D col)
     {
 
@@ -46,7 +60,6 @@ public class BossDoor : MonoBehaviour
 
             }
         }
-
     }
 
     //ドアから離れたらドアを縮める
@@ -55,6 +68,7 @@ public class BossDoor : MonoBehaviour
         if (col.tag == "Player")
         {
             transform.DOScale(new Vector2(1f, 1f), 0.3f);
+            MessageManager.CloseKanbanWindow();
         }
     }
 }
