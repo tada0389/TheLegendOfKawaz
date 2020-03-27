@@ -36,6 +36,7 @@ public class BossDoor : MonoBehaviour
         if (col.tag == "Player")
         {
             MessageManager.OpenKanbanWindow(message);
+            //MessageManager.OpenMessageWindow(message);
         }
     }
 

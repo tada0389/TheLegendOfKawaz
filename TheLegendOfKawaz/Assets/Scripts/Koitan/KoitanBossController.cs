@@ -105,7 +105,7 @@ namespace Actor.Enemy
 
         private void Start()
         {
-            HP = 20;            
+            HP = 20;
             trb_ = GetComponent<TadaRigidbody>();
             bullet_spawner_ = GetComponent<BulletSpawner>();
             mesh = transform.GetChild(0).gameObject;//危険!
@@ -605,28 +605,40 @@ namespace Actor.Enemy
             }
         }
 
-        // 沼を作る
+        // 最初
         [System.Serializable]
         private class StateStart : StateMachine<KoitanBossController>.StateBase
         {
-            [SerializeField]
-            private float start_time_ = 3.0f;
+            [SerializeField, Multiline(3)]
+            private string[] message;
+            private int index = 0;
 
             // 開始時に呼ばれる
             public override void OnStart()
             {
-                Parent.animator.Play(hashStart);
+                //Parent.animator.Play(hashStart);
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                MessageManager.OpenMessageWindow(message[0]);
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if (Timer > start_time_)
+                if (ActionInput.GetButtonDown(ActionCode.Decide))
                 {
-                    ChangeState((int)eState.Think);
-                }
+                    index++;
+                    if (index < message.Length)
+                    {
+                        MessageManager.InitMessage(message[index]);
+                    }
+                    else
+                    {
+                        MessageManager.CloseMessageWindow();
+                        Parent.animator.Play(hashStart);
+                        ChangeState((int)eState.Think);
+                    }
+                }                
             }
 
             // 終了時に呼ばれる

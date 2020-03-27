@@ -35,7 +35,8 @@ namespace Bullet
         private Timer timer_;
 
         private string opponent_tag_;
-        private int damage_;
+        [SerializeField]
+        private int damage_ = 1;
         private float speed_;
 
         private Transform owner_;
