@@ -28,6 +28,7 @@ public class MessageWindow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        seq = DOTween.Sequence();
         targetDeltaSize = windowImage.rectTransform.sizeDelta;
         audioSource = GetComponent<AudioSource>();
         WindowInit();
@@ -58,8 +59,7 @@ public class MessageWindow : MonoBehaviour
     }
 
     public void WindowInit()
-    {
-        seq = DOTween.Sequence();
+    {        
         messageTextMesh.maxVisibleCharacters = 0;
         currentFrame = 0;
         isSending = false;
