@@ -36,4 +36,9 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
     {
         Instance.kanbanWindow.WindowClose();
     }
+
+    public static void InitMessage(string textStr)
+    {
+        Instance.messageWindow.MessageInit(textStr);
+    }
 }

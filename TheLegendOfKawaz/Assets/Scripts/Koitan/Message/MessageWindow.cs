@@ -26,7 +26,7 @@ public class MessageWindow : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         seq = DOTween.Sequence();
         targetDeltaSize = windowImage.rectTransform.sizeDelta;
@@ -59,7 +59,7 @@ public class MessageWindow : MonoBehaviour
     }
 
     public void WindowInit()
-    {        
+    {
         messageTextMesh.maxVisibleCharacters = 0;
         currentFrame = 0;
         isSending = false;
@@ -89,7 +89,7 @@ public class MessageWindow : MonoBehaviour
     }
 
     public void WindowOpen(string textStr)
-    {                
+    {
         messageTextMesh.text = textStr;
         WindowOpen();
     }
@@ -101,7 +101,7 @@ public class MessageWindow : MonoBehaviour
     }
 
     public void WindowClose()
-    {        
+    {
         messageTextMesh.enabled = false;
         if (narratorImage != null) narratorImage.enabled = false;
         seq.Kill();
@@ -117,6 +117,14 @@ public class MessageWindow : MonoBehaviour
             });
 
 
+    }
+
+    public void MessageInit(string textStr)
+    {
+        messageTextMesh.text = textStr;
+        messageTextMesh.maxVisibleCharacters = 0;
+        currentFrame = 0;
+        isSending = true;
     }
 
     private void MessageUpdate()
