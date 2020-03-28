@@ -17,9 +17,9 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
         Instance.messageWindow.WindowOpen(textStr);
     }
 
-    public static void OpenMessageWindow(string textStr, Image image)
+    public static void OpenMessageWindow(string textStr, Sprite sprite)
     {
-        Instance.messageWindow.WindowOpen(textStr, image);
+        Instance.messageWindow.WindowOpen(textStr, sprite);
     }
 
     public static void CloseMessageWindow()

@@ -94,9 +94,9 @@ public class MessageWindow : MonoBehaviour
         WindowOpen();
     }
 
-    public void WindowOpen(string textStr, Image image)
+    public void WindowOpen(string textStr, Sprite sprite)
     {
-        narratorImage = image;
+        narratorImage.sprite = sprite;
         WindowOpen(textStr);
     }
 

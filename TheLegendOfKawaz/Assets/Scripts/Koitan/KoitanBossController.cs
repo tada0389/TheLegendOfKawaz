@@ -624,6 +624,8 @@ namespace Actor.Enemy
         [System.Serializable]
         private class StateStart : StateMachine<KoitanBossController>.StateBase
         {
+            [SerializeField]
+            Sprite im;
             [SerializeField, Multiline(3)]
             private string[] message;
             private int index = 0;
@@ -639,7 +641,7 @@ namespace Actor.Enemy
             {
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
-                MessageManager.OpenMessageWindow(message[0]);
+                MessageManager.OpenMessageWindow(message[0], im);
                 ObjectPoolManager.Init(par, Parent, 1);
             }
 
