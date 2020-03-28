@@ -4,6 +4,7 @@ using UnityEngine;
 using TadaLib;
 using Bullet;
 using KoitanLib;
+using DG.Tweening;
 
 /// <summary>
 /// 全てのボスの基礎 これをコピペしてください
@@ -31,7 +32,9 @@ namespace Actor.Enemy
             Bite,
             DashEnd,
             ShotSwamp,
-            Start
+            Start,
+            Fly,
+            FlyAttack
         }
 
         // 向いている方向
@@ -66,6 +69,10 @@ namespace Actor.Enemy
         private StateAction6 state_action6_;
         [SerializeField]
         private StateStart state_start_;
+        [SerializeField]
+        private StateFly state_fly_;
+        [SerializeField]
+        private StateFlyAttack state_fly_attack_;
         #endregion
 
         // 物理演算 trb_.Velocityをいじって移動する
@@ -95,6 +102,9 @@ namespace Actor.Enemy
         private static readonly int hashAttack2 = Animator.StringToHash("Attack2");
         private static readonly int hashAttack3 = Animator.StringToHash("Attack3");
         private static readonly int hashStart = Animator.StringToHash("Start");
+        private static readonly int hashFly = Animator.StringToHash("Fly");
+        private static readonly int hashFlying = Animator.StringToHash("Flying");
+        private static readonly int hashFlyAttack = Animator.StringToHash("FlyAttack");
 
         //オブジェクトプール
         [SerializeField]
@@ -102,10 +112,13 @@ namespace Actor.Enemy
         [SerializeField]
         BaseBulletController swampBullet;
 
+        //シークエンス
+        Sequence seq;
+
 
         private void Start()
         {
-            HP = 20;
+            HP = 30;
             trb_ = GetComponent<TadaRigidbody>();
             bullet_spawner_ = GetComponent<BulletSpawner>();
             mesh = transform.GetChild(0).gameObject;//危険!
@@ -128,6 +141,8 @@ namespace Actor.Enemy
             state_machine_.AddState((int)eState.DashEnd, state_action5_);
             state_machine_.AddState((int)eState.ShotSwamp, state_action6_);
             state_machine_.AddState((int)eState.Start, state_start_);
+            state_machine_.AddState((int)eState.Fly, state_fly_);
+            state_machine_.AddState((int)eState.FlyAttack, state_fly_attack_);
 
             // 初期ステートを設定
             state_machine_.SetInitialState((int)eState.Start);
@@ -141,7 +156,7 @@ namespace Actor.Enemy
             */
 
             // デバッグ表示
-            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -300));
+            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -100));
         }
 
         private void Update()
@@ -264,7 +279,7 @@ namespace Actor.Enemy
                     if (r < 20f) ChangeState((int)eState.Shot);
                     else if (r < 40f) ChangeState((int)eState.Bite);
                     else if (r < 60f) ChangeState((int)eState.PreDash);
-                    else ChangeState((int)eState.ShotSwamp);
+                    else ChangeState((int)eState.Fly);
                     return;
 
                     //ChangeState((int)eState.Shot);
@@ -612,6 +627,7 @@ namespace Actor.Enemy
             [SerializeField, Multiline(3)]
             private string[] message;
             private int index = 0;
+            private bool isEnd;
 
             [SerializeField]
             private BaseParticle par;
@@ -621,41 +637,186 @@ namespace Actor.Enemy
             // 開始時に呼ばれる
             public override void OnStart()
             {
-                //Parent.animator.Play(hashStart);
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
                 MessageManager.OpenMessageWindow(message[0]);
                 ObjectPoolManager.Init(par, Parent, 1);
-                EffectPlayer.Play(par, parPos.position, Vector3.zero, parPos);
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if (ActionInput.GetButtonDown(ActionCode.Decide))
+                if (!isEnd)
                 {
-                    index++;
-                    if (index < message.Length)
+                    if (ActionInput.GetButtonDown(ActionCode.Decide))
                     {
-                        MessageManager.InitMessage(message[index]);
+                        index++;
+                        if (index < message.Length)
+                        {
+                            MessageManager.InitMessage(message[index]);
+                        }
+                        else
+                        {
+                            EndSeq();
+                        }
                     }
-                    else
-                    {
-                        ChangeState((int)eState.Think);
-                    }
-                }
 
-                if (ActionInput.GetButtonDown(ActionCode.Dash))
-                {
-                    ChangeState((int)eState.Think);
+                    if (ActionInput.GetButtonDown(ActionCode.Dash))
+                    {
+                        EndSeq();
+                    }
                 }
             }
 
             // 終了時に呼ばれる
             public override void OnEnd()
             {
-                MessageManager.CloseMessageWindow();
+                Parent.seq.Kill();
                 //Parent.animator.Play(hashStart);
+            }
+
+            private void EndSeq()
+            {
+                Parent.seq = DOTween.Sequence()
+                    .OnStart(() =>
+                    {
+                        isEnd = true;
+                        MessageManager.CloseMessageWindow();
+                        Parent.animator.Play(hashStart);
+                        EffectPlayer.Play(par, parPos.position, Vector3.zero, parPos);
+                    })
+                    .AppendInterval(3.0f)
+                    .AppendCallback(() =>
+                    {
+                        ChangeState((int)eState.Think);
+                    });
+            }
+        }
+
+        [System.Serializable]
+        private class StateFly : StateMachine<KoitanBossController>.StateBase
+        {
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                Parent.seq = DOTween.Sequence()
+                    .OnStart(() =>
+                    {
+                        Parent.animator.Play(hashFly);
+                    })
+                    .AppendInterval(0.6f)
+                    .AppendCallback(() =>
+                    {
+                        //tadaRigidbodyがうまく動かなかった
+                        //Parent.trb_.Velocity = new Vector2(0, 5);
+                        Parent.transform.DOMoveY(8, 1f).SetRelative();
+                        //ChangeState((int)eState.Think);
+                    })
+                    .AppendInterval(1f)
+                    .AppendCallback(() =>
+                    {
+                        ChangeState((int)eState.FlyAttack);
+                    });
+
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+                Parent.seq.Kill();
+            }
+        }
+
+        [System.Serializable]
+        private class StateFlyAttack : StateMachine<KoitanBossController>.StateBase
+        {
+            //玉の速さ
+            [SerializeField]
+            private float speed = 3;
+
+            [SerializeField]
+            private Transform shotPos;
+
+            float dir;
+
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                Parent.seq = DOTween.Sequence()
+                    .AppendInterval(1f)
+                    .AppendCallback(() =>
+                    {
+                        Parent.animator.Play(hashFlyAttack);
+                    })
+                    .AppendInterval(1f)
+                    .AppendCallback(() =>
+                    {
+                        //玉をうつ
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                    })
+                    .AppendInterval(0.1f)
+                    .AppendCallback(() =>
+                    {
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                    })
+                    .AppendInterval(0.1f)
+                    .AppendCallback(() =>
+                    {
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                    })
+                    .AppendInterval(0.1f)
+                    .AppendCallback(() =>
+                    {
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                    })
+                    .AppendInterval(0.1f)
+                    .AppendCallback(() =>
+                    {
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                    })
+                    .AppendInterval(0.1f)
+                    .AppendCallback(() =>
+                    {
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                    })
+                    .AppendCallback(() =>
+                    {
+                        Parent.transform.DOMoveY(-8, 1f).SetRelative();
+                    })
+                    .AppendInterval(1f)
+                    .AppendCallback(() =>
+                    {
+                        Parent.animator.Play(hashIdle);
+                        ChangeState((int)eState.Think);
+                    });
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+                Parent.seq.Kill();
             }
         }
     }

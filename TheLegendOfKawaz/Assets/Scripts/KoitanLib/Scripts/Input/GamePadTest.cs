@@ -18,7 +18,7 @@ public class GamePadTest : MonoBehaviour
         DebugTextManager.Display(() => "Dash:" + ActionInput.GetSpriteCode(ActionCode.Dash) + "\n");
         //DebugTextManager.Display(() => "Horizontal:" + ActionInput.GetSpriteCode(AxisCode.Horizontal) + "\n");
         //DebugTextManager.Display(() => "Down:" + ActionInput.GetSpriteCode(ButtonCode.Down) + "\n");
-        DebugTextManager.Display(() => "GamePad:\n" + GetInputDevicesName());
+        //DebugTextManager.Display(() => "GamePad:\n" + GetInputDevicesName());
     }
 
     // Update is called once per frame
