@@ -4,15 +4,14 @@ using UnityEngine;
 using TadaLib;
 
 /// <summary>
-/// 全てのボスの基礎 これをコピペしてください
-/// ただし，BaseBossController => 〇〇〇BossController と書き換えること
-/// ファイル一つで済ませる
-/// 詳しくは，テストで作ったKabtBossControllerを見てください
+/// 全てのボスの基底クラス
+/// ボスに共通する関数をまとめている
 /// </summary>
 
 namespace Actor.Enemy
 {
     [RequireComponent(typeof(TadaRigidbody))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class BaseBossController : BaseActorController
     {
         // Bossのステート一覧
@@ -33,82 +32,32 @@ namespace Actor.Enemy
         }
 
         // 向いている方向
-        private enum eDir
+        protected enum eDir
         {
             Left,
             Right,
         }
 
-        // ステートマシン
-        private StateMachine<BaseBossController> state_machine_;
-
-        // ステートのインスタンス
-        #region state class
-        [SerializeField]
-        private StateThink state_think_;
-        [SerializeField]
-        private StateIdle state_idle_;
-        [SerializeField]
-        private StateFall state_fall_;
-        [SerializeField]
-        private StateDamage state_damage_;
-        [SerializeField]
-        private StateDead state_dead_;
-        [SerializeField]
-        private StateAction1 state_action1_;
-        [SerializeField]
-        private StateAction2 state_action2_;
-        [SerializeField]
-        private StateAction3 state_action3_;
-        [SerializeField]
-        private StateAction4 state_action4_;
-        [SerializeField]
-        private StateAction5 state_action5_;
-#endregion
-
-        // 物理演算 trb_.Velocityをいじって移動する
-        private TadaRigidbody trb_;
-
         // 現在見ている方向
-        private float dir_ = 1f;
+        protected float dir_ = 1f;
+
+        // ボス本体に当たった時のダメージ
+        [SerializeField]
+        private int body_damage_ = 3;
 
         // プレイヤーの座標
         [SerializeField]
-        private Transform player_;
+        protected Transform player_;
 
-        private void Start()
-        {
-            trb_ = GetComponent<TadaRigidbody>();
-
-            // ステートマシンのメモリ確保 自分自身を渡す
-            state_machine_ = new StateMachine<BaseBossController>(this);
-
-            // ステートを登録
-            state_machine_.AddState((int)eState.Think, state_think_);
-            state_machine_.AddState((int)eState.Idle, state_idle_);
-            state_machine_.AddState((int)eState.Fall, state_fall_);
-            state_machine_.AddState((int)eState.Damage, state_damage_);
-            state_machine_.AddState((int)eState.Dead, state_dead_);
-            state_machine_.AddState((int)eState.Action1, state_action1_);
-            state_machine_.AddState((int)eState.Action2, state_action2_);
-            state_machine_.AddState((int)eState.Action3, state_action3_);
-            state_machine_.AddState((int)eState.Action4, state_action4_);
-            state_machine_.AddState((int)eState.Action5, state_action5_);
-
-            // 初期ステートを設定
-            state_machine_.SetInitialState((int)eState.Think);
-
-            // デバッグ表示
-            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 0));
-        }
-
-        private void Update()
-        {
-            state_machine_.Proc();
-        }
+        [SerializeField]
+        private float muteki_time_ = 1.0f;
+        private Timer muteki_timer_;
+        private bool timer_inited_ = false;
+        [SerializeField]
+        private GameObject mesh_;
 
         // 向いている方向を変更する
-        private void SetDirection(eDir dir)
+        protected void SetDirection(eDir dir)
         {
             // 浮動小数点型で==はあんまよくないけど・・・
             if (dir == eDir.Left && transform.localEulerAngles.y != 180f)
@@ -127,8 +76,19 @@ namespace Actor.Enemy
         // ダメージを受ける
         public override void Damage(int damage)
         {
+            if (!timer_inited_) // タイマーが起動してないとき
+            {
+                muteki_timer_ = new Timer(muteki_time_);
+                timer_inited_ = true;
+            }
+            else if (!muteki_timer_.IsTimeout()) return;
             HP = Mathf.Max(0, HP - damage);
-            if (HP == 0) Debug.Log("Defeated");
+            muteki_timer_.TimeReset();
+            StartCoroutine(Tenmetu());
+            if (HP == 0)
+            {
+                Debug.Log("Defeated");
+            }
         }
 
         // このボスにぶつかるとダメージを受ける
@@ -136,268 +96,30 @@ namespace Actor.Enemy
         {
             if (collider.tag == "Player")
             {
-                collider.GetComponent<BaseActorController>().Damage(3);
+                collider.GetComponent<BaseActorController>().Damage(body_damage_);
             }
         }
 
-        public override string ToString()
+        //点滅
+        private IEnumerator Tenmetu()
         {
-            return "(" + trb_.Velocity.x.ToString("F2") + ", " + trb_.Velocity.y.ToString("F2") + ")" +
-                "\nState : " + state_machine_.ToString();
-        }
-
-
-        // ===== 以下，ステートクラス =============================================================================
-
-        // 説明
-        // OnStart() ： ステートが切り替わったタイミングで呼ばれる
-        // OnProc() ： 毎フレーム呼ばれる
-        // OnEnd() ： ステートが終了するタイミングで呼ばれる
-
-        // ChangeState(int key) ： ステートを変更するときに使う
-        // Timer ： ステートが開始してからの経過時間を取得できる
-        // Parent ： ボスの本体クラスにアクセスできる (private でも)
-        //           例えば，Parent.trb_.Velocityをいじることで，移動ができる
-
-        // Inspector について
-        // [SerializeField] をつけて変数宣言すると，Inspectorに表示される
-        // デフォルトで，加速度と移動速度の最大値などをInspectorでいじれる
-
-        // ========================================================================================================
-
-        // 次の行動を思考するステート
-        [System.Serializable]
-        private class StateThink : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
+            if (muteki_timer_.GetTime() < muteki_time_ / 2f)
             {
-
+                mesh_.SetActive(false);
+                yield return new WaitForEndOfFrame();
+                mesh_.SetActive(true);
+                yield return new WaitForEndOfFrame();
             }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
+            else
             {
-
+                mesh_.SetActive(false);
+                yield return new WaitForSeconds(0.05f);
+                mesh_.SetActive(true);
+                yield return new WaitForSeconds(0.05f);
             }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
+            if (!muteki_timer_.IsTimeout())
             {
-
-            }
-        }
-
-        // アイドリング状態
-        [System.Serializable]
-        private class StateIdle : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
-            {
-
-            }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
-            {
-
-            }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
-            {
-
-            }
-        }
-
-        // 落下状態
-        [System.Serializable]
-        private class StateFall : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
-            {
-
-            }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
-            {
-                if (Parent.trb_.ButtomCollide)
-                {
-                    ChangeState((int)eState.Think);
-                    return;
-                }
-
-                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, Accel, MaxAbsSpeed);
-            }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
-            {
-
-            }
-        }
-
-        // ダメージを受けたときの状態
-        [System.Serializable]
-        private class StateDamage : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
-            {
-
-            }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
-            {
-
-            }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
-            {
-
-            }
-        }
-
-        // 死亡したときの状態
-        [System.Serializable]
-        private class StateDead : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
-            {
-
-            }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
-            {
-
-            }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
-            {
-
-            }
-        }
-
-        // 行動1状態
-        [System.Serializable]
-        private class StateAction1 : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
-            {
-
-            }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
-            {
-
-            }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
-            {
-
-            }
-        }
-
-        // 行動2状態
-        [System.Serializable]
-        private class StateAction2 : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
-            {
-
-            }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
-            {
-
-            }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
-            {
-
-            }
-        }
-
-        // 行動3状態
-        [System.Serializable]
-        private class StateAction3 : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
-            {
-
-            }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
-            {
-
-            }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
-            {
-
-            }
-        }
-
-        // 行動4状態
-        [System.Serializable]
-        private class StateAction4 : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
-            {
-
-            }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
-            {
-
-            }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
-            {
-
-            }
-        }
-
-        // 行動5状態
-        [System.Serializable]
-        private class StateAction5 : StateMachine<BaseBossController>.StateBase
-        {
-            // 開始時に呼ばれる
-            public override void OnStart()
-            {
-
-            }
-
-            // 毎フレーム呼ばれる
-            public override void Proc()
-            {
-
-            }
-
-            // 終了時に呼ばれる
-            public override void OnEnd()
-            {
-
+                StartCoroutine(Tenmetu());
             }
         }
     }
