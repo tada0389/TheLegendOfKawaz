@@ -85,10 +85,13 @@ namespace Actor.Enemy
             HP = Mathf.Max(0, HP - damage);
             muteki_timer_.TimeReset();
             StartCoroutine(Tenmetu());
-            if (HP == 0)
-            {
-                Debug.Log("Defeated");
-            }
+            if (HP == 0) Dead();
+        }
+
+        protected virtual void Dead()
+        {
+            // 派生クラスで読んでね
+            Debug.Log("Defeated");
         }
 
         // このボスにぶつかるとダメージを受ける

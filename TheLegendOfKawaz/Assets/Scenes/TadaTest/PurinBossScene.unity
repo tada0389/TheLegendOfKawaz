@@ -4439,7 +4439,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actors_.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2557829154029207636}
     - target: {fileID: 6860222096848671347, guid: e2b0470bfcba7174db9a3a469be65278,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4696,8 +4696,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2557829154029207635}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.42, y: 0.46, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalPosition: {x: 4.42, y: 1.03, z: 0}
+  m_LocalScale: {x: -0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 2557829153281834531}
   - {fileID: 2557829153861340164}
@@ -4765,21 +4765,56 @@ MonoBehaviour:
   think_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    think_time_: 0.5
   walk_state_:
-    MaxAbsSpeed: {x: 0.5, y: 0}
-    Accel: {x: 0, y: 0}
+    MaxAbsSpeed: {x: 0.2, y: 0.2}
+    Accel: {x: 0.01, y: 0}
+    speed_: {x: 0.2, y: 0.1}
+    period_: 0.75
+    move_duration_: 1.5
   dead_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-  punch_state_:
+  punch_state1_:
+    MaxAbsSpeed: {x: 0.2, y: 0.2}
+    Accel: {x: 0.01, y: 0}
+    speed_: {x: 0.2, y: 0.1}
+    period_: 0.75
+    stage_center_x: 2.5
+  punch_state2_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    punch_mark_: {fileID: 7562170637233412900, guid: 13c0e452e5e05d2459e418bc1d316c2e,
+      type: 3}
+    punch_interval_: 1
+    punch_num_: 3
+    charge_time_: 1
+    punch_charge_time_range_: {x: 1, y: 1}
+    punch_tenmetu_time_: 0.2
   shot_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-  drop_state_:
-    MaxAbsSpeed: {x: 0.5, y: 0}
-    Accel: {x: 0, y: 0}
+    bullet_: {fileID: 6656918463621878021, guid: c1a750730529e284a93593ca092f820a,
+      type: 3}
+    shot_num_: 3
+    shot_delay_: 0.2
+    shot_dir_y_: 2
+    rigity_time_: 1.5
+  drop_state1_:
+    MaxAbsSpeed: {x: 0.2, y: 0.2}
+    Accel: {x: 0.01, y: 0}
+    speed_: {x: 0.2, y: 0.1}
+    period_: 0.75
+  drop_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0.5}
+    Accel: {x: 0, y: -0.1}
+    charge_time_: 0.25
+    vib_power_: 0.1
+  drop_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0.5}
+    Accel: {x: 0, y: 0.005}
+    duration_: 0.6
+    charge_time_: 1
 --- !u!114 &2557829154029207637
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,6 +5,11 @@ using Actor;
 using TadaLib;
 using Bullet;
 
+/// <summary>
+/// ボス・プリンちゃんを動かすクラス
+/// 他のボスよりきれいになったと思います．
+/// </summary>
+
 namespace Actor.Enemy.Purin
 {
     [RequireComponent(typeof(TadaRigidbody))]
@@ -16,15 +21,21 @@ namespace Actor.Enemy.Purin
             Think,
             Walk,
             Dead,
-            Punch,
+            Punch1,
+            Punch2,
             Shot,
-            Drop,
+            Drop1,
+            Drop2,
+            Drop3,
         }
 
+        // ステートを管理して起動するクラス
         private StateMachine<PurinBossController> state_machine_;
 
-        private TadaRigidbody rigidbody_;
+        // 物理演算や速度を変更するやつ
+        private TadaRigidbody trb_;
 
+        // 弾を管理して発射させるやつ
         private BulletSpawner bullet_spawner_;
 
         #region state
@@ -35,17 +46,23 @@ namespace Actor.Enemy.Purin
         [SerializeField]
         private DeadState dead_state_;
         [SerializeField]
-        private PunchState punch_state_;
+        private PunchState1 punch_state1_;
+        [SerializeField]
+        private PunchState2 punch_state2_;
         [SerializeField]
         private ShotState shot_state_;
         [SerializeField]
-        private DropState drop_state_;
+        private DropState1 drop_state1_;
+        [SerializeField]
+        private DropState2 drop_state2_;
+        [SerializeField]
+        private DropState3 drop_state3_;
         #endregion
 
         // Start is called before the first frame update
         private void Start()
         {
-            rigidbody_ = GetComponent<TadaRigidbody>();
+            trb_ = GetComponent<TadaRigidbody>();
             bullet_spawner_ = GetComponent<BulletSpawner>();
 
             state_machine_ = new StateMachine<PurinBossController>(this);
@@ -54,11 +71,17 @@ namespace Actor.Enemy.Purin
             state_machine_.AddState((int)eState.Think, think_state_);
             state_machine_.AddState((int)eState.Walk, walk_state_);
             state_machine_.AddState((int)eState.Dead, dead_state_);
-            state_machine_.AddState((int)eState.Punch, punch_state_);
+            state_machine_.AddState((int)eState.Punch1, punch_state1_);
+            state_machine_.AddState((int)eState.Punch2, punch_state2_);
             state_machine_.AddState((int)eState.Shot, shot_state_);
-            state_machine_.AddState((int)eState.Drop, drop_state_);
+            state_machine_.AddState((int)eState.Drop1, drop_state1_);
+            state_machine_.AddState((int)eState.Drop2, drop_state2_);
+            state_machine_.AddState((int)eState.Drop3, drop_state3_);
             // 初期ステートの設定
             state_machine_.SetInitialState((int)eState.Think);
+            
+            // デバッグ表示
+            DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 0));
         }
 
         // Update is called once per frame
@@ -66,6 +89,21 @@ namespace Actor.Enemy.Purin
         {
             // ステートの更新
             state_machine_.Proc();
+        }
+
+        // 死亡したときに呼ばれる関数 基底クラスから呼ばれる わかりにくい
+        protected override void Dead()
+        {
+            state_machine_.ChangeState((int)eState.Dead);
+        }
+
+        public override string ToString()
+        {
+            return "(" + trb_.Velocity.x.ToString("F2") + ", " + trb_.Velocity.y.ToString("F2") + ")" +
+                "\nState : " + state_machine_.ToString() +
+                "\nIsGround : " + trb_.ButtomCollide.ToString() +
+                "\nLeftCollide : " + trb_.LeftCollide.ToString() +
+                "\nRightCollide : " + trb_.RightCollide.ToString();
         }
     }
 }
