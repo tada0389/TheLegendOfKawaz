@@ -80,6 +80,11 @@ namespace Bullet
         {
             ObjectPoolManager.Init(bullet, this, max_num);
         }
+        // 上のとまったく同じだけどファイル変更をしたくなかったのでもう一つ作成した
+        public void RegisterBullet(BaseBulletController bullet, int pool_num)
+        {
+            ObjectPoolManager.Init(bullet, this, pool_num);
+        }
 
         // 発射する 弾を出せなかったらfalse
         public bool Shot (BaseBulletController bullet, Vector2 pos, Vector2 dir, string opponent_tag, Transform owner = null,

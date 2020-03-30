@@ -72,6 +72,8 @@ namespace TadaLib
             ButtomCollide = false;
 
             Vector2 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x);
+            scale.y = Mathf.Abs(scale.y);
 
             // 当たり判定(矩形)のサイズと中心
             Vector2 offset = hit_box_.offset * scale;
