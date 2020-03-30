@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   move_body_: {fileID: 6912118007103521710}
-  stage_range_x: {x: -11.25, y: 16.4}
+  stage_range_x: {x: -11.22, y: 16.4}
   gravity_: -0.98
   bounceness_: 0.8
   init_speed_: 25

@@ -74,7 +74,8 @@ namespace Actor.Enemy.Purin
 
                 yield return new WaitForSeconds(rigity_time_);
 
-                ChangeState((int)eState.Think);
+                if (state_machine_.CurrentStateId != (int)eState.Dead)
+                    ChangeState((int)eState.Think);
             }
         }
     }

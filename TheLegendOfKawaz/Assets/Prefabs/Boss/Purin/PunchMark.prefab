@@ -146,7 +146,7 @@ MonoBehaviour:
   scale_to_: 0.8
   scale_change_duration_: 0.75
   ease_: 12
-  tenmetu_interval_: 0.1
+  tenmetu_interval_: 0.06
   hit_box_: {fileID: 172128728263688738}
   damage_: 3
 --- !u!50 &3524546667879125720

@@ -94,7 +94,8 @@ namespace Actor.Enemy.Purin
         // 死亡したときに呼ばれる関数 基底クラスから呼ばれる わかりにくい
         protected override void Dead()
         {
-            state_machine_.ChangeState((int)eState.Dead);
+            if(state_machine_.CurrentStateId != (int)eState.Dead)
+                state_machine_.ChangeState((int)eState.Dead);
         }
 
         public override string ToString()

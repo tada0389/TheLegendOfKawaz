@@ -35,6 +35,8 @@ namespace Actor.Enemy.Purin
 
         private Transform player_;
 
+        private bool lock_ = false;
+
         private void Start()
         {
             timer_ = new TadaLib.Timer(tenmetu_interval_);
@@ -43,7 +45,7 @@ namespace Actor.Enemy.Purin
 
         private void Update()
         {
-            if (player_ && !is_tenmetu_)
+            if (player_ && !lock_)
             {
                 transform.position = player_.position;
             }
@@ -65,6 +67,8 @@ namespace Actor.Enemy.Purin
         {
             player_ = player;
             is_tenmetu_ = false;
+            lock_ = false;
+            transform.DOKill();
             transform.localScale = Vector3.one * scale_from_;
             transform.DOScale(scale_to_, scale_change_duration_).SetEase(ease_);
             transform.localEulerAngles = Vector3.zero;
@@ -80,8 +84,14 @@ namespace Actor.Enemy.Purin
 
         public void TenmetsuEnd()
         {
-            renderer_.color = new Color(1f, 1f, 1f, 1f);
-            transform.DOScale(scale_to_ * 1.5f, scale_change_duration_ / 2f).SetEase(ease_).OnComplete(() =>  gameObject.SetActive(false));
+            transform.DOScale(scale_to_ * 1.5f, scale_change_duration_ / 2f).SetEase(ease_).OnComplete(() => 
+            { renderer_.color = new Color(1f, 1f, 1f, 1f); gameObject.SetActive(false); });
+        }
+
+        // 攻撃する場所を固定する
+        public void LockPosition()
+        {
+            lock_ = true;
         }
 
         // 実際に攻撃する 本当は別でやったほうがいい

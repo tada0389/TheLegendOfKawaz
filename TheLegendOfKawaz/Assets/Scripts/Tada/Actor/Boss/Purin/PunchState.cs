@@ -85,11 +85,13 @@ namespace Actor.Enemy.Purin
             private Vector2 punch_charge_time_range_ = new Vector2(0.5f, 1f);
             [SerializeField]
             private float punch_tenmetu_time_ = 0.2f;
+            [SerializeField]
+            private float punch_lock_time_ = 0.2f;
 
             // ステートの初期化
             public override void OnInit()
             {
-                KoitanLib.ObjectPoolManager.Init(punch_mark_, Parent, 3);
+                KoitanLib.ObjectPoolManager.Init(punch_mark_, Parent, 5);
                 marks_ = new List<PunchMarkController>();
             }
 
@@ -129,6 +131,10 @@ namespace Actor.Enemy.Purin
 
                         yield return new WaitForSeconds(punch_tenmetu_time_);
 
+                        mark.LockPosition();
+
+                        yield return new WaitForSeconds(punch_lock_time_);
+
                         mark.Punch();
                         mark.TenmetsuEnd();
                     }
@@ -136,7 +142,8 @@ namespace Actor.Enemy.Purin
                     yield return new WaitForSeconds(punch_interval_);
                 }
 
-                ChangeState((int)eState.Think);
+                if(state_machine_.CurrentStateId != (int)eState.Dead)
+                    ChangeState((int)eState.Think);
             }
         }
     }
