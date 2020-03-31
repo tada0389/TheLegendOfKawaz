@@ -43,6 +43,11 @@ namespace Actor.Enemy.Purin
                     Time.timeScale = 1.0f;
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
                 }
+
+                if(Timer > 7.0f)
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("ZakkyScene");
+                }
             }
 
             // 終了時に呼ばれる
