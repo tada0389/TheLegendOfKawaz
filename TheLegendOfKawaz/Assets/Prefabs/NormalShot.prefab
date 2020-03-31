@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move_body_: {fileID: 6441579040997332809}
   init_speed_: 0.3
-  init_damage_: 2
+  init_damage_: 1
   life_time_: 1
   shot_effect_: {fileID: -5165703982448799403, guid: efb357c6260a4484a964ad6ca1873aa4,
     type: 3}
