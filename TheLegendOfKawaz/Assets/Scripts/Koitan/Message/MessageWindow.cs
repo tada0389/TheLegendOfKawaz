@@ -37,7 +37,7 @@ public class MessageWindow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (messageTextMesh.textInfo.characterCount > messageTextMesh.maxVisibleCharacters && isSending)
+        if (messageTextMesh.GetTextInfo(messageTextMesh.text).characterCount > messageTextMesh.maxVisibleCharacters && isSending)
         {
             MessageUpdate();
         }

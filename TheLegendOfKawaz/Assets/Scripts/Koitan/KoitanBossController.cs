@@ -34,7 +34,8 @@ namespace Actor.Enemy
             ShotSwamp,
             Start,
             Fly,
-            FlyAttack
+            FlyAttack,
+            Dead
         }
 
         // 向いている方向
@@ -73,6 +74,8 @@ namespace Actor.Enemy
         private StateFly state_fly_;
         [SerializeField]
         private StateFlyAttack state_fly_attack_;
+        [SerializeField]
+        private StateDead state_dead_;
         #endregion
 
         // 物理演算 trb_.Velocityをいじって移動する
@@ -143,6 +146,7 @@ namespace Actor.Enemy
             state_machine_.AddState((int)eState.Start, state_start_);
             state_machine_.AddState((int)eState.Fly, state_fly_);
             state_machine_.AddState((int)eState.FlyAttack, state_fly_attack_);
+            state_machine_.AddState((int)eState.Dead, state_dead_);
 
             // 初期ステートを設定
             state_machine_.SetInitialState((int)eState.Start);
@@ -194,7 +198,15 @@ namespace Actor.Enemy
                 if (HP == 0) Debug.Log("Defeated");
                 mutekiTime = 2f;
                 StartCoroutine(Tenmetu());
+                if (HP == 0) Dead();
             }
+        }
+
+        // 死亡したときに呼ばれる関数 基底クラスから呼ばれる わかりにくい
+        private void Dead()
+        {
+            if (state_machine_.CurrentStateId != (int)eState.Dead)
+                state_machine_.ChangeState((int)eState.Dead);
         }
 
         // このボスにぶつかるとダメージを受ける
@@ -819,6 +831,50 @@ namespace Actor.Enemy
             public override void OnEnd()
             {
                 Parent.seq.Kill();
+            }
+        }
+
+        [System.Serializable]
+        private class StateDead : StateMachine<KoitanBossController>.StateBase
+        {
+            // 死亡時の爆発のエフェクト
+            [SerializeField]
+            private ParticleSystem explosion_effect_;
+
+            private bool get = false;
+
+            // ステートの初期化
+            public override void OnInit()
+            {
+
+            }
+
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                Time.timeScale = 0.3f;
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                if (Timer > 2.0f && !get)
+                {
+                    get = true;
+                    Time.timeScale = 1.0f;
+                    Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
+                }
+
+                if (Timer > 7.0f)
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("ZakkyScene");
+                }
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+
             }
         }
     }

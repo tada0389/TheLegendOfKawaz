@@ -275,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorNum: 4
   next_scene_: TadaBossScene
-  message: 
+  message: "<size=300>\u304B\u3076\u3068</size>"
 --- !u!50 &500287395
 Rigidbody2D:
   serializedVersion: 4
@@ -1818,7 +1818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorNum: 0
   next_scene_: KoitanBossTestScene
-  message: 
+  message: "<size=300>\u3078\u3073</size>"
 --- !u!50 &1484562387
 Rigidbody2D:
   serializedVersion: 4
@@ -2192,7 +2192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorNum: 5
   next_scene_: PurinBossScene
-  message: 
+  message: "<size=300>\u30D7\u30EA\u30F3</size>"
 --- !u!50 &1538607563
 Rigidbody2D:
   serializedVersion: 4
