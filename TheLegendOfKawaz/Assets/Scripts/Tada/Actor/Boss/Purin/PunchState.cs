@@ -110,7 +110,7 @@ namespace Actor.Enemy.Purin
             // 終了時に呼ばれる
             public override void OnEnd()
             {
-
+                Parent.StopCoroutine(PunchFlow());
             }
 
             private IEnumerator PunchFlow()
@@ -119,9 +119,15 @@ namespace Actor.Enemy.Purin
 
                 for(int i = 0; i < punch_num_; ++i)
                 {
+                    if (state_machine_.CurrentStateId == (int)eState.Dead) break;
+
                     // マークを出す
                     PunchMarkController mark = KoitanLib.ObjectPoolManager.GetInstance<PunchMarkController>(punch_mark_);
-                    if(mark != null)
+
+                    if (state_machine_.CurrentStateId != (int)eState.Dead)
+                        Parent.animator_.Play("cherry_attack", 0, 0.25f);
+
+                    if (mark != null)
                     {
                         mark.Init(Parent.player_);
 
@@ -134,6 +140,9 @@ namespace Actor.Enemy.Purin
                         mark.LockPosition();
 
                         yield return new WaitForSeconds(punch_lock_time_);
+
+                        float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                        Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
 
                         mark.Punch();
                         mark.TenmetsuEnd();

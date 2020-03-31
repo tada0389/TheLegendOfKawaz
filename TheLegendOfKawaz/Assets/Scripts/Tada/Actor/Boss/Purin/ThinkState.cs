@@ -28,7 +28,7 @@ namespace Actor.Enemy.Purin
             // 開始時に呼ばれる
             public override void OnStart()
             {
-
+                Parent.animator_.Play("Idle");
             }
 
             // 毎フレーム呼ばれる

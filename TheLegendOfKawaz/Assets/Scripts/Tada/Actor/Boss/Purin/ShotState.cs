@@ -43,6 +43,7 @@ namespace Actor.Enemy.Purin
             // 開始時に呼ばれる
             public override void OnStart()
             {
+                Parent.animator_.Play("cherry_danmaku");
                 Parent.StartCoroutine(ShotCoroutine());
             }
 
@@ -55,7 +56,7 @@ namespace Actor.Enemy.Purin
             // 終了時に呼ばれる
             public override void OnEnd()
             {
-
+                Parent.StopCoroutine(ShotCoroutine());
             }
 
             // 弾を打つコルーチン バグのもとになるかなぁ
@@ -63,6 +64,8 @@ namespace Actor.Enemy.Purin
             {
                 for (int i = 0; i < shot_num_; ++i)
                 {
+                    if (state_machine_.CurrentStateId == (int)eState.Dead) break;
+
                     yield return new WaitForSeconds(shot_delay_);
 
                     // 敵の方向をむく

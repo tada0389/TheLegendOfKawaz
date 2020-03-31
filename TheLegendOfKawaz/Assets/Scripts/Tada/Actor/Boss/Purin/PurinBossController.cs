@@ -38,6 +38,9 @@ namespace Actor.Enemy.Purin
         // 弾を管理して発射させるやつ
         private BulletSpawner bullet_spawner_;
 
+        // アニメータ
+        private Animator animator_;
+
         #region state
         [SerializeField]
         private ThinkState think_state_;
@@ -64,6 +67,7 @@ namespace Actor.Enemy.Purin
         {
             trb_ = GetComponent<TadaRigidbody>();
             bullet_spawner_ = GetComponent<BulletSpawner>();
+            animator_ = GetComponent<Animator>();
 
             state_machine_ = new StateMachine<PurinBossController>(this);
 
