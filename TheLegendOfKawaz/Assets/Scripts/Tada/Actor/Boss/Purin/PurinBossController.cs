@@ -27,6 +27,7 @@ namespace Actor.Enemy.Purin
             Drop1,
             Drop2,
             Drop3,
+            Talk
         }
 
         // ステートを管理して起動するクラス
@@ -60,6 +61,8 @@ namespace Actor.Enemy.Purin
         private DropState2 drop_state2_;
         [SerializeField]
         private DropState3 drop_state3_;
+        [SerializeField]
+        private TalkState talk_state_;
         #endregion
 
         // Start is called before the first frame update
@@ -81,8 +84,9 @@ namespace Actor.Enemy.Purin
             state_machine_.AddState((int)eState.Drop1, drop_state1_);
             state_machine_.AddState((int)eState.Drop2, drop_state2_);
             state_machine_.AddState((int)eState.Drop3, drop_state3_);
+            state_machine_.AddState((int)eState.Talk, talk_state_);
             // 初期ステートの設定
-            state_machine_.SetInitialState((int)eState.Think);
+            state_machine_.SetInitialState((int)eState.Talk);
             
             // デバッグ表示
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 0));
