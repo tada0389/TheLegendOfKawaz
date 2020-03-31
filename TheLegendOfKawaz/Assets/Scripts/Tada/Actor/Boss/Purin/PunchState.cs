@@ -88,6 +88,11 @@ namespace Actor.Enemy.Purin
             [SerializeField]
             private float punch_lock_time_ = 0.2f;
 
+            [SerializeField]
+            private Transform ik_;
+            [SerializeField]
+            private GameObject ik_parent_;
+
             // ステートの初期化
             public override void OnInit()
             {
@@ -138,17 +143,24 @@ namespace Actor.Enemy.Purin
                         yield return new WaitForSeconds(punch_tenmetu_time_);
 
                         mark.LockPosition();
+                        ik_parent_.SetActive(true);
 
                         yield return new WaitForSeconds(punch_lock_time_);
 
                         float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                         Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
 
+
+                        ik_.position = mark.transform.position;
+
                         mark.Punch();
                         mark.TenmetsuEnd();
                     }
 
                     yield return new WaitForSeconds(punch_interval_);
+
+                    ik_parent_.SetActive(false);
+                    ik_.position = new Vector3(1f, 3f);
                 }
 
                 if(state_machine_.CurrentStateId != (int)eState.Dead)
