@@ -58,7 +58,7 @@ public class BossDoor : MonoBehaviour
                 //SceneManager.LoadScene(next_scene_);
                 //koitan追加
                 FadeManager.FadeIn(0.5f, next_scene_, 0);
-
+                MessageManager.CloseKanbanWindow();
             }
         }
     }
