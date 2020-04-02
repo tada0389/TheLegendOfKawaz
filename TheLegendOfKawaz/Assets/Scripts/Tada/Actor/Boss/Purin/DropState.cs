@@ -83,6 +83,13 @@ namespace Actor.Enemy.Purin
 
             private float next_;
 
+            [SerializeField]
+            private BaseParticle drop_eff_;
+            [SerializeField]
+            private BaseParticle ground_eff_;
+
+            private bool effect_appeared_ = false;
+
             // ステートの初期化
             public override void OnInit()
             {
@@ -93,6 +100,7 @@ namespace Actor.Enemy.Purin
             public override void OnStart()
             {
                 next_ = 1f;
+                effect_appeared_ = false;
             }
 
             // 毎フレーム呼ばれる
@@ -100,12 +108,19 @@ namespace Actor.Enemy.Purin
             {
                 if (Parent.trb_.ButtomCollide)
                 {
+                    EffectPlayer.Play(ground_eff_, Parent.transform.position + new Vector3(0f, -3.7f, 0f), Vector3.zero);
                     ChangeState((int)eState.Drop3);
+                    return;
                 }
 
 
                 if(Timer > charge_time_)
                 {
+                    if (!effect_appeared_)
+                    {
+                        effect_appeared_ = true;
+                        EffectPlayer.Play(drop_eff_, Parent.transform.position + new Vector3(0f, -3.7f, 0f), Vector3.zero, Parent.transform);
+                    }
                     ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, Accel, MaxAbsSpeed);
                     Parent.trb_.Velocity.x = 0f;
                 }

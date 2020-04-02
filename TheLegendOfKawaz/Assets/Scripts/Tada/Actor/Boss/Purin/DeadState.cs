@@ -32,6 +32,7 @@ namespace Actor.Enemy.Purin
             public override void OnStart()
             {
                 Time.timeScale = 0.3f;
+                explosion_effect_.gameObject.SetActive(true);
             }
 
             // 毎フレーム呼ばれる

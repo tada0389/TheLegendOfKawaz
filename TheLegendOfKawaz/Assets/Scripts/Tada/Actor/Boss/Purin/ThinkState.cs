@@ -51,9 +51,9 @@ namespace Actor.Enemy.Purin
 
                 float value = Random.value;
                 Debug.Log(value);
-                if (value < 0.28f) ChangeState((int)eState.Shot);
-                else if (value < 0.56f) ChangeState((int)eState.Punch1);
-                else if (value < 0.84f) ChangeState((int)eState.Drop1);
+                if (value < 0.25f) ChangeState((int)eState.Shot);
+                else if (value < 0.50f) ChangeState((int)eState.Punch1);
+                else if (value < 0.75f) ChangeState((int)eState.Drop1);
                 else ChangeState((int)eState.Walk);
             }
         }
