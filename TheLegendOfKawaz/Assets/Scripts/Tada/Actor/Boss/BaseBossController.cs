@@ -13,24 +13,7 @@ namespace Actor.Enemy
     [RequireComponent(typeof(TadaRigidbody))]
     [RequireComponent(typeof(Rigidbody2D))]
     public class BaseBossController : BaseActorController
-    {
-        // Bossのステート一覧
-        private enum eState
-        {
-            Think, // 次の行動を考えるステート
-            Idle, // 待機中のステート アイドリング
-            Fall, // 落下中のステート
-            Damage, // ダメージを受けたときのステート
-            Dead, // 死亡したときのステート
-
-            // 以下，任意の行動 それぞれのボスに合わせて実装する
-            Action1,
-            Action2,
-            Action3,
-            Action4,
-            Action5,
-        }
-
+    { 
         // 向いている方向
         protected enum eDir
         {

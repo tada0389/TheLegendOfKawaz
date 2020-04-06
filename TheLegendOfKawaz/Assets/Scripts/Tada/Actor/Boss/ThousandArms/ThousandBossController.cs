@@ -20,7 +20,10 @@ namespace Actor.Enemy.Thousand
             Think,
             Walk,
             Dead,
-            Talk
+            Talk,
+            ArmStretch, // 腕が伸びる
+            ArmThrow, // 腕を飛ばす
+            Sutras, // お経
         }
 
         // ステートを管理して起動するクラス
