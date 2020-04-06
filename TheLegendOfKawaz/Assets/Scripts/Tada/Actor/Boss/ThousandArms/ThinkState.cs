@@ -50,7 +50,6 @@ namespace Actor.Enemy.Thousand
             {
 
                 float value = Random.value;
-                Debug.Log(value);
                 ChangeState((int)eState.Walk);
             }
         }
