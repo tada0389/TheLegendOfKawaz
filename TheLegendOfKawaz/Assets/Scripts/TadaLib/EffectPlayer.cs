@@ -25,7 +25,7 @@ namespace TadaLib
             if (eff == null) return;
             eff.transform.position = pos;
             eff.transform.parent = owner;
-            eff.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir.x) * 90f - 90f, 0f);
+            eff.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir.x) * 90f - 90f, dir.z * 90f);
             eff.gameObject.SetActive(true);
         }
     }

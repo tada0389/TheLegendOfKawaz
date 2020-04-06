@@ -97,6 +97,9 @@ namespace Actor.Enemy
         // タックルする方向
         private float tackle_angle_;
 
+        [SerializeField]
+        private Transform not_reverse_;
+
         private void Start()
         {
             muteki_timer_ = new Timer(muteki_time_);
@@ -148,12 +151,14 @@ namespace Actor.Enemy
             {
                 dir_ = -1f;
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 180f, transform.localEulerAngles.z);
+                if (not_reverse_) not_reverse_.localEulerAngles = new Vector3(not_reverse_.localEulerAngles.x, 180f, not_reverse_.localEulerAngles.z);
             }
             // else if(data_.velocity.x > 0f)
             else if (dir == eDir.Right && transform.localEulerAngles.y != 0f)
             {
                 dir_ = 1f;
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
+                if (not_reverse_) not_reverse_.localEulerAngles = new Vector3(not_reverse_.localEulerAngles.x, 0f, not_reverse_.localEulerAngles.z);
             }
         }
 
@@ -473,6 +478,14 @@ namespace Actor.Enemy
             [SerializeField]
             private float wait_time_ = 0.5f;
 
+            [SerializeField]
+            private BaseParticle rush_eff_;
+
+            [SerializeField]
+            private BaseParticle wall_hit_eff_;
+
+            private bool rush_inited_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
@@ -482,6 +495,8 @@ namespace Actor.Enemy
                 // 敵の方向をむく
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+
+                rush_inited_ = false;
             }
 
             // 毎フレーム呼ばれる
@@ -489,9 +504,16 @@ namespace Actor.Enemy
             {
                 if (Timer < wait_time_) return;
 
+                if (!rush_inited_)
+                {
+                    rush_inited_ = true;
+                    EffectPlayer.Play(rush_eff_, Parent.transform.position + new Vector3(Parent.dir_ * 2.0f, 0f, 0f), new Vector3(0f, 0f, Parent.dir_), Parent.not_reverse_);
+                }
+
                 // 壁にぶつかったら次のステートへ
                 if(Parent.trb_.LeftCollide || Parent.trb_.RightCollide)
                 {
+                    EffectPlayer.Play(wall_hit_eff_, Parent.transform.position + new Vector3(Parent.dir_, 0f, 0f), new Vector3(Parent.dir_, 0f, 0f));
                     ChangeState((int)eState.Tackle3);
                     return;
                 }
