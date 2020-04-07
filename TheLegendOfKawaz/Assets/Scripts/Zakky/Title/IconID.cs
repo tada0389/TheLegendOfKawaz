@@ -52,22 +52,24 @@ public class IconID : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (TitleState.m_state == TitleState.State.Select)
+        StarEffect();
+        //ロードする関数を呼び出す
+        titleSceneManager.GetComponent<ZakkyTitleSceneManager>().IsLoadScene();
+    }
+
+    public void StarEffect()
+    {
+        //星エフェクト出す
+        //なんかparticle生成
+        for (int i = 0; i < 16; i++)
         {
-            //星エフェクト出す
-            //なんかparticle生成
-            for (int i = 0; i < 16; i++)
-            {
-                GameObject obj = Instantiate(m_particle, transform.position, Quaternion.Euler(Vector3.zero));
-                //角度とスピードランダムで取得
-                float dir = Random.Range(0, 359);
-                float spd = Random.Range(1f, 5.0f);
-                //それらを代入
-                Vector2 vec2 = new Vector2(Mathf.Cos(dir * Mathf.Deg2Rad), Mathf.Sin(dir * Mathf.Deg2Rad)) * spd;
-                obj.GetComponent<Rigidbody2D>().velocity = vec2;
-            }
-            //ロードする関数を呼び出す
-            titleSceneManager.GetComponent<ZakkyTitleSceneManager>().IsLoadScene();
+            GameObject obj = Instantiate(m_particle, transform.position, Quaternion.Euler(Vector3.zero));
+            //角度とスピードランダムで取得
+            float dir = Random.Range(0, 359);
+            float spd = Random.Range(1f, 5.0f);
+            //それらを代入
+            Vector2 vec2 = new Vector2(Mathf.Cos(dir * Mathf.Deg2Rad), Mathf.Sin(dir * Mathf.Deg2Rad)) * spd;
+            obj.GetComponent<Rigidbody2D>().velocity = vec2;
         }
     }
 }
