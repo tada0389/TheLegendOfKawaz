@@ -31,14 +31,14 @@ public class TitleIDManager : MonoBehaviour
         if (TitleState.m_state != TitleState.State.Select) return;
 
         //ボタンのID切り替え
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || ActionInput.GetButtonDown(ButtonCode.Up))
         {
             ChoiceID--;
             if (ChoiceID < 0)
                 ChoiceID = 2;
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) || ActionInput.GetButtonDown(ButtonCode.Down))
         {
             ChoiceID++;
             if (ChoiceID > 2)

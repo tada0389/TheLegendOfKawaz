@@ -8,6 +8,7 @@ public class ZakkyTitleSceneManager : MonoBehaviour
     public GameObject titleIDManager;
     //public GameObject titleState;
     public GameObject mySceneManager;
+    public GameObject[] iconID;
 
     // Start is called before the first frame update
     void Start()
@@ -19,30 +20,38 @@ public class ZakkyTitleSceneManager : MonoBehaviour
     void Update()
     {
         //ボタン押されてたらシーン遷移を確かめる
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))) IsLoadScene();
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || ActionInput.GetButtonDown(ActionCode.Jump))
+        {
+            iconID[titleIDManager.GetComponent<TitleIDManager>().ChoiceID].GetComponent<IconID>().StarEffect();
+            IsLoadScene();
+        }
     }
 
     public void IsLoadScene()
     {
-        //選択肢えらんだら
-        switch (titleIDManager.GetComponent<TitleIDManager>().ChoiceID)
+        if (TitleState.m_state == TitleState.State.Select)
         {
-            case 0:
-                //SceneManager.LoadScene("Cooking");
-                //stateを操作受け付けないやつにする
-                TitleState.m_state = TitleState.State.Decided;
-                //Fadeout関数でフェードアウト
-                mySceneManager.GetComponent<MySceneManager>().Fadeout("ZakkyScene");
-                break;
-            case 1:
-                TitleState.m_state = TitleState.State.Story;
-                break;
-            case 2:
-                //stateを操作受け付けないやつにする
-                TitleState.m_state = TitleState.State.Decided;
-                //Fadeout関数でフェードアウト
-                mySceneManager.GetComponent<MySceneManager>().Fadeout(null);
-                break;
+            //選択肢えらんだら
+            switch (titleIDManager.GetComponent<TitleIDManager>().ChoiceID)
+            {
+                case 0:
+                    //SceneManager.LoadScene("Cooking");
+                    //stateを操作受け付けないやつにする
+                    TitleState.m_state = TitleState.State.Decided;
+                    //Fadeout関数でフェードアウト
+                    mySceneManager.GetComponent<MySceneManager>().Fadeout("ZakkyScene");
+                    break;
+                case 1:
+                    TitleState.m_state = TitleState.State.Story;
+                    break;
+                case 2:
+                    //stateを操作受け付けないやつにする
+                    TitleState.m_state = TitleState.State.Decided;
+                    //Fadeout関数でフェードアウト
+                    mySceneManager.GetComponent<MySceneManager>().Fadeout(null);
+                    break;
+            }
         }
+        
     }
 }
