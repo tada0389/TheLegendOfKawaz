@@ -22685,6 +22685,7 @@ MonoBehaviour:
   walk_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    move_duration_: 1
   dead_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -59229,11 +59230,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP
       objectReference: {fileID: 0}
-    - target: {fileID: 8803086771443180327, guid: d912547428f1f47c69bd798dc924b27b,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 960
-      objectReference: {fileID: 0}
     - target: {fileID: 8803086772366518456, guid: d912547428f1f47c69bd798dc924b27b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -59343,6 +59339,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8803086771443180327, guid: d912547428f1f47c69bd798dc924b27b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 960
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d912547428f1f47c69bd798dc924b27b, type: 3}
