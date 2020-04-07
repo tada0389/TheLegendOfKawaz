@@ -50,7 +50,8 @@ namespace Actor.Enemy.Thousand
             {
 
                 float value = Random.value;
-                ChangeState((int)eState.Walk);
+                if (value < 0.5f) ChangeState((int)eState.Walk);
+                else ChangeState((int)eState.ArmStretch);
             }
         }
     }

@@ -43,8 +43,6 @@ namespace Actor.Enemy.Thousand
 
                 float dir = (Timer > move_duration_ * 3f / 4f)? -Parent.dir_ : Parent.dir_;
                 ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, Accel * new Vector2(dir, 0f), MaxAbsSpeed);
-
-                Debug.Log(Parent.trb_.Velocity.x);
             }
 
             // 終了時に呼ばれる

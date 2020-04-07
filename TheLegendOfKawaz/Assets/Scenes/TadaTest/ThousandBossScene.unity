@@ -855,6 +855,7 @@ GameObject:
   - component: {fileID: 258258116}
   - component: {fileID: 258258118}
   - component: {fileID: 258258117}
+  - component: {fileID: 258258119}
   m_Layer: 0
   m_Name: Arm (2)
   m_TagString: Enemy
@@ -896,6 +897,7 @@ MonoBehaviour:
   mesh_: {fileID: 1092770061}
   boss_: {fileID: 263469653}
   index_: 2
+  body_: {fileID: 1092770063}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -911,6 +913,15 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     revive_time_: 5
   revive_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  stretch_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    stretch_duration_: 0.5
+    ease_: 12
+    distance_: 5
+  throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
 --- !u!61 &258258118
@@ -939,6 +950,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 2.5}
   m_EdgeRadius: 0
+--- !u!50 &258258119
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258258115}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &263469646
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,7 +1010,13 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 805861427}
-  arms_: []
+  arms_:
+  - {fileID: 755804393}
+  - {fileID: 859167309}
+  - {fileID: 258258117}
+  - {fileID: 1244878912}
+  - {fileID: 1465678585}
+  - {fileID: 949576961}
   think_state_:
     MaxAbsSpeed: {x: 0, y: 0}
     Accel: {x: 0, y: 0}
@@ -996,6 +1034,17 @@ MonoBehaviour:
     im: {fileID: 21300000, guid: a2758bf12459afc4c94e74d8e2830252, type: 3}
     message:
     - "\u304B\u304B\u3063\u3066\u3053\u3044"
+  arm_stretch_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    arm_stop_duration_: 0.25
+    warning_duration_: 0.25
+  arm_throw_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  sutras_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
 --- !u!50 &263469648
 Rigidbody2D:
   serializedVersion: 4
@@ -2139,6 +2188,8 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.3, y: 0}
     Accel: {x: 0.05, y: 0}
     wait_time_: 0.5
+    rush_eff_: {fileID: 0}
+    wall_hit_eff_: {fileID: 0}
   state_tackle3_:
     MaxAbsSpeed: {x: 0, y: 0.4}
     Accel: {x: 0.003, y: -0.03}
@@ -2197,6 +2248,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 564111982}
+  not_reverse_: {fileID: 0}
 --- !u!50 &470335610
 Rigidbody2D:
   serializedVersion: 4
@@ -11453,6 +11505,7 @@ GameObject:
   - component: {fileID: 755804391}
   - component: {fileID: 755804394}
   - component: {fileID: 755804393}
+  - component: {fileID: 755804392}
   m_Layer: 0
   m_Name: Arm
   m_TagString: Enemy
@@ -11475,6 +11528,27 @@ Transform:
   m_Father: {fileID: 538836199}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &755804392
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755804390}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &755804393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11494,6 +11568,7 @@ MonoBehaviour:
   mesh_: {fileID: 787104939}
   boss_: {fileID: 263469653}
   index_: 0
+  body_: {fileID: 787104941}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -11509,6 +11584,15 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     revive_time_: 5
   revive_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  stretch_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    stretch_duration_: 0.5
+    ease_: 12
+    distance_: 5
+  throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
 --- !u!61 &755804394
@@ -12527,6 +12611,7 @@ GameObject:
   - component: {fileID: 859167308}
   - component: {fileID: 859167310}
   - component: {fileID: 859167309}
+  - component: {fileID: 859167311}
   m_Layer: 0
   m_Name: Arm (1)
   m_TagString: Enemy
@@ -12568,6 +12653,7 @@ MonoBehaviour:
   mesh_: {fileID: 1902042900}
   boss_: {fileID: 263469653}
   index_: 1
+  body_: {fileID: 1902042902}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -12583,6 +12669,15 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     revive_time_: 5
   revive_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  stretch_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    stretch_duration_: 0.5
+    ease_: 12
+    distance_: 5
+  throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
 --- !u!61 &859167310
@@ -12611,6 +12706,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 2.5}
   m_EdgeRadius: 0
+--- !u!50 &859167311
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859167307}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &890382344
 GameObject:
   m_ObjectHideFlags: 0
@@ -12902,6 +13018,7 @@ GameObject:
   - component: {fileID: 949576960}
   - component: {fileID: 949576962}
   - component: {fileID: 949576961}
+  - component: {fileID: 949576963}
   m_Layer: 0
   m_Name: Arm (5)
   m_TagString: Enemy
@@ -12943,6 +13060,7 @@ MonoBehaviour:
   mesh_: {fileID: 2069125827}
   boss_: {fileID: 263469653}
   index_: 5
+  body_: {fileID: 2069125829}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -12958,6 +13076,15 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     revive_time_: 5
   revive_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  stretch_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    stretch_duration_: 0.5
+    ease_: 12
+    distance_: 5
+  throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
 --- !u!61 &949576962
@@ -12986,6 +13113,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 2.5}
   m_EdgeRadius: 0
+--- !u!50 &949576963
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949576959}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &951311230
 GameObject:
   m_ObjectHideFlags: 0
@@ -23574,6 +23722,7 @@ GameObject:
   - component: {fileID: 1244878911}
   - component: {fileID: 1244878913}
   - component: {fileID: 1244878912}
+  - component: {fileID: 1244878914}
   m_Layer: 0
   m_Name: Arm (3)
   m_TagString: Enemy
@@ -23615,6 +23764,7 @@ MonoBehaviour:
   mesh_: {fileID: 1347655978}
   boss_: {fileID: 263469653}
   index_: 3
+  body_: {fileID: 1347655980}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -23630,6 +23780,15 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     revive_time_: 5
   revive_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  stretch_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    stretch_duration_: 0.5
+    ease_: 12
+    distance_: 5
+  throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
 --- !u!61 &1244878913
@@ -23658,6 +23817,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 2.5}
   m_EdgeRadius: 0
+--- !u!50 &1244878914
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244878910}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1316357038
 GameObject:
   m_ObjectHideFlags: 0
@@ -29005,6 +29185,7 @@ GameObject:
   - component: {fileID: 1465678584}
   - component: {fileID: 1465678586}
   - component: {fileID: 1465678585}
+  - component: {fileID: 1465678587}
   m_Layer: 0
   m_Name: Arm (4)
   m_TagString: Enemy
@@ -29046,6 +29227,7 @@ MonoBehaviour:
   mesh_: {fileID: 241204647}
   boss_: {fileID: 263469653}
   index_: 4
+  body_: {fileID: 241204649}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -29061,6 +29243,15 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     revive_time_: 5
   revive_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  stretch_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    stretch_duration_: 0.5
+    ease_: 12
+    distance_: 5
+  throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
 --- !u!61 &1465678586
@@ -29089,6 +29280,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 2.5}
   m_EdgeRadius: 0
+--- !u!50 &1465678587
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465678583}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1479900680
 GameObject:
   m_ObjectHideFlags: 0
