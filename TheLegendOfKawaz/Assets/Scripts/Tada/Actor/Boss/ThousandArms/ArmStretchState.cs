@@ -75,7 +75,9 @@ namespace Actor.Enemy.Thousand
                 {
                     Parent.arms_[i].Move();
                 }
-                ChangeState((int)eState.Think);
+
+                if(state_machine_.CurrentStateId != (int)eState.Dead)
+                    ChangeState((int)eState.Think);
             }
         }
     }
