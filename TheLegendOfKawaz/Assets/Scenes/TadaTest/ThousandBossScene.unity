@@ -890,13 +890,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a32ba8339dcf34c9be364e93ceec70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp_: 20
+  hp_: 5
   body_damage_: 3
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1092770061}
   boss_: {fileID: 263469653}
   index_: 2
+  radius_: 2
   body_: {fileID: 1092770063}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -906,8 +907,11 @@ MonoBehaviour:
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    power_: {x: 0, y: 1}
-    gravity_: -0.98
+    power_: {x: 0, y: 10}
+    gravity_: -15
+    ground_boader_: -5
+    dead_eff_: {fileID: 5668754949085646629, guid: 576d4b4501d7e3b4883d2891a6c52d83,
+      type: 3}
   dead_state2_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -915,6 +919,10 @@ MonoBehaviour:
   revive_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    revived_hp_: 5
+    revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
+      type: 3}
+    delay_: 1.5
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -1079,7 +1087,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pre_pooled_bullets_: []
-  pre_pooled_effects_: []
+  pre_pooled_effects_:
+  - effect_: {fileID: 5668754949085646629, guid: 576d4b4501d7e3b4883d2891a6c52d83,
+      type: 3}
+    max_num_: 6
+  - effect_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
+      type: 3}
+    max_num_: 6
 --- !u!114 &263469650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11561,13 +11575,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a32ba8339dcf34c9be364e93ceec70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp_: 20
+  hp_: 5
   body_damage_: 3
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 787104939}
   boss_: {fileID: 263469653}
   index_: 0
+  radius_: 2
   body_: {fileID: 787104941}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -11577,8 +11592,11 @@ MonoBehaviour:
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    power_: {x: 0, y: 1}
-    gravity_: -0.98
+    power_: {x: 0, y: 10}
+    gravity_: -15
+    ground_boader_: -5
+    dead_eff_: {fileID: 5668754949085646629, guid: 576d4b4501d7e3b4883d2891a6c52d83,
+      type: 3}
   dead_state2_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -11586,6 +11604,10 @@ MonoBehaviour:
   revive_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    revived_hp_: 5
+    revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
+      type: 3}
+    delay_: 1.5
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -12646,13 +12668,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a32ba8339dcf34c9be364e93ceec70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp_: 20
+  hp_: 5
   body_damage_: 3
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1902042900}
   boss_: {fileID: 263469653}
   index_: 1
+  radius_: 2
   body_: {fileID: 1902042902}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -12662,8 +12685,11 @@ MonoBehaviour:
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    power_: {x: 0, y: 1}
-    gravity_: -0.98
+    power_: {x: 0, y: 10}
+    gravity_: -15
+    ground_boader_: -5
+    dead_eff_: {fileID: 5668754949085646629, guid: 576d4b4501d7e3b4883d2891a6c52d83,
+      type: 3}
   dead_state2_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -12671,6 +12697,10 @@ MonoBehaviour:
   revive_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    revived_hp_: 5
+    revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
+      type: 3}
+    delay_: 1.5
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -13053,13 +13083,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a32ba8339dcf34c9be364e93ceec70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp_: 20
+  hp_: 5
   body_damage_: 3
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 2069125827}
   boss_: {fileID: 263469653}
   index_: 5
+  radius_: 2
   body_: {fileID: 2069125829}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -13069,8 +13100,11 @@ MonoBehaviour:
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    power_: {x: 0, y: 1}
-    gravity_: -0.98
+    power_: {x: 0, y: 10}
+    gravity_: -15
+    ground_boader_: -5
+    dead_eff_: {fileID: 5668754949085646629, guid: 576d4b4501d7e3b4883d2891a6c52d83,
+      type: 3}
   dead_state2_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -13078,6 +13112,10 @@ MonoBehaviour:
   revive_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    revived_hp_: 5
+    revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
+      type: 3}
+    delay_: 1.5
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -23757,13 +23795,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a32ba8339dcf34c9be364e93ceec70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp_: 20
+  hp_: 5
   body_damage_: 3
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1347655978}
   boss_: {fileID: 263469653}
   index_: 3
+  radius_: 2
   body_: {fileID: 1347655980}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -23773,8 +23812,11 @@ MonoBehaviour:
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    power_: {x: 0, y: 1}
-    gravity_: -0.98
+    power_: {x: 0, y: 10}
+    gravity_: -15
+    ground_boader_: -5
+    dead_eff_: {fileID: 5668754949085646629, guid: 576d4b4501d7e3b4883d2891a6c52d83,
+      type: 3}
   dead_state2_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -23782,6 +23824,10 @@ MonoBehaviour:
   revive_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    revived_hp_: 5
+    revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
+      type: 3}
+    delay_: 1.5
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -29220,13 +29266,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a32ba8339dcf34c9be364e93ceec70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp_: 20
+  hp_: 5
   body_damage_: 3
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 241204647}
   boss_: {fileID: 263469653}
   index_: 4
+  radius_: 2
   body_: {fileID: 241204649}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -29236,8 +29283,11 @@ MonoBehaviour:
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    power_: {x: 0, y: 1}
-    gravity_: -0.98
+    power_: {x: 0, y: 10}
+    gravity_: -15
+    ground_boader_: -5
+    dead_eff_: {fileID: 5668754949085646629, guid: 576d4b4501d7e3b4883d2891a6c52d83,
+      type: 3}
   dead_state2_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -29245,6 +29295,10 @@ MonoBehaviour:
   revive_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    revived_hp_: 5
+    revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
+      type: 3}
+    delay_: 1.5
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
