@@ -2378,6 +2378,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleIDManager: {fileID: 580092589}
   mySceneManager: {fileID: 1578516023}
+  iconID:
+  - {fileID: 840620563}
+  - {fileID: 614510992}
+  - {fileID: 1598571173}
 --- !u!1 &1310262007
 GameObject:
   m_ObjectHideFlags: 0
