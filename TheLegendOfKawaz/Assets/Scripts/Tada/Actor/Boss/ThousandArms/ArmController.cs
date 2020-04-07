@@ -14,7 +14,8 @@ namespace Actor.Enemy.Thousand
             Idle,
             Dead1,
             Dead2,
-            Revive,
+            Revive1,
+            Revive2,
             Stretch,
             Throw,
         }
@@ -44,7 +45,9 @@ namespace Actor.Enemy.Thousand
         [SerializeField]
         private DeadState2 dead_state2_;
         [SerializeField]
-        private ReviveState revive_state_;
+        private ReviveState1 revive_state1_;
+        [SerializeField]
+        private ReviveState2 revive_state2_;
         [SerializeField]
         private StretchState stretch_state_;
         [SerializeField]
@@ -66,11 +69,15 @@ namespace Actor.Enemy.Thousand
             state_machine_.AddState((int)eState.Idle, idle_state_);
             state_machine_.AddState((int)eState.Dead1, dead_state1_);
             state_machine_.AddState((int)eState.Dead2, dead_state2_);
-            state_machine_.AddState((int)eState.Revive, revive_state_);
+            state_machine_.AddState((int)eState.Revive1, revive_state1_);
+            state_machine_.AddState((int)eState.Revive2, revive_state2_);
             state_machine_.AddState((int)eState.Stretch, stretch_state_);
             state_machine_.AddState((int)eState.Throw, throw_state_);
 
             state_machine_.SetInitialState((int)eState.Idle);
+
+            // デバッグ表示
+            //DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 0));
         }
 
         private void Update()
@@ -81,7 +88,7 @@ namespace Actor.Enemy.Thousand
         // 蘇生
         private void Revive()
         {
-            state_machine_.ChangeState((int)eState.Revive);
+            state_machine_.ChangeState((int)eState.Revive1);
         }
 
         // 死亡
@@ -126,6 +133,13 @@ namespace Actor.Enemy.Thousand
         {
             if (dead_) return;
             state_machine_.ChangeState((int)eState.Idle);
+        }
+
+
+        public override string ToString()
+        {
+            return 
+                "\nState : " + state_machine_.ToString();
         }
 
         // === 以下，ステート ================================================
@@ -237,13 +251,13 @@ namespace Actor.Enemy.Thousand
             {
                 if (Timer > revive_time_)
                 {
-                    ChangeState((int)eState.Revive);
+                    ChangeState((int)eState.Revive1);
                 }
             }
         }
 
         [System.Serializable]
-        private class ReviveState : StateMachine<ArmController>.StateBase
+        private class ReviveState1 : StateMachine<ArmController>.StateBase
         {
             [SerializeField]
             private int revived_hp_ = 5;
@@ -255,9 +269,7 @@ namespace Actor.Enemy.Thousand
             private float delay_ = 3.0f;
 
             public override void OnStart()
-            {
-                Parent.dead_ = false;
-
+            { 
                 Parent.HP = revived_hp_;
 
                 EffectPlayer.Play(revive_eff_, Parent.transform.position, Vector3.zero);
@@ -267,9 +279,52 @@ namespace Actor.Enemy.Thousand
             {
                 if(Timer > delay_)
                 {
+                    ChangeState((int)eState.Revive2);
+                    return;
+                }
+            }
+        }
+
+        // めちゃくちゃ回転しながら戻る
+        [System.Serializable]
+        private class ReviveState2 : StateMachine<ArmController>.StateBase
+        {
+            [SerializeField]
+            private float back_duration_ = 1.0f;
+            [SerializeField]
+            private float speed_ = 360.0f;
+
+            private float target_degree_;
+
+            private Vector3 from_;
+
+            public override void OnStart()
+            {
+                DumpStartMsg(this);
+                target_degree_ = (360f / Parent.arm_sum_) * Parent.index_;
+                from_ = Parent.transform.position;
+            }
+
+            public override void Proc()
+            {
+                if (Timer >= back_duration_)
+                {
                     ChangeState((int)eState.Idle);
                     return;
                 }
+                Parent.degree_ += speed_ * Time.deltaTime;
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+
+                Vector3 to = Parent.boss_.position + 2.0f * new Vector3(Mathf.Cos(target_degree_ * Mathf.Deg2Rad), Mathf.Sin(target_degree_ * Mathf.Deg2Rad), 0f);
+                Parent.transform.position = to * (Timer / back_duration_) + from_ * (1f - Timer / back_duration_);
+            }
+
+            public override void OnEnd()
+            {
+                Parent.degree_ = target_degree_;
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+
+                Parent.dead_ = false;
             }
         }
 
@@ -317,7 +372,8 @@ namespace Actor.Enemy.Thousand
 
                 yield return new WaitForSeconds(stretch_duration_ + 0.1f);
 
-                ChangeState((int)eState.Idle);
+                if(!Parent.dead_)
+                    ChangeState((int)eState.Idle);
             }
         }
 

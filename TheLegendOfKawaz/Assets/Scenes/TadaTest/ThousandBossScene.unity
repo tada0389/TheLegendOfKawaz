@@ -916,13 +916,18 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revive_time_: 5
-  revive_state_:
+  revive_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revived_hp_: 5
     revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
       type: 3}
     delay_: 1
+  revive_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 0.5
+    speed_: 720
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -11698,13 +11703,18 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revive_time_: 5
-  revive_state_:
+  revive_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revived_hp_: 5
     revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
       type: 3}
     delay_: 1
+  revive_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 0.5
+    speed_: 720
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -12791,13 +12801,18 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revive_time_: 5
-  revive_state_:
+  revive_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revived_hp_: 5
     revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
       type: 3}
     delay_: 1
+  revive_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 0.5
+    speed_: 720
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -13212,13 +13227,18 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revive_time_: 5
-  revive_state_:
+  revive_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revived_hp_: 5
     revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
       type: 3}
     delay_: 1
+  revive_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 0.5
+    speed_: 720
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -23924,13 +23944,18 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revive_time_: 5
-  revive_state_:
+  revive_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revived_hp_: 5
     revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
       type: 3}
     delay_: 1
+  revive_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 0.5
+    speed_: 720
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -29464,13 +29489,18 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revive_time_: 5
-  revive_state_:
+  revive_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     revived_hp_: 5
     revive_eff_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
       type: 3}
     delay_: 1
+  revive_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 0.5
+    speed_: 720
   stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
