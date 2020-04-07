@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Actor;
 using TadaLib;
+using DG.Tweening;
 
 namespace Actor.Enemy.Thousand
 {
@@ -14,7 +15,8 @@ namespace Actor.Enemy.Thousand
             Dead1,
             Dead2,
             Revive,
-            Attack,
+            Stretch,
+            Throw,
         }
 
         private StateMachine<ArmController> state_machine_;
@@ -26,6 +28,9 @@ namespace Actor.Enemy.Thousand
         private int index_ = 0;
         private int arm_sum_ = 6;
 
+        [SerializeField]
+        private SpriteRenderer body_;
+
         #region state
         [SerializeField]
         private IdleState idle_state_;
@@ -35,9 +40,15 @@ namespace Actor.Enemy.Thousand
         private DeadState2 dead_state2_;
         [SerializeField]
         private ReviveState revive_state_;
+        [SerializeField]
+        private StretchState stretch_state_;
+        [SerializeField]
+        private ThrowState throw_state_;
         #endregion
 
         private float degree_ = 0f;
+
+        private bool move_stop_ = false;
 
         private void Start()
         {
@@ -47,6 +58,8 @@ namespace Actor.Enemy.Thousand
             state_machine_.AddState((int)eState.Dead1, dead_state1_);
             state_machine_.AddState((int)eState.Dead2, dead_state2_);
             state_machine_.AddState((int)eState.Revive, revive_state_);
+            state_machine_.AddState((int)eState.Stretch, stretch_state_);
+            state_machine_.AddState((int)eState.Throw, throw_state_);
 
             state_machine_.SetInitialState((int)eState.Idle);
         }
@@ -68,6 +81,39 @@ namespace Actor.Enemy.Thousand
             state_machine_.ChangeState((int)eState.Dead1);
         }
 
+        // 外部から呼び出す
+
+        // 腕の動きを止める
+        public void Stop(float stop_duration_from_order = 0.5f)
+        {
+            move_stop_ = true;
+        }
+
+        // 腕を赤くする
+        public void ChargeStart()
+        {
+            body_.DOColor(Color.red, 0.5f);
+            transform.DOScale(1.5f, 0.5f);
+        }
+
+        // 腕を通常通りの色にする
+        private void ChargeEnd()
+        {
+            body_.DOColor(Color.white, 0.5f);
+            transform.DOScale(1.0f, 0.5f);
+        }
+
+        // 腕を伸ばす
+        public void Stretch()
+        {
+            state_machine_.ChangeState((int)eState.Stretch);
+        }
+
+        public void Move()
+        {
+            state_machine_.ChangeState((int)eState.Idle);
+        }
+
         // === 以下，ステート ================================================
 
         [System.Serializable]
@@ -87,10 +133,13 @@ namespace Actor.Enemy.Thousand
             public override void OnStart()
             {
                 arm_interval_ = 360f / Parent.arm_sum_;
+                Parent.move_stop_ = false;
             }
 
             public override void Proc()
             {
+                if (Parent.move_stop_) return;
+
                 Parent.degree_ = arm_interval_ * Parent.index_ + Timer * speed_;
                 float degree = Parent.degree_;
                 Parent.transform.position = Parent.boss_.position + radius_ * new Vector3(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad), 0f);
@@ -152,7 +201,55 @@ namespace Actor.Enemy.Thousand
         }
 
         [System.Serializable]
-        private class AttackState : StateMachine<ArmController>.StateBase
+        private class StretchState : StateMachine<ArmController>.StateBase
+        {
+            [SerializeField]
+            private float stretch_duration_ = 0.5f;
+
+            [SerializeField]
+            private Ease ease_ = Ease.OutQuart;
+
+            [SerializeField]
+            private float distance_ = 1.5f;
+
+            public override void OnStart()
+            {
+                Parent.StartCoroutine(Flow());
+            }
+
+            public override void Proc()
+            {
+                
+            }
+
+            public override void OnEnd()
+            {
+                Parent.StopCoroutine(Flow());
+            }
+
+            private IEnumerator Flow()
+            {
+                yield return new WaitForSeconds(0.3f);
+
+                Vector3 to = Parent.transform.position + new Vector3(Mathf.Cos(Parent.degree_ * Mathf.Deg2Rad), Mathf.Sin(Parent.degree_ * Mathf.Deg2Rad), 0f) * distance_;
+                Vector3 from = Parent.transform.position;
+
+                Parent.transform.DOMove(to, stretch_duration_).SetEase(ease_);
+
+                yield return new WaitForSeconds(stretch_duration_ + 0.1f);
+
+                Parent.transform.DOMove(from, stretch_duration_).SetEase(ease_);
+
+                Parent.ChargeEnd();
+
+                yield return new WaitForSeconds(stretch_duration_ + 0.1f);
+
+                ChangeState((int)eState.Idle);
+            }
+        }
+
+        [System.Serializable]
+        private class ThrowState : StateMachine<ArmController>.StateBase
         {
 
         }

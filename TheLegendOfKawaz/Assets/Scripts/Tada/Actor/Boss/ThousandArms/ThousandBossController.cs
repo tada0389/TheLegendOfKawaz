@@ -40,7 +40,7 @@ namespace Actor.Enemy.Thousand
 
         // 手たち
         [SerializeField]
-        private List<GameObject> arms_;
+        private List<ArmController> arms_;
 
         #region state
         [SerializeField]
@@ -51,6 +51,12 @@ namespace Actor.Enemy.Thousand
         private DeadState dead_state_;
         [SerializeField]
         private TalkState talk_state_;
+        [SerializeField]
+        private ArmStretchState arm_stretch_state_;
+        [SerializeField]
+        private ArmThrowState arm_throw_state_;
+        [SerializeField]
+        private SutrasState sutras_state_;
         #endregion
 
         // Start is called before the first frame update
@@ -67,6 +73,9 @@ namespace Actor.Enemy.Thousand
             state_machine_.AddState((int)eState.Walk, walk_state_);
             state_machine_.AddState((int)eState.Dead, dead_state_);
             state_machine_.AddState((int)eState.Talk, talk_state_);
+            state_machine_.AddState((int)eState.ArmStretch, arm_stretch_state_);
+            state_machine_.AddState((int)eState.ArmThrow, arm_throw_state_);
+            state_machine_.AddState((int)eState.Sutras, sutras_state_);
             // 初期ステートの設定
             state_machine_.SetInitialState((int)eState.Talk);
 
