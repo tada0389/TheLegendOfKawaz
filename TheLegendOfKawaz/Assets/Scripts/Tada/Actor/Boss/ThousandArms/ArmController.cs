@@ -29,7 +29,12 @@ namespace Actor.Enemy.Thousand
         private int arm_sum_ = 6;
 
         [SerializeField]
+        private float radius_ = 2f;
+
+        [SerializeField]
         private SpriteRenderer body_;
+
+        private bool dead_ = false;
 
         #region state
         [SerializeField]
@@ -52,6 +57,10 @@ namespace Actor.Enemy.Thousand
 
         private void Start()
         {
+            degree_ = (360f / arm_sum_) * index_;
+            transform.position = boss_.position + radius_ * new Vector3(Mathf.Cos(degree_ * Mathf.Deg2Rad), Mathf.Sin(degree_ * Mathf.Deg2Rad), 0f);
+            transform.localEulerAngles = new Vector3(0f, 0f, degree_ - 90f);
+
             state_machine_ = new StateMachine<ArmController>(this);
 
             state_machine_.AddState((int)eState.Idle, idle_state_);
@@ -78,6 +87,7 @@ namespace Actor.Enemy.Thousand
         // 死亡
         protected override void Dead()
         {
+            if (dead_) return;
             state_machine_.ChangeState((int)eState.Dead1);
         }
 
@@ -86,12 +96,14 @@ namespace Actor.Enemy.Thousand
         // 腕の動きを止める
         public void Stop(float stop_duration_from_order = 0.5f)
         {
+            if (dead_) return;
             move_stop_ = true;
         }
 
         // 腕を赤くする
         public void ChargeStart()
         {
+            if (dead_) return;
             body_.DOColor(Color.red, 0.5f);
             transform.DOScale(1.5f, 0.5f);
         }
@@ -106,11 +118,13 @@ namespace Actor.Enemy.Thousand
         // 腕を伸ばす
         public void Stretch()
         {
+            if (dead_) return;
             state_machine_.ChangeState((int)eState.Stretch);
         }
 
         public void Move()
         {
+            if (dead_) return;
             state_machine_.ChangeState((int)eState.Idle);
         }
 
@@ -140,7 +154,7 @@ namespace Actor.Enemy.Thousand
             {
                 if (Parent.move_stop_) return;
 
-                Parent.degree_ = arm_interval_ * Parent.index_ + Timer * speed_;
+                Parent.degree_ += Time.deltaTime * speed_;
                 float degree = Parent.degree_;
                 Parent.transform.position = Parent.boss_.position + radius_ * new Vector3(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad), 0f);
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, degree - 90f);
@@ -168,14 +182,48 @@ namespace Actor.Enemy.Thousand
             // 反転するまでの時間 上に上がってもとに位置に戻るまでの時間
             private float flip_time_;
 
+            private float face_down_degree_per_s_;
+
+            [SerializeField]
+            private float ground_boader_ = -5f;
+
+            [SerializeField]
+            private BaseParticle dead_eff_;
+
             public override void OnStart()
             {
+                Parent.dead_ = true;
+
                 velocity_ = power_;
 
-                flip_time_ = velocity_.y / -gravity_;
+                flip_time_ = 2f * velocity_.y / -gravity_;
+
+                while (Parent.degree_ > 360f) Parent.degree_ -= 360f;
+
+                // 真下を向くまでの角度 真下は180° + 90
+                face_down_degree_per_s_ = (180f + 90f - Parent.degree_) / flip_time_;
+
+                EffectPlayer.Play(dead_eff_, Parent.transform.position, Vector3.zero, Parent.transform);
             }
 
+            public override void Proc()
+            {
+                if(Timer < flip_time_)
+                {
+                    Parent.degree_ += face_down_degree_per_s_ * Time.deltaTime;
+                    Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+                }
 
+                if(Parent.transform.position.y < ground_boader_)
+                {
+                    ChangeState((int)eState.Dead2);
+                    return;
+                }
+
+                velocity_.y += gravity_ * Time.deltaTime;
+
+                Parent.transform.position += (Vector3)velocity_ * Time.deltaTime;
+            }
         }
 
         // 復活待機中のステート
@@ -197,7 +245,32 @@ namespace Actor.Enemy.Thousand
         [System.Serializable]
         private class ReviveState : StateMachine<ArmController>.StateBase
         {
+            [SerializeField]
+            private int revived_hp_ = 5;
 
+            [SerializeField]
+            private BaseParticle revive_eff_;
+
+            [SerializeField]
+            private float delay_ = 3.0f;
+
+            public override void OnStart()
+            {
+                Parent.dead_ = false;
+
+                Parent.HP = revived_hp_;
+
+                EffectPlayer.Play(revive_eff_, Parent.transform.position, Vector3.zero);
+            }
+
+            public override void Proc()
+            {
+                if(Timer > delay_)
+                {
+                    ChangeState((int)eState.Idle);
+                    return;
+                }
+            }
         }
 
         [System.Serializable]
