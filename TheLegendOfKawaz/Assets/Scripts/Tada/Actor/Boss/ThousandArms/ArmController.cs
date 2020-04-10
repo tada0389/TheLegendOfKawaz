@@ -17,7 +17,9 @@ namespace Actor.Enemy.Thousand
             Revive1,
             Revive2,
             Stretch,
-            Throw,
+            Throw1,
+            Throw2,
+            Throw3,
         }
 
         private StateMachine<ArmController> state_machine_;
@@ -38,6 +40,8 @@ namespace Actor.Enemy.Thousand
 
         private bool dead_ = false;
 
+        private bool action_ = false;
+
         #region state
         [SerializeField]
         private IdleState idle_state_;
@@ -52,7 +56,11 @@ namespace Actor.Enemy.Thousand
         [SerializeField]
         private StretchState stretch_state_;
         [SerializeField]
-        private ThrowState throw_state_;
+        private ThrowState1 throw_state1_;
+        [SerializeField]
+        private ThrowState2 throw_state2_;
+        [SerializeField]
+        private ThrowState3 throw_state3_;
         #endregion
 
         private float degree_ = 0f;
@@ -81,7 +89,9 @@ namespace Actor.Enemy.Thousand
             state_machine_.AddState((int)eState.Revive1, revive_state1_);
             state_machine_.AddState((int)eState.Revive2, revive_state2_);
             state_machine_.AddState((int)eState.Stretch, stretch_state_);
-            state_machine_.AddState((int)eState.Throw, throw_state_);
+            state_machine_.AddState((int)eState.Throw1, throw_state1_);
+            state_machine_.AddState((int)eState.Throw2, throw_state2_);
+            state_machine_.AddState((int)eState.Throw3, throw_state3_);
 
             state_machine_.SetInitialState((int)eState.Idle);
 
@@ -119,6 +129,7 @@ namespace Actor.Enemy.Thousand
         public void Stop(float stop_duration_from_order = 0.5f)
         {
             if (dead_) return;
+            if (action_) return;
             move_stop_ = true;
         }
 
@@ -141,15 +152,23 @@ namespace Actor.Enemy.Thousand
         public void Stretch()
         {
             if (dead_) return;
+            if (action_) return;
             state_machine_.ChangeState((int)eState.Stretch);
         }
 
         public void Move()
         {
             if (dead_) return;
+            if (action_) return;
             state_machine_.ChangeState((int)eState.Idle);
         }
 
+        public void Throw()
+        {
+            if (dead_) return;
+            if (action_) return;
+            state_machine_.ChangeState((int)eState.Throw1);
+        }
 
         public override string ToString()
         {
@@ -177,6 +196,7 @@ namespace Actor.Enemy.Thousand
             {
                 arm_interval_ = 360f / Parent.arm_sum_;
                 Parent.move_stop_ = false;
+                Parent.action_ = false;
             }
 
             public override void Proc()
@@ -191,7 +211,7 @@ namespace Actor.Enemy.Thousand
 
             public override void OnEnd()
             {
-
+                Parent.action_ = true;
             }
         }
 
@@ -404,12 +424,124 @@ namespace Actor.Enemy.Thousand
             }
         }
 
+        // 敵の方向を向く
         [System.Serializable]
-        private class ThrowState : StateMachine<ArmController>.StateBase
+        private class ThrowState1 : StateMachine<ArmController>.StateBase
         {
+            private float face_target_degree_per_s_;
 
+            [SerializeField]
+            private float face_time_ = 0.5f;
+
+            public override void OnStart()
+            {
+                Vector2 dir = Parent.player_.position - Parent.transform.position;
+                float target_degree = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+                face_target_degree_per_s_ = (target_degree - Parent.degree_) / face_time_;
+            }
+
+            public override void Proc()
+            {
+                if(Timer > face_time_)
+                {
+                    ChangeState((int)eState.Throw2);
+                    return;
+                }
+
+                Parent.degree_ += face_target_degree_per_s_ * Time.deltaTime;
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+            }
         }
 
+        [System.Serializable]
+        private class ThrowState2 : StateMachine<ArmController>.StateBase
+        {
+            [SerializeField]
+            private float speed_ = 1.0f;
+            [SerializeField]
+            private float accel_ = 0.1f;
+
+            private Vector2 velocity_;
+
+            [SerializeField]
+            private Vector2 stage_boader_x = new Vector2(-5.0f, 15.0f);
+           
+            [SerializeField]
+            private Vector2 stage_boader_y = new Vector2(-5.0f, 5.0f);
+
+            public override void OnStart()
+            {
+                velocity_ = Vector2.zero;
+            }
+
+            public override void Proc()
+            {
+                Vector2 dir = Parent.player_.position - Parent.transform.position;
+                float target_degree = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                velocity_ += accel_ * Time.deltaTime * new Vector2(Mathf.Cos(target_degree * Mathf.Deg2Rad), Mathf.Sin(target_degree * Mathf.Deg2Rad));
+
+                Parent.transform.position += (Vector3)velocity_;
+                target_degree = Mathf.Atan2(velocity_.y, velocity_.x) * Mathf.Rad2Deg;
+                Parent.degree_ = target_degree;
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+
+                if (Parent.transform.position.y < stage_boader_y.x || Parent.transform.position.y > stage_boader_y.y || 
+                    Parent.transform.position.x < stage_boader_x.x || Parent.transform.position.x > stage_boader_x.y)
+                {
+                    ChangeState((int)eState.Throw3);
+                    return;
+                }
+            }
+        }
+        // めちゃくちゃ回転しながら戻る
+        [System.Serializable]
+        private class ThrowState3 : StateMachine<ArmController>.StateBase
+        {
+            [SerializeField]
+            private float back_duration_ = 1.0f;
+            [SerializeField]
+            private float speed_ = 360.0f;
+
+            private float target_degree_;
+
+            private Vector3 from_;
+
+            [SerializeField]
+            private float rigidy_time_ = 2.0f;
+
+            public override void OnStart()
+            {
+                target_degree_ = (360f / Parent.arm_sum_) * Parent.index_;
+                from_ = Parent.transform.position;
+
+                //Parent.hit_box_.enabled = false;
+            }
+
+            public override void Proc()
+            {
+                if (Timer < rigidy_time_) return;
+                if (Timer >= back_duration_ + rigidy_time_)
+                {
+                    ChangeState((int)eState.Idle);
+                    return;
+                }
+                Parent.degree_ += speed_ * Time.deltaTime;
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+
+                Vector3 to = Parent.boss_.position + 3.0f * new Vector3(Mathf.Cos(target_degree_ * Mathf.Deg2Rad), Mathf.Sin(target_degree_ * Mathf.Deg2Rad), 0f);
+                float time = Timer - rigidy_time_;
+                Parent.transform.position = to * (time / back_duration_) + from_ * (1f - time / back_duration_);
+            }
+
+            public override void OnEnd()
+            {
+                Parent.degree_ = target_degree_;
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+
+                //Parent.hit_box_.enabled = true;
+            }
+        }
 
         // ===================================================================
     }

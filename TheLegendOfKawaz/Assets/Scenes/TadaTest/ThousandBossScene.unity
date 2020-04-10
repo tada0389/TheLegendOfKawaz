@@ -852,9 +852,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &184074461
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1316,9 +1330,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &258258118
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1436,9 +1464,9 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     think_time_: 0.2
   walk_state_:
-    MaxAbsSpeed: {x: 0.3, y: 0}
-    Accel: {x: 0.03, y: 0}
-    move_duration_: 0.5
+    MaxAbsSpeed: {x: 0.2, y: 0}
+    Accel: {x: 0.02, y: 0}
+    move_duration_: 0.75
   dead_state_:
     MaxAbsSpeed: {x: 0, y: 0}
     Accel: {x: 0, y: 0}
@@ -1457,6 +1485,7 @@ MonoBehaviour:
   arm_throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    delay_: 5
   sutras_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -1694,9 +1723,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &285036238
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2494,9 +2537,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &372998772
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3443,9 +3500,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &487818805
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12663,9 +12734,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &731517138
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12804,9 +12889,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &732659765
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13007,9 +13106,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &755804394
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14106,9 +14219,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &859167310
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14268,9 +14395,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &882431809
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14674,9 +14815,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &949576962
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -25872,9 +26027,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1244878913
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26034,9 +26203,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1296068165
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26175,9 +26358,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1299038946
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26488,9 +26685,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1331837760
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26629,9 +26840,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1334651092
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32302,9 +32527,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1465678586
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -32672,9 +32911,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1546211280
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -33190,9 +33443,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1637006134
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -33411,9 +33678,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1660906774
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -34043,9 +34324,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1691492722
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -34514,9 +34809,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1730297575
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39884,9 +40193,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1813906242
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45274,6 +45597,41 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[0].type_
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[0].level_
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[1].type_
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[1].level_
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[2].type_
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[2].level_
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
 --- !u!4 &1924393036 stripped
@@ -45480,9 +45838,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &1953455381
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -46183,9 +46555,23 @@ MonoBehaviour:
     stretch_duration_: 0.5
     ease_: 12
     distance_: 6.5
-  throw_state_:
+  throw_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+    face_time_: 0.5
+  throw_state2_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed_: 1
+    accel_: 0.5
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  throw_state3_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    back_duration_: 1
+    speed_: 360
+    rigidy_time_: 1
 --- !u!61 &2046756573
 BoxCollider2D:
   m_ObjectHideFlags: 0
