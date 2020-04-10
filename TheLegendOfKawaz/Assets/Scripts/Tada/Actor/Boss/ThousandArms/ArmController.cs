@@ -186,7 +186,7 @@ namespace Actor.Enemy.Thousand
                 Parent.degree_ += Time.deltaTime * speed_;
                 float degree = Parent.degree_;
                 Parent.transform.position = Parent.boss_.position + radius_ * new Vector3(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad), 0f);
-                Parent.transform.localEulerAngles = new Vector3(0f, 0f, degree - 90f);
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, degree);
             }
 
             public override void OnEnd()
@@ -338,7 +338,7 @@ namespace Actor.Enemy.Thousand
                 Parent.degree_ += speed_ * Time.deltaTime;
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
 
-                Vector3 to = Parent.boss_.position + 2.0f * new Vector3(Mathf.Cos(target_degree_ * Mathf.Deg2Rad), Mathf.Sin(target_degree_ * Mathf.Deg2Rad), 0f);
+                Vector3 to = Parent.boss_.position + 3.0f * new Vector3(Mathf.Cos(target_degree_ * Mathf.Deg2Rad), Mathf.Sin(target_degree_ * Mathf.Deg2Rad), 0f);
                 Parent.transform.position = to * (Timer / back_duration_) + from_ * (1f - Timer / back_duration_);
             }
 
@@ -382,7 +382,9 @@ namespace Actor.Enemy.Thousand
 
             private IEnumerator Flow()
             {
-                yield return new WaitForSeconds(0.3f);
+                Parent.ChargeStart();
+
+                yield return new WaitForSeconds(1.0f);
 
                 Vector3 to = Parent.transform.position + new Vector3(Mathf.Cos(Parent.degree_ * Mathf.Deg2Rad), Mathf.Sin(Parent.degree_ * Mathf.Deg2Rad), 0f) * distance_;
                 Vector3 from = Parent.transform.position;

@@ -66,7 +66,13 @@ namespace Bullet
         {
             if (collider.tag == "Stage" || collider.tag == opponent_tag_)
             {
-                if (collider.tag == opponent_tag_) collider.GetComponent<Actor.BaseActorController>().Damage(damage_);
+                if (collider.tag == opponent_tag_)
+                {
+                    collider.GetComponent<Actor.BaseActorController>().Damage(damage_);
+                    //DamageDisplayer.eDamageType type = DamageDisplayer.eDamageType.Mini;
+                    //if (damage_ >= 2) type = DamageDisplayer.eDamageType.Normal;
+                    //DamageDisplayer.Instance.ShowDamage(damage_ * 100, move_body_.transform.position, type);
+                }
                 Dead();
             }
         }

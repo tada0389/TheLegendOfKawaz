@@ -55,13 +55,11 @@ namespace Actor.Enemy.Thousand
 
                 yield return new WaitForSeconds(arm_stop_duration_);
 
-                // 腕を赤くする 半分の腕だけ
-                for (int i = cnt; i < Parent.arms_.Count; i += 2)
-                {
-                    Parent.arms_[i].ChargeStart();
-                }
-
-                yield return new WaitForSeconds(warning_duration_);
+                //// 腕を赤くする 半分の腕だけ
+                //for (int i = cnt; i < Parent.arms_.Count; i += 2)
+                //{
+                //    Parent.arms_[i].ChargeStart();
+                //}
 
                 // 腕を伸ばす
                 for(int i = cnt; i < Parent.arms_.Count; i += 2)
@@ -69,6 +67,7 @@ namespace Actor.Enemy.Thousand
                     Parent.arms_[i].Stretch();
                 }
 
+                yield return new WaitForSeconds(warning_duration_);
                 yield return new WaitForSeconds(2.0f);
 
                 for(int i = 0; i < Parent.arms_.Count; ++i)

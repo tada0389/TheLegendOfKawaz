@@ -820,7 +820,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -851,7 +851,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -1284,7 +1284,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -1315,7 +1315,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -1662,7 +1662,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -1693,7 +1693,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -2462,7 +2462,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -2493,7 +2493,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -3411,7 +3411,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -3442,7 +3442,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -12631,7 +12631,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -12662,7 +12662,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -12772,7 +12772,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -12803,7 +12803,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -12975,7 +12975,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -13006,7 +13006,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -14074,7 +14074,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -14105,7 +14105,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -14236,7 +14236,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -14267,7 +14267,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -14642,7 +14642,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -14673,7 +14673,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -25840,7 +25840,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -25871,7 +25871,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -26002,7 +26002,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -26033,7 +26033,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -26143,7 +26143,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -26174,7 +26174,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -26456,7 +26456,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -26487,7 +26487,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -26597,7 +26597,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -26628,7 +26628,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -32270,7 +32270,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -32301,7 +32301,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -32640,7 +32640,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -32671,7 +32671,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -33158,7 +33158,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -33189,7 +33189,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -33379,7 +33379,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -33410,7 +33410,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -34011,7 +34011,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -34042,7 +34042,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -34482,7 +34482,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -34513,7 +34513,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -39852,7 +39852,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -39883,7 +39883,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -45448,7 +45448,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -45479,7 +45479,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -46151,7 +46151,7 @@ MonoBehaviour:
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    radius_: 2
+    radius_: 3
     speed_: 180
   dead_state1_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -46182,7 +46182,7 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     stretch_duration_: 0.5
     ease_: 12
-    distance_: 5
+    distance_: 6.5
   throw_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
