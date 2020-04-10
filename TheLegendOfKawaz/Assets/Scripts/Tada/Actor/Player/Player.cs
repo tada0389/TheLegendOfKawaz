@@ -420,6 +420,10 @@ namespace Actor.Player
         {
             if (!muteki_timer_.IsTimeout()) return;
             if (state_machine_.CurrentStateId == (int)eState.Damage) return;
+            DamageDisplayer.eDamageType type = DamageDisplayer.eDamageType.Mini;
+            if (damage >= 3) type = DamageDisplayer.eDamageType.Big;
+            else if (damage >= 2) type = DamageDisplayer.eDamageType.Normal;
+            DamageDisplayer.Instance.ShowDamage(damage * 100, transform.position, type);
             state_machine_.ChangeState((int)eState.Damage);
             data_.SetHP(HP - damage);
             HP = data_.HP;

@@ -65,6 +65,12 @@ namespace Actor.Enemy
                 timer_inited_ = true;
             }
             else if (!muteki_timer_.IsTimeout()) return;
+
+            DamageDisplayer.eDamageType type = DamageDisplayer.eDamageType.Mini;
+            if (damage >= 3) type = DamageDisplayer.eDamageType.Big;
+            else if (damage >= 2) type = DamageDisplayer.eDamageType.Normal;
+            DamageDisplayer.Instance.ShowDamage(damage * 100, transform.position, type);
+
             HP = Mathf.Max(0, HP - damage);
             muteki_timer_.TimeReset();
             StartCoroutine(Tenmetu());
