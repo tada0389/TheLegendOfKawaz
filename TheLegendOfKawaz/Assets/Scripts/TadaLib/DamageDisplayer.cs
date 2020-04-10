@@ -28,17 +28,32 @@ namespace TadaLib
         {
             base.Awake();
 
-            texts_ = new List<DamageText>();
-
-            KoitanLib.ObjectPoolManager.Init(text_prefab_, this,  10);
+            texts_ = new List<DamageText>(10);
+            //KoitanLib.ObjectPoolManager.Init(text_prefab_, this,  10);
+            for (int i = 0; i < 10; ++i)
+            {
+                texts_.Add(Instantiate(text_prefab_));
+                DontDestroyOnLoad(texts_[i]);
+                texts_[i].gameObject.SetActive(false);
+            }
         }
 
         public void ShowDamage(int damage, Vector3 pos, eDamageType type)
         {
-            DamageText text = KoitanLib.ObjectPoolManager.GetInstance<DamageText>(text_prefab_);
+            //DamageText text = KoitanLib.ObjectPoolManager.GetInstance<DamageText>(text_prefab_);
+            DamageText text = null;
+            for(int i = 0; i < 10; ++i)
+            {
+                if (!texts_[i].gameObject.activeSelf)
+                {
+                    text = texts_[i];
+                    break;
+                }
+            }
 
             if (text == null) return;
 
+            text.gameObject.SetActive(true);
             switch (type)
             {
                 case eDamageType.Mini:
