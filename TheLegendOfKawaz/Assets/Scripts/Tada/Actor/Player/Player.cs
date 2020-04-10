@@ -423,7 +423,7 @@ namespace Actor.Player
             DamageDisplayer.eDamageType type = DamageDisplayer.eDamageType.Mini;
             if (damage >= 3) type = DamageDisplayer.eDamageType.Big;
             else if (damage >= 2) type = DamageDisplayer.eDamageType.Normal;
-            DamageDisplayer.Instance.ShowDamage(damage * 100, transform.position, type);
+            DamageDisplayer.Instance.ShowDamage(damage, transform.position, type);
             state_machine_.ChangeState((int)eState.Damage);
             data_.SetHP(HP - damage);
             HP = data_.HP;

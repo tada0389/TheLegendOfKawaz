@@ -1436,8 +1436,8 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     think_time_: 0.2
   walk_state_:
-    MaxAbsSpeed: {x: 0.25, y: 0}
-    Accel: {x: 0.025, y: 0}
+    MaxAbsSpeed: {x: 0.3, y: 0}
+    Accel: {x: 0.03, y: 0}
     move_duration_: 0.5
   dead_state_:
     MaxAbsSpeed: {x: 0, y: 0}
