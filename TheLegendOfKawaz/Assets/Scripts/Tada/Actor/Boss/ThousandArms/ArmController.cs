@@ -356,7 +356,7 @@ namespace Actor.Enemy.Thousand
                     return;
                 }
                 Parent.degree_ += speed_ * Time.deltaTime;
-                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
 
                 Vector3 to = Parent.boss_.position + 3.0f * new Vector3(Mathf.Cos(target_degree_ * Mathf.Deg2Rad), Mathf.Sin(target_degree_ * Mathf.Deg2Rad), 0f);
                 Parent.transform.position = to * (Timer / back_duration_) + from_ * (1f - Timer / back_duration_);
@@ -365,7 +365,7 @@ namespace Actor.Enemy.Thousand
             public override void OnEnd()
             {
                 Parent.degree_ = target_degree_;
-                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
 
                 Parent.dead_ = false;
 
@@ -527,7 +527,7 @@ namespace Actor.Enemy.Thousand
                     return;
                 }
                 Parent.degree_ += speed_ * Time.deltaTime;
-                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
 
                 Vector3 to = Parent.boss_.position + 3.0f * new Vector3(Mathf.Cos(target_degree_ * Mathf.Deg2Rad), Mathf.Sin(target_degree_ * Mathf.Deg2Rad), 0f);
                 float time = Timer - rigidy_time_;
@@ -537,7 +537,7 @@ namespace Actor.Enemy.Thousand
             public override void OnEnd()
             {
                 Parent.degree_ = target_degree_;
-                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
 
                 //Parent.hit_box_.enabled = true;
             }

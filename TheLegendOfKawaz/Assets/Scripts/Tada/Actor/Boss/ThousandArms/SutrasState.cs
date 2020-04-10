@@ -17,21 +17,70 @@ namespace Actor.Enemy.Thousand
         [System.Serializable]
         private class SutrasState : StateMachine<ThousandBossController>.StateBase
         {
+            [SerializeField]
+            private int knock_down_damage_ = 1;
+
+            [SerializeField]
+            private float charge_duration_ = 5f;
+
+            private int prev_hp_;
+
+            [SerializeField]
+            private ParticleSystem kekkai_eff_;
+
+            [SerializeField]
+            private ParticleSystem charge_eff_;
+
+            [SerializeField]
+            private SpriteRenderer background_;
+
+            [SerializeField]
+            private BaseParticle burst_eff_;
+
+            [SerializeField]
+            private BaseParticle knock_down_eff_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
+                prev_hp_ = Parent.HP;
+
+                kekkai_eff_.gameObject.SetActive(true);
+                kekkai_eff_.Play();
+
+                charge_eff_.gameObject.SetActive(true);
+                charge_eff_.Play();
+
+                background_.DOColor(Color.red, 1.0f);
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                if(Timer > charge_duration_)
+                {
+                    Parent.player_.GetComponent<BaseActorController>().Damage(5);
+                    burst_eff_.gameObject.SetActive(true);
+                    ChangeState((int)eState.Think);
+                    return;
+                }
 
+                if(prev_hp_ - Parent.HP >= knock_down_damage_)
+                {
+                    knock_down_eff_.gameObject.SetActive(true);
+                    ChangeState((int)eState.Think);
+                    return;
+                }
             }
 
             // 終了時に呼ばれる
             public override void OnEnd()
             {
+                kekkai_eff_.gameObject.SetActive(false);
+                charge_eff_.gameObject.SetActive(false);
 
+                background_.DOKill();
+                background_.DOColor(Color.white, 1.0f);
             }
         }
     }

@@ -62,7 +62,7 @@ namespace Actor.Enemy.Thousand
                 //}
 
                 // 腕を伸ばす
-                for(int i = cnt; i < Parent.arms_.Count; i += 2)
+                for(int i = 0; i < Parent.arms_.Count; i += 1)
                 {
                     Parent.arms_[i].Stretch();
                 }
