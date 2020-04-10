@@ -32,7 +32,9 @@ namespace Actor.Enemy.Thousand
             private ParticleSystem charge_eff_;
 
             [SerializeField]
-            private SpriteRenderer background_;
+            private SpriteRenderer background_prev_;
+            [SerializeField]
+            private SpriteRenderer background_okyo_;
 
             [SerializeField]
             private BaseParticle burst_eff_;
@@ -51,7 +53,8 @@ namespace Actor.Enemy.Thousand
                 charge_eff_.gameObject.SetActive(true);
                 charge_eff_.Play();
 
-                background_.DOColor(Color.red, 1.0f);
+                background_prev_.DOFade(0.0f, 1.0f);
+                background_okyo_.DOFade(1.0f, 1.0f);
             }
 
             // 毎フレーム呼ばれる
@@ -79,8 +82,10 @@ namespace Actor.Enemy.Thousand
                 kekkai_eff_.gameObject.SetActive(false);
                 charge_eff_.gameObject.SetActive(false);
 
-                background_.DOKill();
-                background_.DOColor(Color.white, 1.0f);
+                background_prev_.DOKill();
+                background_okyo_.DOKill();
+                background_prev_.DOFade(1.0f, 1.0f);
+                background_okyo_.DOFade(0.0f, 1.0f);
             }
         }
     }
