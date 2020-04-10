@@ -42,9 +42,17 @@ namespace Actor.Enemy.Thousand
             [SerializeField]
             private BaseParticle knock_down_eff_;
 
+            [SerializeField]
+            private float knock_down_duration_ = 2.0f;
+
+            private bool is_knock_down_;
+            private float knock_timer_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
+                is_knock_down_ = false;
+
                 prev_hp_ = Parent.HP;
 
                 kekkai_eff_.gameObject.SetActive(true);
@@ -60,7 +68,7 @@ namespace Actor.Enemy.Thousand
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if(Timer > charge_duration_)
+                if(!is_knock_down_ && Timer > charge_duration_)
                 {
                     Parent.player_.GetComponent<BaseActorController>().Damage(5);
                     burst_eff_.gameObject.SetActive(true);
@@ -68,17 +76,38 @@ namespace Actor.Enemy.Thousand
                     return;
                 }
 
-                if(prev_hp_ - Parent.HP >= knock_down_damage_)
+                if(!is_knock_down_ && prev_hp_ - Parent.HP >= knock_down_damage_)
                 {
+                    is_knock_down_ = true;
+                    knock_timer_ = 0.0f;
                     knock_down_eff_.gameObject.SetActive(true);
-                    ChangeState((int)eState.Think);
-                    return;
+
+                    kekkai_eff_.gameObject.SetActive(false);
+                    charge_eff_.gameObject.SetActive(false);
+
+                    background_prev_.DOKill();
+                    background_okyo_.DOKill();
+                    background_prev_.DOFade(1.0f, 1.0f);
+                    background_okyo_.DOFade(0.0f, 1.0f);
+                }
+
+                if (is_knock_down_)
+                {
+                    knock_timer_ += Time.deltaTime;
+                    Parent.transform.localEulerAngles = new Vector3(0f, 0f, knock_timer_ * 360f);
+                    if (knock_timer_ > knock_down_duration_)
+                    {
+                        Parent.transform.localEulerAngles = new Vector3(0f, 0f, 0f);
+                        ChangeState((int)eState.Think);
+                        return;
+                    }
                 }
             }
 
             // 終了時に呼ばれる
             public override void OnEnd()
             {
+                if (is_knock_down_) return;
                 kekkai_eff_.gameObject.SetActive(false);
                 charge_eff_.gameObject.SetActive(false);
 

@@ -514,13 +514,12 @@ namespace Actor.Enemy.Thousand
             {
                 target_degree_ = (360f / Parent.arm_sum_) * Parent.index_;
                 from_ = Parent.transform.position;
-
-                //Parent.hit_box_.enabled = false;
             }
 
             public override void Proc()
             {
                 if (Timer < rigidy_time_) return;
+                //Parent.hit_box_.enabled = false;
                 if (Timer >= back_duration_ + rigidy_time_)
                 {
                     ChangeState((int)eState.Idle);
