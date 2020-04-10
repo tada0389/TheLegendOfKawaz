@@ -27,7 +27,8 @@ namespace Actor.Enemy.Thousand
 
         [SerializeField]
         private int index_ = 0;
-        private int arm_sum_ = 6;
+        [SerializeField]
+        private int arm_sum_ = 16;
 
         [SerializeField]
         private float radius_ = 2f;
@@ -58,11 +59,19 @@ namespace Actor.Enemy.Thousand
 
         private bool move_stop_ = false;
 
+        private BoxCollider2D hit_box_;
+
+        private Vector3 default_scale_;
+
         private void Start()
         {
+            default_scale_ = transform.localScale;
+
             degree_ = (360f / arm_sum_) * index_;
             transform.position = boss_.position + radius_ * new Vector3(Mathf.Cos(degree_ * Mathf.Deg2Rad), Mathf.Sin(degree_ * Mathf.Deg2Rad), 0f);
             transform.localEulerAngles = new Vector3(0f, 0f, degree_ - 90f);
+
+            hit_box_ = GetComponent<BoxCollider2D>();
 
             state_machine_ = new StateMachine<ArmController>(this);
 
@@ -94,6 +103,12 @@ namespace Actor.Enemy.Thousand
         // 死亡
         protected override void Dead()
         {
+            // ダメージを受けない
+            if(state_machine_.CurrentStateId == (int)eState.Stretch)
+            {
+                HP = 1;
+                return;
+            }
             if (dead_) return;
             state_machine_.ChangeState((int)eState.Dead1);
         }
@@ -112,14 +127,14 @@ namespace Actor.Enemy.Thousand
         {
             if (dead_) return;
             body_.DOColor(Color.red, 0.5f);
-            transform.DOScale(1.5f, 0.5f);
+            transform.DOScale(default_scale_.x * 2.0f, 0.5f);
         }
 
         // 腕を通常通りの色にする
         private void ChargeEnd()
         {
             body_.DOColor(Color.white, 0.5f);
-            transform.DOScale(1.0f, 0.5f);
+            transform.DOScale(default_scale_.x, 0.5f);
         }
 
         // 腕を伸ばす
@@ -218,6 +233,8 @@ namespace Actor.Enemy.Thousand
                 face_down_degree_per_s_ = (180f + 90f - Parent.degree_) / flip_time_;
 
                 EffectPlayer.Play(dead_eff_, Parent.transform.position, Vector3.zero, Parent.transform);
+
+                //Parent.body_.DOFade(0.25f, 1.5f);
             }
 
             public override void Proc()
@@ -283,6 +300,11 @@ namespace Actor.Enemy.Thousand
                     return;
                 }
             }
+
+            public override void OnEnd()
+            {
+                //Parent.body_.DOFade(1.0f, 0.5f);
+            }
         }
 
         // めちゃくちゃ回転しながら戻る
@@ -300,9 +322,10 @@ namespace Actor.Enemy.Thousand
 
             public override void OnStart()
             {
-                DumpStartMsg(this);
                 target_degree_ = (360f / Parent.arm_sum_) * Parent.index_;
                 from_ = Parent.transform.position;
+
+                Parent.hit_box_.enabled = false;
             }
 
             public override void Proc()
@@ -325,6 +348,8 @@ namespace Actor.Enemy.Thousand
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
 
                 Parent.dead_ = false;
+
+                Parent.hit_box_.enabled = true;
             }
         }
 
