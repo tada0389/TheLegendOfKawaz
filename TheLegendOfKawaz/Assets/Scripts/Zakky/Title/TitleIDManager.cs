@@ -21,7 +21,7 @@ public class TitleIDManager : MonoBehaviour
     void Update()
     {
         //ストーリーテキストから戻る
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) &&
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1) || ActionInput.GetButtonDown(ActionCode.Back)) &&
             TitleState.m_state == TitleState.State.Story)
         {
             TitleState.m_state = TitleState.State.Select;

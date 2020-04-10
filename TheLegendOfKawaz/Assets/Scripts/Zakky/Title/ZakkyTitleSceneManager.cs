@@ -20,7 +20,7 @@ public class ZakkyTitleSceneManager : MonoBehaviour
     void Update()
     {
         //ボタン押されてたらシーン遷移を確かめる
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || ActionInput.GetButtonDown(ActionCode.Jump))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || ActionInput.GetButtonDown(ActionCode.Decide))
         {
             iconID[titleIDManager.GetComponent<TitleIDManager>().ChoiceID].GetComponent<IconID>().StarEffect();
             IsLoadScene();
