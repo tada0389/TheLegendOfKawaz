@@ -50,9 +50,15 @@ namespace Actor.Enemy.Thousand
             {
 
                 float value = Random.value;
-                if (value < 0.33f) ChangeState((int)eState.Walk);
-                else if (value < 0.66f) ChangeState((int)eState.ArmStretch);
-                else ChangeState((int)eState.ArmThrow);
+                if (value < 0.28f) ChangeState((int)eState.Walk);
+                else if (value < 0.56f) ChangeState((int)eState.ArmStretch);
+                else if (value < 0.84f) ChangeState((int)eState.ArmThrow);
+                else
+                {
+                    // お経を唱えた後はすぐにお経を唱えない
+                    if (PrevStateId == (int)eState.Sutras) Decide();
+                    else ChangeState((int)eState.Sutras);
+                }
             }
         }
     }

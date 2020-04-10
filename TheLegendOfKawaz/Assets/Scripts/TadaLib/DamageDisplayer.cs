@@ -30,7 +30,7 @@ namespace TadaLib
 
             texts_ = new List<DamageText>();
 
-            KoitanLib.ObjectPoolManager.Init(text_prefab_, this,  50);
+            KoitanLib.ObjectPoolManager.Init(text_prefab_, this,  10);
         }
 
         public void ShowDamage(int damage, Vector3 pos, eDamageType type)
