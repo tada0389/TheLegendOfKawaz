@@ -52,12 +52,15 @@ namespace KoitanLib
         }
 
         public static void FadeIn(float duration, string next_scene_name, int maskNum = 0)
-        {
-            is_fading = true;
-            Instance.fadeImage.UpdateMaskTexture(Instance.masks[maskNum]);
+        {            
             var async = SceneManager.LoadSceneAsync(next_scene_name);
             Sequence seq = DOTween.Sequence();
-            seq.AppendCallback(() =>
+            seq.OnStart(()=>
+            {
+                is_fading = true;
+                Instance.fadeImage.UpdateMaskTexture(Instance.masks[maskNum]);
+            })
+            .AppendCallback(() =>
             {
                 async.allowSceneActivation = false;
                 DOTween.To(
