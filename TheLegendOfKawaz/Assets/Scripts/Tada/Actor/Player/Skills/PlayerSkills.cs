@@ -27,6 +27,8 @@ namespace Actor.Player
         public int LevelLimit => Sheet.Count - 1;
         // スキルレベルが最大化
         public bool ReachLevelLimit => Level == LevelLimit;
+        // 次のスキルの値
+        public int NextValue { private set; get; }
 
         // レベルごとの能力値と必要なポイント Item1に能力値，Item2に必要なポイント
         public IReadOnlyList<System.Tuple<int, int>> Sheet { private set; get; }
@@ -37,6 +39,7 @@ namespace Actor.Player
             Explonation = explonation;
             Sheet = list.AsReadOnly();
             Value = Sheet[0].Item1;
+            NextValue = (Sheet.Count <= 1) ? -1 : Sheet[1].Item1;
             Level = 0;
         }
 

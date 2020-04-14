@@ -42,11 +42,14 @@ namespace Actor.Player
 
         public Transform transform;
 
+        // 一時的に取得しているスキルたち
+        private List<bool> temporary_skills_;
+
         // 体力
         public int HP { private set; get; }
         public int MaxHP { private set; get; }
         // 攻撃力
-        public int Power { private set; get; }
+        public float Power { private set; get; }
         // 基礎移動速度
         public float InitSpeed { set { trb.InitSpeed = value; } get { return trb.InitSpeed; } }
         // 壁蹴りできるか
@@ -107,11 +110,14 @@ namespace Actor.Player
             trb = body.GetComponent<TadaRigidbody>();
             bullet_spawner_ = body.GetComponent<BulletSpawner>();
 
+            temporary_skills_ = new List<bool>(9);
+            for(int i = 0; i < 9; ++i)  temporary_skills_.Add(false);
+
             var Skills = SkillManager.Instance.Skills;
 
             MaxHP = Skills[(int)eSkill.HP].Value;
             HP = MaxHP;
-            Power = Skills[(int)eSkill.Attack].Value;
+            Power = Skills[(int)eSkill.Attack].Value / (float)100f;
             InitSpeed = Skills[(int)eSkill.Speed].Value / (float)100f;
             CanWallKick = Skills[(int)eSkill.WallKick].Value != 0;
             AutoHealInterval = Skills[(int)eSkill.AutoHeal].Value;
@@ -168,6 +174,101 @@ namespace Actor.Player
         public void ChangeDirection(eDir dir) => Dir = dir;
 
         public void SetHP(int new_hp) => HP = Mathf.Clamp(new_hp, 0, MaxHP);
+
+        public bool AquireTmpSkill(eSkill skill)
+        {
+            if (temporary_skills_[(int)skill]) return false;
+            var Skills = SkillManager.Instance.Skills;
+            if (Skills[(int)skill].ReachLevelLimit) return false;
+
+            // くそこーど
+            switch (skill)
+            {
+                case eSkill.HP:
+                    MaxHP = Skills[(int)skill].NextValue;
+                    break;
+                case eSkill.Speed:
+                    InitSpeed = Skills[(int)eSkill.Speed].NextValue / (float)100f;
+                    break;
+                case eSkill.Attack:
+                    Power = Skills[(int)eSkill.Attack].NextValue / (float)100f;
+                    break;
+                case eSkill.AirJumpNum:
+                    AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].NextValue;
+                    air_jump_num_ = AirJumpNumMax;
+                    break;
+                case eSkill.AirDushNum:
+                    CanAirDashMove = Skills[(int)eSkill.AirDushNum].NextValue != 0;
+                    break;
+                case eSkill.AutoHeal:
+                    AutoHealInterval = Skills[(int)eSkill.AutoHeal].NextValue;
+                    break;
+                case eSkill.WallKick:
+                    CanWallKick = Skills[(int)eSkill.WallKick].NextValue != 0;
+                    break;
+                case eSkill.ChargeShot:
+                    ChargeEndTime = Skills[(int)eSkill.ChargeShot].NextValue / 10f;
+                    break;
+                case eSkill.ShotNum:
+                    MaxShotNum = Skills[(int)eSkill.ShotNum].NextValue;
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+
+            temporary_skills_[(int)skill] = true;
+
+            return true;
+        }
+
+        public bool ReleaseTmpSkill(eSkill skill)
+        {
+            if (!temporary_skills_[(int)skill]) return false;
+
+            var Skills = SkillManager.Instance.Skills;
+
+            // くそこーど
+            switch (skill)
+            {
+                case eSkill.HP:
+                    MaxHP = Skills[(int)skill].Value;
+                    HP = Mathf.Min(HP, MaxHP);
+                    break;
+                case eSkill.Speed:
+                    InitSpeed = Skills[(int)eSkill.Speed].Value / (float)100f;
+                    break;
+                case eSkill.Attack:
+                    Power = Skills[(int)eSkill.Attack].Value / (float)100f;
+                    break;
+                case eSkill.AirJumpNum:
+                    AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].Value;
+                    air_jump_num_ = Mathf.Min(air_jump_num_, AirJumpNumMax);
+                    break;
+                case eSkill.AirDushNum:
+                    CanAirDashMove = Skills[(int)eSkill.AirDushNum].Value != 0;
+                    break;
+                case eSkill.AutoHeal:
+                    AutoHealInterval = Skills[(int)eSkill.AutoHeal].Value;
+                    break;
+                case eSkill.WallKick:
+                    CanWallKick = Skills[(int)eSkill.WallKick].Value != 0;
+                    break;
+                case eSkill.ChargeShot:
+                    ChargeEndTime = Skills[(int)eSkill.ChargeShot].Value / 10f;
+                    break;
+                case eSkill.ShotNum:
+                    MaxShotNum = Skills[(int)eSkill.ShotNum].Value;
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+
+            temporary_skills_[(int)skill] = false;
+
+            return true;
+        }
     }
 
     // プレイヤークラス partialによりファイル間で分割してクラスを実装
@@ -237,6 +338,7 @@ namespace Actor.Player
         // 自動回復のオブジェクト
         [SerializeField]
         private AutoHealController heal_ctrl_;
+        private bool heal_inited_ = false;
 
         // プレイヤーが反転しても右側を向き続けるオブジェクト
         [SerializeField]
@@ -271,7 +373,11 @@ namespace Actor.Player
 
             data_ = new Data(this);
             HP = data_.HP;
-            if(data_.AutoHealInterval > 0.01f) heal_ctrl_.Init(data_.AutoHealInterval);
+            if (data_.AutoHealInterval > 0.01f)
+            {
+                heal_ctrl_.Init(data_.AutoHealInterval);
+                heal_inited_ = true;
+            }
 
             // ステートマシンのメモリ確保 自分自身を渡す
             state_machine_ = new StateMachine<Player>(this);
@@ -316,7 +422,18 @@ namespace Actor.Player
             // 速度に応じて移動する
             data_.ReflectVelocity();
 
-            if (data_.AutoHealInterval > 0.01f && heal_ctrl_.CanHeal())
+            // ごみ
+            if(data_.AutoHealInterval > 0.01f && !heal_inited_)
+            {
+                heal_ctrl_.Init(data_.AutoHealInterval);
+                heal_inited_ = true;
+            }
+            else if(data_.AutoHealInterval < 0.01f && heal_inited_)
+            {
+                heal_ctrl_.Finish();
+                heal_inited_ = false;
+            }
+            else if (data_.AutoHealInterval > 0.01f && heal_inited_ && heal_ctrl_.CanHeal())
             {
                 data_.SetHP(data_.HP + 1);
                 HP = data_.HP;
@@ -369,7 +486,7 @@ namespace Actor.Player
             float speed = (dashed) ? 1.5f : 1.0f;
             NormalBullet bullet = (is_charged) ? charge_bullet_ : normal_bullet_;
             bool can_shot = data_.bullet_spawner_.Shot(bullet, transform.position + new Vector3(dir * 1.5f, 0f, 0f),
-                new Vector2(dir, 0f), "Enemy", not_reverse_, speed, -1, speed);
+                new Vector2(dir, 0f), "Enemy", not_reverse_, speed, -1, speed * data_.Power);
             if (!can_shot) return;
             if (data_.animator.GetLayerWeight(1) == 0)
             {
@@ -461,6 +578,18 @@ namespace Actor.Player
                         instance.LevelUp((int)skill.type_);
                 }
             }
+        }
+
+        // スキルを一時的に取得する
+        public bool AquireTemporarySkill(eSkill skill)
+        {
+            return data_.AquireTmpSkill(skill);
+        }
+
+        // 一時的に取得したスキルを開放する
+        public bool ReleaseTemporarySkill(eSkill skill)
+        {
+            return data_.ReleaseTmpSkill(skill);
         }
 
         public override string ToString()

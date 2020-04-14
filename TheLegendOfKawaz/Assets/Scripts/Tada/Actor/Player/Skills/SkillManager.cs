@@ -12,15 +12,15 @@ namespace Actor.Player
 {
     public enum eSkill
     {
-        HP, // 体力
-        Speed, // 基礎スピード
-        Attack, // 攻撃力
-        AirJumpNum, // 空中ジャンプ回数 
-        AirDushNum, // 空中ダッシュ回数
-        AutoHeal, // 自動回復
-        WallKick, // 壁キック
-        ChargeShot, // チャージショット
-        ShotNum, // ショット数
+        HP = 0, // 体力
+        Speed = 1, // 基礎スピード
+        Attack = 2, // 攻撃力
+        AirJumpNum = 3, // 空中ジャンプ回数 
+        AirDushNum = 4, // 空中ダッシュ回数
+        AutoHeal = 5, // 自動回復
+        WallKick = 6, // 壁キック
+        ChargeShot = 7, // チャージショット
+        ShotNum = 8, // ショット数
     }
 
     public class SkillManager : SingletonMonoBehaviour<SkillManager>

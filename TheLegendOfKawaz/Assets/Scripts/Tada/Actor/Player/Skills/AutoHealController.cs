@@ -27,6 +27,12 @@ namespace Actor.Player
             timer_ = new Timer(heal_interval);
         }
 
+        public void Finish()
+        {
+            always_eff_.gameObject.SetActive(false);
+            once_eff_.gameObject.SetActive(false);
+        }
+
         // 回復の一時的なエフェクトを出す
         public void PlayHealEffect()
         {
