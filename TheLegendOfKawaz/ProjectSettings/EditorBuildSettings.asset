@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/ZakkyTest/Scene/ZakkyTitle.unity
+    guid: 5d22aba45f5072d4dba199222f7ca649
+  - enabled: 1
     path: Assets/Scenes/TadaTest/StageSelect.unity
     guid: d1b280e2e33ea0749b543958428353a9
   - enabled: 1

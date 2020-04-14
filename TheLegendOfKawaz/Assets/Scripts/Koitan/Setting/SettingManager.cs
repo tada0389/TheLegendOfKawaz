@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using System;
 using DG.Tweening;
+using KoitanLib;
 
 public class SettingManager : MonoBehaviour
 {
@@ -199,7 +200,7 @@ public class SettingManager : MonoBehaviour
         addIndex = 0;
         onSelecteds[0] = SetButtonPush(VideoOption);
         onSelecteds[1] = SetButtonPush(BgmOption);
-        onSelecteds[2] = SetButtonPush(Quit);
+        onSelecteds[2] = SetButtonPush(ReturnTitle);
         onCancel = StartPlacement;
         onCancel += () => nowIndex = 1;
     }
@@ -430,6 +431,11 @@ public class SettingManager : MonoBehaviour
 #elif UNITY_STANDALONE
     UnityEngine.Application.Quit();
 #endif
+    }
+
+    void ReturnTitle()
+    {
+        FadeManager.FadeIn(0.5f, "ZakkyTitle", 1);
     }
 
     enum OpenState
