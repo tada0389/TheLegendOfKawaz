@@ -403,6 +403,7 @@ namespace Actor.Player
         // Update is called once per frame
         private void Update()
         {
+            if (Time.timeScale < 1e-6) return;
             if (state_machine_.CurrentStateId == (int)eState.Dead) return; // 本当はダメなので変える
 
             // 接地しているかどうかなどで，状態を変更する
