@@ -340,6 +340,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MessageWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 1699007339123358846, guid: 4587c7a8837a6e74b896b2d402fce562,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1699007339123358847, guid: 4587c7a8837a6e74b896b2d402fce562,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -473,6 +478,11 @@ PrefabInstance:
     - target: {fileID: 5427126900437563895, guid: 4587c7a8837a6e74b896b2d402fce562,
         type: 3}
       propertyPath: m_textInfo.materialCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699007338347823026, guid: 4587c7a8837a6e74b896b2d402fce562,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1145,12 +1155,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88d804592b939437589c107f8066885b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 02d8ad62809014ddbb1786c33ed6d185, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1854,6 +1864,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: KanbanWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 7743353183237575632, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7743353183237575633, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1987,6 +2002,11 @@ PrefabInstance:
     - target: {fileID: 7743353183302084531, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
         type: 3}
       propertyPath: m_textInfo.materialCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743353183367037271, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
+        type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

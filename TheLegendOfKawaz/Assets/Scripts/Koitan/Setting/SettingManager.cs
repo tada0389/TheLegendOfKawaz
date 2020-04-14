@@ -52,6 +52,8 @@ public class SettingManager : MonoBehaviour
         cursorDefaultPos = cursor.transform.localPosition;
         StartPlacement();
         nowIndex = 0;
+        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(window);
         //MusicManager.Play(MusicManager.Instance.bgm4);
     }
 
