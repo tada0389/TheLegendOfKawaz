@@ -113,15 +113,16 @@ public class SettingManager : MonoBehaviour
             .OnStart(() =>
             {
                 eState = OpenState.Opening;
+                Time.timeScale = 0.0f;
             })
-            .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.5f)).SetEase(Ease.OutBounce)
+            .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.5f)).SetEase(Ease.OutBounce).SetUpdate(true)
             .AppendCallback(() =>
             {
                 StartPlacement();
                 nowIndex = 0;
                 item.SetActive(true);
                 eState = OpenState.Opened;
-            });
+            });        
     }
 
     void CloseWindow()
@@ -132,10 +133,11 @@ public class SettingManager : MonoBehaviour
                 item.SetActive(false);
                 eState = OpenState.Closing;
             })
-            .Append(window.rectTransform.DOSizeDelta(Vector2.zero, 0.25f)).SetEase(Ease.InOutSine)
+            .Append(window.rectTransform.DOSizeDelta(Vector2.zero, 0.25f)).SetEase(Ease.InOutSine).SetUpdate(true)
             .AppendCallback(() =>
             {
                 eState = OpenState.Closed;
+                Time.timeScale = 1.0f;
             });
     }
 
@@ -436,6 +438,7 @@ public class SettingManager : MonoBehaviour
     void ReturnTitle()
     {
         FadeManager.FadeIn(0.5f, "ZakkyTitle", 1);
+        CloseWindow();
     }
 
     enum OpenState

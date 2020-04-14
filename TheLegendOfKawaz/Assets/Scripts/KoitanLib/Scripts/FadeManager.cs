@@ -55,6 +55,7 @@ namespace KoitanLib
         {            
             var async = SceneManager.LoadSceneAsync(next_scene_name);
             Sequence seq = DOTween.Sequence();
+            seq.SetUpdate(true);
             seq.OnStart(()=>
             {
                 is_fading = true;
