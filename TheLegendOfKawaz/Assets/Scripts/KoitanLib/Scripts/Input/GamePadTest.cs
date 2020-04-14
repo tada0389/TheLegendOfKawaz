@@ -28,7 +28,7 @@ public class GamePadTest : MonoBehaviour
 #if UNITY_EDITOR
         if (ActionInput.GetButtonDown(ActionCode.Pause))
         {
-            UnityEditor.EditorApplication.isPaused = true;
+            //UnityEditor.EditorApplication.isPaused = true;
         }
 #endif
         var gamepad = Gamepad.current;
