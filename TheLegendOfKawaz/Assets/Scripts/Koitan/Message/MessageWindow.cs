@@ -29,6 +29,7 @@ public class MessageWindow : MonoBehaviour
     void Awake()
     {
         seq = DOTween.Sequence();
+        seq.SetUpdate(true);
         targetDeltaSize = windowImage.rectTransform.sizeDelta;
         audioSource = GetComponent<AudioSource>();
         WindowInit();
@@ -78,7 +79,7 @@ public class MessageWindow : MonoBehaviour
         seq = DOTween.Sequence()
             //.Append(windowImage.DOFade(1,duration))
             //.Join(narratorImage.DOFade(1, duration))
-            .Append(windowImage.rectTransform.DOSizeDelta(targetDeltaSize, duration)).SetEase(ease)
+            .Append(windowImage.rectTransform.DOSizeDelta(targetDeltaSize, duration)).SetEase(ease).SetUpdate(true)
             //.Join(windowImage.rectTransform.DORotate(new Vector3(0, 0, 360), duration).SetRelative())
             .AppendCallback(() =>
             {
@@ -100,7 +101,7 @@ public class MessageWindow : MonoBehaviour
         WindowOpen(textStr);
     }
 
-    public void WindowClose()
+    public void WindowClose(bool isTimeScale = false)
     {
         messageTextMesh.enabled = false;
         if (narratorImage != null) narratorImage.enabled = false;
@@ -108,12 +109,13 @@ public class MessageWindow : MonoBehaviour
         seq = DOTween.Sequence()
             //.Append(windowImage.DOFade(1,duration))
             //.Join(narratorImage.DOFade(1, duration))
-            .Append(windowImage.rectTransform.DOSizeDelta(initDeltaSize, duration)).SetEase(ease)
+            .Append(windowImage.rectTransform.DOSizeDelta(initDeltaSize, duration).SetUpdate(true)).SetEase(ease).SetUpdate(true)
             //.Join(windowImage.rectTransform.DORotate(new Vector3(0, 0, 360), duration).SetRelative())
             .AppendCallback(() =>
             {
                 windowImage.enabled = false;
                 isOpening = false;
+                if (isTimeScale) Time.timeScale = 1.0f;
             });
 
 

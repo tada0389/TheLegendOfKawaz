@@ -56,7 +56,7 @@ namespace KoitanLib
             var async = SceneManager.LoadSceneAsync(next_scene_name);
             Sequence seq = DOTween.Sequence();
             seq.SetUpdate(true);
-            seq.OnStart(()=>
+            seq.OnStart(() =>
             {
                 is_fading = true;
                 Instance.fadeImage.UpdateMaskTexture(Instance.masks[maskNum]);
@@ -69,8 +69,8 @@ namespace KoitanLib
                 num => Instance.fadeImage.Range = num,   // 値の更新
                 1,                  // 最終的な値
                 duration                  // アニメーション時間
-                );
-            }).AppendInterval(duration)
+                ).SetUpdate(true);
+            }).AppendInterval(duration).SetUpdate(true)
             .AppendCallback(() =>
             {
                 async.allowSceneActivation = true;
@@ -79,9 +79,9 @@ namespace KoitanLib
                 num => Instance.fadeImage.Range = num,   // 値の更新
                 0,                  // 最終的な値
                 duration                  // アニメーション時間
-                );
+                ).SetUpdate(true);
             }
-            ).AppendInterval(duration)
+            ).AppendInterval(duration).SetUpdate(true)
             .AppendCallback(() =>
             {
                 is_fading = false;
@@ -93,7 +93,7 @@ namespace KoitanLib
         {
             if (is_fading) return;
             is_fading = true;
-            image.DOFade(1, duration).OnComplete(() => SceneManager.LoadScene(next_scene_name));
+            image.DOFade(1, duration).OnComplete(() => SceneManager.LoadScene(next_scene_name)).SetUpdate(true);
         }
     }
 

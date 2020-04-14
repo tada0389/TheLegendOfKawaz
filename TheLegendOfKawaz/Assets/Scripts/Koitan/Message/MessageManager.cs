@@ -15,16 +15,18 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
     public static void OpenMessageWindow(string textStr)
     {
         Instance.messageWindow.WindowOpen(textStr);
+        Time.timeScale = 0.0f;
     }
 
     public static void OpenMessageWindow(string textStr, Sprite sprite)
     {
         Instance.messageWindow.WindowOpen(textStr, sprite);
+        Time.timeScale = 0.0f;
     }
 
     public static void CloseMessageWindow()
     {
-        Instance.messageWindow.WindowClose();
+        Instance.messageWindow.WindowClose(true);
     }
 
     public static void OpenKanbanWindow(string textStr)
