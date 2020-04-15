@@ -37,4 +37,13 @@ public class MySceneManager : MonoBehaviour
             SceneManager.LoadScene(nextScene);
         });
     }
+
+    public void Fadein()
+    {
+        fade.FadeIn(0.01f, () =>
+        {
+            fade.FadeOut(1);
+        });
+        
+    }
 }
