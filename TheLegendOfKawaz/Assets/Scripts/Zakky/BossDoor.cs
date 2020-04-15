@@ -16,11 +16,13 @@ public class BossDoor : MonoBehaviour
 
     [SerializeField,Multiline(5)]
     private string message;
+    private bool isOpend;
 
     // Start is called before the first frame update
     void Start()
     {
         bossFlag = BossFlagManager.Instance;
+        isOpend = false;
     }
 
     // Update is called once per frame
@@ -49,8 +51,9 @@ public class BossDoor : MonoBehaviour
             //DOTweenでちょっと大きくする
             transform.DOScale(new Vector2(1.5f, 1.5f), 0.3f);
             //決定ボタン押したらシーン遷移
-            if (ActionInput.GetButtonDown(ButtonCode.Up) && !FadeManager.is_fading)
+            if (ActionInput.GetButtonDown(ButtonCode.Up) && !isOpend)
             {
+                isOpend = true;
                 bossFlag.bossRoomNum = doorNum;
                 Debug.Log("tag:" + col.tag + "/nGetButtonDown(ActionCode.Shot):" + ActionInput.GetButtonDown(ActionCode.Shot));
                 Debug.Log(bossFlag.bossRoomNum);

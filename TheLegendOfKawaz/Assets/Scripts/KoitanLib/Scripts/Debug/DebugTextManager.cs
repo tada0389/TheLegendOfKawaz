@@ -16,6 +16,12 @@ public class DebugTextManager : MonoBehaviour
     {
         debugText.text = string.Empty;
         DontDestroyOnLoad(debugCanvas);
+
+#if UNITY_EDITOR
+        debugCanvas.SetActive(true);
+#else
+        debugCanvas.SetActive(false);
+#endif
     }
 
     // Update is called once per frame
