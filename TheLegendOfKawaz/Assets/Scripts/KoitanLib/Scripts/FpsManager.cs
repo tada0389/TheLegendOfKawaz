@@ -10,6 +10,7 @@ public class FpsManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
+        vSync = 1;
         DebugTextManager.Display(() => { return "Target FPS " + framerate.ToString() + "\n"; }, -2);
         DebugTextManager.Display(() => { return "vSyncCount " + vSync.ToString() + "\n"; }, -2);
     }

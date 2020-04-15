@@ -130,6 +130,7 @@ public class SettingManager : MonoBehaviour
         Sequence seq = DOTween.Sequence()
             .OnStart(()=>
             {
+                nowIndex = 0;
                 item.SetActive(false);
                 eState = OpenState.Closing;
             })
@@ -166,7 +167,7 @@ public class SettingManager : MonoBehaviour
         onSelecteds[0] = SetButtonPush(Manual);
         onSelecteds[1] = SetButtonPush(Option);
         onSelecteds[2] = SetButtonPush(CloseWindow);
-        onCancel = null;
+        onCancel = CloseWindow;        
     }
 
     void StartRocketScene()

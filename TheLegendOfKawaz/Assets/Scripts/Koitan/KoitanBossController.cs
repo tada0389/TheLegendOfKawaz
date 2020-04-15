@@ -691,11 +691,11 @@ namespace Actor.Enemy
 
             private void EndSeq()
             {
+                MessageManager.CloseMessageWindow();
                 Parent.seq = DOTween.Sequence()
                     .OnStart(() =>
                     {
-                        isEnd = true;
-                        MessageManager.CloseMessageWindow();
+                        isEnd = true;                        
                         Parent.animator.Play(hashStart);
                         EffectPlayer.Play(par, parPos.position, Vector3.zero, parPos);
                     })
