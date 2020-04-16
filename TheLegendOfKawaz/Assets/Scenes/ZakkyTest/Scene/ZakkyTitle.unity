@@ -710,12 +710,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
       propertyPath: cutoutRange
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11486218, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: d9d88d72d65d92d409606deefe2646d6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53c22e1773be7f84aad8ed8b7b58fa6e, type: 3}
 --- !u!1 &501584485
@@ -1491,7 +1495,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u3042\u3042\u3042\u3042\u3042"
+  m_text: "\u3084\u3042\u3001\u307C\u304F\u306F\u304B\u308F\u305A\u305F\u3093\uFF01\r\n\u305F\u3044\u3078\u3093\uFF01\u3042\u308B\u3072\u3068\u3064\u305C\u3093\u307F\u3093\u306A\u306E\u3059\u304C\u305F\u304C\r\n\u304B\u308F\u3063\u3066\u3042\u3070\u308C\u3060\u3057\u3061\u3083\u3063\u305F\u306E\uFF01\r\n\u3053\u308C\u306F\u3082\u3046\u3044\u3063\u305F\u3093\u305F\u304A\u3057\u3066\u3082\u3068\u306B\u3082\u3069\u3059\r\n\u3057\u304B\u306A\u3044\uFF01\r\n\u3053\u3046\u3057\u3066\u304B\u308F\u305A\u305F\u3093\u306E\u3067\u3093\u305B\u3064(\u30EC\u30B8\u30A7\u30F3\u30C9)\u306F\r\n\u306F\u3058\u307E\u3063\u305F\u306E\u3067\u3042\u3063\u305F\u2026(\u4EEE)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
   m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
@@ -1561,12 +1565,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 861643521}
-    characterCount: 5
+    characterCount: 119
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 6
+    wordCount: 12
     linkCount: 0
-    lineCount: 1
+    lineCount: 7
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1617,7 +1621,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874195218}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
   m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
