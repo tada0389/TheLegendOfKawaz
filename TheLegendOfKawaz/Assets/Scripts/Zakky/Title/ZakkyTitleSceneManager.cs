@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using KoitanLib;
 
 public class ZakkyTitleSceneManager : MonoBehaviour
 {
@@ -39,7 +40,9 @@ public class ZakkyTitleSceneManager : MonoBehaviour
                     //stateを操作受け付けないやつにする
                     TitleState.m_state = TitleState.State.Decided;
                     //Fadeout関数でフェードアウト
-                    mySceneManager.GetComponent<MySceneManager>().Fadeout("ZakkyScene");
+                    //mySceneManager.GetComponent<MySceneManager>().Fadeout("ZakkyScene");
+                    //STARTのシーン遷移KoitanLibの方つかう(その方が演出がシームレス)
+                    FadeManager.FadeIn(1f, "ZakkyScene");
                     break;
                 case 1:
                     TitleState.m_state = TitleState.State.Story;
@@ -52,6 +55,5 @@ public class ZakkyTitleSceneManager : MonoBehaviour
                     break;
             }
         }
-        
     }
 }

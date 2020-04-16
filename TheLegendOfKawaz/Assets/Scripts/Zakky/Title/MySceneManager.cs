@@ -32,7 +32,6 @@ public class MySceneManager : MonoBehaviour
                 Application.Quit();
                 return;
             }
-                
             //scene遷移
             SceneManager.LoadScene(nextScene);
         });
@@ -44,6 +43,5 @@ public class MySceneManager : MonoBehaviour
         {
             fade.FadeOut(1);
         });
-        
     }
 }
