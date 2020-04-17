@@ -43,28 +43,26 @@ public class DebugTextManager : MonoBehaviour
         }
 
         //debugText.text = str();
-        if (Debug.isDebugBuild)
+        debugText.text = string.Empty;
+        for (int i = debugElements.Count - 1; i >= 0; i--)
         {
-            debugText.text = string.Empty;
-            for (int i = debugElements.Count - 1; i >= 0; i--)
+            //Triggerで削除
+            if (debugElements[i].removeTrigger())
             {
-                //Triggerで削除
-                if (debugElements[i].removeTrigger())
-                {
-                    debugElements.RemoveAt(i);
-                }
-                else
-                {
-                    debugText.text += debugElements[i].message();
-                }
+                debugElements.RemoveAt(i);
             }
-            /*
-            foreach (DebugElement e in debugElements)
+            else
             {
-                debugText.text += e.message();
+                debugText.text += debugElements[i].message();
             }
-            */
         }
+        /*
+        foreach (DebugElement e in debugElements)
+        {
+            debugText.text += e.message();
+        }
+        */
+
     }
 
     public static DebugElement Display(Func<string> message, int priority = 0)
