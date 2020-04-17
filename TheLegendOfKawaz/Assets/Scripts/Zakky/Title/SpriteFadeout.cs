@@ -12,9 +12,19 @@ public class SpriteFadeout : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
+    }
+    private void OnEnable()
+    {
+        spRenderer = GetComponent<SpriteRenderer>();
+    }
+    public void ReStart()
+    {
         // 初期化
         currentRemainTime = fadeTime;
-        spRenderer = GetComponent<SpriteRenderer>();
+        var color = spRenderer.color;
+        color.a = 1f;
+        spRenderer.color = color;
     }
 
     // Update is called once per frame
@@ -26,7 +36,8 @@ public class SpriteFadeout : MonoBehaviour
         if (currentRemainTime <= 0f)
         {
             // 残り時間が無くなったら自分自身を消滅
-            GameObject.Destroy(gameObject);
+            //GameObject.Destroy(gameObject);
+            gameObject.SetActive(false);
             return;
         }
 

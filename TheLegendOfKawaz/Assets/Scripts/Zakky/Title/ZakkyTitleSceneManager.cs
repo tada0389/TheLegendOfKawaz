@@ -23,7 +23,8 @@ public class ZakkyTitleSceneManager : MonoBehaviour
         //ボタン押されてたらシーン遷移を確かめる
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || ActionInput.GetButtonDown(ActionCode.Decide))
         {
-            iconID[titleIDManager.GetComponent<TitleIDManager>().ChoiceID].GetComponent<IconID>().StarEffect();
+            //iconID[titleIDManager.GetComponent<TitleIDManager>().ChoiceID].GetComponent<IconID>().StarEffect();
+            //iconID[titleIDManager.GetComponent<TitleIDManager>().ChoiceID].GetComponent<IconID>().starEffectSpawner.StarEffect(iconID[titleIDManager.GetComponent<TitleIDManager>().ChoiceID].transform.position);
             IsLoadScene();
         }
     }
@@ -32,6 +33,7 @@ public class ZakkyTitleSceneManager : MonoBehaviour
     {
         if (TitleState.m_state == TitleState.State.Select)
         {
+            iconID[titleIDManager.GetComponent<TitleIDManager>().ChoiceID].GetComponent<IconID>().starEffectSpawner.StarEffect(iconID[titleIDManager.GetComponent<TitleIDManager>().ChoiceID].transform.position);
             //選択肢えらんだら
             switch (titleIDManager.GetComponent<TitleIDManager>().ChoiceID)
             {
