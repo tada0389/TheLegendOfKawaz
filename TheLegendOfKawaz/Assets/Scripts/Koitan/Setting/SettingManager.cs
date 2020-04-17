@@ -8,6 +8,7 @@ using UnityEngine.Audio;
 using System;
 using DG.Tweening;
 using KoitanLib;
+using UnityEngine.Rendering.PostProcessing;
 
 public class SettingManager : MonoBehaviour
 {
@@ -46,6 +47,10 @@ public class SettingManager : MonoBehaviour
     private AudioSource audioSource;
 
     private int ScreenSizeNum = 1;
+    private bool isPostEffect = false;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +61,8 @@ public class SettingManager : MonoBehaviour
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(window);
         //MusicManager.Play(MusicManager.Instance.bgm4);
+
+        SceneManager.sceneLoaded += SetPost;
     }
 
     // Update is called once per frame
@@ -107,6 +114,27 @@ public class SettingManager : MonoBehaviour
         }
     }
 
+    //シーンが切り替わったときに行う
+    void SetPost(Scene nextScene, LoadSceneMode mode)
+    {
+        PostProcessLayer ppl = Camera.main.GetComponent<PostProcessLayer>();
+        Debug.Log(ppl);
+        if (ppl != null)
+        {
+            ppl.enabled = isPostEffect;
+        }
+    }
+
+    void SetPost()
+    {
+        PostProcessLayer ppl = Camera.main.GetComponent<PostProcessLayer>();
+        Debug.Log(ppl);
+        if (ppl != null)
+        {
+            ppl.enabled = isPostEffect;
+        }
+    }
+
     void OpenWindow()
     {
         Sequence seq = DOTween.Sequence()
@@ -122,13 +150,13 @@ public class SettingManager : MonoBehaviour
                 nowIndex = 0;
                 item.SetActive(true);
                 eState = OpenState.Opened;
-            });        
+            });
     }
 
     void CloseWindow()
     {
         Sequence seq = DOTween.Sequence()
-            .OnStart(()=>
+            .OnStart(() =>
             {
                 nowIndex = 0;
                 item.SetActive(false);
@@ -167,7 +195,7 @@ public class SettingManager : MonoBehaviour
         onSelecteds[0] = SetButtonPush(Manual);
         onSelecteds[1] = SetButtonPush(Option);
         onSelecteds[2] = SetButtonPush(CloseWindow);
-        onCancel = CloseWindow;        
+        onCancel = CloseWindow;
     }
 
     void StartRocketScene()
@@ -211,13 +239,14 @@ public class SettingManager : MonoBehaviour
     void VideoOption()
     {
         cursor.gameObject.SetActive(true);
-        maxIndex = 2;
+        maxIndex = 3;
         nowIndex = 0;
         addIndex = 0;
         headUi.text = "がめんせってい";
-        titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >";
+        titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + ">";
         onSelecteds[0] = SetFullScreen();
         onSelecteds[1] = SetScreenSize();
+        onSelecteds[2] = SetPostEffect();
         onCancel = Option;
         onCancel += () => nowIndex = 0;
     }
@@ -310,7 +339,7 @@ public class SettingManager : MonoBehaviour
                 Screen.fullScreen = !Screen.fullScreen;
                 audioSource.PlayOneShot(drumSe);
             }
-            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >";
+            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + ">";
         };
     }
 
@@ -341,7 +370,21 @@ public class SettingManager : MonoBehaviour
                 audioSource.PlayOneShot(drumSe);
                 ScreenSizeChange();
             }
-            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >";
+            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + ">";
+        };
+    }
+
+    OnSelected SetPostEffect()
+    {
+        return () =>
+        {
+            if (ActionInput.GetButtonDown(ButtonCode.Right) || ActionInput.GetButtonDown(ButtonCode.Left))
+            {
+                isPostEffect = !isPostEffect;
+                audioSource.PlayOneShot(drumSe);
+                SetPost();
+            }
+            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + ">";
         };
     }
 
@@ -359,6 +402,12 @@ public class SettingManager : MonoBehaviour
                 return "1920 × 1080";
         }
         return "";
+    }
+
+    string PostEffectString()
+    {
+        if (isPostEffect) return "ON";
+        else return "OFF";
     }
 
     void ScreenSizeChange()
