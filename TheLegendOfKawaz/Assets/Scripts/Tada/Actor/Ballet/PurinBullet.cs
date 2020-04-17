@@ -14,6 +14,8 @@ namespace Bullet
     {
         [SerializeField]
         private Vector2 stage_range_x = new Vector2(-10f, 10f);
+        [SerializeField]
+        private Vector2 stage_range_y = new Vector2(-5f, 5f);
 
         [SerializeField]
         private float gravity_ = -0.98f;
@@ -75,7 +77,8 @@ namespace Bullet
 
         protected override void Move()
         {
-            velocity_ += new Vector2(0f, gravity_);
+            //Bound();
+            velocity_ += new Vector2(0f, gravity_) * Time.deltaTime * 60f;
             move_body_.transform.position += (Vector3)velocity_ * Time.deltaTime;
             if (timer_.IsTimeout()) Dead();
         }
@@ -88,7 +91,8 @@ namespace Bullet
                 // 壁反射
                 velocity_.x *= -bounceness_;
             }
-            else
+            else// if(move_body_.transform.position.y - hit_radius_ < stage_range_y.x || 
+               // move_body_.transform.position.y + hit_radius_ > stage_range_y.y)
             {
                 // 床反射
                 velocity_.y *= -bounceness_;

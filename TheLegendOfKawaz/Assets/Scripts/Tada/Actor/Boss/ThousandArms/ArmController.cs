@@ -481,7 +481,7 @@ namespace Actor.Enemy.Thousand
                 float target_degree = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 velocity_ += accel_ * Time.deltaTime * new Vector2(Mathf.Cos(target_degree * Mathf.Deg2Rad), Mathf.Sin(target_degree * Mathf.Deg2Rad));
 
-                Parent.transform.position += (Vector3)velocity_;
+                Parent.transform.position += (Vector3)velocity_ * Time.deltaTime * 60f;
                 target_degree = Mathf.Atan2(velocity_.y, velocity_.x) * Mathf.Rad2Deg;
                 Parent.degree_ = target_degree;
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
