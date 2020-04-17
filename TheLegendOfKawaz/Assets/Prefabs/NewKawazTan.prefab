@@ -737,6 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b29ac43615ea641abbdec8e8cbe0c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp_: 20
   idle_state_:
     MaxAbsSpeed: {x: 0, y: 0}
     Accel: {x: 0, y: 0}
@@ -859,7 +860,8 @@ AudioSource:
   m_GameObject: {fileID: 2131037086634868350}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243678785102170294, guid: 624cc891cfc744abbab6a6871baa0214,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -3946,14 +3948,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4188868256655421386, guid: e7e350bfb76b84ff69e06c1991b258b6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4188868256673871528, guid: e7e350bfb76b84ff69e06c1991b258b6,
         type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188868256655421386, guid: e7e350bfb76b84ff69e06c1991b258b6,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
