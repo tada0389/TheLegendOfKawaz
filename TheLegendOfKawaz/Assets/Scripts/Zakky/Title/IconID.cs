@@ -7,6 +7,7 @@ public class IconID : MonoBehaviour
 
     public GameObject titleIDManager;
     public GameObject titleSceneManager;
+    public StarEffectSpawner starEffectSpawner;
     //public GameObject titleState;
     public GameObject m_particle;
 
@@ -52,24 +53,24 @@ public class IconID : MonoBehaviour
 
     void OnMouseDown()
     {
-        StarEffect();
+        //starEffectSpawner.StarEffect(transform.position);
         //ロードする関数を呼び出す
         titleSceneManager.GetComponent<ZakkyTitleSceneManager>().IsLoadScene();
     }
 
-    public void StarEffect()
-    {
-        //星エフェクト出す
-        //なんかparticle生成
-        for (int i = 0; i < 16; i++)
-        {
-            GameObject obj = Instantiate(m_particle, transform.position, Quaternion.Euler(Vector3.zero));
-            //角度とスピードランダムで取得
-            float dir = Random.Range(0, 359);
-            float spd = Random.Range(1f, 5.0f);
-            //それらを代入
-            Vector2 vec2 = new Vector2(Mathf.Cos(dir * Mathf.Deg2Rad), Mathf.Sin(dir * Mathf.Deg2Rad)) * spd;
-            obj.GetComponent<Rigidbody2D>().velocity = vec2;
-        }
-    }
+    //public void StarEffect()
+    //{
+    //    //星エフェクト出す
+    //    //なんかparticle生成
+    //    for (int i = 0; i < 16; i++)
+    //    {
+    //        GameObject obj = Instantiate(m_particle, transform.position, Quaternion.Euler(Vector3.zero));
+    //        //角度とスピードランダムで取得
+    //        float dir = Random.Range(0, 359);
+    //        float spd = Random.Range(1f, 5.0f);
+    //        //それらを代入
+    //        Vector2 vec2 = new Vector2(Mathf.Cos(dir * Mathf.Deg2Rad), Mathf.Sin(dir * Mathf.Deg2Rad)) * spd;
+    //        obj.GetComponent<Rigidbody2D>().velocity = vec2;
+    //    }
+    //}
 }
