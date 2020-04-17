@@ -56,10 +56,11 @@ public class SettingManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         cursorDefaultPos = cursor.transform.localPosition;
+        onSelecteds = new OnSelected[4];
         StartPlacement();
         nowIndex = 0;
         DontDestroyOnLoad(this);
-        DontDestroyOnLoad(window);
+        DontDestroyOnLoad(window);        
         //MusicManager.Play(MusicManager.Instance.bgm4);
 
         SceneManager.sceneLoaded += SetPost;
@@ -190,8 +191,7 @@ public class SettingManager : MonoBehaviour
         maxIndex = 3;
         addIndex = 0;
         headUi.text = "メニュー";
-        titleUi.text = "そうさほうほう\nオプション\nメニューをとじる";
-        onSelecteds = new OnSelected[maxIndex];
+        titleUi.text = "そうさほうほう\nオプション\nメニューをとじる";        
         onSelecteds[0] = SetButtonPush(Manual);
         onSelecteds[1] = SetButtonPush(Option);
         onSelecteds[2] = SetButtonPush(CloseWindow);
@@ -243,7 +243,7 @@ public class SettingManager : MonoBehaviour
         nowIndex = 0;
         addIndex = 0;
         headUi.text = "がめんせってい";
-        titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + ">";
+        titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
         onSelecteds[0] = SetFullScreen();
         onSelecteds[1] = SetScreenSize();
         onSelecteds[2] = SetPostEffect();
@@ -261,7 +261,7 @@ public class SettingManager : MonoBehaviour
         audioMixer.GetFloat("BGMVol", out bgmVol);
         audioMixer.GetFloat("SEVol", out seVol);
         headUi.text = "おんりょうせってい";
-        titleUi.text = "<sprite=7>でへんこう\n全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
+        titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
         onSelecteds[0] = SetMaster();
         onSelecteds[1] = SetBGM();
         onSelecteds[2] = SetSE();
@@ -286,7 +286,7 @@ public class SettingManager : MonoBehaviour
                 masterVol = Math.Max(masterVol, -80);
                 audioMixer.SetFloat("MasterVol", masterVol);
             }
-            titleUi.text = "おんりょうせってい … <sprite=7>でへんこう\n全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
+            titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
         };
     }
 
@@ -306,7 +306,7 @@ public class SettingManager : MonoBehaviour
                 bgmVol = Math.Max(bgmVol, -80);
                 audioMixer.SetFloat("BGMVol", bgmVol);
             }
-            titleUi.text = "おんりょうせってい … <sprite=7>でへんこう\n全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
+            titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
         };
     }
 
@@ -326,7 +326,7 @@ public class SettingManager : MonoBehaviour
                 seVol = Math.Max(seVol, -80);
                 audioMixer.SetFloat("SEVol", seVol);
             }
-            titleUi.text = "おんりょうせってい … <sprite=7>でへんこう\n全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
+            titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
         };
     }
 
@@ -339,7 +339,7 @@ public class SettingManager : MonoBehaviour
                 Screen.fullScreen = !Screen.fullScreen;
                 audioSource.PlayOneShot(drumSe);
             }
-            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + ">";
+            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
         };
     }
 
@@ -370,7 +370,7 @@ public class SettingManager : MonoBehaviour
                 audioSource.PlayOneShot(drumSe);
                 ScreenSizeChange();
             }
-            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + ">";
+            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
         };
     }
 
@@ -384,7 +384,7 @@ public class SettingManager : MonoBehaviour
                 audioSource.PlayOneShot(drumSe);
                 SetPost();
             }
-            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + ">";
+            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
         };
     }
 
@@ -472,7 +472,7 @@ public class SettingManager : MonoBehaviour
             audioMixer.SetFloat("MasterVol", masterVol);
             audioMixer.SetFloat("BGMVol", bgmVol);
             audioMixer.SetFloat("SEVol", seVol);
-            titleUi.text = "おんりょうせってい … <sprite=7>でへんこう\n全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
+            titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
         });
     }
 

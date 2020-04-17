@@ -2166,7 +2166,7 @@ MonoBehaviour:
   decisionSe: {fileID: 8300000, guid: 4b1283488ffeb4b2aa892d97d9301a4e, type: 3}
   cancelSe: {fileID: 8300000, guid: 5b97853db0a6a4db1a84d426db6ba52d, type: 3}
   drumSe: {fileID: 8300000, guid: fe7bfd2f2b7fa4428b424dae032ac536, type: 3}
-  audioMixer: {fileID: 0}
+  audioMixer: {fileID: 24100000, guid: 624cc891cfc744abbab6a6871baa0214, type: 2}
 --- !u!4 &1228112436
 Transform:
   m_ObjectHideFlags: 0
