@@ -30,6 +30,7 @@ public class SettingManager : MonoBehaviour
     delegate void OnSelected();
     OnSelected[] onSelecteds;
     OnPush onCancel;
+    Func<string> textStr;
 
     [SerializeField]
     private AudioClip decisionSe;
@@ -60,7 +61,7 @@ public class SettingManager : MonoBehaviour
         StartPlacement();
         nowIndex = 0;
         DontDestroyOnLoad(this);
-        DontDestroyOnLoad(window);        
+        DontDestroyOnLoad(window);
         //MusicManager.Play(MusicManager.Instance.bgm4);
 
         SceneManager.sceneLoaded += SetPost;
@@ -78,30 +79,35 @@ public class SettingManager : MonoBehaviour
                 }
                 break;
             case OpenState.Opened:
-                if (ActionInput.GetButtonDown(ButtonCode.Up))
+                //項目が1個以上ないと動かせない
+                if (maxIndex >= 1)
                 {
-                    nowIndex--;
-                    nowIndex = (nowIndex + maxIndex) % maxIndex;
-                    audioSource.PlayOneShot(drumSe);
-                }
+                    if (ActionInput.GetButtonDown(ButtonCode.Up))
+                    {
+                        nowIndex--;
+                        nowIndex = (nowIndex + maxIndex) % maxIndex;
+                        PlaySe(drumSe);
+                    }
 
-                if (ActionInput.GetButtonDown(ButtonCode.Down))
-                {
-                    nowIndex++;
-                    nowIndex %= maxIndex;
-                    audioSource.PlayOneShot(drumSe);
-                }
+                    if (ActionInput.GetButtonDown(ButtonCode.Down))
+                    {
+                        nowIndex++;
+                        nowIndex %= maxIndex;
+                        PlaySe(drumSe);
+                    }
 
-                if (onSelecteds[nowIndex] != null)
-                {
-                    onSelecteds[nowIndex]();
+                    if (onSelecteds[nowIndex] != null)
+                    {
+                        onSelecteds[nowIndex]();
+                    }
                 }
-
+                //テキストの更新
+                titleUi.text = textStr();
 
                 if (onCancel != null && ActionInput.GetButtonDown(ActionCode.Back))
                 {
                     onCancel();
-                    audioSource.PlayOneShot(cancelSe);
+                    PlaySe(cancelSe);
                 }
                 cursor.transform.localPosition = cursorDefaultPos + Vector3.down * width * (nowIndex + addIndex);
 
@@ -171,7 +177,13 @@ public class SettingManager : MonoBehaviour
             });
     }
 
-
+    //audioSource.PlayOneShotが不便すぎる
+    void PlaySe(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.time = 0;
+        audioSource.Play();
+    }
 
     OnSelected SetButtonPush(Action onPush)
     {
@@ -180,7 +192,9 @@ public class SettingManager : MonoBehaviour
             if (ActionInput.GetButtonDown(ActionCode.Decide))
             {
                 onPush();
-                audioSource.PlayOneShot(decisionSe);
+                //audioSource.PlayOneShot(decisionSe);
+                //AudioSource.PlayClipAtPoint(decisionSe, transform.position);
+                PlaySe(decisionSe);
             }
         };
     }
@@ -191,31 +205,20 @@ public class SettingManager : MonoBehaviour
         maxIndex = 3;
         addIndex = 0;
         headUi.text = "メニュー";
-        titleUi.text = "そうさほうほう\nオプション\nメニューをとじる";        
+        textStr = () => "そうさほうほう\nオプション\nメニューをとじる";
         onSelecteds[0] = SetButtonPush(Manual);
         onSelecteds[1] = SetButtonPush(Option);
         onSelecteds[2] = SetButtonPush(CloseWindow);
         onCancel = CloseWindow;
     }
 
-    void StartRocketScene()
-    {
-        /*
-        if (!FadeManager.Instance.isFading)
-        {
-            FadeManager.Instance.LoadScene("RocketStage", 1f);
-        }
-        */
-    }
 
     void Manual()
     {
-        maxIndex = 1;
+        maxIndex = 0;
         nowIndex = 0;
         headUi.text = "そうさほうほう";
-        titleUi.text = ActionInput.GetSpriteCode(ActionCode.Jump) + "ジャンプ\n" + ActionInput.GetSpriteCode(ActionCode.Shot) + "ショット\n" + ActionInput.GetSpriteCode(ActionCode.Dash) + "ダッシュ";
-        onSelecteds[0] = SetButtonPush(StartPlacement);
-        onSelecteds[0] += SetButtonPush(() => nowIndex = 0);
+        textStr = () => ActionInput.GetSpriteCode(ActionCode.Jump) + "ジャンプ\n" + ActionInput.GetSpriteCode(ActionCode.Shot) + "ショット\n" + ActionInput.GetSpriteCode(ActionCode.Dash) + "ダッシュ";
         onCancel = StartPlacement;
         onCancel += () => nowIndex = 0;
         cursor.gameObject.SetActive(false);
@@ -225,7 +228,7 @@ public class SettingManager : MonoBehaviour
     {
         cursor.gameObject.SetActive(true);
         headUi.text = "オプション";
-        titleUi.text = "がめんせってい\nおんりょうせってい\nタイトルにもどる";
+        textStr = () => "がめんせってい\nおんりょうせってい\nタイトルにもどる";
         maxIndex = 3;
         nowIndex = 0;
         addIndex = 0;
@@ -243,7 +246,7 @@ public class SettingManager : MonoBehaviour
         nowIndex = 0;
         addIndex = 0;
         headUi.text = "がめんせってい";
-        titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
+        textStr = () => "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
         onSelecteds[0] = SetFullScreen();
         onSelecteds[1] = SetScreenSize();
         onSelecteds[2] = SetPostEffect();
@@ -261,73 +264,31 @@ public class SettingManager : MonoBehaviour
         audioMixer.GetFloat("BGMVol", out bgmVol);
         audioMixer.GetFloat("SEVol", out seVol);
         headUi.text = "おんりょうせってい";
-        titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
-        onSelecteds[0] = SetMaster();
-        onSelecteds[1] = SetBGM();
-        onSelecteds[2] = SetSE();
+        textStr = () => "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
+        onSelecteds[0] = () => SetVol("MasterVol", ref masterVol);
+        onSelecteds[1] = () => SetVol("BGMVol", ref bgmVol);
+        onSelecteds[2] = () => SetVol("SEVol", ref seVol);
         onSelecteds[3] = SetDefault();
         onCancel = Option;
         onCancel += () => nowIndex = 1;
     }
 
-    OnSelected SetMaster()
+    void SetVol(string mixerName, ref float vol)
     {
-        return () =>
+        if (ActionInput.GetButton(ButtonCode.Right))
         {
-            if (ActionInput.GetButton(ButtonCode.Right))
-            {
-                masterVol++;
-                masterVol = Mathf.Min(masterVol, 20);
-                audioMixer.SetFloat("MasterVol", masterVol);
-            }
-            if (ActionInput.GetButton(ButtonCode.Left))
-            {
-                masterVol--;
-                masterVol = Math.Max(masterVol, -80);
-                audioMixer.SetFloat("MasterVol", masterVol);
-            }
-            titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
-        };
-    }
-
-    OnSelected SetBGM()
-    {
-        return () =>
+            vol++;
+            vol = Mathf.Min(vol, 20);
+            audioMixer.SetFloat(mixerName, vol);
+            PlaySe(drumSe);
+        }
+        if (ActionInput.GetButton(ButtonCode.Left))
         {
-            if (ActionInput.GetButton(ButtonCode.Right))
-            {
-                bgmVol++;
-                bgmVol = Mathf.Min(bgmVol, 20);
-                audioMixer.SetFloat("BGMVol", bgmVol);
-            }
-            if (ActionInput.GetButton(ButtonCode.Left))
-            {
-                bgmVol--;
-                bgmVol = Math.Max(bgmVol, -80);
-                audioMixer.SetFloat("BGMVol", bgmVol);
-            }
-            titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
-        };
-    }
-
-    OnSelected SetSE()
-    {
-        return () =>
-        {
-            if (ActionInput.GetButton(ButtonCode.Right))
-            {
-                seVol++;
-                seVol = Mathf.Min(seVol, 20);
-                audioMixer.SetFloat("SEVol", seVol);
-            }
-            if (ActionInput.GetButton(ButtonCode.Left))
-            {
-                seVol--;
-                seVol = Math.Max(seVol, -80);
-                audioMixer.SetFloat("SEVol", seVol);
-            }
-            titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
-        };
+            vol--;
+            vol = Math.Max(vol, -80);
+            audioMixer.SetFloat(mixerName, vol);
+            PlaySe(drumSe);
+        }
     }
 
     OnSelected SetFullScreen()
@@ -337,9 +298,8 @@ public class SettingManager : MonoBehaviour
             if (ActionInput.GetButtonDown(ButtonCode.Right) || ActionInput.GetButtonDown(ButtonCode.Left))
             {
                 Screen.fullScreen = !Screen.fullScreen;
-                audioSource.PlayOneShot(drumSe);
+                PlaySe(drumSe);
             }
-            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
         };
     }
 
@@ -360,17 +320,16 @@ public class SettingManager : MonoBehaviour
             {
                 ScreenSizeNum++;
                 ScreenSizeNum = (ScreenSizeNum + 4) % 4;
-                audioSource.PlayOneShot(drumSe);
+                PlaySe(drumSe);
                 ScreenSizeChange();
             }
             if (ActionInput.GetButtonDown(ButtonCode.Left))
             {
                 ScreenSizeNum--;
                 ScreenSizeNum = (ScreenSizeNum + 4) % 4;
-                audioSource.PlayOneShot(drumSe);
+                PlaySe(drumSe);
                 ScreenSizeChange();
             }
-            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
         };
     }
 
@@ -381,10 +340,9 @@ public class SettingManager : MonoBehaviour
             if (ActionInput.GetButtonDown(ButtonCode.Right) || ActionInput.GetButtonDown(ButtonCode.Left))
             {
                 isPostEffect = !isPostEffect;
-                audioSource.PlayOneShot(drumSe);
+                PlaySe(drumSe);
                 SetPost();
             }
-            titleUi.text = "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
         };
     }
 
@@ -429,41 +387,6 @@ public class SettingManager : MonoBehaviour
         }
     }
 
-    /*
-    OnSelected SetVol(string n)
-    {
-        return () =>
-        {
-            out float vol = 0;
-            switch (n)
-            {
-                case "MasterVol":
-                    vol = masterVol;
-                    break;
-                case "BGMVol":
-                    vol = bgmVol;
-                    break;
-                case "SEVol":
-                    vol = seVol;
-                    break;
-            }
-            if (ActionInput.GetButton(ButtonCode.RightArrow))
-            {
-                vol++;
-                vol = Mathf.Min(vol, 20);
-                audioMixer.SetFloat(n, vol);
-            }
-            if (ActionInput.GetButton(ButtonCode.LeftArrow))
-            {
-                vol--;
-                vol = Math.Max(vol, -80);
-                audioMixer.SetFloat(n, vol);
-            }
-            titleUi.text = "おんりょうせってい … <sprite=7>でへんこう\n全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
-        };
-    }
-    */
-
     OnSelected SetDefault()
     {
         return SetButtonPush(() =>
@@ -472,7 +395,6 @@ public class SettingManager : MonoBehaviour
             audioMixer.SetFloat("MasterVol", masterVol);
             audioMixer.SetFloat("BGMVol", bgmVol);
             audioMixer.SetFloat("SEVol", seVol);
-            titleUi.text = "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
         });
     }
 
