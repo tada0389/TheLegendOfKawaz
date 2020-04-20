@@ -19,6 +19,9 @@ public class ActionInput : MonoBehaviour
     // インプットの登録と破棄
     PlayerAct input;
 
+    //スティックのしきい値
+    float deadline = 0.25f;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -71,7 +74,7 @@ public class ActionInput : MonoBehaviour
         DebugTextManager.Display(() => "Up:" + Instance.buttonValue[ButtonCode.Up].ToString() + "\n");
         DebugTextManager.Display(() => "UpDown:" + GetButtonDown(ButtonCode.Up).ToString() + "\n");
         DebugTextManager.Display(() => "UpUp:" + GetButtonUp(ButtonCode.Up).ToString() + "\n");
-        */        
+        */
     }
 
     private void Update()
@@ -94,7 +97,7 @@ public class ActionInput : MonoBehaviour
             oldActionValue[code] = actionValue[code];
             actionValue[code] = currentButtonValue(code);
             actionFlag[code] = false;
-        }        
+        }
     }
 
 
@@ -134,13 +137,13 @@ public class ActionInput : MonoBehaviour
         switch (code)
         {
             case ButtonCode.Up:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y > 0;
+                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y > deadline;
             case ButtonCode.Down:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y < 0;
+                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y < -deadline;
             case ButtonCode.Left:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x < 0;
+                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x < -deadline;
             case ButtonCode.Right:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x > 0;
+                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x > deadline;
         }
         return false;
     }
@@ -221,7 +224,7 @@ public class ActionInput : MonoBehaviour
                 case ActionCode.Pause:
                     return "<sprite=\"ps4\" index=28>";
             }
-        }        
+        }
         return "None";
     }
 

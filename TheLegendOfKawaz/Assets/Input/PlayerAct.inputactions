@@ -75,6 +75,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "23d6e559-d6f5-4496-a5d7-cba3768caaa9",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "2D Vector",
                     "id": "dab47c0e-0000-46d5-8a6f-09b9f18a4202",
                     "path": "2DVector",
@@ -309,6 +320,17 @@
                     "name": "",
                     "id": "bb2399a5-938d-4feb-945b-bdad51d72682",
                     "path": "<DualShockGamepad>/touchpadButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c16cdb9-c561-4051-a2f7-f1bdff3a29c1",
+                    "path": "<DualShockGamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
