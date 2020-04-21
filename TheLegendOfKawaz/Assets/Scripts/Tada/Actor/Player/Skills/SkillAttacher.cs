@@ -23,6 +23,11 @@ namespace Actor.Player
 
         [SerializeField]
         private TMPro.TextMeshPro otameshi_text_;
+        [SerializeField]
+        private TMPro.TextMeshPro buy_text_;
+
+        [SerializeField]
+        private SkillItem.SkillUIManager manager_;
 
         private void Start()
         {
@@ -62,15 +67,19 @@ namespace Actor.Player
         private void OnEnter()
         {
             player_.AquireTemporarySkill(skill_);
-            MessageManager.OpenKanbanWindow(message_);
+            //MessageManager.OpenKanbanWindow(message_);
             otameshi_text_.gameObject.SetActive(true);
+            buy_text_.gameObject.SetActive(true);
+            manager_.ChangeExplonation(skill_);
         }
 
         private void OnExit()
         {
             player_.ReleaseTemporarySkill(skill_);
-            MessageManager.CloseKanbanWindow();
+            //MessageManager.CloseKanbanWindow();
             otameshi_text_.gameObject.SetActive(false);
+            buy_text_.gameObject.SetActive(false);
+            manager_.DeleteExplonation();
         }
 
         private bool IsInner()
