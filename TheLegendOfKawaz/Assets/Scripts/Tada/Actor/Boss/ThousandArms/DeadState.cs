@@ -42,7 +42,7 @@ namespace Actor.Enemy.Thousand
                 }
                 if (Timer > 6.0f)
                 {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("ZakkyScene");
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Ending");
                 }
             }
 
