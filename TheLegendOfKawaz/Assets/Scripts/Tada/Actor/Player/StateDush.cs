@@ -53,7 +53,8 @@ namespace Actor.Player
             {
                 data.animator.SetBool("isDash", false);
                 // 急に落ちないように少し上昇する
-                if(!data.IsGround) data.velocity.y += 0.1f;
+                if (!data.IsGround) data.velocity.y += 0.1f;
+                else data.velocity.y -= 0.02f;
             }
 
             // 毎フレーム呼ばれる関数

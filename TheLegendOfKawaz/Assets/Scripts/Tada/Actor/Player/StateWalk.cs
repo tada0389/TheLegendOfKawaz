@@ -20,6 +20,8 @@ namespace Actor.Player
             // ステート間で共有するデータのコピーインスタンス
             private Data data = null;
 
+            private float not_ground_time_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -31,6 +33,8 @@ namespace Actor.Player
 
                 // 移動している方向に速度を加える
                 data.velocity = new Vector2(data.velocity.x, 0f);
+
+                not_ground_time_ = 0.0f;
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -57,7 +61,10 @@ namespace Actor.Player
                 }
 
                 // 地面から離れたらふぉるステートへ
-                if (!data.IsGround)
+                if (!data.IsGround) not_ground_time_ += Time.deltaTime;
+                else not_ground_time_ = 0.0f;
+
+                if(not_ground_time_ > 0.0f)
                 {
                     ChangeState((int)eState.Fall);
                 }

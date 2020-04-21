@@ -134,7 +134,7 @@ namespace TadaLib
                 // ヒットしているなら，それぞれの法線ベクトルを取得 坂道対応
                 if (Mathf.Abs(d.x) > kEpsilon)
                 {
-                    if (hit_down_left && d.x > kEpsilon)
+                    if (hit_down_left && d.x < kEpsilon)
                     {
                         float theta = Mathf.Atan2(hit_down_left.normal.y, hit_down_left.normal.x) - Mathf.PI / 2f;
 
@@ -144,7 +144,7 @@ namespace TadaLib
                             d.x *= Mathf.Cos(theta);
                         }
                     }
-                    else if (hit_down_right && d.x < kEpsilon)
+                    else if (hit_down_right && d.x > kEpsilon)
                     {
                         float theta = Mathf.Atan2(hit_down_right.normal.y, hit_down_right.normal.x) - Mathf.PI / 2f;
                         if (theta < Mathf.Deg2Rad * MaxClimbDegree)
