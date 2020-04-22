@@ -17,11 +17,18 @@ public class SettingManager : MonoBehaviour
     public Image cursor;
     public Image window;
     public GameObject item;
+    public GameObject skillItem;
+    public RectTransform achievementItem;
+    [SerializeField]
+    private float scrollMinY;
+    private float scrollMaxY;
+    private float nowScrollY;
+    [SerializeField]
+    private float scrollSpeed = 100;
     private OpenState eState = OpenState.Closed;
     public float width;
     private int nowIndex = 0;
     private int maxIndex;
-    private int addIndex = 0;
     private Vector3 cursorDefaultPos;
     public Vector2 targetDeltaSize;
     public Ease ease;
@@ -79,8 +86,8 @@ public class SettingManager : MonoBehaviour
                 }
                 break;
             case OpenState.Opened:
-                //項目が1個以上ないと動かせない
-                if (maxIndex >= 1)
+                //項目が2個以上ないと動かせない
+                if (maxIndex >= 2)
                 {
                     if (ActionInput.GetButtonDown(ButtonCode.Up))
                     {
@@ -95,7 +102,10 @@ public class SettingManager : MonoBehaviour
                         nowIndex %= maxIndex;
                         PlaySe(drumSe);
                     }
+                }
 
+                if (maxIndex >= 1)
+                {
                     if (onSelecteds[nowIndex] != null)
                     {
                         onSelecteds[nowIndex]();
@@ -109,7 +119,7 @@ public class SettingManager : MonoBehaviour
                     onCancel();
                     PlaySe(cancelSe);
                 }
-                cursor.transform.localPosition = cursorDefaultPos + Vector3.down * width * (nowIndex + addIndex);
+                cursor.transform.localPosition = cursorDefaultPos + Vector3.down * width * nowIndex;
 
                 if (ActionInput.GetButtonDown(ActionCode.Pause))
                 {
@@ -202,13 +212,15 @@ public class SettingManager : MonoBehaviour
     void StartPlacement()
     {
         cursor.gameObject.SetActive(true);
-        maxIndex = 3;
-        addIndex = 0;
+        skillItem.SetActive(true);
+        achievementItem.gameObject.SetActive(false);
+        maxIndex = 4;
         headUi.text = "メニュー";
-        textStr = () => "そうさほうほう\nオプション\nメニューをとじる";
+        textStr = () => "そうさほうほう\nオプション\nじっせき\nメニューをとじる";
         onSelecteds[0] = SetButtonPush(Manual);
         onSelecteds[1] = SetButtonPush(Option);
-        onSelecteds[2] = SetButtonPush(CloseWindow);
+        onSelecteds[2] = SetButtonPush(AchievementScreen);
+        onSelecteds[3] = SetButtonPush(CloseWindow);
         onCancel = CloseWindow;
     }
 
@@ -231,7 +243,6 @@ public class SettingManager : MonoBehaviour
         textStr = () => "がめんせってい\nおんりょうせってい\nタイトルにもどる";
         maxIndex = 3;
         nowIndex = 0;
-        addIndex = 0;
         onSelecteds[0] = SetButtonPush(VideoOption);
         onSelecteds[1] = SetButtonPush(BgmOption);
         onSelecteds[2] = SetButtonPush(ReturnTitle);
@@ -244,7 +255,6 @@ public class SettingManager : MonoBehaviour
         cursor.gameObject.SetActive(true);
         maxIndex = 3;
         nowIndex = 0;
-        addIndex = 0;
         headUi.text = "がめんせってい";
         textStr = () => "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
         onSelecteds[0] = SetFullScreen();
@@ -259,7 +269,6 @@ public class SettingManager : MonoBehaviour
         cursor.gameObject.SetActive(true);
         maxIndex = 4;
         nowIndex = 0;
-        addIndex = 0;
         audioMixer.GetFloat("MasterVol", out masterVol);
         audioMixer.GetFloat("BGMVol", out bgmVol);
         audioMixer.GetFloat("SEVol", out seVol);
@@ -271,6 +280,45 @@ public class SettingManager : MonoBehaviour
         onSelecteds[3] = SetDefault();
         onCancel = Option;
         onCancel += () => nowIndex = 1;
+    }
+
+    void AchievementScreen()
+    {
+        cursor.gameObject.SetActive(false);
+        skillItem.SetActive(false);
+        achievementItem.gameObject.SetActive(true);
+        maxIndex = 1;
+        nowIndex = 0;
+        nowScrollY = scrollMinY;
+        AchievementManager.UpdateUis();
+        scrollMaxY = AchievementManager.GetScrollMaxY();
+        onSelecteds[0] = ScrollView;
+        headUi.text = "じっせき";
+        textStr = () => "";
+        onCancel = StartPlacement;
+        onCancel += () => nowIndex = 2;
+    }
+
+    void ScrollView()
+    {
+        if (ActionInput.GetButton(ButtonCode.Up))
+        {
+            nowScrollY -= scrollSpeed * Time.unscaledDeltaTime;
+            if (nowScrollY < scrollMinY)
+            {
+                nowScrollY = scrollMinY;
+            }
+        }
+        if (ActionInput.GetButton(ButtonCode.Down))
+        {
+            nowScrollY += scrollSpeed * Time.unscaledDeltaTime;
+            if (nowScrollY > scrollMaxY)
+            {
+                nowScrollY = scrollMaxY;
+            }
+        }
+        achievementItem.localPosition = new Vector3(0, nowScrollY, 0);
+
     }
 
     void SetVol(string mixerName, ref float vol)

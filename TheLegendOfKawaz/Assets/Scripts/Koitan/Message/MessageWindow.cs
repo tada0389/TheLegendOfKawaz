@@ -33,6 +33,7 @@ public class MessageWindow : MonoBehaviour
         targetDeltaSize = windowImage.rectTransform.sizeDelta;
         audioSource = GetComponent<AudioSource>();
         WindowInit();
+        windowImage.enabled = false;
     }
 
     // Update is called once per frame
