@@ -286,6 +286,7 @@ public class SettingManager : MonoBehaviour
     {
         cursor.gameObject.SetActive(false);
         skillItem.SetActive(false);
+        achievementItem.localPosition = new Vector3(0, scrollMinY, 0);
         achievementItem.gameObject.SetActive(true);
         maxIndex = 1;
         nowIndex = 0;

@@ -121,7 +121,7 @@ public class AchievementManager : MonoBehaviour
 
     public static float GetScrollMaxY()
     {
-        return Mathf.Max(-450 - 900 + Instance.contents.Length * 200, -450);
+        return Mathf.Max(-450 - 850 + Instance.contents.Length * 200, -450);
     }
 
     enum OpenState
