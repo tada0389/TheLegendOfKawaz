@@ -43,4 +43,14 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
     {
         Instance.messageWindow.MessageInit(textStr);
     }
+
+    public static bool isSending()
+    {
+        return Instance.messageWindow.isSending;
+    }
+
+    public static void FinishMessage()
+    {
+        Instance.messageWindow.MessageFinish();
+    }
 }

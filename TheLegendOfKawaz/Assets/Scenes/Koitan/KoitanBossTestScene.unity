@@ -5901,7 +5901,7 @@ MonoBehaviour:
   state_fly_attack_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    speed: 20
+    speed: 15
     shotPos: {fileID: 1263051487}
   state_dead_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -6195,11 +6195,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 7062334305907497651, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7062334306977685431, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -6214,6 +6209,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062334305907497651, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7062334306921869600, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
         type: 3}

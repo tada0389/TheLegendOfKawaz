@@ -74,6 +74,7 @@ MonoBehaviour:
     type: 3}
   hit_effect_: {fileID: 3213681669621644596, guid: 35a96ff3104174ccea2fef463f8e398b,
     type: 3}
+  damage_: 3
 --- !u!1 &7106363020500416237
 GameObject:
   m_ObjectHideFlags: 0
