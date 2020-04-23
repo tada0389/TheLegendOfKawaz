@@ -76,11 +76,12 @@ public class SettingManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
         switch (eState)
         {
             case OpenState.Closed:
-                if (ActionInput.GetButtonDown(ActionCode.Pause))
+                //TimeScaleが小さいときメニューを開けないようにする(仮)
+                if (ActionInput.GetButtonDown(ActionCode.Pause) && Time.timeScale > 0.5f && !FadeManager.is_fading)
                 {
                     OpenWindow();
                 }

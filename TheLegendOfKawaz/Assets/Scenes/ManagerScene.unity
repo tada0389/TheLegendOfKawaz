@@ -2733,8 +2733,18 @@ MonoBehaviour:
     isUnlocked: 0
   - key: Purin_nodamage
     icon: {fileID: 21300000, guid: f87bf20afdef0f743ae3e5b5f62d8485, type: 3}
-    body: "\u30D7\u30EA\u30F3\u30DE\u30B9\u30BF\u30FC"
+    body: "\u30D7\u30EA\u30F3\u30DE\u30B9\u30C8\u30C0\u30A4"
     detail: "\u30D7\u30EA\u30F3\u3092\u30CE\u30FC\u30C0\u30E1\u30FC\u30B8\u3067\u5012\u3059\u3002"
+    isUnlocked: 0
+  - key: VenomDrake
+    icon: {fileID: 21300000, guid: efd25df7f643f4999b64cdf1f53024fb, type: 3}
+    body: "\u3057\u3052\u308B\u8A0E\u4F10"
+    detail: "\u3057\u3052\u308B\u3092\u5012\u3059\u3002"
+    isUnlocked: 0
+  - key: VenomDrake_nodamage
+    icon: {fileID: 21300000, guid: efd25df7f643f4999b64cdf1f53024fb, type: 3}
+    body: "\u3057\u3052\u308B\u30DE\u30B9\u30C8\u30C0\u30A4"
+    detail: "\u3057\u3052\u308B\u3092\u30CE\u30FC\u30C0\u30E1\u30FC\u30B8\u3067\u5012\u3059\u3002"
     isUnlocked: 0
   - key: Senju
     icon: {fileID: 21300000, guid: 3cf9d378860d8ab4d8ce57aa0b69a05e, type: 3}
@@ -2743,7 +2753,7 @@ MonoBehaviour:
     isUnlocked: 0
   - key: Senju_nodamage
     icon: {fileID: 21300000, guid: 3cf9d378860d8ab4d8ce57aa0b69a05e, type: 3}
-    body: "\u305B\u3093\u3058\u3085\u304B\u3093\u306E\u3093\u30DE\u30B9\u30BF\u30FC"
+    body: "\u305B\u3093\u3058\u3085\u304B\u3093\u306E\u3093\u30DE\u30B9\u30C8\u30C0\u30A4"
     detail: "\u305B\u3093\u3058\u3085\u304B\u3093\u306E\u3093\u3092\u30CE\u30FC\u30C0\u30E1\u30FC\u30B8\u3067\u5012\u3059\u3002"
     isUnlocked: 0
   - key: Target_Clear

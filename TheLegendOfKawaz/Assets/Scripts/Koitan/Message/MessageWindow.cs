@@ -143,4 +143,10 @@ public class MessageWindow : MonoBehaviour
             currentFrame++;
         }
     }
+
+    public void MessageFinish()
+    {
+        messageTextMesh.maxVisibleCharacters = messageTextMesh.textInfo.characterCount;
+        isSending = false;
+    }
 }

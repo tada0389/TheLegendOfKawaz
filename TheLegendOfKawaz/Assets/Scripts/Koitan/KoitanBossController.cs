@@ -121,7 +121,7 @@ namespace Actor.Enemy
 
         private void Start()
         {
-            HP = 30;
+            HP = 25;
             trb_ = GetComponent<TadaRigidbody>();
             bullet_spawner_ = GetComponent<BulletSpawner>();
             mesh = transform.GetChild(0).gameObject;//危険!
@@ -196,7 +196,7 @@ namespace Actor.Enemy
             {
                 HP = Mathf.Max(0, HP - damage);
                 if (HP == 0) Debug.Log("Defeated");
-                mutekiTime = 2f;
+                mutekiTime = 1f;
                 StartCoroutine(Tenmetu());
                 if (HP == 0) Dead();
             }
@@ -284,13 +284,12 @@ namespace Actor.Enemy
             public override void Proc()
             {
                 if (Timer > think_time_)
-                {
-
+                {                    
                     float r = Random.Range(0f, 100f);
-                    Debug.Log("random:" + r);
-                    if (r < 20f) ChangeState((int)eState.Shot);
-                    else if (r < 40f) ChangeState((int)eState.Bite);
-                    else if (r < 60f) ChangeState((int)eState.PreDash);
+                    //Debug.Log("random:" + r);
+                    if (r < 30f) ChangeState((int)eState.Shot);
+                    else if (r < 60f) ChangeState((int)eState.Bite);
+                    else if (r < 80f) ChangeState((int)eState.PreDash);
                     else ChangeState((int)eState.Fly);
                     return;
 
@@ -403,11 +402,11 @@ namespace Actor.Enemy
                     ++shot_cnt_;
 
                     Parent.bullet_spawner_.Shot(Parent.venomBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector3(dir, 0f) * speed, "Player");
+                        + shot_offset_.y), Quaternion.AngleAxis(dir * 0f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
                     Parent.bullet_spawner_.Shot(Parent.venomBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector3(dir, 0.5f) * speed, "Player");
+                        + shot_offset_.y), Quaternion.AngleAxis(dir * -30f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
                     Parent.bullet_spawner_.Shot(Parent.venomBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector3(dir, 1f) * speed, "Player");
+                        + shot_offset_.y), Quaternion.AngleAxis(dir * -60f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
 
                     if (shot_cnt_ >= shot_num_)
                     {
@@ -612,12 +611,12 @@ namespace Actor.Enemy
                 else if (Timer < startup_time + active_time && !isShot)
                 {
                     isShot = true;
-                    Parent.bullet_spawner_.Shot(Parent.swampBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector3(dir, 0f) * speed, "Player");
-                    Parent.bullet_spawner_.Shot(Parent.swampBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector3(dir, 0.5f) * speed, "Player");
-                    Parent.bullet_spawner_.Shot(Parent.swampBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
-                        + shot_offset_.y), new Vector3(dir, 1f) * speed, "Player");
+                    Parent.bullet_spawner_.Shot(Parent.venomBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), Quaternion.AngleAxis(dir * 0f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                    Parent.bullet_spawner_.Shot(Parent.venomBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), Quaternion.AngleAxis(dir * -30f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                    Parent.bullet_spawner_.Shot(Parent.venomBullet, new Vector3(Parent.transform.position.x + shot_offset_.x * dir, Parent.transform.position.y
+                        + shot_offset_.y), Quaternion.AngleAxis(dir * -60f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
                 }
                 else if (Timer > startup_time + active_time)
                 {
@@ -664,9 +663,13 @@ namespace Actor.Enemy
                 {
                     if (ActionInput.GetButtonDown(ActionCode.Decide))
                     {
-                        index++;
-                        if (index < message.Length)
+                        if (MessageManager.isSending())
                         {
+                            MessageManager.FinishMessage();
+                        }
+                        else if (index < message.Length - 1)
+                        {
+                            index++;
                             MessageManager.InitMessage(message[index]);
                         }
                         else
@@ -691,11 +694,12 @@ namespace Actor.Enemy
 
             private void EndSeq()
             {
+                MessageManager.FinishMessage();
                 MessageManager.CloseMessageWindow();
                 Parent.seq = DOTween.Sequence()
                     .OnStart(() =>
                     {
-                        isEnd = true;                        
+                        isEnd = true;
                         Parent.animator.Play(hashStart);
                         EffectPlayer.Play(par, parPos.position, Vector3.zero, parPos);
                     })
@@ -725,7 +729,7 @@ namespace Actor.Enemy
                     {
                         //tadaRigidbodyがうまく動かなかった
                         //Parent.trb_.Velocity = new Vector2(0, 5);
-                        Parent.transform.DOMoveY(8, 1f).SetRelative();
+                        Parent.transform.DOMoveY(6.5f, 1f).SetRelative();
                         //ChangeState((int)eState.Think);
                     })
                     .AppendInterval(1f)
@@ -776,41 +780,50 @@ namespace Actor.Enemy
                     {
                         //玉をうつ
                         Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir, 0f) * speed, "Player");
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 30f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 60f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 90f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
                     })
-                    .AppendInterval(0.1f)
+                    .AppendInterval(0.3f)
                     .AppendCallback(() =>
                     {
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 15f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 45f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 75f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
                     })
-                    .AppendInterval(0.1f)
+                    .AppendInterval(0.3f)
                     .AppendCallback(() =>
                     {
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 30f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 60f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 90f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
                     })
-                    .AppendInterval(0.1f)
+                    .AppendInterval(0.3f)
                     .AppendCallback(() =>
                     {
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 15f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 45f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 75f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
                     })
-                    .AppendInterval(0.1f)
+                    .AppendInterval(0.3f)
                     .AppendCallback(() =>
                     {
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 30f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 60f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 90f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
                     })
-                    .AppendInterval(0.1f)
+                    .AppendInterval(0.3f)
                     .AppendCallback(() =>
                     {
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
-                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, new Vector3(dir * Random.value, -Random.value) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 15f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 45f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
+                        Parent.bullet_spawner_.Shot(Parent.venomBullet, shotPos.position, Quaternion.AngleAxis(dir * 75f, Vector3.back) * new Vector3(dir, 0f) * speed, "Player");
                     })
                     .AppendCallback(() =>
                     {
-                        Parent.transform.DOMoveY(-8, 1f).SetRelative();
+                        Parent.transform.DOMoveY(-6.5f, 1f).SetRelative();
                     })
                     .AppendInterval(1f)
                     .AppendCallback(() =>
@@ -863,6 +876,8 @@ namespace Actor.Enemy
                     get = true;
                     Time.timeScale = 1.0f;
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
+                    //実績解除
+                    AchievementManager.FireAchievement("VenomDrake");
                 }
 
                 if (Timer > 7.0f)
