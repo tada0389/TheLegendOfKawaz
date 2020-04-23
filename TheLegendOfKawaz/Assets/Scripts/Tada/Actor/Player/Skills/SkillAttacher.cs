@@ -27,7 +27,15 @@ namespace Actor.Player
         private TMPro.TextMeshPro buy_text_;
 
         [SerializeField]
-        private SkillItem.SkillUIManager manager_;
+        private SkillItem.SkillUIManager ui_manager_;
+
+        [SerializeField]
+        private SkillItem.SkillPurchaseGage purchase_manager_;
+
+        private bool uped_ = false;
+
+        private bool is_level_max_ = false;
+        private bool is_has_point_ = false;
 
         private void Start()
         {
@@ -51,6 +59,9 @@ namespace Actor.Player
 
         private void Update()
         {
+            is_level_max_ = SkillManager.Instance.Skills[(int)skill_].ReachLevelLimit;
+            is_has_point_ = SkillManager.Instance.Skills[(int)skill_].NeedPoint() <= SkillManager.Instance.SkillPoint;
+
             // 範囲内か   
             if (IsInner() && !in_player_)
             {
@@ -62,24 +73,44 @@ namespace Actor.Player
                 in_player_ = false;
                 OnExit();
             }
+
+            if (is_level_max_ || !is_has_point_) return; 
+
+            if(!uped_ && IsInner() && ActionInput.GetButton(ButtonCode.Up))
+            {
+                uped_ = true;
+                purchase_manager_.RequestPurchase(skill_);
+            }
+            if (uped_ && !ActionInput.GetButton(ButtonCode.Up))
+            {
+                uped_ = false;
+                purchase_manager_.DismissPurchase();
+            }
         }
 
         private void OnEnter()
         {
+            ui_manager_.ChangeExplonation(skill_);
+
+            if (is_level_max_) return;
             player_.AquireTemporarySkill(skill_);
             //MessageManager.OpenKanbanWindow(message_);
             otameshi_text_.gameObject.SetActive(true);
-            buy_text_.gameObject.SetActive(true);
-            manager_.ChangeExplonation(skill_);
+            if (is_has_point_)
+                buy_text_.gameObject.SetActive(true);
         }
 
         private void OnExit()
         {
+            otameshi_text_.gameObject.SetActive(false);
+            if (!is_has_point_)
+                buy_text_.gameObject.SetActive(false);
+            ui_manager_.DeleteExplonation();
+            purchase_manager_.DismissPurchase();
+
+            if (is_level_max_) return;
             player_.ReleaseTemporarySkill(skill_);
             //MessageManager.CloseKanbanWindow();
-            otameshi_text_.gameObject.SetActive(false);
-            buy_text_.gameObject.SetActive(false);
-            manager_.DeleteExplonation();
         }
 
         private bool IsInner()
