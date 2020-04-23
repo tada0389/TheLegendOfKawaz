@@ -36,10 +36,11 @@ namespace SkillItem
                 Skill skill = SkillManager.Instance.GetSkill((int)skill_item);
 
                 if (skill.ReachLevelLimit)
-                    explonation_text_.text = " <color=red><size=24>Lv Max</size>" + skill.Name + "</size></color>";
+                    explonation_text_.text = " <color=red><size=24>Lv Max</size>  " + skill.Name + "</size></color>";
                 else
-                    explonation_text_.text = "<size=24>Lv" + (skill.Level + 1).ToString() + "</size>  <color=red>" + skill.Name + "</color> <size=24>値段 " + skill.NeedPoint().ToString() + "</size>";
+                    explonation_text_.text = "<size=24>Lv" + (skill.Level + 1).ToString() + "</size>  <color=red>" + skill.Name + "</color> <size=24>値段 " + skill.NeedPoint().ToString() + "SP</size>";
                 delete_requests_ = 0;
+                money_text_.text = "<size=24></size> <sprite index=0> " + SkillManager.Instance.SkillPoint.ToString();
             }
             else if(delete_requests_ >= 1)
             {

@@ -593,6 +593,12 @@ namespace Actor.Player
             return data_.ReleaseTmpSkill(skill);
         }
 
+        // HPが最大かどうか
+        public bool IsNoDamage()
+        {
+            return data_.HP == data_.MaxHP;
+        }
+
         public override string ToString()
         {
             return "(" + data_.velocity.x.ToString("F2") + ", " + data_.velocity.y.ToString("F2") + ")" +
