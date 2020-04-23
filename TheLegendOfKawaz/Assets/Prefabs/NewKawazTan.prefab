@@ -739,11 +739,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp_: 20
   idle_state_:
-    MaxAbsSpeed: {x: 0, y: 0}
-    Accel: {x: 0, y: 0}
+    MaxAbsSpeed: {x: 0, y: 0.02}
+    Accel: {x: 0, y: -0.02}
   walk_state_:
-    MaxAbsSpeed: {x: 0.16, y: 0}
-    Accel: {x: 0.016, y: 0}
+    MaxAbsSpeed: {x: 0.16, y: 0.02}
+    Accel: {x: 0.016, y: -0.02}
   jump_state_:
     MaxAbsSpeed: {x: 0.16, y: 0.28}
     Accel: {x: 0.016, y: -0.04}

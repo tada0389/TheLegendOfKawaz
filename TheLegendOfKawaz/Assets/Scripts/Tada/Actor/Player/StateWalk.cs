@@ -32,7 +32,7 @@ namespace Actor.Player
                 data.animator.SetBool("isWalk", true);
 
                 // 移動している方向に速度を加える
-                data.velocity = new Vector2(data.velocity.x, 0f);
+                data.velocity = new Vector2(data.velocity.x, -0.02f);
 
                 not_ground_time_ = 0.0f;
             }
@@ -67,6 +67,8 @@ namespace Actor.Player
                 if(not_ground_time_ > 0.0f)
                 {
                     ChangeState((int)eState.Fall);
+                    // 下向きの速度をもとにもどす (がくつかないために下向きに速度を加えていた)
+                    data.velocity.y = 0f;
                 }
 
                 // 移動している方向に速度を加える
