@@ -401,7 +401,7 @@ public class SettingManager : MonoBehaviour
         switch (ScreenSizeNum)
         {
             case 0:
-                return "640 × 360";
+                return "720 × 405";
             case 1:
                 return "1280 × 720";
             case 2:
@@ -423,7 +423,7 @@ public class SettingManager : MonoBehaviour
         switch (ScreenSizeNum)
         {
             case 0:
-                Screen.SetResolution(640, 360, Screen.fullScreen);
+                Screen.SetResolution(720, 405, Screen.fullScreen);
                 break;
             case 1:
                 Screen.SetResolution(1280, 720, Screen.fullScreen);

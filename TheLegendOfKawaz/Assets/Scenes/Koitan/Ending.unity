@@ -7085,7 +7085,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30B9\u30DA\u30B7\u30E3\u30EB\u30B5\u30F3\u30AF\u30B9\n\u30EC\u30A4\u30D6\u30F3\n\u307E\u304F\u3089\n\u304E\u3083\u308F\n"
+  m_text: "\u30B9\u30DA\u30B7\u30E3\u30EB\u30B5\u30F3\u30AF\u30B9\n\u30EC\u30A4\u30D6\u30F3\n\u3007\u3007\u3007\n\u2715\u2715\u2715\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
   m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
@@ -7158,7 +7158,7 @@ MonoBehaviour:
     characterCount: 23
     spriteCount: 0
     spaceCount: 4
-    wordCount: 4
+    wordCount: 2
     linkCount: 0
     lineCount: 4
     pageCount: 1
