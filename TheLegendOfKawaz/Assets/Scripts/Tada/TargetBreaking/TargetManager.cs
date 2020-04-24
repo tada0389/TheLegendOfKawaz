@@ -26,10 +26,15 @@ namespace Target
         [SerializeField]
         private float bottom_boader_ = -15f;
 
+        [SerializeField]
+        private BaseParticle target_break_eff_;
+
         private void Start()
         {
             timer_ = 0.0f;
             started_ = true;
+
+            KoitanLib.ObjectPoolManager.Init(target_break_eff_, this, 5);
         }
 
         private void Update()
@@ -46,9 +51,10 @@ namespace Target
             ++target_num_;
         }
 
-        public void BreakTarget()
+        public void BreakTarget(Vector3 pos)
         {
             --target_num_;
+            TadaLib.EffectPlayer.Play(target_break_eff_, pos, Vector3.zero);
             if (target_num_ == 0) Finish(true);
         }
 

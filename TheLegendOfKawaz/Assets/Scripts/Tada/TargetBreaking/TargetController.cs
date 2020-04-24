@@ -34,7 +34,7 @@ namespace Target
 
         public override void Damage(int damage)
         {
-            manager_.BreakTarget();
+            manager_.BreakTarget(transform.position);
             gameObject.SetActive(false);
         }
 
