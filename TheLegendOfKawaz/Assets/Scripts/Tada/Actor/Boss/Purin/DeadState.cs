@@ -43,6 +43,10 @@ namespace Actor.Enemy.Purin
                     get = true;
                     Time.timeScale = 1.0f;
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
+                    //実績解除
+                    AchievementManager.FireAchievement("Purin");
+                    if (Parent.player_.GetComponent<Actor.Player.Player>().IsNoDamage())
+                        AchievementManager.FireAchievement("Purin_nodamage");
                 }
 
                 if(Timer > 7.0f)

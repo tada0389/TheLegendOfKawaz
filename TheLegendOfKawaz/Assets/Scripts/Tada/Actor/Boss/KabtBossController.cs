@@ -421,6 +421,11 @@ namespace Actor.Enemy
                     Time.timeScale = 1.0f;
                     a = true;
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
+
+                    //実績解除
+                    AchievementManager.FireAchievement("Kabt");
+                    if (Parent.player_.GetComponent<Actor.Player.Player>().IsNoDamage())
+                        AchievementManager.FireAchievement("Kabt_nodamage");
                 }
                 if(Timer > 6.0f)
                 {

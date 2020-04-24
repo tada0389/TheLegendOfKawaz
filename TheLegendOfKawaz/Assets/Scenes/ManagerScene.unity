@@ -2746,6 +2746,16 @@ MonoBehaviour:
     body: "\u3057\u3052\u308B\u30DE\u30B9\u30C8\u30C0\u30A4"
     detail: "\u3057\u3052\u308B\u3092\u30CE\u30FC\u30C0\u30E1\u30FC\u30B8\u3067\u5012\u3059\u3002"
     isUnlocked: 0
+  - key: Kabt
+    icon: {fileID: 21300000, guid: abd906b523b2dfd4b93b546a2f04f862, type: 3}
+    body: "\u6539\u9020\u4EBA\u9593\u304B\u308F\u305A\u305F\u3093\u03B2"
+    detail: "\u6539\u9020\u4EBA\u9593\u304B\u308F\u305A\u305F\u3093\u03B2\u3092\u5012\u3059\u3002"
+    isUnlocked: 0
+  - key: Kabt_nodamage
+    icon: {fileID: 21300000, guid: abd906b523b2dfd4b93b546a2f04f862, type: 3}
+    body: "\u6539\u9020\u4EBA\u9593\u304B\u308F\u305A\u305F\u3093\u03B2\u30DE\u30B9\u30C8\u30C0\u30A4"
+    detail: "\u6539\u9020\u4EBA\u9593\u304B\u308F\u305A\u305F\u3093\u03B2\u3092\u30CE\u30FC\u30C0\u30E1\u30FC\u30B8\u3067\u5012\u3059\u3002"
+    isUnlocked: 0
   - key: Senju
     icon: {fileID: 21300000, guid: 3cf9d378860d8ab4d8ce57aa0b69a05e, type: 3}
     body: "\u305B\u3093\u3058\u3085\u304B\u3093\u306E\u3093\u8A0E\u4F10"
