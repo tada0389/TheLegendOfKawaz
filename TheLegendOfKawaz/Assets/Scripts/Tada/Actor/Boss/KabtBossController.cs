@@ -165,6 +165,7 @@ namespace Actor.Enemy
         // ダメージを受ける
         public override void Damage(int damage)
         {
+            if (state_machine_.CurrentStateId == (int)eState.Dead) return;
             if (!muteki_timer_.IsTimeout()) return;
             HP = Mathf.Max(0, HP - damage);
             muteki_timer_.TimeReset();
