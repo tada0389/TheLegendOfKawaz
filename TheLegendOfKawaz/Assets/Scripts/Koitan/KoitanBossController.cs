@@ -878,6 +878,10 @@ namespace Actor.Enemy
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
                     //実績解除
                     AchievementManager.FireAchievement("VenomDrake");
+                    if(Parent.player_.GetComponent<Player.Player>().IsNoDamage())
+                    {
+                        AchievementManager.FireAchievement("VenomDrake_nodamage");
+                    }
                 }
 
                 if (Timer > 7.0f)
