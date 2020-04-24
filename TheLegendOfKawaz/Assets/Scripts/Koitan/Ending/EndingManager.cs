@@ -37,10 +37,10 @@ public class EndingManager : MonoBehaviour
         {
             FadeManager.FadeIn(2f, "ZakkyTitle");
         }
-        if(ActionInput.GetButtonDown(ActionCode.Decide))
+
+        if(ActionInput.GetButtonDown(ActionCode.Dash))
         {
-            AchievementManager.FireAchievement("dummy");
-            AchievementManager.FireAchievement("dummy2");
+            FadeManager.FadeIn(2f, "ZakkyTitle");
         }
     }
 }
