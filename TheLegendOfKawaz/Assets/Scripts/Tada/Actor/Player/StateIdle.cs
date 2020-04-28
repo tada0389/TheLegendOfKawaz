@@ -66,9 +66,9 @@ namespace Actor.Player
                     return;
                 }
 
-                ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed);
-                ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed);
-                ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
+                ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
+                ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
             }
         }
     }

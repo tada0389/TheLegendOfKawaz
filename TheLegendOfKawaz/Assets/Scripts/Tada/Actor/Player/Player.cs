@@ -91,6 +91,9 @@ namespace Actor.Player
         // 右方向にぶつかっている
         public bool IsRight => trb.RightCollide;
 
+        // 地面の摩擦係数
+        public float GroundFriction => trb.GroundFriction;
+
         // アニメーター
         public Animator animator;
         // オーディオソース

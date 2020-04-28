@@ -38,6 +38,9 @@ namespace TadaLib
         // 下でぶつかっている
         public bool ButtomCollide { private set; get; }
 
+        // 地面の摩擦係数
+        public float GroundFriction { private set; get; }
+
         private BoxCollider2D hit_box_;
 
         private const float kEpsilon = 0.001f;
@@ -52,6 +55,8 @@ namespace TadaLib
             RightCollide = false;
             TopCollide = false;
             ButtomCollide = false;
+
+            GroundFriction = 1.0f;
 
             hit_box_ = GetComponent<BoxCollider2D>();
 
@@ -131,6 +136,14 @@ namespace TadaLib
                     riding_mover_ = most_top_hit.collider.gameObject.GetComponent<Mover>();
                 else riding_mover_ = null;
 
+                // 床の摩擦係数を取得する
+                if (ButtomCollide)
+                {
+                    var material = most_top_hit.collider.gameObject.GetComponent<Road.RoadMaterial2D>();
+                    if (material) GroundFriction = material.Friction;
+                    else GroundFriction = 1.0f;
+                }
+
                 // ヒットしているなら，それぞれの法線ベクトルを取得 坂道対応
                 if (Mathf.Abs(d.x) > kEpsilon)
                 {
@@ -140,9 +153,12 @@ namespace TadaLib
 
                         if (theta < Mathf.Deg2Rad * MaxClimbDegree)
                         {
-                            if (d.x * Mathf.Sin(theta) < 0)
-                            { // 下るとき
-                                float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta);
+                            float friction_power = (1f - GroundFriction) * 0.2f;
+                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta);
+                            d.x -= Mathf.Sign(d.x * Mathf.Sin(theta)) * friction_power * (1f - rate);
+
+                            if (d.x * Mathf.Sin(theta) < 0) // 坂道下り坂
+                            {
                                 d.y += d.x * Mathf.Sin(theta) * rate;
                                 d.x *= Mathf.Cos(theta) * rate;
                             }
@@ -158,9 +174,12 @@ namespace TadaLib
                         float theta = Mathf.Atan2(hit_down_right.normal.y, hit_down_right.normal.x) - Mathf.PI / 2f;
                         if (theta < Mathf.Deg2Rad * MaxClimbDegree)
                         {
-                            if (d.x * Mathf.Sin(theta) < 0)
-                            { // 下るとき
-                                float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta);
+                            float friction_power = (1f - GroundFriction) * 0.2f;
+                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta);
+                            d.x -= Mathf.Sign(d.x * Mathf.Sin(theta)) * friction_power * (1f - rate);
+
+                            if (d.x * Mathf.Sin(theta) < 0) // 坂道下り坂
+                            {
                                 d.y += d.x * Mathf.Sin(theta) * rate;
                                 d.x *= Mathf.Cos(theta) * rate;
                             }
@@ -177,9 +196,12 @@ namespace TadaLib
 
                         if (theta < Mathf.Deg2Rad * MaxClimbDegree)
                         {
-                            if (d.x * Mathf.Sin(theta) < 0)
-                            { // 下るとき
-                                float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta);
+                            float friction_power = (1f - GroundFriction) * 0.2f;
+                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta);
+                            d.x -= Mathf.Sign(d.x * Mathf.Sin(theta)) * friction_power * (1f - rate);
+
+                            if (d.x * Mathf.Sin(theta) < 0) // 坂道下り坂
+                            {
                                 d.y += d.x * Mathf.Sin(theta) * rate;
                                 d.x *= Mathf.Cos(theta) * rate;
                             }
