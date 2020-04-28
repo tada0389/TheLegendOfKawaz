@@ -35,12 +35,17 @@ namespace Actor.Player
                 data.velocity = new Vector2(data.velocity.x, -0.02f);
 
                 not_ground_time_ = 0.0f;
+
+                // がくつかないために下向きに速度を加える
+                data.velocity.y = -MaxAbsSpeed.y;
             }
 
             // ステートが終了したときに呼ばれるメソッド
             public override void OnEnd()
             {
                 data.animator.SetBool("isWalk", false);
+                // 下向きの速度をもとにもどす (がくつかないために下向きに速度を加えていた)
+                data.velocity.y = 0f;
             }
 
             // 毎フレーム呼ばれる関数
@@ -67,8 +72,6 @@ namespace Actor.Player
                 if(not_ground_time_ > 0.0f)
                 {
                     ChangeState((int)eState.Fall);
-                    // 下向きの速度をもとにもどす (がくつかないために下向きに速度を加えていた)
-                    data.velocity.y = 0f;
                 }
 
                 // 移動している方向に速度を加える

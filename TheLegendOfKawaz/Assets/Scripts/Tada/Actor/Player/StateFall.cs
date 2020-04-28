@@ -21,13 +21,6 @@ namespace Actor.Player
             [SerializeField]
             private float can_jump_time = 0.15f;
 
-            // 壁に沿っている時の落下加速度
-            [SerializeField]
-            private float fall_accel_with_wall_ = -0.01f;
-            // 壁に沿っている時の落下最大速度
-            [SerializeField]
-            private float fall_max_abs_speed_with_wall_ = -0.15f;
-
 
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()

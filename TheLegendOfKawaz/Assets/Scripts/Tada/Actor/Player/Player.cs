@@ -167,9 +167,10 @@ namespace Actor.Player
             return air_jump_num_ >= 0;
         }
 
-        public void ReflectVelocity()
+        public void ReflectVelocity(bool is_in)
         {
-            trb.Velocity = velocity;
+            if (is_in) trb.Velocity = velocity;
+            else velocity = trb.Velocity;
         }
 
         // 向いている方向を反転する
@@ -409,11 +410,14 @@ namespace Actor.Player
             if (Time.timeScale < 1e-6) return;
             if (state_machine_.CurrentStateId == (int)eState.Dead)
             {
-                data_.ReflectVelocity();
+                data_.ReflectVelocity(true);
                 return; // 本当はダメなので変える
             }
             // 接地しているかどうかなどで，状態を変更する
-            RefectCollide();
+            RefectRigidbody();
+
+            // 変更された速度を取得する
+            data_.ReflectVelocity(false);
 
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
             {
@@ -427,7 +431,7 @@ namespace Actor.Player
             CheckFaceDirChange();
 
             // 速度に応じて移動する
-            data_.ReflectVelocity();
+            data_.ReflectVelocity(true);
 
             // ごみ
             if(data_.AutoHealInterval > 0.01f && !heal_inited_)
@@ -509,8 +513,9 @@ namespace Actor.Player
         }
 
         // コライド情報などで状態を更新する
-        private void RefectCollide()
+        private void RefectRigidbody()
         {
+
             data_.IsThrough = (ActionInput.GetAxis(AxisCode.Vertical) < -0.5f);
 
             data_.animator.SetBool("isGround", data_.IsGround);
