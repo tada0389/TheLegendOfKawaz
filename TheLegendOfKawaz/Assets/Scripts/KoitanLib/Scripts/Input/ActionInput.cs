@@ -96,6 +96,7 @@ public class ActionInput : MonoBehaviour
         gamepad = Gamepad.current;
         joystick = Joystick.current;
         //デバッグ用
+        /*
         foreach (var i in Keyboard.current.allKeys)
         {
             if (i.ReadValue() > 0)
@@ -103,6 +104,7 @@ public class ActionInput : MonoBehaviour
                 Debug.Log("押されたキーのpath:" + i.path + "\n");
             }
         }
+        */
 
         //更新
         foreach (ButtonCode code in Enum.GetValues(typeof(ButtonCode)))
