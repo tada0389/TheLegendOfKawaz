@@ -22,6 +22,10 @@ public class ActionInput : MonoBehaviour
     //スティックのしきい値
     float deadline = 0.25f;
 
+    //ゲームパッド
+    Gamepad gamepad;
+    Joystick joystick;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -65,6 +69,14 @@ public class ActionInput : MonoBehaviour
 
     void Start()
     {
+        gamepad = Gamepad.current;
+        joystick = Joystick.current;
+        DebugTextManager.Display(() => "leftTrigger:" + gamepad.leftTrigger.ReadValue().ToString() + "\n");
+        DebugTextManager.Display(() => "leftShoulder:" + gamepad.leftShoulder.ReadValue().ToString() + "\n");
+        DebugTextManager.Display(() => "ButtonEast:" + gamepad.buttonEast.ReadValue().ToString() + "\n");
+        //input.PlatformAction.Dash.ApplyBindingOverride("<Gamepad>/buttonNorth", input.GamepadScheme.bindingGroup);
+        //joystick.
+
         /*
         DebugTextManager.Display(() => "ReadValue:" + input.PlatformAction.Jump.ReadValue<float>().ToString() + "\n");
         DebugTextManager.Display(() => "JumpFlag:" + Instance.actionFlag[ActionCode.Jump].ToString() + "\n");
@@ -79,6 +91,17 @@ public class ActionInput : MonoBehaviour
 
     private void Update()
     {
+        gamepad = Gamepad.current;
+        joystick = Joystick.current;
+        //デバッグ用
+        foreach (var i in Keyboard.current.allKeys)
+        {
+            if (i.ReadValue() > 0)
+            {
+                Debug.Log("押されたキーのpath:" + i.path + "\n");
+            }
+        }
+
         //更新
         foreach (ButtonCode code in Enum.GetValues(typeof(ButtonCode)))
         {
@@ -204,7 +227,7 @@ public class ActionInput : MonoBehaviour
                 case ActionCode.Back:
                     return "Xキー";
                 case ActionCode.Pause:
-                    return "Pキー";
+                    return "Shiftキー";
             }
         }
         else
@@ -216,13 +239,13 @@ public class ActionInput : MonoBehaviour
                 case ActionCode.Shot:
                     return "<sprite=\"ps4\" index=23>";
                 case ActionCode.Dash:
-                    return "<sprite=\"ps4\" index=15>";
+                    return "<sprite=\"ps4\" index=15><sprite=\"ps4\" index=16>";
                 case ActionCode.Decide:
                     return "<sprite=\"ps4\" index=25>";
                 case ActionCode.Back:
                     return "<sprite=\"ps4\" index=26>";
                 case ActionCode.Pause:
-                    return "<sprite=\"ps4\" index=28>";
+                    return "<sprite=\"ps4\" index=21>";
             }
         }
         return "None";
@@ -302,6 +325,7 @@ public class ActionInput : MonoBehaviour
         Debug.Log("OnJump");
     }
     */
+
 }
 
 public enum ButtonCode
