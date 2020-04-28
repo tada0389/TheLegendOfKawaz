@@ -265,6 +265,17 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""3ee38dd9-6922-46f3-a45a-1309d16b4cd9"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""34c1afd5-9349-491d-9e16-1a54cd7403e3"",
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
@@ -355,6 +366,17 @@ public class @PlayerAct : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""9a6b53eb-82b1-4c6f-868e-03210125e662"",
                     ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b95c8172-07ce-4032-a977-22cadd8c1829"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
