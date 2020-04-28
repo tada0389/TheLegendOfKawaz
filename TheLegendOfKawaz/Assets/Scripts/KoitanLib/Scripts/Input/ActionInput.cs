@@ -71,9 +71,11 @@ public class ActionInput : MonoBehaviour
     {
         gamepad = Gamepad.current;
         joystick = Joystick.current;
+        /*
         DebugTextManager.Display(() => "leftTrigger:" + gamepad.leftTrigger.ReadValue().ToString() + "\n");
         DebugTextManager.Display(() => "leftShoulder:" + gamepad.leftShoulder.ReadValue().ToString() + "\n");
         DebugTextManager.Display(() => "ButtonEast:" + gamepad.buttonEast.ReadValue().ToString() + "\n");
+        */
         //input.PlatformAction.Dash.ApplyBindingOverride("<Gamepad>/buttonNorth", input.GamepadScheme.bindingGroup);
         //joystick.
 
