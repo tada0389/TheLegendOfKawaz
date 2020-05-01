@@ -15,8 +15,8 @@ namespace Target
 
         [SerializeField]
         private TextMeshProUGUI timer_text_;
-        [SerializeField]
-        private TextMeshProUGUI clear_text_;
+        //[SerializeField]
+        //private TextMeshProUGUI clear_text_;
 
         private bool started_ = false;
         private bool finished_ = false;
@@ -29,16 +29,33 @@ namespace Target
         [SerializeField]
         private BaseParticle target_break_eff_;
 
+        [SerializeField]
+        private Animator ui_animator_;
+
+        [SerializeField]
+        private float ready_duration_ = 1.5f;
+
+
         private void Start()
         {
             timer_ = 0.0f;
-            started_ = true;
+            started_ = false;
 
             KoitanLib.ObjectPoolManager.Init(target_break_eff_, this, 5);
         }
 
         private void Update()
         {
+            if (!started_)
+            {
+                ready_duration_ -= Time.deltaTime;
+                if(ready_duration_ <= 0f)
+                {
+                    started_ = true;
+                    player_.GetComponent<Actor.Player.Player>().enabled = true;
+                }
+            }
+
             if (!started_ || finished_) return;
             timer_ += Time.deltaTime;
             timer_text_.text = timer_.ToString("f1");
@@ -66,11 +83,12 @@ namespace Target
 
         private IEnumerator FinishFlow(bool clear)
         {
-            clear_text_.gameObject.SetActive(true);
-            if (!clear) clear_text_.text = "Failed";
+            if(clear) ui_animator_.Play("clear");
+            else ui_animator_.Play("failed");
+
             Time.timeScale = 0.1f;
 
-            clear_text_.rectTransform.DOPunchScale(Vector3.one, 3.0f * Time.timeScale);
+            //clear_text_.rectTransform.DOPunchScale(Vector3.one, 3.0f * Time.timeScale);
 
             yield return new WaitForSeconds(3.0f * Time.timeScale);
 
