@@ -25,7 +25,8 @@ public class SettingManager : MonoBehaviour
     private float nowScrollY;
     [SerializeField]
     private float scrollSpeed = 100;
-    private OpenState eState = OpenState.Closed;
+    private OpenState openState = OpenState.Closed;
+    private SceneState sceneState = SceneState.Game;
     public float width;
     private int nowIndex = 0;
     private int maxIndex;
@@ -76,8 +77,8 @@ public class SettingManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
-        switch (eState)
+    {
+        switch (openState)
         {
             case OpenState.Closed:
                 //TimeScaleが小さいときメニューを開けないようにする(仮)
@@ -158,16 +159,23 @@ public class SettingManager : MonoBehaviour
         Sequence seq = DOTween.Sequence()
             .OnStart(() =>
             {
-                eState = OpenState.Opening;
+                openState = OpenState.Opening;
                 Time.timeScale = 0.0f;
             })
             .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.5f)).SetEase(Ease.OutBounce).SetUpdate(true)
             .AppendCallback(() =>
             {
-                StartPlacement();
+                if(isTargetScene())
+                {
+                    RetryMenu();
+                }
+                else
+                {
+                    StartPlacement();
+                }        
                 nowIndex = 0;
                 item.SetActive(true);
-                eState = OpenState.Opened;
+                openState = OpenState.Opened;
             });
     }
 
@@ -178,12 +186,12 @@ public class SettingManager : MonoBehaviour
             {
                 nowIndex = 0;
                 item.SetActive(false);
-                eState = OpenState.Closing;
+                openState = OpenState.Closing;
             })
             .Append(window.rectTransform.DOSizeDelta(Vector2.zero, 0.25f)).SetEase(Ease.InOutSine).SetUpdate(true)
             .AppendCallback(() =>
             {
-                eState = OpenState.Closed;
+                openState = OpenState.Closed;
                 Time.timeScale = 1.0f;
             });
     }
@@ -341,6 +349,38 @@ public class SettingManager : MonoBehaviour
         }
     }
 
+    void RetryMenu()
+    {
+        cursor.gameObject.SetActive(true);
+        skillItem.SetActive(true);
+        achievementItem.gameObject.SetActive(false);
+        maxIndex = 3;
+        headUi.text = "メニュー";
+        textStr = () => "リトライ\nターゲットを壊せをやめる\nメニューをとじる";
+        onSelecteds[0] = SetButtonPush(Retry);
+        onSelecteds[1] = SetButtonPush(ExitTargetMode);
+        onSelecteds[2] = SetButtonPush(CloseWindow);
+        onCancel = CloseWindow;
+    }
+
+    void ExitTargetMode()
+    {
+        FadeManager.FadeIn(1.0f, "ZakkyScene");
+        CloseWindow();
+    }
+
+    void Retry()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        CloseWindow();
+
+    }
+
+    bool isTargetScene()
+    {
+        return SceneManager.GetActiveScene().name.IndexOf("Target") >= 0;
+    }
+
     OnSelected SetFullScreen()
     {
         return () =>
@@ -470,4 +510,12 @@ public class SettingManager : MonoBehaviour
         Opened,
         Closing
     }
+}
+
+public enum SceneState
+{
+    Title,
+    Game,
+    Target,
+    None
 }
