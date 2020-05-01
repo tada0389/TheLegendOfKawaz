@@ -8419,7 +8419,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 69.68}
+  m_Size: {x: 100, y: 74.54}
   m_EdgeRadius: 0
 --- !u!4 &1968732181
 Transform:
@@ -8967,7 +8967,7 @@ MonoBehaviour:
   timer_text_: {fileID: 1417128166}
   clear_text_: {fileID: 658407140}
   player_: {fileID: 865562795}
-  bottom_boader_: -34.7
+  bottom_boader_: -40
   target_break_eff_: {fileID: 22089467}
 --- !u!4 &2141627615
 Transform:
