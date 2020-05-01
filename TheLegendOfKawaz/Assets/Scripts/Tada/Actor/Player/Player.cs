@@ -94,6 +94,9 @@ namespace Actor.Player
         // 地面の摩擦係数
         public float GroundFriction => trb.GroundFriction;
 
+        // 水中にいるかどうか
+        public bool IsUnderWater => trb.IsUnderWater;
+
         // アニメーター
         public Animator animator;
         // オーディオソース
@@ -293,6 +296,9 @@ namespace Actor.Player
             DashJump, // ダッシュジャンプ
             Damage, // ダメージを受けたときのステート
             Dead, // 死亡ステート
+            WaterIdle, // 水中のアイドリング
+            WaterWalk, // 水中の移動
+            WaterJump, // 水中ジャンプ
         }
 
         // ステートマシン
@@ -323,6 +329,12 @@ namespace Actor.Player
         private StateDamage damage_state_;
         [SerializeField]
         private StateDead dead_state_;
+        [SerializeField]
+        private StateWaterIdle water_idle_state_;
+        [SerializeField]
+        private StateWaterWalk water_walk_state_;
+        [SerializeField]
+        private StateWaterJump water_jump_state_;
 #endregion
 
         private Timer shot_anim_timer_;
@@ -396,6 +408,9 @@ namespace Actor.Player
             state_machine_.AddState((int)eState.DashJump, dashjump_state_);
             state_machine_.AddState((int)eState.Damage, damage_state_);
             state_machine_.AddState((int)eState.Dead, dead_state_);
+            state_machine_.AddState((int)eState.WaterIdle, water_idle_state_);
+            state_machine_.AddState((int)eState.WaterWalk, water_walk_state_);
+            state_machine_.AddState((int)eState.WaterJump, water_jump_state_);
 
             // 始めのステートを設定
             state_machine_.SetInitialState((int)eState.Fall);
