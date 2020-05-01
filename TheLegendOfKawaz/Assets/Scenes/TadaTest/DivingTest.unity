@@ -10296,6 +10296,11 @@ PrefabInstance:
       propertyPath: water_walk_state_.add_jump_time_
       value: 0.075
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: water_walk_state_.cant_jump_time_
+      value: 0.075
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
 --- !u!4 &747070664 stripped

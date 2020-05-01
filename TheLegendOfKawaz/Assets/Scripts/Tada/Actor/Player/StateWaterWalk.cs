@@ -24,6 +24,10 @@ namespace Actor.Player
             [SerializeField]
             private float add_jump_time_ = 0.05f;
 
+            // 水中外から水中に入ったときにジャンプできない時間
+            [SerializeField]
+            private float cant_jump_time_ = 0.1f;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -51,10 +55,15 @@ namespace Actor.Player
                 }
 
                 // ジャンプ入力ならジャンプステートへ
+                // ただし，水中に入ったばかりだとジャンプできない
                 if (ActionInput.GetButtonDown(ActionCode.Jump))
                 {
-                    ChangeState((int)eState.WaterJump);
-                    return;
+                    if (PrevStateId != (int)eState.WaterJump && PrevStateId != (int)eState.WaterIdle && Timer < cant_jump_time_) ;
+                    else
+                    {
+                        ChangeState((int)eState.WaterJump);
+                        return;
+                    }
                 }
 
                 // 移動している方向に速度を加える
