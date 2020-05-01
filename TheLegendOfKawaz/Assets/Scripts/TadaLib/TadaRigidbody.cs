@@ -157,7 +157,7 @@ namespace TadaLib
                     {
                         float theta = Mathf.Atan2(hit_down_left.normal.y, hit_down_left.normal.x) - Mathf.PI / 2f;
 
-                        if (theta < Mathf.Deg2Rad * MaxClimbDegree)
+                        if (Mathf.Abs(theta) < MaxClimbDegree / 90f)
                         {
                             float friction_power = (1f - GroundFriction) * 0.2f;
                             float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
@@ -181,7 +181,7 @@ namespace TadaLib
                     {
                         float theta = Mathf.Atan2(hit_down_right.normal.y, hit_down_right.normal.x) - Mathf.PI / 2f;
 
-                        if (theta < Mathf.Deg2Rad * MaxClimbDegree)
+                        if (Mathf.Abs(theta) < MaxClimbDegree / 90f)
                         {
                             float friction_power = (1f - GroundFriction) * 0.2f;
                             float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
@@ -205,7 +205,7 @@ namespace TadaLib
                     {
                         float theta = Mathf.Atan2(hit_down_center.normal.y, hit_down_center.normal.x) - Mathf.PI / 2f;
 
-                        if (theta < Mathf.Deg2Rad * MaxClimbDegree)
+                        if (Mathf.Abs(theta) < MaxClimbDegree / 90f)
                         {
                             float friction_power = (1f - GroundFriction) * 0.2f;
                             float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
