@@ -41,6 +41,13 @@ namespace Actor.Player
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
+                // 水中に落ちた
+                if (data.IsUnderWater)
+                {
+                    ChangeState((int)eState.WaterWalk);
+                    return;
+                }
+
                 // ジャンプ
                 if (ActionInput.GetButtonDown(ActionCode.Jump))
                 {

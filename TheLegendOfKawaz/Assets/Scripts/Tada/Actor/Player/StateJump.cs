@@ -66,6 +66,13 @@ namespace Actor.Player
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
+                // 水中に落ちた
+                if (data.IsUnderWater)
+                {
+                    ChangeState((int)eState.WaterWalk);
+                    return;
+                }
+
                 // 移動している方向に速度を加える
                 float dir = ActionInput.GetAxis(AxisCode.Horizontal);
                 // もし壁キック後なら一定時間は移動は固定

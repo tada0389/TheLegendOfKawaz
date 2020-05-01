@@ -41,6 +41,9 @@ namespace TadaLib
         // 地面の摩擦係数
         public float GroundFriction { private set; get; }
 
+        // 水中の中にいるかどうか
+        public bool IsUnderWater { private set; get; }
+
         private BoxCollider2D hit_box_;
 
         private const float kEpsilon = 0.001f;
@@ -66,6 +69,10 @@ namespace TadaLib
         private void LateUpdate()
         {
             Move();
+
+            // 水中にいるか
+            IsUnderWater = hit_box_.IsTouchingLayers(1 << 14);
+            Debug.Log(IsUnderWater);
         }
 
         private void Move()
