@@ -153,7 +153,7 @@ namespace TadaLib
                         if (theta < Mathf.Deg2Rad * MaxClimbDegree)
                         {
                             float friction_power = (1f - GroundFriction) * 0.2f;
-                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta);
+                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
 
                             //Velocity.x -= Mathf.Sin(theta) * friction_power * Mathf.Abs(1f - rate) / 60f;
                             Velocity.x -= Mathf.Sin(theta) * friction_power / 60f;
@@ -177,7 +177,7 @@ namespace TadaLib
                         if (theta < Mathf.Deg2Rad * MaxClimbDegree)
                         {
                             float friction_power = (1f - GroundFriction) * 0.2f;
-                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta);
+                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
 
                             //Velocity.x -= Mathf.Sin(theta) * friction_power * Mathf.Abs(1f - rate) / 60f;
                             Velocity.x -= Mathf.Sin(theta) * friction_power / 60f;
@@ -201,7 +201,7 @@ namespace TadaLib
                         if (theta < Mathf.Deg2Rad * MaxClimbDegree)
                         {
                             float friction_power = (1f - GroundFriction) * 0.2f;
-                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta);
+                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
 
                             //Velocity.x -= Mathf.Sin(theta) * friction_power * Mathf.Abs(1f - rate) / 60f;
                             Velocity.x -= Mathf.Sin(theta) * friction_power / 60f;
