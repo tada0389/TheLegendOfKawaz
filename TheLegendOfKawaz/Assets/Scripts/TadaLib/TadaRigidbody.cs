@@ -72,7 +72,6 @@ namespace TadaLib
 
             // 水中にいるか
             IsUnderWater = hit_box_.IsTouchingLayers(1 << 14);
-            Debug.Log(IsUnderWater);
         }
 
         private void Move()
@@ -227,16 +226,16 @@ namespace TadaLib
                     }
                 }
             }
-
             // 次に上方向 下向き方向にヒットしたならば，上向き方向はやらない
-            if(!ButtomCollide){
+            if (!ButtomCollide)
+            {
                 // 左端，中央，右端の順に確かめる
                 Vector2 origin_left = origin + new Vector2(-half_size.x * 0.8f, 0f);
                 Vector2 origin_right = origin + new Vector2(half_size.x * 0.8f, 0f);
-                float length = half_size.y;
-                RaycastHit2D hit_up_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, length + d.y), mask_1);
-                RaycastHit2D hit_up_center = LinecastWithGizmos(origin, origin + new Vector2(0f, length + d.y), mask_1);
-                RaycastHit2D hit_up_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, length + d.y), mask_1);
+                RaycastHit2D hit_up_left = LinecastWithGizmos(origin_left, origin_left + new Vector2(0f, length_y + d.y), mask_1);
+                RaycastHit2D hit_up_center = LinecastWithGizmos(origin, origin + new Vector2(0f, length_y + d.y), mask_1);
+                RaycastHit2D hit_up_right = LinecastWithGizmos(origin_right, origin_right + new Vector2(0f, length_y + d.y), mask_1);
+
 
                 // めり込んでいる分は下に下げる
                 float len = half_size.y; // 地面までの通常の距離
@@ -246,6 +245,29 @@ namespace TadaLib
                 if (hit_up_right) tmp_d_y = Mathf.Min(tmp_d_y, hit_up_right.distance - len);
                 d.y = Mathf.Min(d.y, tmp_d_y);
                 TopCollide |= (tmp_d_y <= (d.y + kEpsilon));
+
+                // ヒットしているなら，それぞれの法線ベクトルを取得 坂崖対応
+                // 移動の関心を崖の角度方向にさせる
+                {
+                    if (hit_up_left && d.x < kEpsilon)
+                    {
+                        float theta = Mathf.Atan2(hit_up_left.normal.y, hit_up_left.normal.x) + Mathf.PI / 2f;
+                        d.y += Mathf.Abs(d.x) * Mathf.Sin(theta);
+                        d.x *= Mathf.Cos(theta);
+                    }
+                    else if (hit_up_right && d.x > kEpsilon)
+                    {
+                        float theta = Mathf.Atan2(hit_up_right.normal.y, hit_up_right.normal.x) + Mathf.PI / 2f;
+                        d.y += Mathf.Abs(d.x) * Mathf.Sin(theta);
+                        d.x *= Mathf.Cos(theta);
+                    }
+                    else if (hit_up_center)
+                    {
+                        float theta = Mathf.Atan2(hit_up_center.normal.y, hit_up_center.normal.x) + Mathf.PI / 2f;
+                        d.y += Mathf.Abs(d.x) * Mathf.Sin(theta);
+                        d.x *= Mathf.Cos(theta);
+                    }
+                }
             }
 
             // y軸移動を考慮する
@@ -254,7 +276,6 @@ namespace TadaLib
             // 次に左右
             {
                 // まずはx軸方向
-                if (d.x < 0)
                 {
                     RaycastHit2D hit_left = Physics2D.BoxCast(origin, new Vector2(half_size.x, half_size.y * 0.6f), 0f, Vector2.left,
                         -d.x + half_size.x / 2f, mask_1);
@@ -266,7 +287,7 @@ namespace TadaLib
                     if (hit_left) LeftCollide = true;
 
                 }
-                else if (d.x > 0)
+
                 {
                     RaycastHit2D hit_right = Physics2D.BoxCast(origin, new Vector2(half_size.x, half_size.y * 0.6f), 0f, Vector2.right,
                         d.x + half_size.x / 2f, mask_1);
@@ -275,10 +296,10 @@ namespace TadaLib
                     {
                         d.x = hit_right.distance - half_size.x / 2f;
                     }
-                    if (hit_right) RightCollide = true; ;
+
+                    if (hit_right) RightCollide = true;
                 }
             }
-
             transform.position += (Vector3)d;
         }
 
