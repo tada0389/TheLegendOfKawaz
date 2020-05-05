@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // コレ重要
 
 public class Bomb : MonoBehaviour
 {
@@ -9,7 +10,10 @@ public class Bomb : MonoBehaviour
     [SerializeField]
     private float maxVelo;
     private Rigidbody2D m_rigidbody2D;
+    [HideInInspector]
     public float bounce;
+    [HideInInspector]
+    public BombSpawner m_bombSpawner;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,18 +39,26 @@ public class Bomb : MonoBehaviour
         //床に当たったら床ぶっ壊す
         if (col.tag == "KawazCeil")
         {
-            Destroy(col.gameObject);
+            //Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
             //爆破もする
             Destroy(gameObject);
         }
         else if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったらまけ
         {
-            Debug.Log("まけ");
-            Time.timeScale = 0f;
+            //Debug.Log("まけ");
+            //Time.timeScale = 0f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else if (col.tag == "KawaztanShot")
         {
+            m_bombSpawner.brokenBombsSum++;
+            Debug.Log(m_bombSpawner.brokenBombsSum.ToString());
             Destroy(gameObject);
+        }
+        else if (col.tag == "ToumeiStage")
+        {
+
         }
         else
         {
