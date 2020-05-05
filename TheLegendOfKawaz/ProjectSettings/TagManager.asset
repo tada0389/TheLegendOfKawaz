@@ -8,6 +8,8 @@ TagManager:
   - KawaztanShot
   - CameraTrigger
   - Enemy
+  - KawazWall
+  - KawazCeil
   layers:
   - Default
   - TransparentFX
