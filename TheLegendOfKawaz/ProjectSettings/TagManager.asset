@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - KawazWall
   - KawazCeil
+  - ToumeiStage
   layers:
   - Default
   - TransparentFX

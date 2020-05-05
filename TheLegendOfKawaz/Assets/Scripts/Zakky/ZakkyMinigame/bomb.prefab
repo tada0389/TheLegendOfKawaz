@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1008020056236594120}
   m_Layer: 0
   m_Name: bomb
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,7 +95,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af5bdd3208eda248863b4a0b15552f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelo: 3
+  maxVelo: 5
+  bounce: 0
+  m_bombSpawner: {fileID: 0}
 --- !u!58 &1008020056236594123
 CircleCollider2D:
   m_ObjectHideFlags: 0
