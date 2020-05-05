@@ -50,6 +50,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Koitan/Ending.unity
     guid: cbba8340d15374312a207a9b264f6d92
+  - enabled: 1
+    path: Assets/Scenes/TadaTest/TargetTest.unity
+    guid: f0591246216169043829c138b84edae8
+  - enabled: 1
+    path: Assets/Scenes/ZakkyTest/Scene/TargetZakkyMiddleLevel.unity
+    guid: 49f0d8be658a3094ca24e43fa149b7d8
+  - enabled: 1
+    path: Assets/Scenes/Koitan/Target_jokyu.unity
+    guid: 4c541bf1136dd4cde9dba5df11959cbb
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: cef15f5a95d11294d83f6d5c988c8d91,
       type: 2}
