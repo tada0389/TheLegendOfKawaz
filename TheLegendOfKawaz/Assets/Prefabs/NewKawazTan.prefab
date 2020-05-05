@@ -786,6 +786,19 @@ MonoBehaviour:
   dead_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
+  water_idle_state_:
+    MaxAbsSpeed: {x: 0, y: 0.18}
+    Accel: {x: 0, y: -0.012}
+  water_walk_state_:
+    MaxAbsSpeed: {x: 0.15, y: 0.18}
+    Accel: {x: 0.004, y: -0.012}
+    add_jump_time_: 0.075
+    cant_jump_time_: 0.075
+  water_jump_state_:
+    MaxAbsSpeed: {x: 0.15, y: 0.25}
+    Accel: {x: 0.008, y: -0.012}
+    jump_power_: 0.1
+    rigity_time_: 0.05
   charge_shot_pre_: {fileID: 5178167681758080773}
   charge_shot_end_: {fileID: 5586593142362632429}
   normal_bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0,
@@ -825,7 +838,7 @@ MonoBehaviour:
     max_num_: 2
   - effect_: {fileID: 7389638420637238532, guid: 87d9dfc975f7d3e408a42c7a02b4d1ed,
       type: 3}
-    max_num_: 5
+    max_num_: 10
   - effect_: {fileID: -5165703982448799403, guid: efb357c6260a4484a964ad6ca1873aa4,
       type: 3}
     max_num_: 5

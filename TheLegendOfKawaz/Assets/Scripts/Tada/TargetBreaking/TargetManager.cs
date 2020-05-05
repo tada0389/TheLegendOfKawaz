@@ -94,7 +94,8 @@ namespace Target
 
             Time.timeScale = 1.0f;
             // もどったゆ「
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("ZakkyScene");
         }
     }
 }
