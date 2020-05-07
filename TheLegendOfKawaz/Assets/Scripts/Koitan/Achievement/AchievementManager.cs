@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System.Linq;
 
 public class AchievementManager : MonoBehaviour
 {
@@ -93,11 +94,13 @@ public class AchievementManager : MonoBehaviour
         }
 
         //デバッグ用
+        /*
         if(Input.GetKeyDown(KeyCode.Space))
         {
             AchievementManager.FireAchievement("GameClear");
             AchievementManager.FireAchievement("Kagawa");
         }
+        */
     }
 
     public static void FireAchievement(string key)
@@ -122,6 +125,16 @@ public class AchievementManager : MonoBehaviour
     public static float GetScrollMaxY()
     {
         return Mathf.Max(-450 - 850 + Instance.contents.Length * 200, -450);
+    }
+
+    public static int GetAchieveMax()
+    {
+        return Instance.contents.Length;
+    }
+
+    public static int GetAchieveNowUnlockedNum()
+    {
+        return Instance.contents.Count(c => c.isUnlocked);
     }
 
     enum OpenState

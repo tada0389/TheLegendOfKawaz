@@ -437,6 +437,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 10, z: 0}
   ease_: 15
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &38285658
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -611,6 +614,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: -10, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &52940305
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -704,12 +710,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 8, y: 0.51313305}
-      - {x: 3, y: 0.5417204}
+    - - {x: 8, y: 0.6999999}
+      - {x: 3, y: 0.7}
       - {x: 3, y: 7}
       - {x: 8, y: 4}
-      - {x: 8, y: 0.5575583}
-      - {x: 8, y: 0.51313305}
+      - {x: 8, y: 0.7420444}
+      - {x: 8, y: 0.7}
+      - {x: 8, y: 0.6999999}
 --- !u!114 &274988693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,7 +732,7 @@ MonoBehaviour:
   m_Spline:
     m_IsOpenEnded: 0
     m_ControlPoints:
-    - position: {x: 8, y: 0.51313305, z: 0}
+    - position: {x: 8, y: 0.7, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -734,7 +741,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: 3, y: 0.5417204, z: 0}
+    - position: {x: 3, y: 0.7, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -819,8 +826,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 8a213466b4b3642faa34dd7853586d96, type: 3}
   - {fileID: 21300000, guid: 8c2b3b75a86844168b54c83f67a5fe8e, type: 3}
   m_LocalAABB:
-    m_Center: {x: 4.0036592, y: 3.5, z: -0.00501}
-    m_Extent: {x: 4.0036592, y: 3.5, z: 0.00501}
+    m_Center: {x: 4.0000005, y: 3.5, z: -0.00501}
+    m_Extent: {x: 4.0000005, y: 3.5, z: 0.00501}
 --- !u!4 &274988695
 Transform:
   m_ObjectHideFlags: 0
@@ -4946,6 +4953,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &509278832
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5704,6 +5714,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &806794645
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5822,6 +5835,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 22
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &878755882
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5959,6 +5975,9 @@ MonoBehaviour:
   duration_: 1
   move_distance_: {x: 0, y: -8, z: 0}
   ease_: 24
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &888270246
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6133,6 +6152,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &926224649
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6233,6 +6255,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &965494219
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6519,12 +6544,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 8, y: -0.51603603}
+    - - {x: 8, y: -0.7}
       - {x: 8, y: -4}
       - {x: 3, y: -7}
-      - {x: 3, y: -0.4874487}
-      - {x: 7.9362965, y: -0.5156718}
-      - {x: 8, y: -0.51603603}
+      - {x: 3, y: -0.6999999}
+      - {x: 7.9362965, y: -0.6999999}
+      - {x: 8, y: -0.6999999}
+      - {x: 8, y: -0.7}
 --- !u!114 &995697349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6540,7 +6566,7 @@ MonoBehaviour:
   m_Spline:
     m_IsOpenEnded: 0
     m_ControlPoints:
-    - position: {x: 8, y: -0.51603603, z: 0}
+    - position: {x: 8, y: -0.7, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -6567,7 +6593,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: 3, y: -0.4874487, z: 0}
+    - position: {x: 3, y: -0.7, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -6694,12 +6720,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 4.2548676, y: 2.0783825}
-      - {x: -4.23007, y: 2.0429573}
+    - - {x: 4.2548676, y: 2}
+      - {x: -4.23007, y: 2}
       - {x: -7, y: 6}
       - {x: 7, y: 6}
-      - {x: 4.2898426, y: 2.1283467}
-      - {x: 4.2548676, y: 2.0783825}
+      - {x: 4.2898426, y: 2.050963}
+      - {x: 4.2548676, y: 2}
 --- !u!114 &1262980213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6715,7 +6741,7 @@ MonoBehaviour:
   m_Spline:
     m_IsOpenEnded: 0
     m_ControlPoints:
-    - position: {x: 4.2548676, y: 2.0783825, z: 0}
+    - position: {x: 4.2548676, y: 2, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -6724,7 +6750,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: -4.23007, y: 2.0429573, z: 0}
+    - position: {x: -4.23007, y: 2, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -6809,8 +6835,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 8a213466b4b3642faa34dd7853586d96, type: 3}
   - {fileID: 21300000, guid: 8c2b3b75a86844168b54c83f67a5fe8e, type: 3}
   m_LocalAABB:
-    m_Center: {x: 0, y: 3.3670125, z: -0.00501}
-    m_Extent: {x: 7.000004, y: 3.3670125, z: 0.00501}
+    m_Center: {x: 0, y: 3.3643527, z: -0.00501}
+    m_Extent: {x: 7.000004, y: 3.3643527, z: 0.00501}
 --- !u!4 &1262980215
 Transform:
   m_ObjectHideFlags: 0
@@ -6869,11 +6895,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 3, y: 1}
+    - - {x: 3.5, y: 1.5}
       - {x: 0, y: -4}
-      - {x: -3, y: 1}
-      - {x: 2.9235554, y: 1}
-      - {x: 3, y: 1}
+      - {x: -3.5, y: 1.5}
+      - {x: 3.4108148, y: 1.4999999}
+      - {x: 3.5, y: 1.5}
 --- !u!114 &1333103150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6889,7 +6915,7 @@ MonoBehaviour:
   m_Spline:
     m_IsOpenEnded: 0
     m_ControlPoints:
-    - position: {x: 3, y: 1, z: 0}
+    - position: {x: 3.5, y: 1.5, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -6907,7 +6933,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: -3, y: 1, z: 0}
+    - position: {x: -3.5, y: 1.5, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -6974,8 +7000,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 8a213466b4b3642faa34dd7853586d96, type: 3}
   - {fileID: 21300000, guid: 8c2b3b75a86844168b54c83f67a5fe8e, type: 3}
   m_LocalAABB:
-    m_Center: {x: 0, y: -1.170722, z: -0.00501}
-    m_Extent: {x: 3, y: 2.829278, z: 0.00501}
+    m_Center: {x: 0, y: -0.9063997, z: -0.00501}
+    m_Extent: {x: 3.500002, y: 3.0936003, z: 0.00501}
 --- !u!4 &1333103152
 Transform:
   m_ObjectHideFlags: 0
@@ -6984,7 +7010,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1333103148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -24.07, y: 19.44, z: 0}
+  m_LocalPosition: {x: -24.07, y: 19.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7971,6 +7997,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &1702733226
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8317,6 +8346,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &1783838397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8748,6 +8780,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 30
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &1876788212
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8884,12 +8919,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -3.0000532, y: -0.45889282}
+    - - {x: -3, y: -0.7}
       - {x: -3.0001, y: -7}
       - {x: -8, y: -4}
-      - {x: -8, y: -0.43030453}
-      - {x: -3.063756, y: -0.45852858}
-      - {x: -3.0000532, y: -0.45889282}
+      - {x: -8, y: -0.6999999}
+      - {x: -3.0637035, y: -0.6999999}
+      - {x: -3, y: -0.6999999}
+      - {x: -3, y: -0.7}
 --- !u!114 &1921161627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8905,7 +8941,7 @@ MonoBehaviour:
   m_Spline:
     m_IsOpenEnded: 0
     m_ControlPoints:
-    - position: {x: -3.0000532, y: -0.45889282, z: 0}
+    - position: {x: -3, y: -0.7, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -8932,7 +8968,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: -8, y: -0.43030453, z: 0}
+    - position: {x: -8, y: -0.7, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -8999,8 +9035,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 8a213466b4b3642faa34dd7853586d96, type: 3}
   - {fileID: 21300000, guid: 8c2b3b75a86844168b54c83f67a5fe8e, type: 3}
   m_LocalAABB:
-    m_Center: {x: -4.0036592, y: -3.5, z: -0.005015}
-    m_Extent: {x: 4.0036592, y: 3.5, z: 0.005015}
+    m_Center: {x: -4.0000005, y: -3.5, z: -0.005015}
+    m_Extent: {x: 4.0000005, y: 3.5, z: 0.005015}
 --- !u!4 &1921161629
 Transform:
   m_ObjectHideFlags: 0
@@ -9239,13 +9275,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -3.0000465, y: 0.48451328}
-      - {x: -8, y: 0.48451328}
+    - - {x: -3, y: 0.6999999}
+      - {x: -8, y: 0.7}
       - {x: -8, y: 4}
       - {x: -3, y: 7}
-      - {x: -3.0000458, y: 0.5675254}
-      - {x: -3.0000465, y: 0.48451376}
-      - {x: -3.0000465, y: 0.48451328}
+      - {x: -2.9999998, y: 0.78026664}
+      - {x: -3, y: 0.70000064}
+      - {x: -3, y: 0.6999999}
 --- !u!114 &2000027903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9261,7 +9297,7 @@ MonoBehaviour:
   m_Spline:
     m_IsOpenEnded: 0
     m_ControlPoints:
-    - position: {x: -3.0000465, y: 0.48451328, z: 0}
+    - position: {x: -3, y: 0.7, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -9270,7 +9306,7 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: -8, y: 0.48451328, z: 0}
+    - position: {x: -8, y: 0.7, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -9355,8 +9391,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 8a213466b4b3642faa34dd7853586d96, type: 3}
   - {fileID: 21300000, guid: 8c2b3b75a86844168b54c83f67a5fe8e, type: 3}
   m_LocalAABB:
-    m_Center: {x: -4.0000005, y: 3.5000038, z: -0.00501}
-    m_Extent: {x: 4.0000005, y: 3.5000038, z: 0.00501}
+    m_Center: {x: -4.0000005, y: 3.5, z: -0.00501}
+    m_Extent: {x: 4.0000005, y: 3.5, z: 0.00501}
 --- !u!4 &2000027905
 Transform:
   m_ObjectHideFlags: 0
@@ -9539,6 +9575,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: -5, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &2098208677
 SpriteRenderer:
   m_ObjectHideFlags: 0
