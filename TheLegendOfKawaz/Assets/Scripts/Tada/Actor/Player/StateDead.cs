@@ -18,12 +18,22 @@ namespace Actor.Player
             // ステート間で共有するデータのコピーインスタンス
             private Data data = null;
 
+            [SerializeField]
+            private float scene_transitioin_time_ = 3.0f;
+
+            [SerializeField]
+            private string next_scene_ = "ZakkyScene";
+
+            private bool is_feed_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
                 if (data == null) data = Parent.data_;
 
-                data.velocity = Vector2.zero;
+                data.animator.Play("Cry");
+
+                is_feed_ = false;
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -35,7 +45,13 @@ namespace Actor.Player
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
+                ActorUtils.ProcSpeed(ref data.velocity, Accel, MaxAbsSpeed);
 
+                if (!is_feed_ && Timer > scene_transitioin_time_)
+                {
+                    KoitanLib.FadeManager.FadeIn(0.5f, next_scene_, 0);
+                    is_feed_ = true;
+                }
             }
         }
     }
