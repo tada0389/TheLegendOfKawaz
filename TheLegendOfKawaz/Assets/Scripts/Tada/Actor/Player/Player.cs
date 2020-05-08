@@ -220,7 +220,6 @@ namespace Actor.Player
                     break;
                 default:
                     return false;
-                    break;
             }
 
             return true;
@@ -266,7 +265,6 @@ namespace Actor.Player
                     break;
                 default:
                     return false;
-                    break;
             }
 
             return true;
@@ -416,6 +414,9 @@ namespace Actor.Player
             // ショットのプーリング
             KoitanLib.ObjectPoolManager.Release(normal_bullet_);
             KoitanLib.ObjectPoolManager.Init(normal_bullet_, this, data_.MaxShotNum);
+
+            Vector3 new_pos = TadaScene.TadaSceneManager.GetPrevPosition();
+            if (new_pos != Vector3.zero) transform.position = new_pos;
         }
 
         private void OnDestroy()

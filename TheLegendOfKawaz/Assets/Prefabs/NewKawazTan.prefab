@@ -743,7 +743,7 @@ MonoBehaviour:
     Accel: {x: 0, y: -0.1}
   walk_state_:
     MaxAbsSpeed: {x: 0.16, y: 0.1}
-    Accel: {x: 0.016, y: -0.1}
+    Accel: {x: 0.016, y: 0}
   jump_state_:
     MaxAbsSpeed: {x: 0.16, y: 0.37}
     Accel: {x: 0.016, y: -0.028}
@@ -784,9 +784,9 @@ MonoBehaviour:
     power_: {x: 0.005, y: 0.2}
     rigidity_time_: 0.3
   dead_state_:
-    MaxAbsSpeed: {x: 0, y: 0.25}
-    Accel: {x: 0, y: -0.02}
-    scene_transitioin_time_: 3
+    MaxAbsSpeed: {x: 0, y: 0.2}
+    Accel: {x: 0, y: -0.015}
+    scene_transitioin_time_: 2.5
     next_scene_: ZakkyScene
   water_idle_state_:
     MaxAbsSpeed: {x: 0, y: 0.18}

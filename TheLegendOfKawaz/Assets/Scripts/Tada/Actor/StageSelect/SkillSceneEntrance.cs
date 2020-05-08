@@ -49,7 +49,8 @@ public class SkillSceneEntrance : MonoBehaviour
                 //Scene読み込み
                 //SceneManager.LoadScene(next_scene_);
                 //koitan追加
-                FadeManager.FadeIn(0.5f, next_scene_, 0);
+                //FadeManager.FadeIn(0.5f, next_scene_, 0);
+                TadaScene.TadaSceneManager.LoadScene(next_scene_, 0.5f, transform.position);
                 MessageManager.CloseKanbanWindow();
             }
         }
