@@ -190,6 +190,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: -5, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &38285658
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4251,6 +4254,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 5, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &509278832
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4990,6 +4996,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 3, z: 0}
   ease_: 22
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &878755882
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5127,6 +5136,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 5, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &888270246
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5264,6 +5276,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &965494219
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6219,6 +6234,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &1783838397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6583,6 +6601,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 5, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &1876788212
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7017,6 +7038,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: -5, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &2098208677
 SpriteRenderer:
   m_ObjectHideFlags: 0

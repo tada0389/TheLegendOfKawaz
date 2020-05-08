@@ -63,6 +63,13 @@ namespace Actor.Player
             return Sheet[Level + 1].Item2;
         }
 
+        // n次のスキルの値
+        public int NextsValue(int add_level)
+        {
+            int level = Mathf.Clamp(Level + add_level, Level, Sheet.Count - 1);
+            return Sheet[level].Item1;
+        }
+
         public override string ToString() => Name  +
             " Level : " + Level.ToString() +
             " Value : " + Value.ToString();

@@ -3475,6 +3475,27 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_bullets_.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_bullets_.Array.data[0].bullet_
+      value: 
+      objectReference: {fileID: 4628252163955358299, guid: f9f39f5c4a86769489b8218c4f31bc23,
+        type: 3}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_bullets_.Array.data[0].max_num_
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_effects_.Array.data[3].max_num_
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
 --- !u!1 &1572999354

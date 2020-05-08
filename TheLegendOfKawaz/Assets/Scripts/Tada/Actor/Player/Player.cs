@@ -42,9 +42,6 @@ namespace Actor.Player
 
         public Transform transform;
 
-        // 一時的に取得しているスキルたち
-        private List<bool> temporary_skills_;
-
         // 体力
         public int HP { private set; get; }
         public int MaxHP { private set; get; }
@@ -103,7 +100,8 @@ namespace Actor.Player
         public AudioSource audio;
         public BulletSpawner bullet_spawner_;
 
-        // それぞれのステートのデータ
+        // スキルの一時的な強化数
+        private List<int> temporary_skills_;
 
         // コンストラクタ
         public Data(Player body)
@@ -115,9 +113,6 @@ namespace Actor.Player
             audio = body.GetComponent<AudioSource>();
             trb = body.GetComponent<TadaRigidbody>();
             bullet_spawner_ = body.GetComponent<BulletSpawner>();
-
-            temporary_skills_ = new List<bool>(9);
-            for(int i = 0; i < 9; ++i)  temporary_skills_.Add(false);
 
             var Skills = SkillManager.Instance.Skills;
 
@@ -133,6 +128,11 @@ namespace Actor.Player
             air_jump_num_ = AirJumpNumMax;
             CanAirDashMove = Skills[(int)eSkill.AirDushNum].Value != 0;
             prev_dash_time_ = 0f;
+
+            int sz = System.Enum.GetNames(typeof(eSkill)).Length;
+            temporary_skills_ = new List<int>(sz);
+            for (int i = 0; i < sz; ++i) temporary_skills_.Add(0);
+
         }
 
         // ダッシュできるか
@@ -184,54 +184,51 @@ namespace Actor.Player
 
         public bool AquireTmpSkill(eSkill skill)
         {
-            if (temporary_skills_[(int)skill]) return false;
             var Skills = SkillManager.Instance.Skills;
-            if (Skills[(int)skill].ReachLevelLimit) return false;
+            int v = ++temporary_skills_[(int)skill];
 
             // くそこーど
             switch (skill)
             {
                 case eSkill.HP:
-                    MaxHP = Skills[(int)skill].NextValue;
+                    MaxHP = Skills[(int)skill].NextsValue(v);
                     break;
                 case eSkill.Speed:
-                    InitSpeed = Skills[(int)eSkill.Speed].NextValue / (float)100f;
+                    InitSpeed = Skills[(int)skill].NextsValue(v) / (float)100f;
                     break;
                 case eSkill.Attack:
-                    Power = Skills[(int)eSkill.Attack].NextValue / (float)100f;
+                    Power = Skills[(int)skill].NextsValue(v) / (float)100f;
                     break;
                 case eSkill.AirJumpNum:
-                    AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].NextValue;
+                    AirJumpNumMax = Skills[(int)skill].NextsValue(v);
                     air_jump_num_ = AirJumpNumMax;
                     break;
                 case eSkill.AirDushNum:
-                    CanAirDashMove = Skills[(int)eSkill.AirDushNum].NextValue != 0;
+                    CanAirDashMove = Skills[(int)skill].NextsValue(v) != 0;
                     break;
                 case eSkill.AutoHeal:
-                    AutoHealInterval = Skills[(int)eSkill.AutoHeal].NextValue;
+                    AutoHealInterval = Skills[(int)skill].NextsValue(v);
                     break;
                 case eSkill.WallKick:
-                    CanWallKick = Skills[(int)eSkill.WallKick].NextValue != 0;
+                    CanWallKick = Skills[(int)skill].NextsValue(v) != 0;
                     break;
                 case eSkill.ChargeShot:
-                    ChargeEndTime = Skills[(int)eSkill.ChargeShot].NextValue / 10f;
+                    ChargeEndTime = Skills[(int)skill].NextsValue(v) / 10f;
                     break;
                 case eSkill.ShotNum:
-                    MaxShotNum = Skills[(int)eSkill.ShotNum].NextValue;
+                    MaxShotNum = Skills[(int)skill].NextsValue(v);
                     break;
                 default:
                     return false;
                     break;
             }
-
-            temporary_skills_[(int)skill] = true;
 
             return true;
         }
 
         public bool ReleaseTmpSkill(eSkill skill)
         {
-            if (!temporary_skills_[(int)skill]) return false;
+            int v = --temporary_skills_[(int)skill];
 
             var Skills = SkillManager.Instance.Skills;
 
@@ -239,40 +236,38 @@ namespace Actor.Player
             switch (skill)
             {
                 case eSkill.HP:
-                    MaxHP = Skills[(int)skill].Value;
+                    MaxHP = Skills[(int)skill].NextsValue(v);
                     HP = Mathf.Min(HP, MaxHP);
                     break;
                 case eSkill.Speed:
-                    InitSpeed = Skills[(int)eSkill.Speed].Value / (float)100f;
+                    InitSpeed = Skills[(int)skill].NextsValue(v) / (float)100f;
                     break;
                 case eSkill.Attack:
-                    Power = Skills[(int)eSkill.Attack].Value / (float)100f;
+                    Power = Skills[(int)skill].NextsValue(v) / (float)100f;
                     break;
                 case eSkill.AirJumpNum:
-                    AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].Value;
+                    AirJumpNumMax = Skills[(int)skill].NextsValue(v);
                     air_jump_num_ = Mathf.Min(air_jump_num_, AirJumpNumMax);
                     break;
                 case eSkill.AirDushNum:
-                    CanAirDashMove = Skills[(int)eSkill.AirDushNum].Value != 0;
+                    CanAirDashMove = Skills[(int)skill].NextsValue(v) != 0;
                     break;
                 case eSkill.AutoHeal:
-                    AutoHealInterval = Skills[(int)eSkill.AutoHeal].Value;
+                    AutoHealInterval = Skills[(int)skill].NextsValue(v);
                     break;
                 case eSkill.WallKick:
-                    CanWallKick = Skills[(int)eSkill.WallKick].Value != 0;
+                    CanWallKick = Skills[(int)skill].NextsValue(v) != 0;
                     break;
                 case eSkill.ChargeShot:
-                    ChargeEndTime = Skills[(int)eSkill.ChargeShot].Value / 10f;
+                    ChargeEndTime = Skills[(int)skill].NextsValue(v) / 10f;
                     break;
                 case eSkill.ShotNum:
-                    MaxShotNum = Skills[(int)eSkill.ShotNum].Value;
+                    MaxShotNum = Skills[(int)skill].NextsValue(v);
                     break;
                 default:
                     return false;
                     break;
             }
-
-            temporary_skills_[(int)skill] = false;
 
             return true;
         }
@@ -381,9 +376,6 @@ namespace Actor.Player
         // Start is called before the first frame update
         private void Start()
         {
-            // デバッグ
-            GetSkillSet();
-
             shot_anim_timer_ = new Timer(0.3f);
             muteki_timer_ = new Timer(muteki_time_);
 
@@ -417,6 +409,17 @@ namespace Actor.Player
 
             // デバッグ表示
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -100));
+
+            GetSkillSet();
+
+            // ショットのプーリング
+            KoitanLib.ObjectPoolManager.Release(normal_bullet_);
+            KoitanLib.ObjectPoolManager.Init(normal_bullet_, this, data_.MaxShotNum);
+        }
+
+        private void OnDestroy()
+        {
+            ReleaseSkillSet();
         }
 
         // Update is called once per frame
@@ -596,13 +599,23 @@ namespace Actor.Player
         // デバッグで最初から指定したスキルを持っている
         private void GetSkillSet()
         {
-            SkillManager instance = SkillManager.Instance;
             foreach(InitialSkill skill in demo_skills_)
             {
                 for(int i = 0; i < skill.level_; ++i)
                 {
-                    if(instance.GetSkill((int)skill.type_).Level < skill.level_)
-                        instance.LevelUp((int)skill.type_);
+                    data_.AquireTmpSkill(skill.type_);
+                }
+            }
+        }
+
+        // デバッグで最初に入手したスキルを開放する
+        private void ReleaseSkillSet()
+        {
+            foreach (InitialSkill skill in demo_skills_)
+            {
+                for (int i = 0; i < skill.level_; ++i)
+                {
+                    data_.ReleaseTmpSkill(skill.type_);
                 }
             }
         }
@@ -610,12 +623,26 @@ namespace Actor.Player
         // スキルを一時的に取得する
         public bool AquireTemporarySkill(eSkill skill)
         {
+            if(skill == eSkill.ShotNum) // オブジェクトプーリングを再設定 強引
+            {
+                KoitanLib.ObjectPoolManager.Release(normal_bullet_);
+                bool ok = data_.AquireTmpSkill(skill);
+                KoitanLib.ObjectPoolManager.Init(normal_bullet_, this, data_.MaxShotNum);
+                return ok;
+            }
             return data_.AquireTmpSkill(skill);
         }
 
         // 一時的に取得したスキルを開放する
         public bool ReleaseTemporarySkill(eSkill skill)
         {
+            if (skill == eSkill.ShotNum) // オブジェクトプーリングを再設定 強引
+            {
+                KoitanLib.ObjectPoolManager.Release(normal_bullet_);
+                bool ok = data_.ReleaseTmpSkill(skill);
+                KoitanLib.ObjectPoolManager.Init(normal_bullet_, this, data_.MaxShotNum);
+                return ok;
+            }
             return data_.ReleaseTmpSkill(skill);
         }
 

@@ -29,6 +29,9 @@ namespace Actor.Player
             {
                 if (data == null) data = Parent.data_;
 
+                // 空中ジャンプ数をリセット
+                data.ResetArialJump();
+
                 // アニメーション開始
                 data.animator.Play("Wall");
                 data.animator.SetBool("isWall", true);
