@@ -24,6 +24,10 @@ namespace KoitanLib
 
         public static RawImage image;
         public static bool is_fading { private set; get; }
+        public static OpenState openState = OpenState.Opened;
+        static AsyncOperation async = new AsyncOperation();
+        static float m_duration;
+
 
         private void Awake()
         {
@@ -42,18 +46,37 @@ namespace KoitanLib
         // Start is called before the first frame update
         void Start()
         {
-
+            //DebugTextManager.Display(() => "NowLoading..." + (async.priority * 100f).ToString() + "%\n");
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (openState == OpenState.Closed && async.progress >= 0.9f)
+            {
+                openState = OpenState.Closing;
+                async.allowSceneActivation = true;
+                DOTween.To(
+                () => Instance.fadeImage.Range = 1,          // 何を対象にするのか
+                num => Instance.fadeImage.Range = num,   // 値の更新
+                0,                  // 最終的な値
+                m_duration - 0.1f                // アニメーション時間
+                ).SetUpdate(true).SetDelay(0.1f)
+                .OnComplete(() =>
+                {
+                    is_fading = false;
+                    openState = OpenState.Opened;
+                });
 
+            }
         }
 
         public static void FadeIn(float duration, string next_scene_name, int maskNum = 0)
-        {            
-            var async = SceneManager.LoadSceneAsync(next_scene_name);
+        {
+            if (openState != OpenState.Opened) return;
+            openState = OpenState.Closing;
+            m_duration = duration;
+            async = SceneManager.LoadSceneAsync(next_scene_name);
             Sequence seq = DOTween.Sequence();
             seq.SetUpdate(true);
             seq.OnStart(() =>
@@ -73,20 +96,8 @@ namespace KoitanLib
             }).AppendInterval(duration).SetUpdate(true)
             .AppendCallback(() =>
             {
-                async.allowSceneActivation = true;
-                DOTween.To(
-                () => Instance.fadeImage.Range = 1,          // 何を対象にするのか
-                num => Instance.fadeImage.Range = num,   // 値の更新
-                0,                  // 最終的な値
-                duration                  // アニメーション時間
-                ).SetUpdate(true);
-            }
-            ).AppendInterval(duration).SetUpdate(true)
-            .AppendCallback(() =>
-            {
-                is_fading = false;
+                openState = OpenState.Closed;
             });
-            //image.DOFade(0, duration);            
         }
 
         public static void FadeOut(float duration, string next_scene_name)
@@ -97,5 +108,12 @@ namespace KoitanLib
         }
     }
 
+    public enum OpenState
+    {
+        Closed,
+        Opening,
+        Opened,
+        Closing
+    }
 }
 
