@@ -780,12 +780,14 @@ MonoBehaviour:
     jump_se_2: {fileID: 8300000, guid: 7ac5fdf38a07a4a018c0691d2c398bf5, type: 3}
   damage_state_:
     MaxAbsSpeed: {x: 1, y: 1}
-    Accel: {x: -0.0005, y: -0.0075}
-    power_: {x: 0.005, y: 0.15}
-    rigidity_time_: 0.4
+    Accel: {x: -0.0005, y: -0.01}
+    power_: {x: 0.005, y: 0.2}
+    rigidity_time_: 0.3
   dead_state_:
-    MaxAbsSpeed: {x: 0.5, y: 0}
-    Accel: {x: 0, y: 0}
+    MaxAbsSpeed: {x: 0, y: 0.25}
+    Accel: {x: 0, y: -0.02}
+    scene_transitioin_time_: 3
+    next_scene_: ZakkyScene
   water_idle_state_:
     MaxAbsSpeed: {x: 0, y: 0.18}
     Accel: {x: 0, y: -0.012}
@@ -823,9 +825,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pre_pooled_bullets_:
-  - bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0,
-      type: 3}
-    max_num_: 3
   - bullet_: {fileID: 4628252163955358299, guid: f9f39f5c4a86769489b8218c4f31bc23,
       type: 3}
     max_num_: 2
@@ -841,7 +840,7 @@ MonoBehaviour:
     max_num_: 10
   - effect_: {fileID: -5165703982448799403, guid: efb357c6260a4484a964ad6ca1873aa4,
       type: 3}
-    max_num_: 5
+    max_num_: 10
   - effect_: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
       type: 3}
     max_num_: 2

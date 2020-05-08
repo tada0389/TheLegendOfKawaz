@@ -357,6 +357,7 @@ namespace Actor.Player
 
         [SerializeField]
         private float muteki_time_ = 2.0f;
+        private bool is_nodamage_ = true;
         [SerializeField]
         private GameObject mesh_;
         private Timer muteki_timer_;
@@ -426,11 +427,7 @@ namespace Actor.Player
         private void Update()
         {
             if (Time.timeScale < 1e-6) return;
-            if (state_machine_.CurrentStateId == (int)eState.Dead)
-            {
-                data_.ReflectVelocity(true);
-                return; // 本当はダメなので変える
-            }
+
             // 接地しているかどうかなどで，状態を変更する
             RefectRigidbody();
 
@@ -451,8 +448,10 @@ namespace Actor.Player
             // 速度に応じて移動する
             data_.ReflectVelocity(true);
 
-            // ごみ
-            if(data_.AutoHealInterval > 0.01f && !heal_inited_)
+            if (state_machine_.CurrentStateId == (int)eState.Dead) return;
+
+            // ごみ 自動回復のエフェクトを出すか出さないか
+            if (data_.AutoHealInterval > 0.01f && !heal_inited_)
             {
                 heal_ctrl_.Init(data_.AutoHealInterval);
                 heal_inited_ = true;
@@ -565,8 +564,11 @@ namespace Actor.Player
         // ダメージを受ける
         public override void Damage(int damage)
         {
-            if (!muteki_timer_.IsTimeout()) return;
+            if (!is_nodamage_ && !muteki_timer_.IsTimeout()) return;
             if (state_machine_.CurrentStateId == (int)eState.Damage) return;
+            if (state_machine_.CurrentStateId == (int)eState.Dead) return;
+
+            is_nodamage_ = false;
             DamageDisplayer.eDamageType type = DamageDisplayer.eDamageType.Mini;
             if (damage >= 3) type = DamageDisplayer.eDamageType.Big;
             else if (damage >= 2) type = DamageDisplayer.eDamageType.Normal;
