@@ -56,7 +56,7 @@ public class SettingManager : MonoBehaviour
     private AudioSource audioSource;
 
     private int ScreenSizeNum = 1;
-    private bool isPostEffect = false;
+    private bool isPostEffect = true;
 
 
 
