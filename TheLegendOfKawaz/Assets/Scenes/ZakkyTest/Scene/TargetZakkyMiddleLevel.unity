@@ -3877,7 +3877,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 5
-  bomb: {fileID: 1008020056236594121, guid: ee94136665400c443a9d91cb54994aee, type: 3}
+  bomb: {fileID: 1008020056236594122, guid: ee94136665400c443a9d91cb54994aee, type: 3}
+  bomFX: {fileID: 8826173852865939361, guid: db19ec2b7abd8405f9c7323400d53c1b, type: 3}
   brokenBombsSum: 0
 --- !u!4 &532370632
 Transform:
@@ -4175,10 +4176,6 @@ PrefabInstance:
       propertyPath: pre_pooled_bullets_.Array.data[0].max_num_
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 69060419, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
-      propertyPath: MaxClimbDegree
-      value: 60
-      objectReference: {fileID: 0}
     - target: {fileID: 2131037086502031393, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_Mesh
@@ -4258,6 +4255,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 69060419, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
+      propertyPath: MaxClimbDegree
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
@@ -7010,7 +7011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2141627614
 MonoBehaviour:
   m_ObjectHideFlags: 0
