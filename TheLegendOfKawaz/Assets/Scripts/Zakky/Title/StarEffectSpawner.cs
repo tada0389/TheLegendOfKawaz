@@ -31,22 +31,9 @@ public class StarEffectSpawner : MonoBehaviour
     {
         //星エフェクト出す
         //なんかparticle生成
-        //GameObject obj = Instantiate(m_particle, transform.position, Quaternion.Euler(Vector3.zero));
         //角度とスピードランダムで取得
         // 子オブジェクトを全て取得する
-        //foreach (Transform childTransform in transform)
-        //{
-        //    Debug.Log(childTransform.gameObject.name);
-        //        
-        //    childTransform.gameObject.SetActive(true);
-        //    childTransform.GetComponent<SpriteFadeout>().ReStart();
-        //    childTransform.position = pos;
-        //    float dir = Random.Range(0, 359);
-        //    float spd = Random.Range(1f, 5.0f);
-        //    //それらを代入
-        //    Vector2 vec2 = new Vector2(Mathf.Cos(dir * Mathf.Deg2Rad), Mathf.Sin(dir * Mathf.Deg2Rad)) * spd;
-        //    childTransform.GetComponent<Rigidbody2D>().velocity = vec2;
-        //}
+
         for (int i = 0; i < star.Length; i++)
         {
             star[i].SetActive(true);

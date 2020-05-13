@@ -8,7 +8,6 @@ public class TitlePostProcessing : MonoBehaviour
 {
     [SerializeField]
     PostProcessVolume postProcesser;
-    //FadeManager fadeManager;
     // Start is called before the first frame update
     void Start()
     {
