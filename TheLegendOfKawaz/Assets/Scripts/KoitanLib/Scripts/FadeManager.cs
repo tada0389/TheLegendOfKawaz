@@ -54,7 +54,11 @@ namespace KoitanLib
         {
             if (openState == OpenState.Closed && async.progress >= 0.9f)
             {
-                openState = OpenState.Closing;
+                if (Time.timeScale == 0.1f)
+                {
+                    Time.timeScale = 1.0f;
+                }
+                openState = OpenState.Opening;
                 async.allowSceneActivation = true;
                 DOTween.To(
                 () => Instance.fadeImage.Range = 1,          // 何を対象にするのか
@@ -73,7 +77,8 @@ namespace KoitanLib
 
         public static void FadeIn(float duration, string next_scene_name, int maskNum = 0)
         {
-            if (openState != OpenState.Opened) return;
+            //if (openState != OpenState.Opened) return;
+            Time.timeScale = 0.1f;
             openState = OpenState.Closing;
             m_duration = duration;
             async = SceneManager.LoadSceneAsync(next_scene_name);
