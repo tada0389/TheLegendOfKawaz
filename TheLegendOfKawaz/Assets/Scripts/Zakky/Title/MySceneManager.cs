@@ -37,11 +37,4 @@ public class MySceneManager : MonoBehaviour
         });
     }
 
-    //public void Fadein()
-    //{
-    //    fade.FadeIn(0.01f, () =>
-    //    {
-    //        fade.FadeOut(1);
-    //    });
-    //}
 }
