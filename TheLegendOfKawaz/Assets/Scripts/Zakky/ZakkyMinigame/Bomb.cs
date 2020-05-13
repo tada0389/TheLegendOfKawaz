@@ -9,6 +9,9 @@ public class Bomb : MonoBehaviour
     //private Vector2 iniVelo;
     [SerializeField]
     private float maxVelo;
+    [SerializeField]
+    BaseParticle bomFX;
+
     private Rigidbody2D m_rigidbody2D;
     [HideInInspector]
     public float bounce;
@@ -42,7 +45,9 @@ public class Bomb : MonoBehaviour
             //Destroy(col.gameObject);
             col.gameObject.SetActive(false);
             //爆破もする
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
+            gameObject.SetActive(false);
         }
         else if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったらまけ
         {
@@ -54,7 +59,9 @@ public class Bomb : MonoBehaviour
         {
             m_bombSpawner.brokenBombsSum++;
             Debug.Log(m_bombSpawner.brokenBombsSum.ToString());
-            Destroy(gameObject);
+            TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
         }
         else if (col.tag == "ToumeiStage")
         {
