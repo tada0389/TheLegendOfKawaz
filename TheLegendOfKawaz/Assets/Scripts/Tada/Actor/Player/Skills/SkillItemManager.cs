@@ -324,7 +324,7 @@ namespace SkillItem
                     //icon_back_.sprite = skill_icon_.sprite;
                     levelup_message_.DOScale(Vector3.one, levelup_message_time_).SetEase(levelup_ease_).OnComplete(
                         () => { levelup_message_.DOScale(Vector3.zero, levelup_message_time_ / 2f); ChangeState((int)eState.Select); });
-                    SkillManager.Instance.SpendSkillPoint(Parent.skills_[Parent.select_index_].NeedPoint);
+                    SkillManager.Instance.SpendSkillPoint(Parent.skills_[Parent.select_index_].NeedPoint, Vector3.zero);
                     Parent.skills_[Parent.select_index_].LevelUp();
                     if(SkillManager.Instance.SkillPoint == 0) Parent.skill_point_text_.text = "<color=red>" + SkillManager.Instance.SkillPoint.ToString() + "SP</color>";
                     else Parent.skill_point_text_.text = SkillManager.Instance.SkillPoint.ToString() + "SP";

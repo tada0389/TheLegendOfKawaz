@@ -65,9 +65,10 @@ namespace Actor.Player
         }
 
         // スキルポイントを消費する できないならfalse
-        public bool SpendSkillPoint(int point)
+        public bool SpendSkillPoint(int point, Vector3 point_spawner_pos)
         {
             if (SkillPoint < point) return false;
+            skill_point_ctrl_.SpendSkillPoint(point, point_spawner_pos);
             SkillPoint -= point;
             return true;
         }

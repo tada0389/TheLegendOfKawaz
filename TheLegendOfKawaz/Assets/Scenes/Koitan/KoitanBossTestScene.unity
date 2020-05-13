@@ -4271,6 +4271,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 156820138238292206, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: demo_skills_.Array.size
@@ -4294,11 +4299,6 @@ PrefabInstance:
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: demo_skills_.Array.data[1].level_
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 156820138238292206, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1421661576, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
