@@ -28,7 +28,7 @@ namespace TadaScene
             string cur_scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             if (!dict_.ContainsKey(cur_scene))
             {
-                UnityEngine.Assertions.Assert.IsTrue(false, "このシーンでは前回の座標が登録されていません");
+                //UnityEngine.Assertions.Assert.IsTrue(false, "このシーンでは前回の座標が登録されていません");
                 return Vector3.zero;
             }
             else return dict_[cur_scene];
