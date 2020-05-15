@@ -19,14 +19,19 @@ public class Ciel : MonoBehaviour
     void Update()
     {
         //fiverTime -= Time.deltaTime;
-        if (m_bombSpawnerScript.brokenBombsSum >= 20)
+        //if (m_bombSpawnerScript.brokenBombsSum >= 20)
+        //{
+        //    
+        //}
+    }
+
+    public void CielRespawner()
+    {
+        //m_bombSpawnerScript.brokenBombsSum = 0;
+        for (int i = 0; i < ciels.Length; i++)
         {
-            m_bombSpawnerScript.brokenBombsSum = 0;
-            for (int i = 0; i < ciels.Length; i++)
-            {
-                ciels[i].SetActive(true);
-            }
-            //fiverTime = 10f;
+            ciels[i].SetActive(true);
         }
+        //fiverTime = 10f;
     }
 }
