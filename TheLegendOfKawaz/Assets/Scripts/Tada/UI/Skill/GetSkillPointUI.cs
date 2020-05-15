@@ -89,17 +89,17 @@ namespace SkillUI
         }
 
         // ポイントの取得を開始する
-        public void GainSkillPoint(int point, Vector3 point_spawner_pos)
+        public void GainSkillPoint(int point, Vector3 point_spawner_pos, float time_scale = 1.0f)
         {
             cam_ = Camera.main;
             point_ = Actor.Player.SkillManager.Instance.SkillPoint;
             point_text_.text = point_.ToString();
             Vector3 pos = cam_.WorldToScreenPoint(point_spawner_pos);
-            StartCoroutine(GetFlow(point, pos));
+            StartCoroutine(GetFlow(point, pos, time_scale));
         }
 
         // ポイントの減少を開始する
-        public void SpendSkillPoint(int point, Vector3 point_spawner_pos)
+        public void SpendSkillPoint(int point, float time_scale = 1.0f)
         {
             cam_ = Camera.main;
             int add = 0;
@@ -111,7 +111,7 @@ namespace SkillUI
             if(!now_spending_) point_text_.text = point_.ToString();
             Vector3 pos = new Vector3(665f, 472f, 0f);//cam_.WorldToScreenPoint(point_spawner_pos);
             // UIを出現
-            if(!now_spending_) FeedUI(true);
+            if(!now_spending_) FeedUI(true, time_scale);
             if (now_spending_)
             {
                 StopAllCoroutines();
@@ -124,21 +124,20 @@ namespace SkillUI
                 icons_.Clear();
                 added_point_ = 0;
             }
-            StartCoroutine(SpendFlow(point + add, pos));
+            StartCoroutine(SpendFlow(point + add, pos, time_scale));
         }
 
         // コルーチンで処理
-        private IEnumerator GetFlow(int point, Vector3 point_spawner_pos)
+        private IEnumerator GetFlow(int point, Vector3 point_spawner_pos, float time_scale)
         {
-            feed_timer_.TimeReset();
-            point_get_timer_.TimeReset();
+            feed_timer_ = new Timer(feed_duration_ * time_scale);
 
-            FeedUI(true);
+            FeedUI(true, time_scale);
 
             // いくつのアイコンを生成させるか
             int icon_num = point / icon_per_point_;
             // 一フレームで生成するアイコンの数
-            float icon_num_per_sec = icon_num / feed_duration_;
+            float icon_num_per_sec = icon_num / (feed_duration_ * time_scale);
 
             int icon_cnt = 0;
             // フェードの時間にポイント分のオブジェクトをプーリングしておく
@@ -154,24 +153,27 @@ namespace SkillUI
             PoolingIcon(icon_num - icon_cnt);
 
             // アイコンを出現させる
+
+            point_get_timer_ = new Timer(icon_get_duration_ * time_scale);
+
             // 徐々に出現
-            icon_num_per_sec = icon_num / icon_get_duration_;
+            icon_num_per_sec = icon_num / (icon_get_duration_ * time_scale);
             icon_cnt = 0;
             // フェードの時間にポイント分のオブジェクトを生成しておく
             while (!point_get_timer_.IsTimeout())
             {
                 int new_icon_num = (int)(point_get_timer_.GetTime() * icon_num_per_sec) - icon_cnt;
-                CreateIcon(new_icon_num, point_spawner_pos, icon_cnt);
+                CreateIcon(new_icon_num, point_spawner_pos, icon_cnt, time_scale);
                 icon_cnt += new_icon_num;
                 yield return null;
             }
             // 足りない分のアイコンを生成する
-            CreateIcon(icon_num - icon_cnt, point_spawner_pos, icon_cnt);
+            CreateIcon(icon_num - icon_cnt, point_spawner_pos, icon_cnt, time_scale);
 
-            yield return new WaitForSeconds(icon_move_duration_ + feed_wait_time_);
+            yield return new WaitForSeconds((icon_move_duration_ + feed_wait_time_) * time_scale);
 
             // UIを消す
-            FeedUI(false);
+            FeedUI(false, time_scale);
 
             // 後処理
             icons_.Clear();
@@ -189,7 +191,7 @@ namespace SkillUI
         }
 
         // アイコンを出現させる
-        private void CreateIcon(int num, Vector3 point_spawner_pos, int start_index)
+        private void CreateIcon(int num, Vector3 point_spawner_pos, int start_index, float time_scale = 1.0f)
         {
             for (int i = 0; i < num; ++i)
             {
@@ -199,9 +201,9 @@ namespace SkillUI
                 icon.gameObject.SetActive(true);
                 icon.rectTransform.position = point_spawner_pos;
                 // 終了のコールバックで再度DOMoveして，その終了のコールバックで破棄するごり押し
-                icon.rectTransform.DOMove(icon.rectTransform.position + (Vector3)target, icon_appear_duration).SetEase(icon_appear_ease_).OnComplete(() =>
+                icon.rectTransform.DOMove(icon.rectTransform.position + (Vector3)target, icon_appear_duration * time_scale).SetEase(icon_appear_ease_).OnComplete(() =>
                 {
-                    icon.rectTransform.DOMove(point_icon_.rectTransform.position, icon_move_duration_).SetEase(icon_move_ease_).OnComplete(() =>
+                    icon.rectTransform.DOMove(point_icon_.rectTransform.position, icon_move_duration_ * time_scale).SetEase(icon_move_ease_).OnComplete(() =>
                     {
                         ++added_point_;
                         Destroy(icon.gameObject);
@@ -211,17 +213,17 @@ namespace SkillUI
         }
 
         // UIをフェードで出現させる
-        private void FeedUI(bool feedin)
+        private void FeedUI(bool feedin, float time_scale = 1.0f)
         {
             if (feedin)
             {
-                point_icon_.DOFade(1.0f, feed_duration_);
-                point_text_.DOFade(1.0f, feed_duration_);
+                point_icon_.DOFade(1.0f, feed_duration_ * time_scale);
+                point_text_.DOFade(1.0f, feed_duration_ * time_scale);
             }
             else
             {
-                point_icon_.DOFade(0.0f, feed_duration_);
-                point_text_.DOFade(0.0f, feed_duration_);
+                point_icon_.DOFade(0.0f, feed_duration_ * time_scale);
+                point_text_.DOFade(0.0f, feed_duration_ * time_scale);
             }
         }
 
@@ -232,21 +234,21 @@ namespace SkillUI
             point_ += add_point * icon_per_point_;
             if(add_point > 0) point_ = Mathf.Min(SkillManager.Instance.SkillPoint, point_);
             else if(add_point < 0) point_ = Mathf.Max(SkillManager.Instance.SkillPoint, point_);
+            point_ = Mathf.Max(0, point_);
             point_text_.text = point_.ToString();
         }
 
         // コルーチンで処理
-        private IEnumerator SpendFlow(int point, Vector3 point_spawner_pos)
+        private IEnumerator SpendFlow(int point, Vector3 point_spawner_pos, float time_scale = 1.0f)
         {
-            feed_timer_.TimeReset();
-            point_get_timer_.TimeReset();
+            feed_timer_ = new Timer(feed_duration_ * time_scale);
 
             now_spending_ = true;
 
             // いくつのアイコンを生成させるか
             int icon_num = point / icon_per_point_;
             // 一フレームで生成するアイコンの数
-            float icon_num_per_sec = icon_num / feed_duration_;
+            float icon_num_per_sec = icon_num / (feed_duration_ * time_scale);
 
             int icon_cnt = 0;
             // フェードの時間にポイント分のオブジェクトをプーリングしておく
@@ -262,24 +264,28 @@ namespace SkillUI
             PoolingIcon(icon_num - icon_cnt);
 
             // アイコンを出現させる
+
+            point_get_timer_ = new Timer(icon_get_duration_ * time_scale);
+
             // 徐々に出現
-            icon_num_per_sec = icon_num / icon_get_duration_;
+            icon_num_per_sec = icon_num / (icon_get_duration_ * time_scale);
             icon_cnt = 0;
             // フェードの時間にポイント分のオブジェクトを生成しておく
             while (!point_get_timer_.IsTimeout())
             {
                 int new_icon_num = (int)(point_get_timer_.GetTime() * icon_num_per_sec) - icon_cnt;
-                CreateIconForSpend(new_icon_num, point_spawner_pos, icon_cnt);
+                CreateIconForSpend(new_icon_num, point_spawner_pos, icon_cnt, time_scale);
                 icon_cnt += new_icon_num;
                 yield return null;
             }
-            // 足りない分のアイコンを生成する
-            CreateIconForSpend(icon_num - icon_cnt, point_spawner_pos, icon_cnt);
 
-            yield return new WaitForSeconds(icon_move_duration_ + feed_duration_);
+            // 足りない分のアイコンを生成する
+            CreateIconForSpend(icon_num - icon_cnt, point_spawner_pos, icon_cnt, time_scale);
+
+            yield return new WaitForSeconds((icon_move_duration_ + feed_duration_) * time_scale);
 
             // UIを消す
-            FeedUI(false);
+            FeedUI(false, time_scale);
 
             now_spending_ = false;
 
@@ -288,7 +294,7 @@ namespace SkillUI
         }
 
         // アイコンを出現させる
-        private void CreateIconForSpend(int num, Vector3 point_spawner_pos, int start_index)
+        private void CreateIconForSpend(int num, Vector3 point_spawner_pos, int start_index, float time_scale = 1.0f)
         {
             for (int i = 0; i < num; ++i)
             {
@@ -299,10 +305,10 @@ namespace SkillUI
                 icon.gameObject.SetActive(true);
                 icon.rectTransform.position = point_spawner_pos;
                 // 終了のコールバックで再度DOMoveして，その終了のコールバックで破棄するごり押し
-                icon.rectTransform.DOMove(icon.rectTransform.position + (Vector3)target, icon_appear_duration).SetEase(icon_appear_ease_).OnComplete(() =>
+                icon.rectTransform.DOMove(icon.rectTransform.position + (Vector3)target, icon_appear_duration * time_scale).SetEase(icon_appear_ease_).OnComplete(() =>
                 {
                     --added_point_;
-                    icon.DOFade(0.0f, icon_appear_duration).SetEase(icon_move_ease_).OnComplete(() =>
+                    icon.DOFade(0.0f, icon_appear_duration * time_scale).SetEase(icon_move_ease_).OnComplete(() =>
                     {
                         Destroy(icon.gameObject);
                     });

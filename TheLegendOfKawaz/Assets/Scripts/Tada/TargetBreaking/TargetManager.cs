@@ -4,6 +4,8 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using TargetBreaking;
+using Actor.Player;
 
 namespace Target
 {
@@ -85,6 +87,12 @@ namespace Target
         {
             if(clear) ui_animator_.Play("clear");
             else ui_animator_.Play("failed");
+
+            if (!clear)
+            {
+                if (TargetSelectManager.CurStageData != null) 
+                    SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.1f);
+            }
 
             Time.timeScale = 0.1f;
 

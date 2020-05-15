@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Actor.Player;
 using TadaLib;
+using UnityEditorInternal;
 
 /// <summary>
 /// プレイヤーのパラメータを管理するクラス
@@ -58,19 +59,19 @@ namespace Actor.Player
         public bool LevelUp(int id) => Skills[id].LevelUp();
 
         // スキルポイントを獲得する
-        public void GainSkillPoint(int point, Vector3 point_spawner_pos)
+        public void GainSkillPoint(int point, Vector3 point_spawner_pos, float time_scale = 1.0f)
         {
-            skill_point_ctrl_.GainSkillPoint(point, point_spawner_pos);
+            if (time_scale < 1e-6) return;
+            skill_point_ctrl_.GainSkillPoint(point, point_spawner_pos, time_scale);
             SkillPoint += point;
         }
 
         // スキルポイントを消費する できないならfalse
-        public bool SpendSkillPoint(int point, Vector3 point_spawner_pos)
+        public void SpendSkillPoint(int point, float time_scale = 1.0f)
         {
-            if (SkillPoint < point) return false;
-            skill_point_ctrl_.SpendSkillPoint(point, point_spawner_pos);
+            if (time_scale < 1e-6) return;
+            skill_point_ctrl_.SpendSkillPoint(point, time_scale);
             SkillPoint -= point;
-            return true;
         }
     }
 } // namespace Actor.Player
