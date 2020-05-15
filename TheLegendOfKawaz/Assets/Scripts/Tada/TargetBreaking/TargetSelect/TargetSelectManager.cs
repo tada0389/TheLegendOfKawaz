@@ -74,6 +74,8 @@ namespace TargetBreaking
         // 今見てるインデックス // firstがグレード選び secondが始めるかどうか
         private TadaLib.Pair<int, int> index_;
 
+        private static int prev_stage_index_;
+
         // 難易度選択中か
         private bool selecting_grade_;
 
@@ -106,9 +108,9 @@ namespace TargetBreaking
         // Start is called before the first frame update
         private void Awake()
         {
-            index_ = new TadaLib.Pair<int, int>(0, 0);
+            index_ = new TadaLib.Pair<int, int>(prev_stage_index_, 0);
             selecting_grade_ = true;
-            grades_[0].color = Color.red;
+            grades_[prev_stage_index_].color = Color.red;
         }
 
         // Update is called once per frame
@@ -171,6 +173,7 @@ namespace TargetBreaking
                     is_feeding_ = true;
                     // 実際に遊ぶ
                     CurStageData = stages_[index_.first];
+                    prev_stage_index_ = index_.first;
                     KoitanLib.FadeManager.FadeIn(0.5f, stages_[index_.first].NextScene);
 
                 }
@@ -213,7 +216,7 @@ namespace TargetBreaking
             needpoint_text_.text = "必要SP : " + data.NeedPoint.ToString();
             gold_text_.text =   "Gold      " + data.GoldBoaderTime.ToString("F1") + "s   -> " + data.GoldReward + "SP";
             silver_text_.text = "Silver    " + data.SilverBoaderTime.ToString("F1") + "s   -> " + data.SilverReward + "SP";
-            bronze_text_.text = "Bronze   " + data.GoldBoaderTime.ToString("F1") + "s   -> " + data.BronzeReward + "SP";
+            bronze_text_.text = "Bronze   " + data.BronzeBoaderTime.ToString("F1") + "s   -> " + data.BronzeReward + "SP";
             other_text_.text =  "Other     " + data.OtherReward + "SP";
             developer_text_.text = "Developer Time  :  " + data.DeveloperTime.ToString("F1") + "s";
         }

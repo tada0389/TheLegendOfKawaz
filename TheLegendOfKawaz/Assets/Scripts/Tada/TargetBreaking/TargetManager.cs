@@ -98,7 +98,7 @@ namespace Target
                     if (timer_ <= data.GoldBoaderTime) reward = data.GoldReward;
                     else if (timer_ <= data.SilverBoaderTime) reward = data.SilverReward;
                     else if (timer_ <= data.BronzeBoaderTime) reward = data.BronzeReward;
-                    SkillManager.Instance.GainSkillPoint(reward, Camera.main.transform.position, 0.05f);
+                    SkillManager.Instance.GainSkillPoint(reward, Camera.main.transform.position, 0.03f);
                 }
                 else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
             }
