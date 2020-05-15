@@ -14,6 +14,8 @@ public class EndingManager : MonoBehaviour
     [SerializeField]
     private GameObject lastObj;
     [SerializeField]
+    private GameObject exObj;
+    [SerializeField]
     private SpriteRenderer makuSpr;
     [SerializeField]
     private TextMeshPro timeMesh;
@@ -34,8 +36,10 @@ public class EndingManager : MonoBehaviour
         TimeSpan ts = new TimeSpan(0, 0, (int)TimeRecoder.GlobalTime);
         timeMesh.text = ts.ToString() + "\n" + AchievementManager.GetAchieveNowUnlockedNum().ToString() + "/" + AchievementManager.GetAchieveMax();
         lastObj.SetActive(false);
-        startObj.gameObject.SetActive(true);
+        exObj.SetActive(false);
+        startObj.SetActive(true);
         makuSpr.color = Color.black;
+
         seq = DOTween.Sequence()
             .Append(makuSpr.DOFade(0f, 1f))
             .AppendInterval(4f)
@@ -44,7 +48,22 @@ public class EndingManager : MonoBehaviour
             .AppendInterval(71f)
             .AppendCallback(() => lastObj.SetActive(true))
             .Append(makuSpr.DOFade(0f, 2f))
-            .AppendCallback(() => canSkip = true);
+            .AppendInterval(1f)
+            .Append(makuSpr.DOFade(1f, 1f))
+            .AppendCallback(() =>
+            {
+                makuSpr.sortingOrder = 30;
+                lastObj.SetActive(false);
+                exObj.SetActive(true);
+            })
+            .Append(makuSpr.DOFade(0f, 1f))
+            .AppendCallback(() =>
+            {
+                canSkip = true;
+            });
+
+
+        //.AppendCallback(() => canSkip = true);
     }
 
     // Update is called once per frame
