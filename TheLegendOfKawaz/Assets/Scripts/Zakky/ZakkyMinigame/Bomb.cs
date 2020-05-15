@@ -12,6 +12,7 @@ public class Bomb : MonoBehaviour
     [SerializeField]
     BaseParticle bomFX;
     //[SerializeField]
+    MiniGamePostProcessing m_miniPostProcessing;
     Gage m_gage;
 
     private Rigidbody2D m_rigidbody2D;
@@ -23,6 +24,7 @@ public class Bomb : MonoBehaviour
     void Start()
     {
         m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_miniPostProcessing = GameObject.Find("PostProcessVolume").GetComponent<MiniGamePostProcessing>();
         m_gage = GameObject.Find("Gage").GetComponent<Gage>();
         //m_rigidbody2D.velocity = IniVelo;
     }
@@ -49,7 +51,11 @@ public class Bomb : MonoBehaviour
             col.gameObject.SetActive(false);
             //爆破もする
             //Destroy(gameObject);
+            //bloom関数呼ぶ
+            m_miniPostProcessing.ExplotionLight();
+            //爆破エフェクト
             TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
+            //used = false;
             gameObject.SetActive(false);
         }
         else if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったらまけ
@@ -63,6 +69,8 @@ public class Bomb : MonoBehaviour
             //m_bombSpawner.brokenBombsSum++;
             m_gage.bombNumIncrimenter();
             //Debug.Log(m_bombSpawner.brokenBombsSum.ToString());
+            //bloom関数呼ぶ
+            m_miniPostProcessing.ExplotionLight();
             TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
             gameObject.SetActive(false);
             //Destroy(gameObject);
