@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using TargetBreaking;
 using Actor.Player;
+using System.Threading;
 
 namespace Target
 {
@@ -88,10 +89,18 @@ namespace Target
             if(clear) ui_animator_.Play("clear");
             else ui_animator_.Play("failed");
 
-            if (!clear)
+            if (TargetSelectManager.CurStageData != null)
             {
-                if (TargetSelectManager.CurStageData != null) 
-                    SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.1f);
+                if (clear)
+                {
+                    var data = TargetSelectManager.CurStageData;
+                    int reward = data.OtherReward;
+                    if (timer_ <= data.GoldBoaderTime) reward = data.GoldReward;
+                    else if (timer_ <= data.SilverBoaderTime) reward = data.SilverReward;
+                    else if (timer_ <= data.BronzeBoaderTime) reward = data.BronzeReward;
+                    SkillManager.Instance.GainSkillPoint(reward, Camera.main.transform.position, 0.05f);
+                }
+                else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
             }
 
             Time.timeScale = 0.1f;
@@ -103,7 +112,7 @@ namespace Target
             Time.timeScale = 1.0f;
             // もどったゆ「
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            SceneManager.LoadScene("ZakkyScene");
+            KoitanLib.FadeManager.FadeIn(0.5f, "TargetMediator");
         }
     }
 }

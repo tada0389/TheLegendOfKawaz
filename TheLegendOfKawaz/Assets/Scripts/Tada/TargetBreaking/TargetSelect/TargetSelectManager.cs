@@ -166,8 +166,9 @@ namespace TargetBreaking
             }
             else
             {
-                if(index_.second == 0)
+                if(index_.second == 0 && !is_feeding_)
                 {
+                    is_feeding_ = true;
                     // 実際に遊ぶ
                     CurStageData = stages_[index_.first];
                     KoitanLib.FadeManager.FadeIn(0.5f, stages_[index_.first].NextScene);
@@ -212,7 +213,7 @@ namespace TargetBreaking
             needpoint_text_.text = "必要SP : " + data.NeedPoint.ToString();
             gold_text_.text =   "Gold      " + data.GoldBoaderTime.ToString("F1") + "s   -> " + data.GoldReward + "SP";
             silver_text_.text = "Silver    " + data.SilverBoaderTime.ToString("F1") + "s   -> " + data.SilverReward + "SP";
-            bronze_text_.text = "Bronze   " + data.GoldBoaderTime.ToString("F1") + "s   -> " + data.GoldReward + "SP";
+            bronze_text_.text = "Bronze   " + data.GoldBoaderTime.ToString("F1") + "s   -> " + data.BronzeReward + "SP";
             other_text_.text =  "Other     " + data.OtherReward + "SP";
             developer_text_.text = "Developer Time  :  " + data.DeveloperTime.ToString("F1") + "s";
         }
