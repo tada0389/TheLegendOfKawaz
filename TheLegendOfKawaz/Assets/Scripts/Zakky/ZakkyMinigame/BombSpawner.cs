@@ -17,6 +17,9 @@ public class BombSpawner : MonoBehaviour
     private float overTime;
     IEnumerator Start()
     {
+        //最初にゴミをリリース
+        KoitanLib.ObjectPoolManager.Release(bomb);
+        KoitanLib.ObjectPoolManager.Release(bomFX);
         KoitanLib.ObjectPoolManager.Init(bomb, this, 50);
         KoitanLib.ObjectPoolManager.Init(bomFX, this, 20);
 
@@ -30,9 +33,9 @@ public class BombSpawner : MonoBehaviour
             float randomX = Random.Range(-50f, 50f);
 
             Bomb obj = KoitanLib.ObjectPoolManager.GetInstance<Bomb>(bomb);
-                //Instantiate(bomb,
-                //new Vector2(randomX, 35f),
-                //Quaternion.Euler(Vector2.zero));
+            //Instantiate(bomb,
+            //new Vector2(randomX, 35f),
+            //Quaternion.Euler(Vector2.zero));
             if (obj != null)
             {
                 obj.transform.position = new Vector2(randomX, 35f);
@@ -49,6 +52,6 @@ public class BombSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
