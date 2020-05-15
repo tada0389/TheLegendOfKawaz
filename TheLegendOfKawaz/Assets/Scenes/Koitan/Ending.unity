@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.5879695
+  m_Length: 0.5879697
   m_ChildTransform: {fileID: 2110129732}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &30678989
@@ -784,7 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.58441615
+  m_Length: 0.5844163
   m_ChildTransform: {fileID: 1451694556}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &197933331
@@ -1027,7 +1027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.4613616
+  m_Length: 0.46136168
   m_ChildTransform: {fileID: 1124709538}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &291789230
@@ -1217,7 +1217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.4408436
+  m_Length: 0.44084367
   m_ChildTransform: {fileID: 282416213}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &325846832
@@ -1651,7 +1651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.41329342
+  m_Length: 0.41329354
   m_ChildTransform: {fileID: 599946884}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &472789246
@@ -2180,7 +2180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.89087373
+  m_Length: 0.8908739
   m_ChildTransform: {fileID: 942547558}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &566811471
@@ -2682,7 +2682,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30B5\u30A6\u30F3\u30C9\u30A8\u30D5\u30A7\u30AF\u30C8\nFe2O3\n"
+  m_text: "\u30B5\u30A6\u30F3\u30C9\u30A8\u30D5\u30A7\u30AF\u30C8\u306E\u30C9\u30E9\u30DE\u30FC\nFe2O3\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
   m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
@@ -2728,7 +2728,7 @@ MonoBehaviour:
   m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 10
+  m_firstOverflowCharacterIndex: 15
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2752,7 +2752,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 623352956}
-    characterCount: 16
+    characterCount: 21
     spriteCount: 0
     spaceCount: 2
     wordCount: 2
@@ -2912,7 +2912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.39744473
+  m_Length: 0.3974445
   m_ChildTransform: {fileID: 1930994286}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &629581680
@@ -3110,7 +3110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.8944092
+  m_Length: 0.89440924
   m_ChildTransform: {fileID: 1816831829}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &668394937
@@ -3284,7 +3284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.46406198
+  m_Length: 0.4640621
   m_ChildTransform: {fileID: 673819242}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &691257325
@@ -3362,7 +3362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.5750969
+  m_Length: 0.5750973
   m_ChildTransform: {fileID: 1793045098}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &695035880
@@ -6267,7 +6267,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30A4\u30E9\u30B9\u30C8\nmimimi"
+  m_text: "\u30A4\u30E9\u30B9\u30C8\u306E\u4F1D\u9053\u5E2B\nmimimi"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
   m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
@@ -6313,7 +6313,7 @@ MonoBehaviour:
   m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 5
+  m_firstOverflowCharacterIndex: 9
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -6337,7 +6337,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1308679137}
-    characterCount: 11
+    characterCount: 15
     spriteCount: 0
     spaceCount: 1
     wordCount: 2
@@ -6493,7 +6493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.11775857
+  m_Length: 0.117758796
   m_ChildTransform: {fileID: 469976222}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &1398973341
@@ -6969,7 +6969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.6878018
+  m_Length: 0.6878019
   m_ChildTransform: {fileID: 633222889}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &1464623875
@@ -7215,7 +7215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30B9\u30DA\u30B7\u30E3\u30EB\u30B5\u30F3\u30AF\u30B9\n\u30EC\u30A4\u30D6\u30F3\n\u3007\u3007\u3007\n\u2715\u2715\u2715\n"
+  m_text: "\n\u30EC\u30A4\u30D6\u30F3\n\u3007\u3007\u3007\n\u2715\u2715\u2715\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
   m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
@@ -7261,7 +7261,7 @@ MonoBehaviour:
   m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 10
+  m_firstOverflowCharacterIndex: 1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -7285,7 +7285,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1516250293}
-    characterCount: 23
+    characterCount: 14
     spriteCount: 0
     spaceCount: 4
     wordCount: 2
@@ -8871,7 +8871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.6902871
+  m_Length: 0.6902874
   m_ChildTransform: {fileID: 564919295}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &1800172354
@@ -9022,7 +9022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.617544
+  m_Length: 0.61754376
   m_ChildTransform: {fileID: 1103466834}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &1840833560
@@ -9072,7 +9072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.33632413
+  m_Length: 0.3363239
   m_ChildTransform: {fileID: 1492380830}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &1842490857
@@ -9330,7 +9330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 1.0648158
+  m_Length: 1.0648159
   m_ChildTransform: {fileID: 649672403}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &1906944811
@@ -9408,7 +9408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.366804
+  m_Length: 0.36680377
   m_ChildTransform: {fileID: 1840833561}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &1951015279
@@ -9960,7 +9960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.55364484
+  m_Length: 0.5536448
   m_ChildTransform: {fileID: 709609324}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &2110721481
@@ -10902,7 +10902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.46406266
+  m_Length: 0.46406278
   m_ChildTransform: {fileID: 6295196597007800502}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &641553196632368816
@@ -10998,7 +10998,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.41329408
+  m_Length: 0.4132942
   m_ChildTransform: {fileID: 3490908412813717645}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &805954672719693211
@@ -11593,7 +11593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.366804
+  m_Length: 0.36680377
   m_ChildTransform: {fileID: 2140191196844043201}
   m_AttachedIK: {fileID: 0}
 --- !u!4 &2698209526741179819
@@ -11624,7 +11624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.55364466
+  m_Length: 0.5536446
   m_ChildTransform: {fileID: 6768723955630769541}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &2785946415006923447
@@ -11960,7 +11960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.46136177
+  m_Length: 0.46136189
   m_ChildTransform: {fileID: 5995846342933975595}
   m_AttachedIK: {fileID: 0}
 --- !u!114 &3683651199312433298
@@ -12167,7 +12167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 1.0648156
+  m_Length: 1.0648159
   m_ChildTransform: {fileID: 8251630399393903710}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &4312338860623429921
@@ -12377,7 +12377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.6878017
+  m_Length: 0.68780184
   m_ChildTransform: {fileID: 5258951984391014147}
   m_AttachedIK: {fileID: 0}
 --- !u!114 &4869361614615669183
@@ -12393,7 +12393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.4408437
+  m_Length: 0.44084385
   m_ChildTransform: {fileID: 473419946936517263}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &4879278128180334524
@@ -12580,7 +12580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.7684466
+  m_Length: 0.7684469
   m_ChildTransform: {fileID: 7216419470056605043}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &5147196737811508960
@@ -12681,7 +12681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.58796895
+  m_Length: 0.5879691
   m_ChildTransform: {fileID: 7554779601907406565}
   m_AttachedIK: {fileID: 0}
 --- !u!114 &5380400220992574764
@@ -12710,7 +12710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.61754423
+  m_Length: 0.61754376
   m_ChildTransform: {fileID: 1356577274456030153}
   m_AttachedIK: {fileID: 0}
 --- !u!4 &5448966576283362958
@@ -12759,7 +12759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.5844169
+  m_Length: 0.584417
   m_ChildTransform: {fileID: 3075151300037468892}
   m_AttachedIK: {fileID: 0}
 --- !u!4 &5574882255885121712
@@ -13048,7 +13048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.33629382
+  m_Length: 0.33629358
   m_ChildTransform: {fileID: 3477391331658074151}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &6548608841157995057
@@ -13157,7 +13157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.8944089
+  m_Length: 0.89440906
   m_ChildTransform: {fileID: 6765360297403733664}
   m_AttachedIK: {fileID: 0}
 --- !u!4 &6885955490449124222
@@ -13264,7 +13264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.8908732
+  m_Length: 0.8908733
   m_ChildTransform: {fileID: 646473534122428216}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &7030824806062536990
@@ -13312,7 +13312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.57509744
+  m_Length: 0.5750977
   m_ChildTransform: {fileID: 7260352610629492418}
   m_AttachedIK: {fileID: 0}
 --- !u!1 &7191050437218509321
@@ -13480,7 +13480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.39744544
+  m_Length: 0.3974452
   m_ChildTransform: {fileID: 4446008820351586426}
   m_AttachedIK: {fileID: 0}
 --- !u!114 &7588233023097425757
@@ -13794,7 +13794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.6902871
+  m_Length: 0.69028735
   m_ChildTransform: {fileID: 4890595709653331789}
   m_AttachedIK: {fileID: 0}
 --- !u!114 &8901360715390418724
@@ -13864,7 +13864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Length: 0.11775841
+  m_Length: 0.117758624
   m_ChildTransform: {fileID: 2698209526741179819}
   m_AttachedIK: {fileID: 0}
 --- !u!4 &9018384372326441088
