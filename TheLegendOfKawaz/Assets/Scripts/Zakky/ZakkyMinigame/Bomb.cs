@@ -11,6 +11,8 @@ public class Bomb : MonoBehaviour
     private float maxVelo;
     [SerializeField]
     BaseParticle bomFX;
+    //[SerializeField]
+    Gage m_gage;
 
     private Rigidbody2D m_rigidbody2D;
     [HideInInspector]
@@ -21,6 +23,7 @@ public class Bomb : MonoBehaviour
     void Start()
     {
         m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_gage = GameObject.Find("Gage").GetComponent<Gage>();
         //m_rigidbody2D.velocity = IniVelo;
     }
 
@@ -57,8 +60,9 @@ public class Bomb : MonoBehaviour
         }
         else if (col.tag == "KawaztanShot")
         {
-            m_bombSpawner.brokenBombsSum++;
-            Debug.Log(m_bombSpawner.brokenBombsSum.ToString());
+            //m_bombSpawner.brokenBombsSum++;
+            m_gage.bombNumIncrimenter();
+            //Debug.Log(m_bombSpawner.brokenBombsSum.ToString());
             TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
             gameObject.SetActive(false);
             //Destroy(gameObject);
