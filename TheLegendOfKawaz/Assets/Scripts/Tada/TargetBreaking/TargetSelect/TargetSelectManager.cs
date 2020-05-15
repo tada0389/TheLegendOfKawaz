@@ -65,6 +65,9 @@ namespace TargetBreaking
 
     public class TargetSelectManager : MonoBehaviour
     {
+        // 現在のステージを得る
+        public static StageData CurStageData = null;
+
         [SerializeField]
         private StageData[] stages_;
 
@@ -101,7 +104,7 @@ namespace TargetBreaking
         private TextMeshProUGUI developer_text_;
 
         // Start is called before the first frame update
-        void Start()
+        private void Awake()
         {
             index_ = new TadaLib.Pair<int, int>(0, 0);
             selecting_grade_ = true;
@@ -166,6 +169,7 @@ namespace TargetBreaking
                 if(index_.second == 0)
                 {
                     // 実際に遊ぶ
+                    CurStageData = stages_[index_.first];
                     KoitanLib.FadeManager.FadeIn(0.5f, stages_[index_.first].NextScene);
 
                 }

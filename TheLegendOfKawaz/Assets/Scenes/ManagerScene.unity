@@ -1841,7 +1841,7 @@ MonoBehaviour:
   canvas_: {fileID: 1411305535}
   point_icon_: {fileID: 336484020}
   point_text_: {fileID: 1986397782}
-  icon_per_point_: 10
+  icon_per_point_: 5
   icon_get_duration_: 3
   icon_appear_power_: {x: 80, y: 150}
   icon_appear_duration: 0.25

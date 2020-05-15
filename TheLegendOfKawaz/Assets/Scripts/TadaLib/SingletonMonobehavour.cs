@@ -7,7 +7,7 @@ namespace TadaLib
     public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
     {
 
-        private static T instance;
+        private static T instance = null;
         public static T Instance
         {
             get

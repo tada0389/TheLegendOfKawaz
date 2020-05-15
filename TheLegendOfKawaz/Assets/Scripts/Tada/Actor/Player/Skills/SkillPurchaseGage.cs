@@ -115,7 +115,7 @@ namespace SkillItem
             if (timer_.IsTimeout()) // 購入完了
             {
                 body_.fillAmount = 1.0f;
-                SkillManager.Instance.SpendSkillPoint(SkillManager.Instance.Skills[(int)cur_skill_].NeedPoint(), player_.position);
+                SkillManager.Instance.SpendSkillPoint(SkillManager.Instance.Skills[(int)cur_skill_].NeedPoint(), 0.5f);
                 SkillManager.Instance.LevelUp((int)cur_skill_);
                 delete_requests_ = 0;
                 displayed_ = false;
