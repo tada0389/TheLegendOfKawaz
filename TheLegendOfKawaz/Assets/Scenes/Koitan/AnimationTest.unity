@@ -40023,7 +40023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1786864441
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -47457,6 +47457,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Last_Stage_Background_particle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725081172478209697, guid: 8d6bfc3e976944a2d9e6d989638131e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1725081172478209708, guid: 8d6bfc3e976944a2d9e6d989638131e0,
         type: 3}
@@ -60579,11 +60584,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HP
       objectReference: {fileID: 0}
-    - target: {fileID: 8803086771443180327, guid: d912547428f1f47c69bd798dc924b27b,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 960
-      objectReference: {fileID: 0}
     - target: {fileID: 8803086772366518456, guid: d912547428f1f47c69bd798dc924b27b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -60693,6 +60693,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8803086771443180327, guid: d912547428f1f47c69bd798dc924b27b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 960
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d912547428f1f47c69bd798dc924b27b, type: 3}
