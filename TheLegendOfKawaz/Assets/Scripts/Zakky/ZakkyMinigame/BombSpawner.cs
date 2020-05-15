@@ -19,6 +19,9 @@ public class BombSpawner : MonoBehaviour
     private float overTime;
     IEnumerator Start()
     {
+        //最初にリソースを開放
+        KoitanLib.ObjectPoolManager.Release(bomb);
+        KoitanLib.ObjectPoolManager.Release(bomFX);
         KoitanLib.ObjectPoolManager.Init(bomb, this, 50);
         KoitanLib.ObjectPoolManager.Init(bomFX, this, 20);
 
