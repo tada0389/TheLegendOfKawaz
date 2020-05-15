@@ -11,20 +11,19 @@ public class BombSpawner : MonoBehaviour
     private Bomb bomb;
     [SerializeField]
     BaseParticle bomFX;
+    [SerializeField]
+    Gage m_gage;
 
-    public int brokenBombsSum;
+    //public int brokenBombsSum;
     // Start is called before the first frame update
     private float overTime;
     IEnumerator Start()
     {
-        //最初にゴミをリリース
-        KoitanLib.ObjectPoolManager.Release(bomb);
-        KoitanLib.ObjectPoolManager.Release(bomFX);
         KoitanLib.ObjectPoolManager.Init(bomb, this, 50);
         KoitanLib.ObjectPoolManager.Init(bomFX, this, 20);
 
         overTime = 0f;
-        brokenBombsSum = 0;
+        //brokenBombsSum = 0;
         yield return new WaitForSeconds(interval);
         while (true)
         {
@@ -33,9 +32,9 @@ public class BombSpawner : MonoBehaviour
             float randomX = Random.Range(-50f, 50f);
 
             Bomb obj = KoitanLib.ObjectPoolManager.GetInstance<Bomb>(bomb);
-            //Instantiate(bomb,
-            //new Vector2(randomX, 35f),
-            //Quaternion.Euler(Vector2.zero));
+                //Instantiate(bomb,
+                //new Vector2(randomX, 35f),
+                //Quaternion.Euler(Vector2.zero));
             if (obj != null)
             {
                 obj.transform.position = new Vector2(randomX, 35f);
@@ -52,6 +51,7 @@ public class BombSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //ゲージを上げる
+        //m_gage.bombNumSetter(brokenBombsSum);
     }
 }
