@@ -12,7 +12,7 @@ public class FPSCounter : MonoBehaviour
 
     private void Start()
     {
-        DebugTextManager.Display(() => "FPS: " + m_fps.ToString("f2") + "(" + (Time.deltaTime * 1000).ToString("00") + "ms)\n" , -3);
+        DebugTextManager.Display(() => "FPS: " + m_fps.ToString("f2") + "(" + (Time.unscaledDeltaTime * 1000).ToString("00") + "ms)\n" , -3);
         DebugTextManager.Display(() => { return "Resolution: " + Screen.width + "×" + Screen.height + "\n"; }, -1);
         //ObserverGraph.observerValue = () => m_fps;
         RawImageGraph.observerValue = () => m_fps;
@@ -21,8 +21,8 @@ public class FPSCounter : MonoBehaviour
 
     private void Update()
     {
-        m_timeleft -= Time.deltaTime;
-        m_accum += Time.timeScale / Time.deltaTime;
+        m_timeleft -= Time.unscaledDeltaTime;
+        m_accum += 1f / Time.unscaledDeltaTime;
         m_frames++;
 
         if (0 < m_timeleft) return;
