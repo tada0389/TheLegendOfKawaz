@@ -137,7 +137,7 @@ public class SettingManager : MonoBehaviour
     void SetPost(Scene nextScene, LoadSceneMode mode)
     {
         PostProcessLayer ppl = Camera.main.GetComponent<PostProcessLayer>();
-        Debug.Log(ppl);
+        //Debug.Log(ppl);
         if (ppl != null)
         {
             ppl.enabled = isPostEffect;
@@ -147,7 +147,7 @@ public class SettingManager : MonoBehaviour
     void SetPost()
     {
         PostProcessLayer ppl = Camera.main.GetComponent<PostProcessLayer>();
-        Debug.Log(ppl);
+        //Debug.Log(ppl);
         if (ppl != null)
         {
             ppl.enabled = isPostEffect;
