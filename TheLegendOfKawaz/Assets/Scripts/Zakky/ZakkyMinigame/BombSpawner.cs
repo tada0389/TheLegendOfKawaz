@@ -12,6 +12,8 @@ public class BombSpawner : MonoBehaviour
     [SerializeField]
     BaseParticle bomFX;
     [SerializeField]
+    BaseParticle bomStartFX;
+    [SerializeField]
     Gage m_gage;
 
     //public int brokenBombsSum;
@@ -22,8 +24,10 @@ public class BombSpawner : MonoBehaviour
         //最初にリソースを開放
         KoitanLib.ObjectPoolManager.Release(bomb);
         KoitanLib.ObjectPoolManager.Release(bomFX);
+        KoitanLib.ObjectPoolManager.Release(bomStartFX);
         KoitanLib.ObjectPoolManager.Init(bomb, this, 50);
         KoitanLib.ObjectPoolManager.Init(bomFX, this, 20);
+        KoitanLib.ObjectPoolManager.Init(bomStartFX, this, 20);
 
         overTime = 0f;
         //brokenBombsSum = 0;

@@ -3879,6 +3879,8 @@ MonoBehaviour:
   interval: 5
   bomb: {fileID: 1008020056236594122, guid: ee94136665400c443a9d91cb54994aee, type: 3}
   bomFX: {fileID: 8826173852865939361, guid: db19ec2b7abd8405f9c7323400d53c1b, type: 3}
+  bomStartFX: {fileID: 9050830574756541051, guid: c27bdff77c374494487bac1e7e534737,
+    type: 3}
   m_gage: {fileID: 1137173831}
 --- !u!4 &532370632
 Transform:
