@@ -25,9 +25,9 @@ public class BombSpawner : MonoBehaviour
         KoitanLib.ObjectPoolManager.Release(bomb);
         KoitanLib.ObjectPoolManager.Release(bomFX);
         KoitanLib.ObjectPoolManager.Release(bomStartFX);
-        KoitanLib.ObjectPoolManager.Init(bomb, this, 50);
-        KoitanLib.ObjectPoolManager.Init(bomFX, this, 20);
-        KoitanLib.ObjectPoolManager.Init(bomStartFX, this, 20);
+        KoitanLib.ObjectPoolManager.Init(bomb, this, 30);
+        KoitanLib.ObjectPoolManager.Init(bomFX, this, 10);
+        KoitanLib.ObjectPoolManager.Init(bomStartFX, this, 10);
 
         overTime = 0f;
         //brokenBombsSum = 0;

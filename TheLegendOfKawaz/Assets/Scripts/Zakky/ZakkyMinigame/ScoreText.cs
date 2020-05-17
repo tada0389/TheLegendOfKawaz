@@ -7,7 +7,8 @@ public class ScoreText : MonoBehaviour
 {
     private TextMeshProUGUI m_text;
     [HideInInspector]
-    public static int m_score { private set; get; }
+    public int m_score { private set; get; }
+    private static int m_highScore = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,11 +19,13 @@ public class ScoreText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_text.text = "Score:" + m_score.ToString("D5") + "Pt";
+        m_text.text = "Score:       " + m_score.ToString("D5") + "Pt\n"
+            + "HighScore:" + m_highScore.ToString("D5") + "Pt";
     }
 
     public void ScoreAdder(int num)
     {
         m_score += num;
+        if (m_highScore < m_score) m_highScore = m_score;
     }
 }
