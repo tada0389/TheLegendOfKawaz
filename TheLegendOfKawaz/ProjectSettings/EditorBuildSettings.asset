@@ -54,7 +54,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TadaTest/TargetTest.unity
     guid: f0591246216169043829c138b84edae8
   - enabled: 1
-    path: Assets/Scenes/ZakkyTest/Scene/TargetZakkyMiddleLevel.unity
+    path: Assets/Scenes/ZakkyTest/Scene/WellDefenceMiniGame.unity
     guid: 49f0d8be658a3094ca24e43fa149b7d8
   - enabled: 1
     path: Assets/Scenes/Koitan/Target_jokyu.unity
@@ -62,6 +62,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TadaTest/TargetMediator.unity
     guid: e49622d9e5f5d6a4a8855a0c06d54bb5
+  - enabled: 1
+    path: Assets/Scenes/ZakkyTest/Scene/TargetZakkyMiddleLevel.unity
+    guid: 3237d1b0edf5b9646986eb17a7670930
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: cef15f5a95d11294d83f6d5c988c8d91,
       type: 2}
