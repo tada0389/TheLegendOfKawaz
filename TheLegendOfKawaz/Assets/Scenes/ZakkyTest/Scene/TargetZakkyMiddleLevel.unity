@@ -190,6 +190,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: -5, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &38285658
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -364,6 +367,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &91235574
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -501,6 +507,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &128214459
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4629,6 +4638,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &509278832
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5971,6 +5983,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 3, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &878755882
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6108,6 +6123,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 10, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &888270246
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6489,6 +6507,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &941269819
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6589,6 +6610,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &965494219
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7118,6 +7142,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &1224346707
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8076,6 +8103,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 0, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &1783838397
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8321,6 +8351,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: 5, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &1876788212
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8878,6 +8911,9 @@ MonoBehaviour:
   duration_: 3
   move_distance_: {x: -5, y: 0, z: 0}
   ease_: 1
+  isPath_: 0
+  loop_type_: 2
+  path_: []
 --- !u!212 &2098208677
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8998,7 +9034,15 @@ MonoBehaviour:
   bottom_boader_: -40
   target_break_eff_: {fileID: 22089467}
   ui_animator_: {fileID: 0}
+  grade_ui_animator_: {fileID: 0}
+  coin_spwan_pos_: {fileID: 0}
   ready_duration_: 1.5
+  canvas_: {fileID: 0}
+  target_icon_: {fileID: 0}
+  icon_initial_pos_: {x: -800, y: 400, z: 0}
+  icon_distance_: 50
+  icon_space_width_: 5
+  icon_default_scale_: {x: 0.2, y: 0.2, z: 1}
 --- !u!4 &2141627615
 Transform:
   m_ObjectHideFlags: 0
