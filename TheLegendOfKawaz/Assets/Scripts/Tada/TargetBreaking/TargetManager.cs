@@ -43,6 +43,20 @@ namespace Target
         [SerializeField]
         private float ready_duration_ = 1.5f;
 
+        [SerializeField]
+        private Canvas canvas_;
+        [SerializeField]
+        private UnityEngine.UI.Image target_icon_;
+        [SerializeField]
+        private Vector3 icon_initial_pos_ = new Vector3(-800f, 400f, 0f);
+        [SerializeField]
+        private float icon_distance_ = 50f;
+        [SerializeField]
+        private int icon_space_width_ = 5;
+        [SerializeField]
+        private Vector3 icon_default_scale_ = new Vector3(0.2f, 0.2f, 1.0f);
+
+        private List<UnityEngine.UI.Image> target_icons_ = new List<UnityEngine.UI.Image>();
 
         private void Start()
         {
@@ -74,12 +88,19 @@ namespace Target
         public void RegisterTarget()
         {
             ++target_num_;
+            // アイコンを生成する
+            UnityEngine.UI.Image image = Instantiate(target_icon_, canvas_.transform);
+            image.rectTransform.localPosition = new Vector3(icon_initial_pos_.x + (target_icons_.Count % icon_space_width_) * icon_distance_,
+                icon_initial_pos_.y - target_icons_.Count / icon_space_width_ * icon_distance_, 0f);
+            image.rectTransform.localScale = icon_default_scale_;
+            target_icons_.Add(image);
         }
 
         public void BreakTarget(Vector3 pos)
         {
             --target_num_;
             TadaLib.EffectPlayer.Play(target_break_eff_, pos, Vector3.zero);
+            Destroy(target_icons_[target_num_].gameObject);
             if (target_num_ == 0) Finish(true);
         }
 
