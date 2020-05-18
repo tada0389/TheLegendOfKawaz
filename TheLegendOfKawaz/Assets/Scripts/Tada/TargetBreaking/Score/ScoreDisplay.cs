@@ -21,13 +21,10 @@ namespace Result
         void Start()
         {
             score_manager_ = ScoreManager.Instance;
-
-            text_.rectTransform.DOShakePosition(1, 3).SetLoops(-1);
-
-            Display(score_manager_.LatestGameScene, score_manager_.LatestGame, score_manager_.LatestRank);
+            //Display(score_manager_.LatestGameScene, score_manager_.LatestGame, score_manager_.LatestRank);
         }
 
-        private void Display(string game_scene_name, string game_name, int rank = -1)
+        public void Display(string game_scene_name, string game_name, int rank = -1)
         {
             string res = "";
             res += game_name;
@@ -37,14 +34,14 @@ namespace Result
             {
                 if (i == rank - 1) res += "<color=red>";
                 res += (i + 1).ToString() + "位";
-                res += String.Format("{0, 6}", score.Scores[i].ToString());
+                res += String.Format("{0, 6}", (-score.Scores[i] / 10.0f).ToString("F1"));
                 if (i == rank - 1) res += "</color>";
                 res += "\n";
             }
             text_.text = res;
 
             // 順位の表示量に応じてテキストのフォントサイズを変更する
-            text_.fontSize = 50 - 3 * score.Scores.Count;
+            //text_.fontSize = 50 - 3 * score.Scores.Count;
         }
     }
 } // namespace Result

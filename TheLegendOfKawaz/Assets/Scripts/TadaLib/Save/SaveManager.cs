@@ -55,6 +55,7 @@ namespace TadaLib
                 if (save_action_queue_.Count >= 1)
                 {
                     DebugNotificationGenerator.Notify("セーブしました");
+                    Debug.Log("セーブのあれ出すはず");
                 }
 
                 while (save_action_queue_.Count >= 1)

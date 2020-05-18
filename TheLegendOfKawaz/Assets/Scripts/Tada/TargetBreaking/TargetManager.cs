@@ -121,6 +121,7 @@ namespace Target
             {
                 if (clear)
                 {
+                    ScoreManager.Instance.RegisterScore((int)(-(timer_ + 0.05f) * 10.0f), SceneManager.GetActiveScene().name);
                     Time.timeScale = 0.06f;
                     var data = TargetSelectManager.CurStageData;
                     int reward = data.OtherReward;
@@ -144,6 +145,8 @@ namespace Target
                     if (grade_ui_animator_ != null) grade_ui_animator_.Play(grade_name);
                     yield return new WaitForSeconds(0.06f);
                     SkillManager.Instance.GainSkillPoint(reward, spawn_pos, 0.02f);
+                    // お試し
+                    TadaLib.Save.SaveManager.Instance.Save();
                 }
                 else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
             }

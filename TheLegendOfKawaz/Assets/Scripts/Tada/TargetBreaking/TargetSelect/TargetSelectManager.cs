@@ -123,6 +123,15 @@ namespace TargetBreaking
         [SerializeField]
         private ExplonationBoxData box_data_;
 
+        // スコアデータ
+        [SerializeField]
+        private Result.ScoreDisplay score_displayer_;
+
+        [SerializeField]
+        private GameObject stage_texts_;
+        [SerializeField]
+        private GameObject score_texts_;
+
         // Start is called before the first frame update
         private void Awake()
         {
@@ -163,6 +172,22 @@ namespace TargetBreaking
             }
             else
             {
+                // スコアを表示
+                if (ActionInput.GetButtonDown(ActionCode.Dash))
+                {
+                    if (score_texts_.activeSelf)
+                    {
+                        score_texts_.SetActive(false);
+                        stage_texts_.SetActive(true);
+                    }
+                    else
+                    {
+                        score_displayer_.Display(stages_[index_.first].NextScene, ScoreManager.Instance.GetGameName(stages_[index_.first].NextScene));
+                        score_texts_.SetActive(true);
+                        stage_texts_.SetActive(false);
+                    }
+                    return;
+                }
                 int prev = index_.second;
                 if (ActionInput.GetButtonDown(ButtonCode.Left) || ActionInput.GetButtonDown(ButtonCode.Right)) index_.second = 1 - index_.second;
                 if (prev != index_.second)

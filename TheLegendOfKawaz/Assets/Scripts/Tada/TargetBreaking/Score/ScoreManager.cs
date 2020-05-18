@@ -43,7 +43,7 @@ public class Score
         // 2分探索使いたいけどデータ少ないので愚直に
         for(int i = 0, n = scores_.Count; i < n; ++i)
         {
-            if(scores_[i] <= score)
+            if(scores_[i] < score)
             {
                 // 順位更新
                 rank = i;
@@ -77,10 +77,10 @@ public class Score
         }
         else if (scores_.Count < length)
         {
-            // 0点のデータを追加する
+            // 適当なデータを追加する
             for (int i = 0, n = length - scores_.Count; i < n; ++i)
             {
-                scores_.Add(0);
+                scores_.Add(-2222);
             }
         }
     }
@@ -255,6 +255,13 @@ public class ScoreManager : MonoBehaviour
         data_.Init(games_.Count, display_rank_length_);
     }
 
+    // シーン名からゲーム名を取得する
+    public string GetGameName(string game_scene_name)
+    {
+        if(!dic_to_name_.ContainsKey(game_scene_name)) return "";
+        return dic_to_name_[game_scene_name];
+    }
+
     private void AssouciateGame()
     {
         for(int i = 0; i < games_.Count; ++i)
@@ -262,6 +269,5 @@ public class ScoreManager : MonoBehaviour
             dic_to_id_.Add(games_[i].SceneName, i + 1);
             dic_to_name_.Add(games_[i].SceneName, games_[i].GameName);
         }
-
     }
 }
