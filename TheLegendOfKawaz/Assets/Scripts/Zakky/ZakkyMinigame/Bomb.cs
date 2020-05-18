@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; // コレ重要
+using TMPro;
 
 public class Bomb : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Bomb : MonoBehaviour
     BaseParticle bomFX;
     [SerializeField]
     BaseParticle bomStartFX;
+    [SerializeField]
+    TextMeshPro gotPoint;
 
     MiniGamePostProcessing m_miniPostProcessing;
     Gage m_gage;
@@ -28,6 +31,8 @@ public class Bomb : MonoBehaviour
         m_miniPostProcessing = GameObject.Find("PostProcessVolume").GetComponent<MiniGamePostProcessing>();
         m_gage = GameObject.Find("Gage").GetComponent<Gage>();
         m_scoreText = GameObject.Find("ScoreText").GetComponent<ScoreText>();
+
+        //最初のまがまがしい登場エフェクト
         TadaLib.EffectPlayer.Play(bomStartFX, transform.position, Vector3.zero);
 
     }
@@ -53,6 +58,8 @@ public class Bomb : MonoBehaviour
             m_miniPostProcessing.ExplotionLight();
             //爆破エフェクト
             TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
+            
+            //TadaLib.EffectPlayer.Play(gotPoint, transform.position, Vector3.zero);
             //used = falseをする
             gameObject.SetActive(false);
         }
@@ -72,6 +79,18 @@ public class Bomb : MonoBehaviour
             m_miniPostProcessing.ExplotionLight();
             TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
 
+            {
+                //テキスト呼び出す
+                
+                //Color colo = txt.color;
+                //colo.a = 1f;
+                //txt.color = colo;
+                GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero));
+                //txt.transform.position = transform.position;
+                //txt.transform.rotation = Quaternion.Euler(Vector3.zero);
+            }
+
+            Debug.Log("false");
             gameObject.SetActive(false);
         }
         else if (col.tag == "ToumeiStage")

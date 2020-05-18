@@ -99,6 +99,8 @@ MonoBehaviour:
   bomFX: {fileID: 8826173852865939361, guid: db19ec2b7abd8405f9c7323400d53c1b, type: 3}
   bomStartFX: {fileID: 9050830574756541051, guid: c27bdff77c374494487bac1e7e534737,
     type: 3}
+  gotPoint: {fileID: 7705360564555343293, guid: d73872298742d1f46b8560eb6a9561e1,
+    type: 3}
   bounce: 0
   m_bombSpawner: {fileID: 0}
 --- !u!58 &1008020056236594123
