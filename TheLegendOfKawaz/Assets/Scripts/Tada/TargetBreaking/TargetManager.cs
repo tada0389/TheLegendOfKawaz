@@ -125,7 +125,7 @@ namespace Target
                     Time.timeScale = 0.06f;
                     var data = TargetSelectManager.CurStageData;
                     int reward = data.OtherReward;
-                    string grade_name = "";
+                    string grade_name = "Other";
                     if (timer_ <= data.GoldBoaderTime)
                     {
                         reward = data.GoldReward;
@@ -144,7 +144,8 @@ namespace Target
                     Vector3 spawn_pos = (coin_spwan_pos_ != null) ? coin_spwan_pos_.position : Camera.main.transform.position;
                     if (grade_ui_animator_ != null) grade_ui_animator_.Play(grade_name);
                     yield return new WaitForSeconds(0.06f);
-                    SkillManager.Instance.GainSkillPoint(reward, spawn_pos, 0.02f);
+                    if (grade_name != "Other") SkillManager.Instance.GainSkillPoint(reward, spawn_pos, 0.02f);
+                    else SkillManager.Instance.SpendSkillPoint(-reward, 0.03f);
                     // お試し
                     TadaLib.Save.SaveManager.Instance.Save();
                 }
