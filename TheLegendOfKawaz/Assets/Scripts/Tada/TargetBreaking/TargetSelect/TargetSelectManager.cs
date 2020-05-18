@@ -204,7 +204,6 @@ namespace TargetBreaking
                 {
                     // 戻る
                     GoBack();
-
                 }
             }
         }

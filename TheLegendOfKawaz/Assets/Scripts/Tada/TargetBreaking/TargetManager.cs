@@ -34,6 +34,11 @@ namespace Target
 
         [SerializeField]
         private Animator ui_animator_;
+        [SerializeField]
+        private Animator grade_ui_animator_;
+
+        [SerializeField]
+        private Transform coin_spwan_pos_;
 
         [SerializeField]
         private float ready_duration_ = 1.5f;
@@ -89,21 +94,38 @@ namespace Target
             if(clear) ui_animator_.Play("clear");
             else ui_animator_.Play("failed");
 
+            Time.timeScale = 0.1f;
+
             if (TargetSelectManager.CurStageData != null)
             {
                 if (clear)
                 {
+                    Time.timeScale = 0.06f;
                     var data = TargetSelectManager.CurStageData;
                     int reward = data.OtherReward;
-                    if (timer_ <= data.GoldBoaderTime) reward = data.GoldReward;
-                    else if (timer_ <= data.SilverBoaderTime) reward = data.SilverReward;
-                    else if (timer_ <= data.BronzeBoaderTime) reward = data.BronzeReward;
-                    SkillManager.Instance.GainSkillPoint(reward, Camera.main.transform.position, 0.03f);
+                    string grade_name = "";
+                    if (timer_ <= data.GoldBoaderTime)
+                    {
+                        reward = data.GoldReward;
+                        grade_name = "Gold";
+                    }
+                    else if (timer_ <= data.SilverBoaderTime)
+                    {
+                        reward = data.SilverReward;
+                        grade_name = "Silver";
+                    }
+                    else if (timer_ <= data.BronzeBoaderTime)
+                    {
+                        reward = data.BronzeReward;
+                        grade_name = "Bronze";
+                    }
+                    Vector3 spawn_pos = (coin_spwan_pos_ != null) ? coin_spwan_pos_.position : Camera.main.transform.position;
+                    if (grade_ui_animator_ != null) grade_ui_animator_.Play(grade_name);
+                    yield return new WaitForSeconds(0.06f);
+                    SkillManager.Instance.GainSkillPoint(reward, spawn_pos, 0.02f);
                 }
                 else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
             }
-
-            Time.timeScale = 0.1f;
 
             //clear_text_.rectTransform.DOPunchScale(Vector3.one, 3.0f * Time.timeScale);
 
