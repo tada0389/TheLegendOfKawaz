@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Actor.Player;
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -63,6 +65,16 @@ namespace TargetBreaking
         public string NextScene => next_scene_;
     }
 
+    // ステージ説明欄を開くときのイージング情報
+    [Serializable]
+    public class ExplonationBoxData
+    {
+        public Ease ease_ = Ease.OutQuart;
+        public float open_duration_ = 0.5f;
+        public float close_duration_ = 0.3f;
+        public float default_scale_x_ = 1.0f;
+    }
+
     public class TargetSelectManager : MonoBehaviour
     {
         // 現在のステージを得る
@@ -105,12 +117,23 @@ namespace TargetBreaking
         [SerializeField]
         private TextMeshProUGUI developer_text_;
 
+        [SerializeField]
+        private TextMeshProUGUI skill_point_text_;
+
+        [SerializeField]
+        private ExplonationBoxData box_data_;
+
         // Start is called before the first frame update
         private void Awake()
         {
             index_ = new TadaLib.Pair<int, int>(prev_stage_index_, 0);
             selecting_grade_ = true;
             grades_[prev_stage_index_].color = Color.red;
+        }
+
+        private void Start()
+        {
+            skill_point_text_.text = SkillManager.Instance.SkillPoint.ToString();
         }
 
         // Update is called once per frame
@@ -209,23 +232,26 @@ namespace TargetBreaking
             go_back_texts_[0].color = Color.red;
             go_back_texts_[1].color = Color.white;
             index_.second = 0;
-            explonation_box_.gameObject.SetActive(true);
+            //explonation_box_.gameObject.SetActive(true);
 
             // 中身を変更する
             grade_text_.text = data.RankName;
             needpoint_text_.text = "必要SP : " + data.NeedPoint.ToString();
-            gold_text_.text =   "Gold      " + data.GoldBoaderTime.ToString("F1") + "s   -> " + data.GoldReward + "SP";
-            silver_text_.text = "Silver    " + data.SilverBoaderTime.ToString("F1") + "s   -> " + data.SilverReward + "SP";
-            bronze_text_.text = "Bronze   " + data.BronzeBoaderTime.ToString("F1") + "s   -> " + data.BronzeReward + "SP";
+            gold_text_.text =   "Gold      " + data.GoldBoaderTime.ToString("F1") + "s以内   -> " + data.GoldReward + "SP";
+            silver_text_.text = "Silver    " + data.SilverBoaderTime.ToString("F1") + "s以内   -> " + data.SilverReward + "SP";
+            bronze_text_.text = "Bronze   " + data.BronzeBoaderTime.ToString("F1") + "s以内   -> " + data.BronzeReward + "SP";
             other_text_.text =  "Other     " + data.OtherReward + "SP";
             developer_text_.text = "Developer Time  :  " + data.DeveloperTime.ToString("F1") + "s";
+
+            explonation_box_.rectTransform.DOScaleX(box_data_.default_scale_x_, box_data_.open_duration_);
         }
 
         // 説明欄を閉じる
         private void CloseExplonation()
         {
             selecting_grade_ = true;
-            explonation_box_.gameObject.SetActive(false);
+            //explonation_box_.gameObject.SetActive(false);
+            explonation_box_.rectTransform.DOScaleX(0f, box_data_.close_duration_);
         }
     }
 }
