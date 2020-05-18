@@ -72,7 +72,8 @@ namespace TargetBreaking
         public Ease ease_ = Ease.OutQuart;
         public float open_duration_ = 0.5f;
         public float close_duration_ = 0.3f;
-        public float default_scale_x_ = 1.0f;
+        public float inverse_duration_ = 0.5f;
+        public Ease inverse_ease_ = Ease.InOutBack;
     }
 
     public class TargetSelectManager : MonoBehaviour
@@ -175,27 +176,22 @@ namespace TargetBreaking
                 // スコアを表示
                 if (ActionInput.GetButtonDown(ActionCode.Dash))
                 {
-                    if (score_texts_.activeSelf)
-                    {
-                        score_texts_.SetActive(false);
-                        stage_texts_.SetActive(true);
-                    }
-                    else
-                    {
-                        score_displayer_.Display(stages_[index_.first].NextScene, ScoreManager.Instance.GetGameName(stages_[index_.first].NextScene));
-                        score_texts_.SetActive(true);
-                        stage_texts_.SetActive(false);
-                    }
+                    ChangeStageDataDisplay();
                     return;
                 }
-                int prev = index_.second;
-                if (ActionInput.GetButtonDown(ButtonCode.Left) || ActionInput.GetButtonDown(ButtonCode.Right)) index_.second = 1 - index_.second;
-                if (prev != index_.second)
+                if (!score_texts_.activeSelf)
                 {
-                    go_back_texts_[index_.second].color = Color.red;
-                    go_back_texts_[prev].color = Color.white;
+                    int prev = index_.second;
+                    if (ActionInput.GetButtonDown(ButtonCode.Left) || ActionInput.GetButtonDown(ButtonCode.Right)) index_.second = 1 - index_.second;
+                    if (prev != index_.second)
+                    {
+                        go_back_texts_[index_.second].color = Color.red;
+                        go_back_texts_[prev].color = Color.white;
+                    }
                 }
             }
+
+            CheckStageData();
         }
 
         // 現在のインデックスで決定する
@@ -216,6 +212,8 @@ namespace TargetBreaking
             }
             else
             {
+                if (score_texts_.activeSelf) return; // ランキング表示
+
                 if(index_.second == 0 && !is_feeding_)
                 {
                     is_feeding_ = true;
@@ -267,7 +265,8 @@ namespace TargetBreaking
             other_text_.text =  "Other     " + data.OtherReward + "SP";
             developer_text_.text = "Developer Time  :  " + data.DeveloperTime.ToString("F1") + "s";
 
-            explonation_box_.rectTransform.DOScaleX(box_data_.default_scale_x_, box_data_.open_duration_);
+            explonation_box_.rectTransform.DOKill();
+            explonation_box_.rectTransform.DOLocalRotate(Vector3.zero, box_data_.open_duration_).SetEase(box_data_.ease_);
         }
 
         // 説明欄を閉じる
@@ -275,7 +274,41 @@ namespace TargetBreaking
         {
             selecting_grade_ = true;
             //explonation_box_.gameObject.SetActive(false);
-            explonation_box_.rectTransform.DOScaleX(0f, box_data_.close_duration_);
+            explonation_box_.rectTransform.DOKill();
+            explonation_box_.rectTransform.DOLocalRotate(new Vector3(0f, -90f, 0f), box_data_.close_duration_).SetEase(box_data_.ease_);
+
+            //// ランキング表示からステージ詳細に戻す
+            //score_texts_.SetActive(false);
+            //stage_texts_.SetActive(true);
+        }
+
+        // ステージの詳細を変更する
+        private void ChangeStageDataDisplay()
+        {
+            explonation_box_.rectTransform.DOKill();
+            if(stage_texts_.activeSelf) explonation_box_.rectTransform.DOLocalRotate(new Vector3(0f, -180f, 0f), box_data_.inverse_duration_).SetEase(box_data_.inverse_ease_);
+            else explonation_box_.rectTransform.DOLocalRotate(new Vector3(0f,    0f, 0f), box_data_.inverse_duration_).SetEase(box_data_.inverse_ease_);
+        }
+        
+        // ステージの詳細を表示するか，スコア表を表示するか確認する
+        private void CheckStageData()
+        {
+            if (selecting_grade_) return;
+            float r_y = explonation_box_.rectTransform.localEulerAngles.y;
+            //Debug.Log(r_y);
+            if (stage_texts_.activeSelf && (r_y > 90f && r_y < 270f))
+            {
+                //Debug.Log("ランク");
+                score_displayer_.Display(stages_[index_.first].NextScene, ScoreManager.Instance.GetGameName(stages_[index_.first].NextScene));
+                score_texts_.SetActive(true);
+                stage_texts_.SetActive(false);
+            }
+            else if(score_texts_.activeSelf && (r_y < 90f || r_y > 270f))
+            {
+                //Debug.Log("データ");
+                score_texts_.SetActive(false);
+                stage_texts_.SetActive(true);
+            }
         }
     }
 }

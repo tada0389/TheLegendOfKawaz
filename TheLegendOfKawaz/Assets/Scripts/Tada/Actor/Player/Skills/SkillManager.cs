@@ -71,7 +71,7 @@ namespace Actor.Player
         {
             if (time_scale < 1e-6) return;
             skill_point_ctrl_.SpendSkillPoint(point, time_scale);
-            SkillPoint -= point;
+            SkillPoint = Mathf.Max(0, SkillPoint - point);
         }
     }
 } // namespace Actor.Player
