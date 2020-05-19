@@ -40,6 +40,8 @@ public class Bomb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //一定以上落ちてたら消す
+        if (transform.position.y < -10f) gameObject.SetActive(false);
         {
             Vector2 vec = m_rigidbody2D.velocity;
             if (vec.y < -maxVelo) vec.y = -maxVelo;
