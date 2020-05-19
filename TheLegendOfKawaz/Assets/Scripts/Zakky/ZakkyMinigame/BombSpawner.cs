@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BombSpawner : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class BombSpawner : MonoBehaviour
     [SerializeField]
     BaseParticle bomStartFX;
     [SerializeField]
+    TextMeshPro gotPoint;
+    [SerializeField]
     Gage m_gage;
 
     //public int brokenBombsSum;
@@ -25,9 +28,12 @@ public class BombSpawner : MonoBehaviour
         KoitanLib.ObjectPoolManager.Release(bomb);
         KoitanLib.ObjectPoolManager.Release(bomFX);
         KoitanLib.ObjectPoolManager.Release(bomStartFX);
+        KoitanLib.ObjectPoolManager.Release(gotPoint);
+
         KoitanLib.ObjectPoolManager.Init(bomb, this, 30);
         KoitanLib.ObjectPoolManager.Init(bomFX, this, 10);
         KoitanLib.ObjectPoolManager.Init(bomStartFX, this, 10);
+        KoitanLib.ObjectPoolManager.Init(gotPoint, this, 5);
 
         overTime = 0f;
         //brokenBombsSum = 0;
