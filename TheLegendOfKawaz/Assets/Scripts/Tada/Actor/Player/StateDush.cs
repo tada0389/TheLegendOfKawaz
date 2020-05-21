@@ -46,6 +46,9 @@ namespace Actor.Player
                 data.velocity = new Vector2(0f, 0f);
 
                 EffectPlayer.Play(dash_effect_, data.transform.position, new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f));
+
+                // カメラを揺らす
+                CameraSpace.CameraShaker.Shake(0.05f, 0.1f);
             }
 
             // ステートが終了したときに呼ばれるメソッド

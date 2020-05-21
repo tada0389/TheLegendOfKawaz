@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using TMPro.Examples;
 using UnityEngine;
 
 /// <summary>
@@ -49,9 +51,23 @@ namespace CameraSpace
 
         private Vector3 velocity;
 
+        // カメラの座標 カメラを揺らすために実際の座標と分離している
+        public Vector3 Position { private set; get; }
+
+        // 揺らしている大きさ
+        private Vector3 shake_dif;
+
+        // 揺れの大きさの集合 大きい順
+        TadaLib.MultiSet<float> shake_powers_;
+
         private void Start()
         {
             cam_ = GetComponent<Camera>();
+
+            Position = transform.position;
+            shake_dif = Vector3.zero;
+
+            shake_powers_ = new TadaLib.MultiSet<float>();
         }
 
         private void LateUpdate()
@@ -61,6 +77,36 @@ namespace CameraSpace
 
             Zoom();
             Move();
+
+            // カメラの座標と揺れを合わせる
+            transform.position = Position + shake_dif;
+        }
+
+        // カメラを揺らす
+        public void Shake(float power = 1.0f, float duration = 1.0f, float shake_interval = 0.05f)
+        {
+            StartCoroutine(DOShake(power, duration, shake_interval));
+        }
+
+        private IEnumerator DOShake(float power = 1.0f, float duration = 1.0f, float shake_interval = 0.05f)
+        {
+            shake_powers_.Insert(-power);
+            float start = Time.time;
+
+            while((Time.time - start) < duration)
+            {
+                // もしより震度の大きいものが回っていたらそっちを優先
+                if (power >= -shake_powers_.ElementAt(0) - 1e-6)
+                {
+                    shake_dif.x = Random.Range(-power, power);
+                    shake_dif.y = Random.Range(-power, power);
+                }
+
+                yield return new WaitForSeconds(shake_interval);
+            }
+
+            shake_dif = Vector3.zero;
+            shake_powers_.Remove(-power);
         }
 
         // 削除されたターゲットをリストから削除する
@@ -120,7 +166,7 @@ namespace CameraSpace
                 if(bottom_c < bottom_limit) new_position.y -= bottom_c - bottom_limit;
                 else if(top_c > top_limit) new_position.y -= top_c - top_limit;
             }
-            transform.position = Vector3.SmoothDamp(transform.position, new_position, ref velocity, data_.SmoothTime);
+            Position = Vector3.SmoothDamp(Position, new_position, ref velocity, data_.SmoothTime);
         }
 
         // 縦横ともに考慮して最も長い方を返す
