@@ -31,7 +31,7 @@ namespace Actor.Enemy.Purin
             // 開始時に呼ばれる
             public override void OnStart()
             {
-                Time.timeScale = 0.3f;
+                TadaLib.TimeScaler.Instance.RequestChange(0.3f, 2.0f);
                 explosion_effect_.gameObject.SetActive(true);
             }
 
@@ -41,7 +41,6 @@ namespace Actor.Enemy.Purin
                 if (Timer > 2.0f && !get)
                 {
                     get = true;
-                    Time.timeScale = 1.0f;
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
                     //実績解除
                     AchievementManager.FireAchievement("Purin");

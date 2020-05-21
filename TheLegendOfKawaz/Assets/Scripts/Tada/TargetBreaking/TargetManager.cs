@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using TargetBreaking;
 using Actor.Player;
 using System.Threading;
+using TadaLib;
 
 namespace Target
 {
@@ -115,14 +116,16 @@ namespace Target
             if(clear) ui_animator_.Play("clear");
             else ui_animator_.Play("failed");
 
-            Time.timeScale = 0.1f;
+            float new_time_scale = 0.1f;
 
+            bool get_point = false;
             if (TargetSelectManager.CurStageData != null)
             {
                 if (clear)
                 {
+                    get_point = true;
                     ScoreManager.Instance.RegisterScore((int)(-(timer_ + 0.05f) * 10.0f), SceneManager.GetActiveScene().name);
-                    Time.timeScale = 0.06f;
+                    new_time_scale = 0.06f;
                     var data = TargetSelectManager.CurStageData;
                     int reward = data.OtherReward;
                     string grade_name = "Other";
@@ -143,7 +146,6 @@ namespace Target
                     }
                     Vector3 spawn_pos = (coin_spwan_pos_ != null) ? coin_spwan_pos_.position : Camera.main.transform.position;
                     if (grade_ui_animator_ != null) grade_ui_animator_.Play(grade_name);
-                    yield return new WaitForSeconds(0.06f);
                     if (grade_name != "Other") SkillManager.Instance.GainSkillPoint(reward, spawn_pos, 0.02f);
                     else SkillManager.Instance.SpendSkillPoint(-reward, 0.03f);
                     // お試し
@@ -152,11 +154,15 @@ namespace Target
                 else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
             }
 
+            float time_change_duration = 3.0f * new_time_scale;
+            // もしポイントを獲得していたならもうちょい伸ばす
+            if(get_point) time_change_duration += 0.06f;
+            TimeScaler.Instance.RequestChange(new_time_scale, time_change_duration);
+
             //clear_text_.rectTransform.DOPunchScale(Vector3.one, 3.0f * Time.timeScale);
 
-            yield return new WaitForSeconds(3.0f * Time.timeScale);
+            yield return new WaitForSeconds(time_change_duration);
 
-            Time.timeScale = 1.0f;
             // もどったゆ「
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             KoitanLib.FadeManager.FadeIn(0.5f, "TargetMediator");

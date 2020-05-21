@@ -411,7 +411,7 @@ namespace Actor.Enemy
             {
                 Parent.trb_.Velocity = Vector2.zero;
                 explosion_effect_.gameObject.SetActive(true);
-                if(!a) Time.timeScale = 0.3f;
+                if (!a) TadaLib.TimeScaler.Instance.RequestChange(0.3f, 2.0f);
             }
 
             // 毎フレーム呼ばれる
@@ -419,7 +419,6 @@ namespace Actor.Enemy
             {
                 if(Timer > 2.0f && !a)
                 {
-                    Time.timeScale = 1.0f;
                     a = true;
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
 

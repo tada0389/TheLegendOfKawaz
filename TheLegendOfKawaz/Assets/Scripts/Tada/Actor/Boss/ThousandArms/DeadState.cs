@@ -28,7 +28,7 @@ namespace Actor.Enemy.Thousand
             {
                 Parent.trb_.Velocity = Vector2.zero;
                 explosion_effect_.gameObject.SetActive(true);
-                if (!a) Time.timeScale = 0.3f;
+                if (!a) TimeScaler.Instance.RequestChange(0.3f, 2.0f);
             }
 
             // 毎フレーム呼ばれる
