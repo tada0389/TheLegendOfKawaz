@@ -38,6 +38,9 @@ namespace Actor.Player
                 // 速度ダメージを受けた方向に飛ぶ いまは左だけ
                 data.velocity.x = power_.x;
                 data.velocity.y = power_.y;
+
+                // カメラを揺らす
+                CameraSpace.CameraShaker.Shake(0.20f, 0.15f);
             }
 
             // ステートが終了したときに呼ばれるメソッド
