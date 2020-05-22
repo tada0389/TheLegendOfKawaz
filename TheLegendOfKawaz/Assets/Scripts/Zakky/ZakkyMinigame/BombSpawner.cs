@@ -53,7 +53,7 @@ public class BombSpawner : MonoBehaviour
             {
                 obj.transform.position = new Vector2(randomX, 35f);
                 //もし井戸の真ん中らへんなら速度ゼロ
-                if (Mathf.Abs(obj.transform.position.x) < 5)
+                if (Mathf.Abs(obj.transform.position.x) < 10)
                 {
                     obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 }
