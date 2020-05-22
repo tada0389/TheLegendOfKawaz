@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4465553261858056348}
   m_Layer: 0
   m_Name: KawaCoin
-  m_TagString: Stage
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a7600dbe78717b4fb9b5e58615bb14d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxVelo: 5
+  maxVelo: 3
   bomFX: {fileID: 8826173852865939361, guid: db19ec2b7abd8405f9c7323400d53c1b, type: 3}
   bomStartFX: {fileID: 9050830574756541051, guid: c27bdff77c374494487bac1e7e534737,
     type: 3}

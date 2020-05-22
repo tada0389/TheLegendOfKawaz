@@ -10,22 +10,22 @@ public class Gage : MonoBehaviour
     [SerializeField]
     Ciel m_ciel;
 
-    private int bombNum;
-    float gageNum = 0;
+    private float bombNum;
+    float gageNum = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        bombNum = 0;
-        gageNum = 0;
+        bombNum = 0f;
+        gageNum = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (bombNum >= 20)
+        if (bombNum >= 20f)
         {
-            bombNum = 0;
+            bombNum = 0f;
             m_ciel.CielRespawner();
         }
         //int gageNum = 0;
@@ -39,8 +39,9 @@ public class Gage : MonoBehaviour
         BHPBar.SetPosition(0, new Vector3(10f * gageNum / 20, 0.0f, 0.0f));
     }
 
-    public void bombNumIncrimenter()
+    public void bombNumAdder(float num)
     {
-        bombNum++;
+        bombNum += num;
+        if (bombNum < 0) bombNum = 0;
     }
 }

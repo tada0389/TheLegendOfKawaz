@@ -46,8 +46,10 @@ public class KawaCoin : PrimitiveTarget
             gameObject.SetActive(false);
         }
         */
-        if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったら吸収
+        if (col.tag == "Player") //プレイヤーに当たったら吸収
         {
+            //ゲージふやす
+            m_gage.bombNumAdder(0.3f);
             //スコア増やす
             int score = 50;
             m_scoreText.ScoreAdder(score);
@@ -60,6 +62,8 @@ public class KawaCoin : PrimitiveTarget
         }
         else if (col.tag == "KawaztanShot")
         {
+            //ゲージ減らす
+            m_gage.bombNumAdder(-1f);
             //スコア減らす
             int score = -50;
             m_scoreText.ScoreAdder(score);
@@ -92,7 +96,7 @@ public class KawaCoin : PrimitiveTarget
             //Debug.Log("false");
             */
         }
-        else if (col.tag == "ToumeiStage")
+        else if (col.tag == "ToumeiStage" || col.tag == "Enemy")
         {
 
         }

@@ -85,7 +85,7 @@ public class Bomb : PrimitiveTarget
         else if (col.tag == "KawaztanShot")
         {
             //ゲージふやす
-            m_gage.bombNumIncrimenter();
+            m_gage.bombNumAdder(1f);
             //スコア増やす
             m_scoreText.ScoreAdder(30);
 
@@ -107,7 +107,7 @@ public class Bomb : PrimitiveTarget
             Debug.Log("false");
             gameObject.SetActive(false);
         }
-        else if (col.tag == "ToumeiStage")
+        else if (col.tag == "ToumeiStage" || col.tag == "Enemy")
         {
 
         }

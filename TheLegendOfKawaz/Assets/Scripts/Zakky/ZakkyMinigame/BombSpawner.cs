@@ -11,6 +11,8 @@ public class BombSpawner : MonoBehaviour
     [SerializeField]
     float overTimeCoe;
     [SerializeField]
+    float finalInterval;
+    [SerializeField]
     PrimitiveTarget bomb;
     [SerializeField]
     BaseParticle bomFX;
@@ -65,7 +67,7 @@ public class BombSpawner : MonoBehaviour
             }
 
             //Debug.Log(overTime.ToString());
-            yield return new WaitForSeconds(Mathf.Max(interval - 0.05f * overTime, 1f));
+            yield return new WaitForSeconds(Mathf.Max(interval - 0.05f * overTime, finalInterval));
         }
     }
 

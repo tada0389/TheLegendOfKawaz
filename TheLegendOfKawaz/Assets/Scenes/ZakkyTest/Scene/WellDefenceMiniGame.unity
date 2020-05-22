@@ -3700,6 +3700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interval: 5
   overTimeCoe: 0.05
+  finalInterval: 0.5
   bomb: {fileID: -4096486554652576994, guid: ee94136665400c443a9d91cb54994aee, type: 3}
   bomFX: {fileID: 8826173852865939361, guid: db19ec2b7abd8405f9c7323400d53c1b, type: 3}
   bomStartFX: {fileID: 9050830574756541051, guid: c27bdff77c374494487bac1e7e534737,
@@ -3998,6 +3999,15 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_bullets_.Array.data[0].max_num_
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 69060419, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
+      propertyPath: MaxClimbDegree
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 2131037086502031393, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_Mesh
@@ -4077,15 +4087,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: pre_pooled_bullets_.Array.data[0].max_num_
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 69060419, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
-      propertyPath: MaxClimbDegree
-      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
@@ -7660,7 +7661,7 @@ GameObject:
   - component: {fileID: 2015080765}
   - component: {fileID: 2015080764}
   m_Layer: 0
-  m_Name: BombSpawner (1)
+  m_Name: KawaCoinSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7678,8 +7679,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabde3ce62539714fae643922767f4d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 3
-  overTimeCoe: 0
+  interval: 10
+  overTimeCoe: 0.03
+  finalInterval: 1
   bomb: {fileID: 4465553261858056348, guid: 7f0553ad305529043a77a9bcbb25fc36, type: 3}
   bomFX: {fileID: 8826173852865939361, guid: db19ec2b7abd8405f9c7323400d53c1b, type: 3}
   bomStartFX: {fileID: 9050830574756541051, guid: c27bdff77c374494487bac1e7e534737,
