@@ -33,6 +33,7 @@ namespace Actor.Enemy.Purin
             {
                 TadaLib.TimeScaler.Instance.RequestChange(0.3f, 2.0f);
                 explosion_effect_.gameObject.SetActive(true);
+                Global.GlobalPlayerInfo.IsMuteki = true;
             }
 
             // 毎フレーム呼ばれる
@@ -41,7 +42,7 @@ namespace Actor.Enemy.Purin
                 if (Timer > 2.0f && !get)
                 {
                     get = true;
-                    Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
+                    Actor.Player.SkillManager.Instance.GainSkillPoint(500, Parent.transform.position, 0.8f);
                     //実績解除
                     AchievementManager.FireAchievement("Purin");
                     if (Parent.player_.GetComponent<Actor.Player.Player>().IsNoDamage())
