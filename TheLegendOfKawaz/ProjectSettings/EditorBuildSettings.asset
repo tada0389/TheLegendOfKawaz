@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ZakkyTest/Scene/UsedScenes/ZakkyTitle.unity
+    path: Assets/Scenes/ZakkyTest/Scene/UsingScenes/ZakkyTitle.unity
     guid: 5d22aba45f5072d4dba199222f7ca649
   - enabled: 1
-    path: Assets/Scenes/ZakkyTest/Scene/UsedScenes/ZakkyScene.unity
+    path: Assets/Scenes/ZakkyTest/Scene/UsingScenes/ZakkyScene.unity
     guid: 69c0515d42fd57248aaee48887da7ac2
   - enabled: 1
     path: Assets/Scenes/TadaTest/SkillSelectScene.unity
@@ -36,13 +36,13 @@ EditorBuildSettings:
     path: Assets/Scenes/TadaTest/TargetTest.unity
     guid: f0591246216169043829c138b84edae8
   - enabled: 1
-    path: Assets/Scenes/ZakkyTest/Scene/UsedScenes/TargetZakkyMiddleLevel.unity
+    path: Assets/Scenes/ZakkyTest/Scene/UsingScenes/TargetZakkyMiddleLevel.unity
     guid: 3237d1b0edf5b9646986eb17a7670930
   - enabled: 1
     path: Assets/Scenes/Koitan/Target_jokyu.unity
     guid: 4c541bf1136dd4cde9dba5df11959cbb
   - enabled: 1
-    path: Assets/Scenes/ZakkyTest/Scene/UsedScenes/WellDefenceMiniGame.unity
+    path: Assets/Scenes/ZakkyTest/Scene/UsingScenes/WellDefenceMiniGame.unity
     guid: 49f0d8be658a3094ca24e43fa149b7d8
   - enabled: 1
     path: Assets/Scenes/ManagerScene.unity

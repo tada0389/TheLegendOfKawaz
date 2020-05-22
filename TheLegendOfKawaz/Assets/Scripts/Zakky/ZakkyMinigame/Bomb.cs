@@ -73,7 +73,8 @@ public class Bomb : PrimitiveTarget
         else if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったらまけ
         {
             //ダメージ
-            col.gameObject.GetComponent<Actor.Player.Player>().Damage(10);
+            col.gameObject.GetComponent<Actor.Player.Player>().Damage(5);
+            //ダメージを受けるとカメラがゆれる
             Explotion();
         }
         else if (col.tag == "KawaztanShot")
