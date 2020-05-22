@@ -9,6 +9,7 @@ using System;
 using DG.Tweening;
 using KoitanLib;
 using UnityEngine.Rendering.PostProcessing;
+using System.IO;
 
 public class SettingManager : MonoBehaviour
 {
@@ -57,7 +58,6 @@ public class SettingManager : MonoBehaviour
 
     private int ScreenSizeNum = 1;
     private bool isPostEffect = true;
-
 
 
     // Start is called before the first frame update
@@ -160,19 +160,19 @@ public class SettingManager : MonoBehaviour
             .OnStart(() =>
             {
                 openState = OpenState.Opening;
-                Time.timeScale = 0.0f;
+                TadaLib.TimeScaler.Instance.RequestChange(0.0f);                
             })
             .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.5f)).SetEase(Ease.OutBounce).SetUpdate(true)
             .AppendCallback(() =>
             {
-                if(isTargetScene())
+                if (isTargetScene())
                 {
                     RetryMenu();
                 }
                 else
                 {
                     StartPlacement();
-                }        
+                }
                 nowIndex = 0;
                 item.SetActive(true);
                 openState = OpenState.Opened;
@@ -192,7 +192,7 @@ public class SettingManager : MonoBehaviour
             .AppendCallback(() =>
             {
                 openState = OpenState.Closed;
-                Time.timeScale = 1.0f;
+                TadaLib.TimeScaler.Instance.DismissRequest(0.0f);                
             });
     }
 
