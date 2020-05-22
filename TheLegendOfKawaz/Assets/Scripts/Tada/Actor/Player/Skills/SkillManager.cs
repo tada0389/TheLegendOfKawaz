@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Actor.Player;
 using TadaLib;
-using UnityEditorInternal;
 
 /// <summary>
 /// プレイヤーのパラメータを管理するクラス

@@ -31,7 +31,7 @@ namespace Actor.Enemy.Purin
             // 開始時に呼ばれる
             public override void OnStart()
             {
-                TadaLib.TimeScaler.Instance.RequestChange(0.3f, 2.0f);
+                TadaLib.TimeScaler.Instance.RequestChange(0.3f, 1.5f);
                 explosion_effect_.gameObject.SetActive(true);
                 Global.GlobalPlayerInfo.IsMuteki = true;
             }
