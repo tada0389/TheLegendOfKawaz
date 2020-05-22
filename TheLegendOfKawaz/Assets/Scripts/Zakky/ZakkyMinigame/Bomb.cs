@@ -68,19 +68,13 @@ public class Bomb : PrimitiveTarget
         {
             col.gameObject.SetActive(false);
             //爆破もする
-            //bloom関数呼ぶ
-            m_miniPostProcessing.ExplotionLight();
-            //爆破エフェクト
-            TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
-
-            //TadaLib.EffectPlayer.Play(gotPoint, transform.position, Vector3.zero);
-            //used = falseをする
-            gameObject.SetActive(false);
+            Explotion();
         }
         else if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったらまけ
         {
-            //まけ
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //ダメージ
+            col.gameObject.GetComponent<Actor.Player.Player>().Damage(10);
+            Explotion();
         }
         else if (col.tag == "KawaztanShot")
         {
@@ -89,23 +83,11 @@ public class Bomb : PrimitiveTarget
             //スコア増やす
             m_scoreText.ScoreAdder(30);
 
-            //bloom関数呼ぶ
-            m_miniPostProcessing.ExplotionLight();
-            TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
-
             {
                 //テキスト呼び出す
-
-                //Color colo = txt.color;
-                //colo.a = 1f;
-                //txt.color = colo;
                 GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), 30);
-                //txt.transform.position = transform.position;
-                //txt.transform.rotation = Quaternion.Euler(Vector3.zero);
             }
-
-            Debug.Log("false");
-            gameObject.SetActive(false);
+            Explotion();
         }
         else if (col.tag == "ToumeiStage" || col.tag == "Enemy")
         {
@@ -114,10 +96,18 @@ public class Bomb : PrimitiveTarget
         else
         {
             //速度反転
-            //col.gameObject.GetComponent<Rigidbody2D>().velocity = -col.gameObject.GetComponent<Rigidbody2D>().velocity;
             Vector3 vec = m_rigidbody2D.velocity;
             vec.y = bounce;
             m_rigidbody2D.velocity = vec;
         }
+    }
+
+    void Explotion()
+    {
+        //bloom関数呼ぶ
+        m_miniPostProcessing.ExplotionLight();
+        //爆破エフェクト
+        TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
+        gameObject.SetActive(false);
     }
 }
