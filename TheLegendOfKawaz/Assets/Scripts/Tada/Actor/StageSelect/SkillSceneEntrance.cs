@@ -13,6 +13,8 @@ public class SkillSceneEntrance : MonoBehaviour
     [SerializeField, Multiline(5)]
     private string message;
 
+    private bool scene_flag_ = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,8 +46,9 @@ public class SkillSceneEntrance : MonoBehaviour
             //DOTweenでちょっと大きくする
             transform.DOScale(new Vector2(1.5f, 1.5f), 0.3f);
             //決定ボタン押したらシーン遷移
-            if (ActionInput.GetButtonDown(ButtonCode.Up) && !FadeManager.is_fading)
+            if (!scene_flag_ && ActionInput.GetButtonDown(ButtonCode.Up) && !FadeManager.is_fading)
             {
+                scene_flag_ = true;
                 //Scene読み込み
                 //SceneManager.LoadScene(next_scene_);
                 //koitan追加

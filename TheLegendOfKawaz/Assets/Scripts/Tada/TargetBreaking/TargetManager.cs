@@ -13,6 +13,10 @@ namespace Target
 {
     public class TargetManager : MonoBehaviour
     {
+        // 実績のキー
+        [SerializeField]
+        private string achievement_key_ = "Target_Clear_syokyu";
+
         private int target_num_ = 0;
 
         private float timer_;
@@ -150,13 +154,16 @@ namespace Target
                     else SkillManager.Instance.SpendSkillPoint(-reward, 0.03f);
                     // お試し
                     TadaLib.Save.SaveManager.Instance.Save();
+                    // 実績解除
+                    AchievementManager.FireAchievement(achievement_key_);
+                    if(grade_name == "Gold") AchievementManager.FireAchievement(achievement_key_ + "_Gold");
                 }
                 else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
             }
 
             float time_change_duration = 3.0f * new_time_scale;
-            // もしポイントを獲得していたならもうちょい伸ばす
-            if(get_point) time_change_duration += 0.06f;
+            //// もしポイントを獲得していたならもうちょい伸ばす
+            //if(get_point) time_change_duration += 0.03f;
             TimeScaler.Instance.RequestChange(new_time_scale, time_change_duration);
 
             //clear_text_.rectTransform.DOPunchScale(Vector3.one, 3.0f * Time.timeScale);

@@ -4552,11 +4552,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: pre_pooled_bullets_.Array.data[0].max_num_
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2131037086502031393, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_Mesh
@@ -4636,6 +4631,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: pre_pooled_bullets_.Array.data[0].max_num_
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
@@ -7121,6 +7121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66bc041c650595d4c9acc34b957647e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  achievement_key_: Target_Clear_shokyu
   timer_text_: {fileID: 1417128166}
   player_: {fileID: 865562795}
   bottom_boader_: -17

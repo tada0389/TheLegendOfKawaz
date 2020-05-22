@@ -36,7 +36,6 @@ namespace Actor.Enemy.Thousand
             {
                 if (Timer > 2.0f && !a)
                 {
-                    Time.timeScale = 1.0f;
                     a = true;
                     Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
                     //実績解除

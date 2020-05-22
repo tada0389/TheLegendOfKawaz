@@ -40,7 +40,10 @@ namespace Actor.Player
                 data.velocity.y = power_.y;
 
                 // カメラを揺らす
-                CameraSpace.CameraShaker.Shake(0.20f, 0.15f);
+                CameraSpace.CameraShaker.Shake(0.20f, 0.15f, 0.03f);
+
+                // 時間をスローに
+                TadaLib.TimeScaler.Instance.RequestChange(0.5f, 0.025f);
             }
 
             // ステートが終了したときに呼ばれるメソッド
