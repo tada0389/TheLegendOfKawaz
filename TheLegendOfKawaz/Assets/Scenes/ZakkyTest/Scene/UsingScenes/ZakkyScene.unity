@@ -1998,7 +1998,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1014698405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.83, y: -8.13, z: 0}
+  m_LocalPosition: {x: -12, y: -8.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2354,7 +2354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &1149912939
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2438,7 +2438,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1149912938}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: -7.1, z: 0}
+  m_LocalPosition: {x: -18, y: -8.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2457,8 +2457,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorNum: 2
-  next_scene_: TadaBossScene
-  message: 
+  next_scene_: WellDefenceMiniGame
+  message: "\u4E95\u6238\u30C7\u30A3\u30D5\u30A7\u30F3\u30B9\u30DF\u30CB\u30B2\u30FC\u30E0"
 --- !u!50 &1149912943
 Rigidbody2D:
   serializedVersion: 4
