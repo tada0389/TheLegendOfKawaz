@@ -234,7 +234,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.64, y: 0.96}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
@@ -794,6 +794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b29ac43615ea641abbdec8e8cbe0c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp_: 20
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -806,16 +807,64 @@ MonoBehaviour:
     jump_power: 0.38
     jump_input_time: 0.25
     wall_thr: 0.05
+    jump_se_1: {fileID: 0}
+    jump_se_2: {fileID: 0}
+    kick_wait_time_: 0.2
   fall_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     can_jump_time: 0.1
-    fall_accel_with_wall_: -0.01
-    fall_max_abs_speed_with_wall_: -0.15
   wall_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     kick_power_: {x: 0.2, y: 0.35}
+    kick_effect_: {fileID: 0}
+  dush_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    dush_time_: 1
+    dush_speed_: 0.4
+    dash_effect_: {fileID: 0}
+  dashjump_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    jump_power: 0.4
+    jump_input_time: 0.25
+    wall_thr: 0.05
+    jump_se_1: {fileID: 0}
+    jump_se_2: {fileID: 0}
+  damage_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    power_: {x: 0.5, y: 1}
+    rigidity_time_: 1
+  dead_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    scene_transitioin_time_: 3
+    next_scene_: ZakkyScene
+  water_idle_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  water_walk_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    add_jump_time_: 0.05
+    cant_jump_time_: 0.1
+  water_jump_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    jump_power_: 0.1
+    rigity_time_: 0.1
+  charge_shot_pre_: {fileID: 0}
+  charge_shot_end_: {fileID: 0}
+  normal_bullet_: {fileID: 0}
+  charge_bullet_: {fileID: 0}
+  heal_ctrl_: {fileID: 0}
+  not_reverse_: {fileID: 0}
+  muteki_time_: 2
+  mesh_: {fileID: 0}
+  demo_skills_: []
 --- !u!95 &771873948
 Animator:
   serializedVersion: 3
@@ -4261,7 +4310,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1.6, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
@@ -4383,7 +4432,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.64, y: 0.96}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
@@ -4909,7 +4958,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1.6, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
@@ -5310,7 +5359,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1.6, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
