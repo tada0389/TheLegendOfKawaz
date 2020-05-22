@@ -2,66 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; // コレ重要
-//using TMPro;
+using TMPro;
 
-public class Bomb : PrimitiveTarget
+public class PrimitiveTarget : MonoBehaviour
 {
-    /*
+    //y方向の最大の速さ
     [SerializeField]
     private float maxVelo;
+    //ボム爆発エフェクト
     [SerializeField]
-    BaseParticle bomFX;
+    protected BaseParticle bomFX;
+    //ボム発生エフェクト
     [SerializeField]
-    BaseParticle bomStartFX;
+    protected BaseParticle bomStartFX;
+    //ボム爆発時ゲットポイントテキスト
     [SerializeField]
-    TextMeshPro gotPoint;
+    protected TextMeshPro gotPoint;
 
-    MiniGamePostProcessing m_miniPostProcessing;
-    Gage m_gage;
-    ScoreText m_scoreText;
+    //ポストプロセシング
+    protected MiniGamePostProcessing m_miniPostProcessing;
+    //フィーバーゲージ
+    protected Gage m_gage;
+    //スコアテキスト
+    protected ScoreText m_scoreText;
+    //rigidbody2D
+    protected Rigidbody2D m_rigidbody2D;
 
-    private Rigidbody2D m_rigidbody2D;
+    //跳ねやすさ
     [HideInInspector]
     public float bounce;
-    [HideInInspector]
-    public BombSpawner m_bombSpawner;
-    */
+    //[HideInInspector]
+    //public BombSpawner m_bombSpawner;
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
-        base.Start();
-        /*
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
-        m_miniPostProcessing = GameObject.Find("PostProcessVolume").GetComponent<MiniGamePostProcessing>();
-        m_gage = GameObject.Find("Gage").GetComponent<Gage>();
-        m_scoreText = GameObject.Find("ScoreText").GetComponent<ScoreText>();
+        GetComponenter();
 
         //最初のまがまがしい登場エフェクト
         TadaLib.EffectPlayer.Play(bomStartFX, transform.position, Vector3.zero);
-        */
+
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
-        base.Update();
-        /*
-        //一定以上落ちてたら消す
-        if (transform.position.y < -10f) gameObject.SetActive(false);
-        {
-            Vector2 vec = m_rigidbody2D.velocity;
-            if (vec.y < -maxVelo) vec.y = -maxVelo;
-            m_rigidbody2D.velocity = vec;
-        }
-        */
+        TeritoryCheck();
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D col)
-    {
-        ColTriggerAction(col);
-    }
-
-    protected override void ColTriggerAction(Collider2D col)
     {
         //床に当たったら床ぶっ壊す
         if (col.tag == "KawazCeil")
@@ -72,7 +61,7 @@ public class Bomb : PrimitiveTarget
             m_miniPostProcessing.ExplotionLight();
             //爆破エフェクト
             TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
-
+            
             //TadaLib.EffectPlayer.Play(gotPoint, transform.position, Vector3.zero);
             //used = falseをする
             gameObject.SetActive(false);
@@ -95,11 +84,11 @@ public class Bomb : PrimitiveTarget
 
             {
                 //テキスト呼び出す
-
+                
                 //Color colo = txt.color;
                 //colo.a = 1f;
                 //txt.color = colo;
-                GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), 30);
+                GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero));
                 //txt.transform.position = transform.position;
                 //txt.transform.rotation = Quaternion.Euler(Vector3.zero);
             }
@@ -117,6 +106,32 @@ public class Bomb : PrimitiveTarget
             //col.gameObject.GetComponent<Rigidbody2D>().velocity = -col.gameObject.GetComponent<Rigidbody2D>().velocity;
             Vector3 vec = m_rigidbody2D.velocity;
             vec.y = bounce;
+            m_rigidbody2D.velocity = vec;
+        }
+    }
+    */
+
+    protected virtual void ColTriggerAction(Collider2D col)
+    {
+
+    }
+
+    void GetComponenter()
+    {
+        //Rigidbody2D、MiniGamePostProcessing、Gage、ScoreTextとる
+        m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_miniPostProcessing = GameObject.Find("PostProcessVolume").GetComponent<MiniGamePostProcessing>();
+        m_gage = GameObject.Find("Gage").GetComponent<Gage>();
+        m_scoreText = GameObject.Find("ScoreText").GetComponent<ScoreText>();
+    }
+
+    void TeritoryCheck()
+    {
+        //一定以上落ちてたら消す
+        if (transform.position.y < -10f) gameObject.SetActive(false);
+        {
+            Vector2 vec = m_rigidbody2D.velocity;
+            if (vec.y < -maxVelo) vec.y = -maxVelo;
             m_rigidbody2D.velocity = vec;
         }
     }

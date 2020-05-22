@@ -28,16 +28,21 @@ public class GotPoint : MonoBehaviour
     }
 
     
-    public static void PointInit(TextMeshPro text, Vector3 pos, Quaternion ang, Transform owner = null)
+    public static void PointInit(TextMeshPro text, Vector3 pos, Quaternion ang, int score, Transform owner = null)
     {
         var txt = KoitanLib.ObjectPoolManager.GetInstance<TextMeshPro>(text);
         if (txt == null) return;
         txt.transform.position = pos;
         txt.transform.rotation = ang;
-        //txt.transform.parent = owner;
+        if (score >= 0) txt.text = "+" + score.ToString();
+        else txt.text = score.ToString();
+        txt.transform.parent = owner;
         //アルファ値を1にする
         Color col = txt.color;
-        col.a = 1f;
+        if (score > 0) col = Color.blue;
+        else if (score == 0) col = Color.black;
+        else col = Color.red;
+        //col.a = 1f;
         txt.color = col;
         txt.gameObject.SetActive(true);
     }
