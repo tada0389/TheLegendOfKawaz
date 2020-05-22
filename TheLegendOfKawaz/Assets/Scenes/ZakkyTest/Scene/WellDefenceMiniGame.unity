@@ -3478,7 +3478,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &354455751
 PolygonCollider2D:
@@ -3700,7 +3700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interval: 5
   overTimeCoe: 0.05
-  finalInterval: 0.5
+  finalInterval: 1
   bomb: {fileID: -4096486554652576994, guid: ee94136665400c443a9d91cb54994aee, type: 3}
   bomFX: {fileID: 8826173852865939361, guid: db19ec2b7abd8405f9c7323400d53c1b, type: 3}
   bomStartFX: {fileID: 9050830574756541051, guid: c27bdff77c374494487bac1e7e534737,
@@ -3720,7 +3720,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &648293089
 PrefabInstance:
@@ -4594,7 +4594,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &922295328
 MonoBehaviour:
@@ -4924,7 +4924,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1152576516
 GameObject:
@@ -4968,7 +4968,7 @@ Transform:
   - {fileID: 1465506503}
   - {fileID: 869297879}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1152576518
 MonoBehaviour:
@@ -6030,7 +6030,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1557613045
 GameObject:
@@ -6722,7 +6722,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1780753473
 PrefabInstance:
@@ -6829,7 +6829,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &1828330144
 PolygonCollider2D:
@@ -7202,7 +7202,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &1963435562
 PolygonCollider2D:
@@ -7681,7 +7681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interval: 10
   overTimeCoe: 0.03
-  finalInterval: 1
+  finalInterval: 2
   bomb: {fileID: 4465553261858056348, guid: 7f0553ad305529043a77a9bcbb25fc36, type: 3}
   bomFX: {fileID: 8826173852865939361, guid: db19ec2b7abd8405f9c7323400d53c1b, type: 3}
   bomStartFX: {fileID: 9050830574756541051, guid: c27bdff77c374494487bac1e7e534737,
