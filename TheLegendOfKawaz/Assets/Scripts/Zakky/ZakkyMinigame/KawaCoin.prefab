@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1008020056236594117}
   - component: {fileID: 1008020056236594123}
   - component: {fileID: 1008020056236594120}
-  - component: {fileID: -4096486554652576994}
+  - component: {fileID: 4465553261858056348}
   m_Layer: 0
-  m_Name: bomb
+  m_Name: KawaCoin
   m_TagString: Stage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008020056236594121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -38.3, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 322163b73c7f444b5a6fd4000529169d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0d8bde14b2ee03d4991210c73555fa2f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,9 +96,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.39}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.4
+  m_Radius: 2
 --- !u!50 &1008020056236594120
 Rigidbody2D:
   serializedVersion: 4
@@ -120,7 +120,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-4096486554652576994
+--- !u!114 &4465553261858056348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1008020056236594121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecff1bd9e2599814db078f53f22a05c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a7600dbe78717b4fb9b5e58615bb14d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxVelo: 5

@@ -7,9 +7,11 @@ public class BombSpawner : MonoBehaviour
 {
     //はねかた、横速度、位置がランダム
     [SerializeField]
-    private float interval;
+    float interval;
     [SerializeField]
-    private Bomb bomb;
+    float overTimeCoe;
+    [SerializeField]
+    PrimitiveTarget bomb;
     [SerializeField]
     BaseParticle bomFX;
     [SerializeField]
@@ -44,16 +46,22 @@ public class BombSpawner : MonoBehaviour
             //処理
             float randomX = Random.Range(-50f, 50f);
 
-            Bomb obj = KoitanLib.ObjectPoolManager.GetInstance<Bomb>(bomb);
-                //Instantiate(bomb,
-                //new Vector2(randomX, 35f),
-                //Quaternion.Euler(Vector2.zero));
+            PrimitiveTarget obj = KoitanLib.ObjectPoolManager.GetInstance<PrimitiveTarget>(bomb);
             if (obj != null)
             {
                 obj.transform.position = new Vector2(randomX, 35f);
-                obj.GetComponent<Rigidbody2D>().velocity = new Vector2(-Mathf.Sign(randomX), 0) * Random.Range(2f, 10f);
+                //もし井戸の真ん中らへんなら速度ゼロ
+                if (Mathf.Abs(obj.transform.position.x) < 5)
+                {
+                    obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                }
+                else
+                {
+                    //違うなら左右に応じて速度入れる
+                    obj.GetComponent<Rigidbody2D>().velocity = new Vector2(-Mathf.Sign(randomX), 0) * Random.Range(2f, 10f);
+                }
                 obj.bounce = Random.Range(5f, 15f);
-                obj.m_bombSpawner = this;
+                //obj.m_bombSpawner = this;
             }
 
             //Debug.Log(overTime.ToString());
@@ -62,9 +70,9 @@ public class BombSpawner : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    //void Update()
+    //{
         //ゲージを上げる
         //m_gage.bombNumSetter(brokenBombsSum);
-    }
+    //}
 }
