@@ -375,6 +375,8 @@ namespace Actor.Player
         // Start is called before the first frame update
         private void Start()
         {
+            Global.GlobalPlayerInfo.IsMuteki = false;
+
             shot_anim_timer_ = new Timer(0.3f);
             muteki_timer_ = new Timer(muteki_time_);
 
@@ -565,6 +567,7 @@ namespace Actor.Player
         // ダメージを受ける
         public override void Damage(int damage)
         {
+            if (Global.GlobalPlayerInfo.IsMuteki) return;
             if (!is_nodamage_ && !muteki_timer_.IsTimeout()) return;
             if (state_machine_.CurrentStateId == (int)eState.Damage) return;
             if (state_machine_.CurrentStateId == (int)eState.Dead) return;

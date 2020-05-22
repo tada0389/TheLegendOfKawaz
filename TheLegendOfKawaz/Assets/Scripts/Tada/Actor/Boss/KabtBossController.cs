@@ -411,7 +411,8 @@ namespace Actor.Enemy
             {
                 Parent.trb_.Velocity = Vector2.zero;
                 explosion_effect_.gameObject.SetActive(true);
-                if (!a) TadaLib.TimeScaler.Instance.RequestChange(0.3f, 2.0f);
+                if (!a) TadaLib.TimeScaler.Instance.RequestChange(0.3f, 1.5f);
+                Global.GlobalPlayerInfo.IsMuteki = true;
             }
 
             // 毎フレーム呼ばれる
@@ -420,7 +421,7 @@ namespace Actor.Enemy
                 if(Timer > 2.0f && !a)
                 {
                     a = true;
-                    Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
+                    Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position, 0.8f);
 
                     //実績解除
                     AchievementManager.FireAchievement("Kabt");

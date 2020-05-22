@@ -865,7 +865,8 @@ namespace Actor.Enemy
             // 開始時に呼ばれる
             public override void OnStart()
             {
-                TadaLib.TimeScaler.Instance.RequestChange(0.3f, 2.0f);
+                TadaLib.TimeScaler.Instance.RequestChange(0.3f, 1.5f);
+                Global.GlobalPlayerInfo.IsMuteki = true;
             }
 
             // 毎フレーム呼ばれる
@@ -874,7 +875,7 @@ namespace Actor.Enemy
                 if (Timer > 2.0f && !get)
                 {
                     get = true;
-                    Actor.Player.SkillManager.Instance.GainSkillPoint(1000, Parent.transform.position);
+                    Actor.Player.SkillManager.Instance.GainSkillPoint(750, Parent.transform.position, 0.8f);
                     //実績解除
                     AchievementManager.FireAchievement("VenomDrake");
                     if(Parent.player_.GetComponent<Player.Player>().IsNoDamage())
