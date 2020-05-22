@@ -67,7 +67,7 @@ public class BombSpawner : MonoBehaviour
             }
 
             //Debug.Log(overTime.ToString());
-            yield return new WaitForSeconds(Mathf.Max(interval - 0.05f * overTime, finalInterval));
+            yield return new WaitForSeconds(Mathf.Max(interval - overTimeCoe * overTime, finalInterval));
         }
     }
 
