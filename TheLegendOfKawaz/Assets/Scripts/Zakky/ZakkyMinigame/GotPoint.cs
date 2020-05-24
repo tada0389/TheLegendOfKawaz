@@ -39,9 +39,14 @@ public class GotPoint : MonoBehaviour
         txt.transform.parent = owner;
         //アルファ値を1にする
         Color col = txt.color;
-        if (score > 0) col = Color.blue;
+        if (score > 0)
+        {
+            if (Game.instance.state == Game.STATE.FEVER) col = Color.yellow;
+            else col = Color.blue;
+        }
         else if (score == 0) col = Color.black;
         else col = Color.red;
+        
         //col.a = 1f;
         txt.color = col;
         txt.gameObject.SetActive(true);

@@ -66,27 +66,38 @@ public class Bomb : PrimitiveTarget
         //床に当たったら床ぶっ壊す
         if (col.tag == "KawazCeil")
         {
-            col.gameObject.SetActive(false);
+            if (Game.instance.state == Game.STATE.MOVE) col.gameObject.SetActive(false);
+            //else if (Game.instance.state == Game.STATE.FEVER) m_scoreText.ScoreAdder(30);
             //爆破もする
             Explotion();
         }
         else if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったらまけ
         {
             //ダメージ
-            GameObject.Find("NewKawazTan").GetComponent<Actor.Player.Player>().Damage(5);
-            //ダメージを受けるとカメラがゆれる
+            if (Game.instance.state == Game.STATE.MOVE) GameObject.Find("NewKawazTan").GetComponent<Actor.Player.Player>().Damage(5);
+            else if (Game.instance.state == Game.STATE.FEVER)
+            {
+                int score = 60;
+                m_scoreText.ScoreAdder(score);
+                //テキスト呼び出す
+                GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), score);
+            }
+            //爆弾ばくはつ
             Explotion();
         }
         else if (col.tag == "KawaztanShot")
         {
             //ゲージふやす
             m_gage.bombNumAdder(1f);
+            int score = 30;
+            if (Game.instance.state == Game.STATE.FEVER) score = 60;
+
             //スコア増やす
-            m_scoreText.ScoreAdder(30);
+            m_scoreText.ScoreAdder(score);
 
             {
                 //テキスト呼び出す
-                GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), 30);
+                GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), score);
             }
             Explotion();
         }

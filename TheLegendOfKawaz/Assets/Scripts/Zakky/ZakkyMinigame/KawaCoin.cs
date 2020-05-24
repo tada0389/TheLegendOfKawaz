@@ -52,6 +52,8 @@ public class KawaCoin : PrimitiveTarget
             m_gage.bombNumAdder(0.3f);
             //スコア増やす
             int score = 50;
+            if (Game.instance.state == Game.STATE.FEVER) score = 100;
+
             m_scoreText.ScoreAdder(score);
             //ゲットしたポイントをその場に表示
             GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), score);
@@ -62,10 +64,17 @@ public class KawaCoin : PrimitiveTarget
         }
         else if (col.tag == "KawaztanShot")
         {
-            //ゲージ減らす
-            m_gage.bombNumAdder(-1f);
-            //スコア減らす
             int score = -50;
+            if (Game.instance.state == Game.STATE.MOVE)
+            {
+                //ゲージ減らす
+                m_gage.bombNumAdder(-1f);
+            }
+            else if (Game.instance.state == Game.STATE.FEVER)
+            {
+                score = 100;
+            }
+            
             m_scoreText.ScoreAdder(score);
             GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), score);
             m_miniPostProcessing.ExplotionLight();
