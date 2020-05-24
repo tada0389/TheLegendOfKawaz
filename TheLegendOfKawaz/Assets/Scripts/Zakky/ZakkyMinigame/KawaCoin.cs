@@ -24,28 +24,6 @@ public class KawaCoin : PrimitiveTarget
 
     protected override void ColTriggerAction(Collider2D col)
     {
-        /*
-        //床に当たったら床にとどまる
-        if (col.tag == "KawazCeil")
-        {
-            //速度反転
-            //Vector3 vec = m_rigidbody2D.velocity;
-            //vec.y = bounce;
-            //m_rigidbody2D.velocity = vec;
-
-            //col.gameObject.SetActive(false);
-            //爆破もする
-            //bloom関数呼ぶ
-            m_miniPostProcessing.ExplotionLight();
-            //消滅エフェクト
-            TadaLib.EffectPlayer.Play(bomStartFX, transform.position, Vector3.zero);
-
-            int score = 0;
-            GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), score);
-            //used = falseをする
-            gameObject.SetActive(false);
-        }
-        */
         if (col.tag == "Player") //プレイヤーに当たったら吸収
         {
             //ゲージふやす
@@ -81,29 +59,6 @@ public class KawaCoin : PrimitiveTarget
             TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
 
             gameObject.SetActive(false);
-            /*
-            //ゲージふやす
-            m_gage.bombNumIncrimenter();
-            //スコア増やす
-            m_scoreText.ScoreAdder(150);
-
-            //bloom関数呼ぶ
-            m_miniPostProcessing.ExplotionLight();
-            TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
-
-            {
-                //テキスト呼び出す
-
-                //Color colo = txt.color;
-                //colo.a = 1f;
-                //txt.color = colo;
-                GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), 150);
-                //txt.transform.position = transform.position;
-                //txt.transform.rotation = Quaternion.Euler(Vector3.zero);
-            }
-
-            //Debug.Log("false");
-            */
         }
         else if (col.tag == "ToumeiStage" || col.tag == "Enemy")
         {
@@ -111,12 +66,6 @@ public class KawaCoin : PrimitiveTarget
         }
         else
         {
-            //速度反転
-            //col.gameObject.GetComponent<Rigidbody2D>().velocity = -col.gameObject.GetComponent<Rigidbody2D>().velocity;
-            //Vector3 vec = m_rigidbody2D.velocity;
-            //vec.y = base.bounce;
-            //m_rigidbody2D.velocity = vec;
-
             //bloom関数呼ぶ
             m_miniPostProcessing.ExplotionLight();
             //消滅エフェクト

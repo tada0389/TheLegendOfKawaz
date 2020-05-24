@@ -31,8 +31,6 @@ public class PrimitiveTarget : MonoBehaviour
     //跳ねやすさ
     [HideInInspector]
     public float bounce;
-    //[HideInInspector]
-    //public BombSpawner m_bombSpawner;
     // Start is called before the first frame update
     protected void Start()
     {
@@ -49,68 +47,7 @@ public class PrimitiveTarget : MonoBehaviour
         TeritoryCheck();
     }
 
-    /*
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        //床に当たったら床ぶっ壊す
-        if (col.tag == "KawazCeil")
-        {
-            col.gameObject.SetActive(false);
-            //爆破もする
-            //bloom関数呼ぶ
-            m_miniPostProcessing.ExplotionLight();
-            //爆破エフェクト
-            TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
-            
-            //TadaLib.EffectPlayer.Play(gotPoint, transform.position, Vector3.zero);
-            //used = falseをする
-            gameObject.SetActive(false);
-        }
-        else if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったらまけ
-        {
-            //まけ
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        else if (col.tag == "KawaztanShot")
-        {
-            //ゲージふやす
-            m_gage.bombNumIncrimenter();
-            //スコア増やす
-            m_scoreText.ScoreAdder(30);
-
-            //bloom関数呼ぶ
-            m_miniPostProcessing.ExplotionLight();
-            TadaLib.EffectPlayer.Play(bomFX, transform.position, Vector3.zero);
-
-            {
-                //テキスト呼び出す
-                
-                //Color colo = txt.color;
-                //colo.a = 1f;
-                //txt.color = colo;
-                GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero));
-                //txt.transform.position = transform.position;
-                //txt.transform.rotation = Quaternion.Euler(Vector3.zero);
-            }
-
-            Debug.Log("false");
-            gameObject.SetActive(false);
-        }
-        else if (col.tag == "ToumeiStage")
-        {
-
-        }
-        else
-        {
-            //速度反転
-            //col.gameObject.GetComponent<Rigidbody2D>().velocity = -col.gameObject.GetComponent<Rigidbody2D>().velocity;
-            Vector3 vec = m_rigidbody2D.velocity;
-            vec.y = bounce;
-            m_rigidbody2D.velocity = vec;
-        }
-    }
-    */
-
+    //接触時に呼び出す関数
     protected virtual void ColTriggerAction(Collider2D col)
     {
 

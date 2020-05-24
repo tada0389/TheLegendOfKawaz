@@ -6,54 +6,16 @@ using UnityEngine.SceneManagement; // コレ重要
 
 public class Bomb : PrimitiveTarget
 {
-    /*
-    [SerializeField]
-    private float maxVelo;
-    [SerializeField]
-    BaseParticle bomFX;
-    [SerializeField]
-    BaseParticle bomStartFX;
-    [SerializeField]
-    TextMeshPro gotPoint;
-
-    MiniGamePostProcessing m_miniPostProcessing;
-    Gage m_gage;
-    ScoreText m_scoreText;
-
-    private Rigidbody2D m_rigidbody2D;
-    [HideInInspector]
-    public float bounce;
-    [HideInInspector]
-    public BombSpawner m_bombSpawner;
-    */
     // Start is called before the first frame update
     void Start()
     {
         base.Start();
-        /*
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
-        m_miniPostProcessing = GameObject.Find("PostProcessVolume").GetComponent<MiniGamePostProcessing>();
-        m_gage = GameObject.Find("Gage").GetComponent<Gage>();
-        m_scoreText = GameObject.Find("ScoreText").GetComponent<ScoreText>();
-
-        //最初のまがまがしい登場エフェクト
-        TadaLib.EffectPlayer.Play(bomStartFX, transform.position, Vector3.zero);
-        */
     }
 
     // Update is called once per frame
     void Update()
     {
         base.Update();
-        /*
-        //一定以上落ちてたら消す
-        if (transform.position.y < -10f) gameObject.SetActive(false);
-        {
-            Vector2 vec = m_rigidbody2D.velocity;
-            if (vec.y < -maxVelo) vec.y = -maxVelo;
-            m_rigidbody2D.velocity = vec;
-        }
-        */
     }
 
     private void OnTriggerEnter2D(Collider2D col)

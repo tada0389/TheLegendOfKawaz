@@ -32,6 +32,7 @@ public class Gage : MonoBehaviour
 
     public void bombNumAdder(float num)
     {
+        //フィーバー状態のときはゲージ増やさない
         if (Game.instance.state == Game.STATE.FEVER) return;
 
         bombNum += num;
@@ -49,6 +50,7 @@ public class Gage : MonoBehaviour
             BHPBar.startColor = col;
             BHPBar.endColor = col;
             m_ciel.CielRespawner();
+            //紙吹雪降らせる
             m_kamihubuki.Play();
         }
     }
@@ -58,6 +60,7 @@ public class Gage : MonoBehaviour
         if (Game.instance.state == Game.STATE.FEVER)
         {
             gageNum -= 20f * (Time.deltaTime / 8f);
+            //2秒前になったら紙吹雪止める
             if (gageNum < 20f * 2f / 8f) m_kamihubuki.Stop();
             if (gageNum <= 0f)
             {
@@ -70,6 +73,7 @@ public class Gage : MonoBehaviour
         }
         else
         {
+            //ゲージをぬるっとふやす
             DOTween.To(
             () => gageNum,          // 何を対象にするのか
             num => gageNum = num,   // 値の更新
