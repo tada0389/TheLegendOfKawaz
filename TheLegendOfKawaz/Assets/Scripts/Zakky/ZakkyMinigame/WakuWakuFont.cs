@@ -10,15 +10,6 @@ public class WakuWakuFont : MonoBehaviour
     void Start()
     {
         fiverCheck = false;
-        //seq = DOTween.Sequence();
-
-        //seq.SetLoops(-1);
-        //seq.Append(
-        //    transform.DOScale(Vector2.one * 2f, 0.5f)
-        //    ).Append(
-        //    transform.DOScale(Vector2.one, 0.5f)
-        //    );
-        //seq.Play().SetLoops(-1);
     }
 
     // Update is called once per frame
