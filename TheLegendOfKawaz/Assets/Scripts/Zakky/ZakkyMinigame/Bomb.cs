@@ -36,7 +36,11 @@ public class Bomb : PrimitiveTarget
         else if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったらまけ
         {
             //ダメージ
-            if (Game.instance.state == Game.STATE.MOVE) GameObject.Find("NewKawazTan").GetComponent<Actor.Player.Player>().Damage(5);
+            if (Game.instance.state == Game.STATE.MOVE)
+            {
+                GameObject.Find("NewKawazTan").GetComponent<Actor.Player.Player>().Damage(5);
+                CameraSpace.CameraShaker.Shake(0.6f, 0.3f);
+            }
             else if (Game.instance.state == Game.STATE.FEVER)
             {
                 int score = 60;

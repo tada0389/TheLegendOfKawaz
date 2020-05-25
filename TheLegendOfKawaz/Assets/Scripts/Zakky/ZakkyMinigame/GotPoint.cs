@@ -42,7 +42,7 @@ public class GotPoint : MonoBehaviour
         if (score > 0)
         {
             if (Game.instance.state == Game.STATE.FEVER) col = Color.yellow;
-            else col = Color.blue;
+            else col = Color.green;
         }
         else if (score == 0) col = Color.black;
         else col = Color.red;
