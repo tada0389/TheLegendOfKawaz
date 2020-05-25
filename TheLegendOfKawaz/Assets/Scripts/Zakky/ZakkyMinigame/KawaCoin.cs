@@ -46,7 +46,7 @@ public class KawaCoin : PrimitiveTarget
             if (Game.instance.state == Game.STATE.MOVE)
             {
                 //ゲージ減らす
-                m_gage.bombNumAdder(-1f);
+                m_gage.bombNumAdder(-2f);
             }
             else if (Game.instance.state == Game.STATE.FEVER)
             {

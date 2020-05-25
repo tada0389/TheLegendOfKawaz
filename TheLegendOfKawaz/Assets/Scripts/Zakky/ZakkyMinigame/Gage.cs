@@ -72,15 +72,20 @@ public class Gage : MonoBehaviour
                 Game.instance.state = Game.STATE.MOVE;
             }
         }
-        else
+        else if (Game.instance.state == Game.STATE.MOVE)
         {
             //ゲージをぬるっとふやす
             DOTween.To(
             () => gageNum,          // 何を対象にするのか
             num => gageNum = num,   // 値の更新
             bombNum,                  // 最終的な値
-            0.2f                  // アニメーション時間
+            0.5f                  // アニメーション時間
             );
+            Color col = new Color(0.6f, 0.6f, 1f);
+            if (bombNum - gageNum > 0.01f) col = Color.green;
+            else if (bombNum - gageNum < -0.01f) col = Color.red;
+            BHPBar.startColor = col;
+            BHPBar.endColor = col;
         }
         BHPBar.SetPosition(0, new Vector3(10f * gageNum / 20, 0.0f, 0.0f));
     }
