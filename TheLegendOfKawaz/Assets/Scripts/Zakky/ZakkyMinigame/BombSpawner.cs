@@ -70,11 +70,4 @@ public class BombSpawner : MonoBehaviour
             yield return new WaitForSeconds(Mathf.Max(interval - overTimeCoe * overTime, finalInterval));
         }
     }
-
-    // Update is called once per frame
-    //void Update()
-    //{
-        //ゲージを上げる
-        //m_gage.bombNumSetter(brokenBombsSum);
-    //}
 }
