@@ -6,7 +6,6 @@ public class Ciel : MonoBehaviour
 {
     [SerializeField]
     BombSpawner m_bombSpawnerScript;
-    //private float fiverTime;
     [SerializeField]
     GameObject[] ciels;
     List<Renderer> cielsRenderers;
@@ -24,11 +23,6 @@ public class Ciel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //fiverTime -= Time.deltaTime;
-        //if (m_bombSpawnerScript.brokenBombsSum >= 20)
-        //{
-        //    
-        //}
         if (Game.instance.state == Game.STATE.MOVE)
         {
             for (int i = 0; i < ciels.Length; i++)
@@ -47,11 +41,9 @@ public class Ciel : MonoBehaviour
 
     public void CielRespawner()
     {
-        //m_bombSpawnerScript.brokenBombsSum = 0;
         for (int i = 0; i < ciels.Length; i++)
         {
             ciels[i].SetActive(true);
         }
-        //fiverTime = 10f;
     }
 }

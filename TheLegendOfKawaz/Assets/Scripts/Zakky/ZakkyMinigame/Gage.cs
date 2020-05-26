@@ -82,8 +82,8 @@ public class Gage : MonoBehaviour
             0.5f                  // アニメーション時間
             );
             Color col = new Color(0.6f, 0.6f, 1f);
-            if (bombNum - gageNum > 0.01f) col = Color.green;
-            else if (bombNum - gageNum < -0.01f) col = Color.red;
+            if (bombNum - gageNum > 0.01f) col = Color.green * 0.8f;
+            else if (bombNum - gageNum < -0.01f) col = Color.red * 0.8f;
             BHPBar.startColor = col;
             BHPBar.endColor = col;
         }

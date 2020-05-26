@@ -6,7 +6,7 @@ using TMPro;
 public class WakuWakuFont : MonoBehaviour
 {
     bool fiverCheck;
-    Sequence seq;
+    //Sequence seq;
     TextMeshProUGUI m_text;
     Color prevColor;
     // Start is called before the first frame update
