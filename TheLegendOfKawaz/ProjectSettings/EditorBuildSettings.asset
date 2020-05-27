@@ -42,6 +42,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Koitan/Target_jokyu.unity
     guid: 4c541bf1136dd4cde9dba5df11959cbb
   - enabled: 1
+    path: Assets/Scenes/TadaTest/WellDefenceMediator.unity
+    guid: 61db87e287b4d6845b40454a1cbe6c6d
+  - enabled: 1
     path: Assets/Scenes/ZakkyTest/Scene/UsingScenes/WellDefenceMiniGame.unity
     guid: 49f0d8be658a3094ca24e43fa149b7d8
   - enabled: 1

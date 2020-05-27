@@ -3780,6 +3780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696d2501b72e04c16bd3642fb914b207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp_: 20
   state_think_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -3829,14 +3830,27 @@ MonoBehaviour:
   state_start_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
-    start_time_: 3
+    im: {fileID: 0}
+    message: []
+    par: {fileID: 0}
+    parPos: {fileID: 0}
+  state_fly_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  state_fly_attack_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed: 3
+    shotPos: {fileID: 0}
+  state_dead_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    explosion_effect_: {fileID: 0}
   player_: {fileID: 0}
   venomBullet: {fileID: 366738011581893803, guid: 47f7f28e565b149afb13f05712207c06,
     type: 3}
   swampBullet: {fileID: 9205976797270046497, guid: e2d5a9fbdfc1d46788314521bf3ec701,
     type: 3}
-  shotEff: {fileID: 7956539869703678606, guid: fdf0f8ce0da6b46bc971302322cff80a, type: 3}
-  hitEff: {fileID: 4706858232718288485, guid: 35a96ff3104174ccea2fef463f8e398b, type: 3}
 --- !u!114 &701097171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4346,31 +4360,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewKawazTan
       objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[0].type_
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[0].level_
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[1].type_
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[1].level_
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4510,6 +4499,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[0].type_
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[0].level_
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[1].type_
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[1].level_
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 156820138238292206, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
@@ -6241,6 +6255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696d2501b72e04c16bd3642fb914b207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp_: 20
   state_think_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -6290,14 +6305,27 @@ MonoBehaviour:
   state_start_:
     MaxAbsSpeed: {x: 0, y: 0}
     Accel: {x: 0, y: 0}
-    start_time_: 3
+    im: {fileID: 0}
+    message: []
+    par: {fileID: 0}
+    parPos: {fileID: 0}
+  state_fly_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+  state_fly_attack_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    speed: 3
+    shotPos: {fileID: 0}
+  state_dead_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    explosion_effect_: {fileID: 0}
   player_: {fileID: 833600609}
   venomBullet: {fileID: 366738011581893803, guid: 47f7f28e565b149afb13f05712207c06,
     type: 3}
   swampBullet: {fileID: 9205976797270046497, guid: e2d5a9fbdfc1d46788314521bf3ec701,
     type: 3}
-  shotEff: {fileID: 7956539869703678606, guid: fdf0f8ce0da6b46bc971302322cff80a, type: 3}
-  hitEff: {fileID: 4706858232718288485, guid: 35a96ff3104174ccea2fef463f8e398b, type: 3}
 --- !u!114 &8415324323408457965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6575,11 +6603,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 7062334305907497651, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7062334306977685431, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -6594,6 +6617,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062334305907497651, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7062334306921869600, guid: 1b2d9d7055d04f74e8c67d9fa34568ad,
         type: 3}

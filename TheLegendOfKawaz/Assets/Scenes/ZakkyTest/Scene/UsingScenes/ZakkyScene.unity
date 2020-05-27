@@ -2457,7 +2457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorNum: 2
-  next_scene_: WellDefenceMiniGame
+  next_scene_: WellDefenceMediator
   message: "\u4E95\u6238\u30C7\u30A3\u30D5\u30A7\u30F3\u30B9\u30DF\u30CB\u30B2\u30FC\u30E0"
 --- !u!50 &1149912943
 Rigidbody2D:

@@ -163,7 +163,7 @@ namespace TargetBreaking
             if (selecting_grade_)
             {
                 int prev = index_.first;
-                if (ActionInput.GetButtonDown(ButtonCode.Up)) index_.first = (index_.first + 3) % grades_.Length;
+                if (ActionInput.GetButtonDown(ButtonCode.Up)) index_.first = (index_.first + grades_.Length - 1) % grades_.Length;
                 else if (ActionInput.GetButtonDown(ButtonCode.Down)) index_.first = (index_.first + 1) % grades_.Length;
                 if (prev != index_.first)
                 {
@@ -199,7 +199,7 @@ namespace TargetBreaking
         {
             if (selecting_grade_)
             {
-                if(index_.first == 3 && !is_feeding_)
+                if(index_.first == grades_.Length - 1 && !is_feeding_)
                 {
                     is_feeding_ = true;
                     // 前のシーンに戻る

@@ -266,7 +266,7 @@ public class ScoreManager : MonoBehaviour
     {
         for(int i = 0; i < games_.Count; ++i)
         {
-            dic_to_id_.Add(games_[i].SceneName, i + 1);
+            dic_to_id_.Add(games_[i].SceneName, i);
             dic_to_name_.Add(games_[i].SceneName, games_[i].GameName);
         }
     }
