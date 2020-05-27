@@ -43,6 +43,9 @@ namespace SkillItem
         [SerializeField]
         private SkillUIManager ui_manager_;
 
+        [SerializeField]
+        private TMPro.TextMeshPro levelup_text_;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -119,12 +122,25 @@ namespace SkillItem
                 SkillManager.Instance.LevelUp((int)cur_skill_);
                 delete_requests_ = 0;
                 displayed_ = false;
-                body_.rectTransform.DOScale(2.0f, 0.5f).OnComplete(() =>
-                {
-                    body_.rectTransform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
-                    body_.fillAmount = 0.0f;
-                });
+                //body_.rectTransform.DOScale(2.0f, 0.5f).OnComplete(() =>
+                //{
+                //    body_.rectTransform.localScale = new Vector3(1.2f, 1.2f, 1.0f);
+                //    body_.fillAmount = 0.0f;
+                //});
+                body_.fillAmount = 0.0f;
                 ui_manager_.ChangeExplonation(cur_skill_);
+
+                levelup_text_.rectTransform.position = player_.transform.position + Vector3.up * 2.5f;
+
+                levelup_text_.rectTransform.localScale = new Vector3(0f, 0f, 0f);
+                levelup_text_.rectTransform.DOScale(0.7f, 0.75f).SetEase(Ease.OutBack);
+                levelup_text_.DOFade(1.0f, 0.2f);
+                DOTween.To(
+                    () => levelup_text_.characterSpacing,
+                    num => levelup_text_.characterSpacing = num,
+                    20f,
+                    0.75f).SetEase(Ease.OutBack).OnComplete(() => levelup_text_.DOFade(0f, 0.2f));
+
                 return;
             }
             body_.fillAmount = timer_.GetTime() / purchase_wait_time_;
