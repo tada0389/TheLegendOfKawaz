@@ -430,7 +430,7 @@ namespace Actor.Enemy
                 }
 
                 // 壁にぶつかったら次のステートへ
-                if(Parent.trb_.LeftCollide || Parent.trb_.RightCollide)
+                if((Parent.trb_.LeftCollide && Parent.dir_ < 0f) || (Parent.trb_.RightCollide && Parent.dir_ > 0f))
                 {
                     EffectPlayer.Play(wall_hit_eff_, Parent.transform.position + new Vector3(Parent.dir_, 0f, 0f), new Vector3(Parent.dir_, 0f, 0f));
                     ChangeState((int)eState.Tackle3);
