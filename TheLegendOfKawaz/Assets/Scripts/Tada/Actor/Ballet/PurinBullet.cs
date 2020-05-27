@@ -49,9 +49,15 @@ namespace Bullet
 
         private float hit_radius_;
 
+        private bool prev_hit_wall_x_;
+        private bool prev_hit_wall_y_;
+
         private void Start()
         {
             hit_radius_ = move_body_.GetComponent<CircleCollider2D>().radius * transform.localScale.x;
+
+            prev_hit_wall_x_ = false;
+            prev_hit_wall_y_ = false;
         }
 
         private void Update()
@@ -77,7 +83,7 @@ namespace Bullet
 
         protected override void Move()
         {
-            //Bound();
+            Bound();
             velocity_ += new Vector2(0f, gravity_) * Time.deltaTime * 60f;
             move_body_.transform.position += (Vector3)velocity_ * Time.deltaTime;
             if (timer_.IsTimeout()) Dead();
@@ -85,18 +91,23 @@ namespace Bullet
 
         private void Bound()
         {
-            if(move_body_.transform.position.x - hit_radius_ < stage_range_x.x ||
+            if (move_body_.transform.position.x - hit_radius_ < stage_range_x.x ||
                 move_body_.transform.position.x + hit_radius_ > stage_range_x.y)
             {
                 // 壁反射
-                velocity_.x *= -bounceness_;
+                if(!prev_hit_wall_x_) velocity_.x *= -bounceness_;
+                prev_hit_wall_x_ = true;
             }
-            else// if(move_body_.transform.position.y - hit_radius_ < stage_range_y.x || 
-               // move_body_.transform.position.y + hit_radius_ > stage_range_y.y)
+            else prev_hit_wall_x_ = false;
+
+            if (move_body_.transform.position.y - hit_radius_ < stage_range_y.x ||
+               move_body_.transform.position.y + hit_radius_ > stage_range_y.y)
             {
                 // 床反射
-                velocity_.y *= -bounceness_;
+                if (!prev_hit_wall_y_) velocity_.y *= -bounceness_;
+                prev_hit_wall_y_ = true;
             }
+            else prev_hit_wall_y_ = false;
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
@@ -109,7 +120,7 @@ namespace Bullet
             // バウンドする
             if (collider.tag == "Stage")
             {
-                Bound();
+                //Bound();
             }
         }
 

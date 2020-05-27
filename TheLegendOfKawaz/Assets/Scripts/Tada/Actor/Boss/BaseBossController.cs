@@ -39,6 +39,9 @@ namespace Actor.Enemy
         [SerializeField]
         private GameObject mesh_;
 
+        [SerializeField]
+        protected Transform not_reverse_;
+
         // 向いている方向を変更する
         protected void SetDirection(eDir dir)
         {
@@ -47,12 +50,14 @@ namespace Actor.Enemy
             {
                 dir_ = -1f;
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 180f, transform.localEulerAngles.z);
+                if (not_reverse_) not_reverse_.localEulerAngles = new Vector3(not_reverse_.localEulerAngles.x, 180f, not_reverse_.localEulerAngles.z);
             }
             // else if(data_.velocity.x > 0f)
             else if (dir == eDir.Right && transform.localEulerAngles.y != 0f)
             {
                 dir_ = 1f;
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
+                if (not_reverse_) not_reverse_.localEulerAngles = new Vector3(not_reverse_.localEulerAngles.x, 0f, not_reverse_.localEulerAngles.z);
             }
         }
 

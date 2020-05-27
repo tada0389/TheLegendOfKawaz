@@ -12,7 +12,7 @@ using Bullet;
 namespace Actor.Enemy
 {
     [RequireComponent(typeof(TadaRigidbody))]
-    public class KabtBossController : BaseActorController
+    public class KabtBossController : BaseBossController
     {
         // Bossのステート一覧
         private enum eState
@@ -32,13 +32,6 @@ namespace Actor.Enemy
             PlasmaBig1, // ビートプラズマ (大) 準備
             PlasmaBig2, // ビートプラズマ (大) 発射
             Jump, // ジャンプでプレイヤーの方向に飛んでいく
-        }
-
-        // 向いている方向
-        private enum eDir
-        {
-            Left,
-            Right,
         }
 
         // ステートマシン
@@ -81,29 +74,8 @@ namespace Actor.Enemy
         // 物理演算 trb_.Velocityをいじって移動する
         private TadaRigidbody trb_;
 
-        // 現在見ている方向
-        private float dir_ = 1f;
-
-        // プレイヤーの座標
-        [SerializeField]
-        private Transform player_;
-
-        [SerializeField]
-        private float muteki_time_ = 1.0f;
-        private Timer muteki_timer_;
-        [SerializeField]
-        private GameObject mesh_;
-
-        // タックルする方向
-        private float tackle_angle_;
-
-        [SerializeField]
-        private Transform not_reverse_;
-
         private void Start()
         {
-            muteki_timer_ = new Timer(muteki_time_);
-
             HP = 32;
 
             trb_ = GetComponent<TadaRigidbody>();
@@ -143,70 +115,11 @@ namespace Actor.Enemy
             state_machine_.Proc();
         }
 
-        // 向いている方向を変更する
-        private void SetDirection(eDir dir)
+        // 死亡したときに呼ばれる関数 基底クラスから呼ばれる わかりにくい
+        protected override void Dead()
         {
-            // 浮動小数点型で==はあんまよくないけど・・・
-            if (dir == eDir.Left && transform.localEulerAngles.y != 180f)
-            {
-                dir_ = -1f;
-                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 180f, transform.localEulerAngles.z);
-                if (not_reverse_) not_reverse_.localEulerAngles = new Vector3(not_reverse_.localEulerAngles.x, 180f, not_reverse_.localEulerAngles.z);
-            }
-            // else if(data_.velocity.x > 0f)
-            else if (dir == eDir.Right && transform.localEulerAngles.y != 0f)
-            {
-                dir_ = 1f;
-                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
-                if (not_reverse_) not_reverse_.localEulerAngles = new Vector3(not_reverse_.localEulerAngles.x, 0f, not_reverse_.localEulerAngles.z);
-            }
-        }
-
-        // ダメージを受ける
-        public override void Damage(int damage)
-        {
-            if (state_machine_.CurrentStateId == (int)eState.Dead) return;
-            if (!muteki_timer_.IsTimeout()) return;
-            HP = Mathf.Max(0, HP - damage);
-            muteki_timer_.TimeReset();
-            StartCoroutine(Tenmetu());
-            if (HP == 0)
-            {
+            if (state_machine_.CurrentStateId != (int)eState.Dead)
                 state_machine_.ChangeState((int)eState.Dead);
-                Debug.Log("Defeated");
-            }
-        }
-
-        // このボスにぶつかるとダメージを受ける
-        private void OnTriggerStay2D(Collider2D collider)
-        {
-            if (collider.tag == "Player")
-            {
-                collider.GetComponent<BaseActorController>().Damage(4);
-            }
-        }
-
-        //点滅
-        private IEnumerator Tenmetu()
-        {
-            if (muteki_timer_.GetTime() < muteki_time_ / 2f)
-            {
-                mesh_.SetActive(false);
-                yield return new WaitForEndOfFrame();
-                mesh_.SetActive(true);
-                yield return new WaitForEndOfFrame();
-            }
-            else
-            {
-                mesh_.SetActive(false);
-                yield return new WaitForSeconds(0.05f);
-                mesh_.SetActive(true);
-                yield return new WaitForSeconds(0.05f);
-            }
-            if (!muteki_timer_.IsTimeout())
-            {
-                StartCoroutine(Tenmetu());
-            }
         }
 
         public override string ToString()

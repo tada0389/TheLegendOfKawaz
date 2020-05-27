@@ -196,6 +196,12 @@ namespace Actor.Enemy
             {
                 HP = Mathf.Max(0, HP - damage);
                 if (HP == 0) Debug.Log("Defeated");
+
+                DamageDisplayer.eDamageType type = DamageDisplayer.eDamageType.Mini;
+                if (damage >= 3) type = DamageDisplayer.eDamageType.Big;
+                else if (damage >= 2) type = DamageDisplayer.eDamageType.Normal;
+                DamageDisplayer.Instance.ShowDamage(damage, transform.position, type);
+
                 mutekiTime = 1f;
                 StartCoroutine(Tenmetu());
                 if (HP == 0) Dead();

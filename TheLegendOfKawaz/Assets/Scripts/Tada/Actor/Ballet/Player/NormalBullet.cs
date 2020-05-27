@@ -53,7 +53,7 @@ namespace Bullet
             timer_.TimeReset();
             owner_ = owner;
             // 発射エフェクト
-            EffectPlayer.Play(shot_effect_, move_body_.transform.position, new Vector3(0f, dir_.x, 0f), owner);
+            EffectPlayer.Play(shot_effect_, move_body_.transform.position, new Vector3(dir_.x, dir_.x, 0f), owner);
         }
 
         protected override void Move()
