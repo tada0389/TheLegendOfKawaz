@@ -22,7 +22,7 @@ namespace KoitanLib
 
         Sequence seq;
         int msIndex = 0;
-        bool isCanSkip = false;
+        bool isLoaded = false;
 
         private void Start()
         {
@@ -43,8 +43,9 @@ namespace KoitanLib
 
         private void Update()
         {
-            if((isCanSkip && ActionInput.GetButtonDown(ActionCode.Decide)) || ActionInput.GetButtonDown(ActionCode.Dash))
+            if(ActionInput.GetButtonDown(ActionCode.Dash) && !isLoaded)
             {
+                isLoaded = true;
                 FadeManager.FadeIn(1f, "ZakkyScene");
             }
         }
@@ -85,7 +86,8 @@ namespace KoitanLib
                     }
                     else
                     {
-                        isCanSkip = true;
+                        isLoaded = true;
+                        FadeManager.FadeIn(1f, "ZakkyScene");
                     }
                 });
         }

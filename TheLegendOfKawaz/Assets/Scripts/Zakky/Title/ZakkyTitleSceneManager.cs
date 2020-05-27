@@ -40,7 +40,7 @@ public class ZakkyTitleSceneManager : MonoBehaviour
                     TitleState.m_state = TitleState.State.Decided;
                     //Fadeout関数でフェードアウト
                     //STARTのシーン遷移KoitanLibの方つかう(その方が演出がシームレス)
-                    FadeManager.FadeIn(1f, "ZakkyScene");
+                    FadeManager.FadeIn(1f, "Prologue");
                     break;
                 case 1:
                     TitleState.m_state = TitleState.State.Story;
