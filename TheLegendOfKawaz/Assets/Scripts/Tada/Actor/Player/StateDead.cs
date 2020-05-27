@@ -26,6 +26,8 @@ namespace Actor.Player
 
             private bool is_feed_;
 
+            private bool dont_scene_transition_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -34,6 +36,8 @@ namespace Actor.Player
                 data.animator.Play("Cry");
 
                 is_feed_ = false;
+
+                dont_scene_transition_ = (next_scene_ == "");
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -47,6 +51,7 @@ namespace Actor.Player
             {
                 ActorUtils.ProcSpeed(ref data.velocity, Accel, MaxAbsSpeed);
 
+                if (dont_scene_transition_) return;
                 if (!is_feed_ && Timer > scene_transitioin_time_)
                 {
                     KoitanLib.FadeManager.FadeIn(0.5f, next_scene_, 0);

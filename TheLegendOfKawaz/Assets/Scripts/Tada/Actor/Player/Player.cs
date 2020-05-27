@@ -658,6 +658,12 @@ namespace Actor.Player
             return data_.HP == data_.MaxHP;
         }
 
+        // 死亡しているかどうか
+        public bool IsDead()
+        {
+            return state_machine_.CurrentStateId == (int)eState.Dead;
+        }
+
         public override string ToString()
         {
             return "(" + data_.velocity.x.ToString("F2") + ", " + data_.velocity.y.ToString("F2") + ")" +
