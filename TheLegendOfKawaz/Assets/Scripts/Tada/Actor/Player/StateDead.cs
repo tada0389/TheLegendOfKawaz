@@ -28,6 +28,9 @@ namespace Actor.Player
 
             private bool dont_scene_transition_;
 
+            [SerializeField]
+            private BaseParticle dead_eff_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -38,6 +41,8 @@ namespace Actor.Player
                 is_feed_ = false;
 
                 dont_scene_transition_ = (next_scene_ == "");
+
+                EffectPlayer.Play(dead_eff_, Parent.transform.position, Vector3.zero, Parent.transform);
             }
 
             // ステートが終了したときに呼ばれるメソッド

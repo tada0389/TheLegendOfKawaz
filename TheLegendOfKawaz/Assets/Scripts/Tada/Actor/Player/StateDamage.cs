@@ -25,6 +25,8 @@ namespace Actor.Player
             [SerializeField]
             private float rigidity_time_ = 1.0f;
 
+           // [SerializeField]
+           // private BaseParticle damage_eff_;
 
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
@@ -44,6 +46,8 @@ namespace Actor.Player
 
                 // 時間をスローに
                 TadaLib.TimeScaler.Instance.RequestChange(0.5f, 0.025f);
+
+                //EffectPlayer.Play(damage_eff_, Parent.transform.position, Vector3.zero, Parent.transform);
             }
 
             // ステートが終了したときに呼ばれるメソッド
