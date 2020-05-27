@@ -22,6 +22,7 @@ namespace KoitanLib
 
         Sequence seq;
         int msIndex = 0;
+        bool isCanSkip = false;
 
         private void Start()
         {
@@ -38,6 +39,14 @@ namespace KoitanLib
                 {
                     ShowMessage();
                 });
+        }
+
+        private void Update()
+        {
+            if((isCanSkip && ActionInput.GetButtonDown(ActionCode.Decide)) || ActionInput.GetButtonDown(ActionCode.Dash))
+            {
+                FadeManager.FadeIn(1f, "ZakkyScene");
+            }
         }
 
         private void ShowMessage()
@@ -73,6 +82,10 @@ namespace KoitanLib
                     if (msIndex < messages.Length)
                     {
                         ShowMessage();
+                    }
+                    else
+                    {
+                        isCanSkip = true;
                     }
                 });
         }
