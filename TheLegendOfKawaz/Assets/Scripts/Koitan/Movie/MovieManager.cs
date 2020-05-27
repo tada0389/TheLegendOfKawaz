@@ -45,8 +45,9 @@ namespace KoitanLib
         {
             if(ActionInput.GetButtonDown(ActionCode.Dash) && !isLoaded)
             {
+                seq.Kill();
                 isLoaded = true;
-                FadeManager.FadeIn(1f, "ZakkyScene");
+                FadeManager.FadeIn(1f, "ZakkyScene");                
             }
         }
 
