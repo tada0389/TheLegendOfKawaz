@@ -61,6 +61,9 @@ namespace SkillUI
 
         private bool now_spending_ = false;
 
+        [SerializeField]
+        private RectTransform skill_icon_pos_;
+
         private void Update()
         {
             //// デバッグ
@@ -109,7 +112,7 @@ namespace SkillUI
                 add = int.Parse(point_text_.text) - point_;
             }
             if(!now_spending_) point_text_.text = point_.ToString();
-            Vector3 pos = new Vector3(665f, 472f, 0f);//cam_.WorldToScreenPoint(point_spawner_pos);
+            Vector3 pos = skill_icon_pos_.position; // new Vector3(665f, 472f, 0f);//cam_.WorldToScreenPoint(point_spawner_pos);
             // UIを出現
             if(!now_spending_) FeedUI(true, time_scale);
             if (now_spending_)

@@ -1893,6 +1893,7 @@ MonoBehaviour:
   feed_duration_: 1.5
   icon_appear_ease_: 13
   icon_move_ease_: 7
+  skill_icon_pos_: {fileID: 336484019}
 --- !u!1 &1028838111
 GameObject:
   m_ObjectHideFlags: 0
@@ -2956,6 +2957,11 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 0d8bde14b2ee03d4991210c73555fa2f, type: 3}
     body: "\u30BF\u30FC\u30B2\u30C3\u30C8\u7834\u58CA\u30DE\u30B9\u30BF\u30FC(\u4E0A\u7D1A)"
     detail: "\u300C\u30BF\u30FC\u30B2\u30C3\u30C8\u3092\u58CA\u305B\uFF01(\u4E0A\u7D1A)\u300D\u3092\u25CB\u79D2\u4EE5\u5185\u306B\u30AF\u30EA\u30A2\u3059\u308B\u3002"
+    isUnlocked: 0
+  - key: Hidden
+    icon: {fileID: 21300000, guid: 0d8bde14b2ee03d4991210c73555fa2f, type: 3}
+    body: "\u6167\u773C\u306E\u6301\u3061\u4E3B"
+    detail: ??????????
     isUnlocked: 0
   achievementPrefab: {fileID: 417135360115433026, guid: 6fb672fea3b36425a88a15a4e63af580,
     type: 3}
