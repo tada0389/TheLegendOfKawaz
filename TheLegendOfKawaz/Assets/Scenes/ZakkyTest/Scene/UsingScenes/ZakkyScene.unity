@@ -786,6 +786,7 @@ MonoBehaviour:
   doorNum: 4
   next_scene_: TadaBossScene
   message: "<size=300>\u304B\u3076\u3068</size>"
+  save_position_: 1
 --- !u!50 &500287395
 Rigidbody2D:
   serializedVersion: 4
@@ -1038,6 +1039,7 @@ MonoBehaviour:
   doorNum: 0
   next_scene_: EndingTest
   message: <size=300>Ending?</size>
+  save_position_: 1
 --- !u!61 &675471927
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2651,6 +2653,7 @@ MonoBehaviour:
   doorNum: 7
   next_scene_: TargetMediator
   message: "\u30BF\u30FC\u30B2\u30C3\u30C8\u3092\u58CA\u305B"
+  save_position_: 1
 --- !u!61 &1014698408
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3173,6 +3176,7 @@ MonoBehaviour:
   doorNum: 6
   next_scene_: ThousandBossScene
   message: "\u3058\u3054\u304F"
+  save_position_: 1
 --- !u!50 &1127758497
 Rigidbody2D:
   serializedVersion: 4
@@ -3425,6 +3429,7 @@ MonoBehaviour:
   doorNum: 2
   next_scene_: WellDefenceMediator
   message: "\u4E95\u6238\u30C7\u30A3\u30D5\u30A7\u30F3\u30B9\u30DF\u30CB\u30B2\u30FC\u30E0"
+  save_position_: 1
 --- !u!50 &1149912943
 Rigidbody2D:
   serializedVersion: 4
@@ -4107,6 +4112,7 @@ MonoBehaviour:
   doorNum: 0
   next_scene_: KoitanBossTestScene
   message: "<size=300>\u3078\u3073</size>"
+  save_position_: 1
 --- !u!50 &1484562387
 Rigidbody2D:
   serializedVersion: 4
@@ -4542,6 +4548,7 @@ MonoBehaviour:
   doorNum: 5
   next_scene_: PurinBossScene
   message: "<size=300>\u30D7\u30EA\u30F3</size>"
+  save_position_: 1
 --- !u!50 &1538607563
 Rigidbody2D:
   serializedVersion: 4
