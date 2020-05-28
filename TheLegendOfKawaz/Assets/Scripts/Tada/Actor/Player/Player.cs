@@ -434,7 +434,13 @@ namespace Actor.Player
         // Update is called once per frame
         private void Update()
         {
-            if (!Global.GlobalPlayerInfo.ActionEnabled) return;
+            if (!Global.GlobalPlayerInfo.ActionEnabled)
+            {
+                // 速度をゼロに
+                data_.velocity = Vector2.zero;
+                data_.ReflectVelocity(true);
+                return;
+            }
             if (Time.timeScale < 1e-6) return;
 
             // 接地しているかどうかなどで，状態を変更する

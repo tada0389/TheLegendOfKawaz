@@ -48,6 +48,8 @@ public class SkillSceneEntrance : MonoBehaviour
             //決定ボタン押したらシーン遷移
             if (!scene_flag_ && ActionInput.GetButtonDown(ButtonCode.Up) && !FadeManager.is_fading)
             {
+                // かわずたんを動けなくする
+                Global.GlobalPlayerInfo.ActionEnabled = false;
                 scene_flag_ = true;
                 //Scene読み込み
                 //SceneManager.LoadScene(next_scene_);

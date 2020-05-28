@@ -9,8 +9,6 @@ public class BossDoor : MonoBehaviour
 {
     public int doorNum;
 
-    BossFlagManager bossFlag;
-
     [SerializeField]
     private string next_scene_ = "TadaBossScene";
 
@@ -18,10 +16,12 @@ public class BossDoor : MonoBehaviour
     private string message;
     private bool isOpend;
 
+    [SerializeField]
+    private bool save_position_ = true;
+
     // Start is called before the first frame update
     void Start()
     {
-        bossFlag = BossFlagManager.Instance;
         isOpend = false;
     }
 
@@ -53,15 +53,16 @@ public class BossDoor : MonoBehaviour
             //決定ボタン押したらシーン遷移
             if (ActionInput.GetButtonDown(ButtonCode.Up) && !isOpend)
             {
+                // かわずたんを動けなくする
+                Global.GlobalPlayerInfo.ActionEnabled = false;
                 isOpend = true;
-                bossFlag.bossRoomNum = doorNum;
                 Debug.Log("tag:" + col.tag + "/nGetButtonDown(ActionCode.Shot):" + ActionInput.GetButtonDown(ActionCode.Shot));
-                Debug.Log(bossFlag.bossRoomNum);
                 //Scene読み込み
                 //SceneManager.LoadScene(next_scene_);
                 //koitan追加
                 //FadeManager.FadeIn(0.5f, next_scene_, 0);
-                TadaScene.TadaSceneManager.LoadScene(next_scene_, 0.5f, transform.position);
+                if (!save_position_) FadeManager.FadeIn(0.5f, next_scene_);
+                else TadaScene.TadaSceneManager.LoadScene(next_scene_, 0.5f, transform.position);
                 MessageManager.CloseKanbanWindow();
             }
         }
