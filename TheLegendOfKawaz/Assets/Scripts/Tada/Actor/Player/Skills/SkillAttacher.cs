@@ -96,14 +96,14 @@ namespace Actor.Player
             player_.AquireTemporarySkill(skill_);
             //MessageManager.OpenKanbanWindow(message_);
             otameshi_text_.gameObject.SetActive(true);
-            if (is_has_point_)
+            //if (is_has_point_)
                 buy_text_.gameObject.SetActive(true);
         }
 
         private void OnExit()
         {
             otameshi_text_.gameObject.SetActive(false);
-            if (!is_has_point_)
+            //if (!is_has_point_)
                 buy_text_.gameObject.SetActive(false);
             ui_manager_.DeleteExplonation();
             purchase_manager_.DismissPurchase();

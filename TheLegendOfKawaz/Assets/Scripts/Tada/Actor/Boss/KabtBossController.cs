@@ -592,6 +592,14 @@ namespace Actor.Enemy
 
             private Vector2 add_speed_;
 
+            [SerializeField]
+            private BaseParticle rush_eff_;
+
+            [SerializeField]
+            private BaseParticle wall_hit_eff_;
+
+            private bool rush_inited_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
@@ -601,13 +609,22 @@ namespace Actor.Enemy
 
                 // 飛ぶ方向を向く
                 Parent.SetDirection((Parent.trb_.Velocity.x < 0f) ? eDir.Left : eDir.Right);
+
+                rush_inited_ = false;
             }
 
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if(Parent.trb_.LeftCollide || Parent.trb_.RightCollide || Parent.trb_.TopCollide)
+                if (!rush_inited_)
                 {
+                    rush_inited_ = true;
+                    EffectPlayer.Play(rush_eff_, Parent.transform.position + new Vector3(Parent.dir_ * 2.0f, 0f, 0f), new Vector3(0f, 0f, Parent.dir_), Parent.not_reverse_);
+                }
+
+                if (Parent.trb_.LeftCollide || Parent.trb_.RightCollide || Parent.trb_.TopCollide)
+                {
+                    EffectPlayer.Play(wall_hit_eff_, Parent.transform.position + new Vector3(Parent.dir_, 0f, 0f), new Vector3(Parent.dir_, 0f, 0f));
                     // 使いまわし
                     ChangeState((int)eState.Tackle3);
                     return;

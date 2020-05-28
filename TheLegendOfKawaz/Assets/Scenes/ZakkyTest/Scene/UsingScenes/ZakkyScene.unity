@@ -1036,7 +1036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorNum: 0
-  next_scene_: Ending
+  next_scene_: EndingTest
   message: <size=300>Ending?</size>
 --- !u!61 &675471927
 BoxCollider2D:
