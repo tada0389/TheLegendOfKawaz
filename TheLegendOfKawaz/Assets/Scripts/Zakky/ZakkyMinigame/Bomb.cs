@@ -38,7 +38,14 @@ public class Bomb : PrimitiveTarget
             //ダメージ
             if (Game.instance.state == Game.STATE.MOVE)
             {
-                GameObject.Find("NewKawazTan").GetComponent<Actor.Player.Player>().Damage(5);
+                Actor.Player.Player ply = GameObject.Find("NewKawazTan").GetComponent<Actor.Player.Player>();
+                {
+                    ply.Damage(5);
+                    if (ply.IsDead())
+                    {
+                        Game.instance.state = Game.STATE.GAMEOVER;
+                    }
+                }
                 CameraSpace.CameraShaker.Shake(0.6f, 0.3f);
             }
             else if (Game.instance.state == Game.STATE.FEVER)
