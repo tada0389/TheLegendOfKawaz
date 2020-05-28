@@ -27,7 +27,7 @@ namespace Actor
 
         public void ChangeValue(int hp)
         {
-            target_.sizeDelta = new Vector2(target_.sizeDelta.x, Mathf.Min(max_hp_, hp * init_size_));
+            target_.sizeDelta = new Vector2(target_.sizeDelta.x, hp * init_size_); // Mathf.Min(max_hp_, hp * init_size_));
         }
     }
 }

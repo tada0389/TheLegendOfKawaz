@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InitSpeed: 1
-  MaxClimbDegree: 90
+  MaxClimbDegree: 70
 --- !u!82 &1421661576
 AudioSource:
   m_ObjectHideFlags: 0

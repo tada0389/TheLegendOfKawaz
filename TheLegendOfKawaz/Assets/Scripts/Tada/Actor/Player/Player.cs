@@ -192,6 +192,7 @@ namespace Actor.Player
             {
                 case eSkill.HP:
                     MaxHP = Skills[(int)skill].NextsValue(v);
+                    HP = MaxHP;
                     break;
                 case eSkill.Speed:
                     InitSpeed = Skills[(int)skill].NextsValue(v) / (float)100f;
@@ -372,11 +373,15 @@ namespace Actor.Player
         private InitialSkill[] demo_skills_;
         #endregion
 
+        private void Awake()
+        {
+            Global.GlobalPlayerInfo.IsMuteki = false;
+            Global.GlobalPlayerInfo.ActionEnabled = true;
+        }
+
         // Start is called before the first frame update
         private void Start()
         {
-            Global.GlobalPlayerInfo.IsMuteki = false;
-
             shot_anim_timer_ = new Timer(0.3f);
             muteki_timer_ = new Timer(muteki_time_);
 
@@ -471,7 +476,6 @@ namespace Actor.Player
                 HP = data_.HP;
                 heal_ctrl_.PlayHealEffect();
             }
-
 
             // 弾を撃つかどうか決める
             CheckShot();

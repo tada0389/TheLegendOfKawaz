@@ -1049,6 +1049,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1362397640}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 12
   arm_sum_: 25
@@ -1875,6 +1876,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1092770061}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 2
   arm_sum_: 25
@@ -2087,6 +2089,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 805861427}
+  not_reverse_: {fileID: 0}
   arms_:
   - {fileID: 755804393}
   - {fileID: 859167309}
@@ -2355,6 +2358,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1351176651}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 7
   arm_sum_: 25
@@ -3345,6 +3349,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 2078839540}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 14
   arm_sum_: 25
@@ -3958,6 +3963,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp_: 20
+  body_damage_: 3
+  player_: {fileID: 1924393036}
+  muteki_time_: 1
+  mesh_: {fileID: 564111982}
+  not_reverse_: {fileID: 0}
   state_think_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -4007,6 +4017,8 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     init_speed_: 0.4
     accel_: 0.02
+    rush_eff_: {fileID: 0}
+    wall_hit_eff_: {fileID: 0}
   state_plasma_mini_:
     MaxAbsSpeed: {x: 0, y: 0}
     Accel: {x: 0, y: 0}
@@ -4043,10 +4055,6 @@ MonoBehaviour:
     Accel: {x: 0, y: -0.02}
     jump_power_: 0.5
     over_dx_: 1
-  player_: {fileID: 1924393036}
-  muteki_time_: 1
-  mesh_: {fileID: 564111982}
-  not_reverse_: {fileID: 0}
 --- !u!50 &470335610
 Rigidbody2D:
   serializedVersion: 4
@@ -4335,6 +4343,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1100382512}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 24
   arm_sum_: 25
@@ -13639,6 +13648,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1095125265}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 9
   arm_sum_: 25
@@ -13795,6 +13805,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1244731229}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 20
   arm_sum_: 25
@@ -14019,6 +14030,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 787104939}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 0
   arm_sum_: 25
@@ -15425,6 +15437,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1902042900}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 1
   arm_sum_: 25
@@ -15608,6 +15621,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 2003862313}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 11
   arm_sum_: 25
@@ -16029,6 +16043,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 2069125827}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 5
   arm_sum_: 25
@@ -27402,6 +27417,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1347655978}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 3
   arm_sum_: 25
@@ -27579,6 +27595,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 608826518}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 8
   arm_sum_: 25
@@ -27735,6 +27752,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1430414734}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 22
   arm_sum_: 25
@@ -28149,6 +28167,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 47457603}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 19
   arm_sum_: 25
@@ -28305,6 +28324,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 185950858}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 21
   arm_sum_: 25
@@ -33993,6 +34013,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 241204647}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 4
   arm_sum_: 25
@@ -34516,6 +34537,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1179088550}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 18
   arm_sum_: 25
@@ -35262,6 +35284,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1178832985}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 15
   arm_sum_: 25
@@ -35567,6 +35590,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1322255305}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 6
   arm_sum_: 25
@@ -36283,6 +36307,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 298310954}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 17
   arm_sum_: 25
@@ -36769,6 +36794,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1007001296}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 10
   arm_sum_: 25
@@ -42229,6 +42255,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 112224095}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 13
   arm_sum_: 25
@@ -47746,6 +47773,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewKawazTan
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[0].type_
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[0].level_
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[1].type_
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[1].level_
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[2].type_
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[2].level_
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -47880,41 +47942,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[0].type_
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[0].level_
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[1].type_
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[1].level_
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[2].type_
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[2].level_
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
@@ -48249,6 +48276,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1658324687}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 23
   arm_sum_: 25
@@ -48973,6 +49001,7 @@ MonoBehaviour:
   player_: {fileID: 1924393036}
   muteki_time_: 1
   mesh_: {fileID: 1679167758}
+  not_reverse_: {fileID: 0}
   boss_: {fileID: 263469653}
   index_: 16
   arm_sum_: 25

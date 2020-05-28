@@ -112,6 +112,7 @@ namespace TadaLib
             // y軸は少し余分に取る
             float length_y = half_size.y + half_size.x * 1.5f;
 
+            bool can_climb = true;
             // 始めにy軸方向 3本の線を出す 坂道チェックもする
             {
                 // 左端，中央，右端の順に確かめる
@@ -134,7 +135,16 @@ namespace TadaLib
                 hit |= CheckButtonCollide(ref tmp_d_y, ref most_top_hit, hit_down_center, length, through);
                 hit |= CheckButtonCollide(ref tmp_d_y, ref most_top_hit, hit_down_right, length, through);
 
-                d.y = Mathf.Max(d.y, tmp_d_y);
+                // 角度制限を設ける
+                float degree = Mathf.Atan2(most_top_hit.normal.y, most_top_hit.normal.x);
+                //Debug.Log(degree);
+                //Debug.Log("0 < degree < " + (Mathf.PI / 2f - MaxClimbDegree * Mathf.Deg2Rad));
+                //Debug.Log(Mathf.PI / 2f + MaxClimbDegree * Mathf.Deg2Rad  + " < degree < 3.14");
+                can_climb = !((degree >= 0f && degree <= Mathf.PI / 2f - MaxClimbDegree * Mathf.Deg2Rad) || 
+                                    (degree <= Mathf.PI && degree >= Mathf.PI / 2f + MaxClimbDegree * Mathf.Deg2Rad));
+                hit &= can_climb;
+                if (hit)
+                    d.y = Mathf.Max(d.y, tmp_d_y);
                 ButtomCollide = hit;
 
                 // 移動する床に載っているか確かめる
@@ -151,80 +161,79 @@ namespace TadaLib
                 }
 
                 // ヒットしているなら，それぞれの法線ベクトルを取得 坂道対応
-                {
+                if(can_climb) {
                     if (hit_down_left && d.x < kEpsilon)
                     {
                         float theta = Mathf.Atan2(hit_down_left.normal.y, hit_down_left.normal.x) - Mathf.PI / 2f;
 
-                        if (Mathf.Abs(theta) < MaxClimbDegree / 90f)
+                        float friction_power = (1f - GroundFriction) * 0.2f;
+                        float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
+
+                        //Velocity.x -= Mathf.Sin(theta) * friction_power * Mathf.Abs(1f - rate) / 60f;
+                        Velocity.x -= Mathf.Sin(theta) * friction_power / 60f;
+
+                        if (d.x * Mathf.Sin(theta) < 0) // 坂道下り坂
                         {
-                            float friction_power = (1f - GroundFriction) * 0.2f;
-                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
-
-                            //Velocity.x -= Mathf.Sin(theta) * friction_power * Mathf.Abs(1f - rate) / 60f;
-                            Velocity.x -= Mathf.Sin(theta) * friction_power / 60f;
-
-                            if (d.x * Mathf.Sin(theta) < 0) // 坂道下り坂
-                            {
-                                d.y += d.x * Mathf.Sin(theta) * rate;
-                                d.x *= Mathf.Cos(theta) * rate;
-                            }
-                            else
-                            {
-                                d.y += d.x * Mathf.Sin(theta);
-                                d.x *= Mathf.Cos(theta);
-                            }
+                            d.y += d.x * Mathf.Sin(theta) * rate;
+                            d.x *= Mathf.Cos(theta) * rate;
+                        }
+                        else
+                        {
+                            d.y += d.x * Mathf.Sin(theta);
+                            d.x *= Mathf.Cos(theta);
                         }
                     }
                     else if (hit_down_right && d.x > kEpsilon)
                     {
                         float theta = Mathf.Atan2(hit_down_right.normal.y, hit_down_right.normal.x) - Mathf.PI / 2f;
 
-                        if (Mathf.Abs(theta) < MaxClimbDegree / 90f)
+                        float friction_power = (1f - GroundFriction) * 0.2f;
+                        float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
+
+                        //Velocity.x -= Mathf.Sin(theta) * friction_power * Mathf.Abs(1f - rate) / 60f;
+                        Velocity.x -= Mathf.Sin(theta) * friction_power / 60f;
+
+                        if (d.x * Mathf.Sin(theta) < 0) // 坂道下り坂
                         {
-                            float friction_power = (1f - GroundFriction) * 0.2f;
-                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
-
-                            //Velocity.x -= Mathf.Sin(theta) * friction_power * Mathf.Abs(1f - rate) / 60f;
-                            Velocity.x -= Mathf.Sin(theta) * friction_power / 60f;
-
-                            if (d.x * Mathf.Sin(theta) < 0) // 坂道下り坂
-                            {
-                                d.y += d.x * Mathf.Sin(theta) * rate;
-                                d.x *= Mathf.Cos(theta) * rate;
-                            }
-                            else
-                            {
-                                d.y += d.x * Mathf.Sin(theta);
-                                d.x *= Mathf.Cos(theta);
-                            }
+                            d.y += d.x * Mathf.Sin(theta) * rate;
+                            d.x *= Mathf.Cos(theta) * rate;
+                        }
+                        else
+                        {
+                            d.y += d.x * Mathf.Sin(theta);
+                            d.x *= Mathf.Cos(theta);
                         }
                     }
                     else if (hit_down_center)
                     {
                         float theta = Mathf.Atan2(hit_down_center.normal.y, hit_down_center.normal.x) - Mathf.PI / 2f;
 
-                        if (Mathf.Abs(theta) < MaxClimbDegree / 90f)
+                        float friction_power = (1f - GroundFriction) * 0.2f;
+                        float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
+
+                        //Velocity.x -= Mathf.Sin(theta) * friction_power * Mathf.Abs(1f - rate) / 60f;
+                        Velocity.x -= Mathf.Sin(theta) * friction_power / 60f;
+
+                        if (d.x * Mathf.Sin(theta) < 0) // 坂道下り坂
                         {
-                            float friction_power = (1f - GroundFriction) * 0.2f;
-                            float rate = 1f - Mathf.Sign(d.x) * Mathf.Sin(theta) * 0.75f;
-
-                            //Velocity.x -= Mathf.Sin(theta) * friction_power * Mathf.Abs(1f - rate) / 60f;
-                            Velocity.x -= Mathf.Sin(theta) * friction_power / 60f;
-
-                            if (d.x * Mathf.Sin(theta) < 0) // 坂道下り坂
-                            {
-                                d.y += d.x * Mathf.Sin(theta) * rate;
-                                d.x *= Mathf.Cos(theta) * rate;
-                            }
-                            else
-                            {
-                                d.y += d.x * Mathf.Sin(theta);
-                                d.x *= Mathf.Cos(theta);
-                            }
+                            d.y += d.x * Mathf.Sin(theta) * rate;
+                            d.x *= Mathf.Cos(theta) * rate;
+                        }
+                        else
+                        {
+                            d.y += d.x * Mathf.Sin(theta);
+                            d.x *= Mathf.Cos(theta);
                         }
                     }
                 }
+                //else // 登れない坂
+                //{
+                //    if (hit)
+                //    {
+                //        // 左右のほうへと加速させる
+                //        Velocity.x += Mathf.Sign(degree) * (1f - Mathf.Abs(Mathf.Cos(degree))) * 0.05f;
+                //    }
+                //}
             }
             // 次に上方向 下向き方向にヒットしたならば，上向き方向はやらない
             if (!ButtomCollide)

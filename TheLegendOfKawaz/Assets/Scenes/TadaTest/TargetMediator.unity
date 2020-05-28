@@ -2385,33 +2385,33 @@ MonoBehaviour:
   - rank_name_: "\u521D\u7D1A"
     need_point_: 0
     gold_boader_time_: 10
-    gold_reward_: 100
+    gold_reward_: 300
     silver_boader_time_: 15
-    silver_reward_: 50
+    silver_reward_: 150
     bronze_boader_time_: 30
-    bronze_reward_: 25
+    bronze_reward_: 75
     other_reward_: -15
     developer_time_: 7.9
     next_scene_: TargetTest
   - rank_name_: "\u4E2D\u7D1A"
     need_point_: 0
     gold_boader_time_: 20
-    gold_reward_: 120
+    gold_reward_: 360
     silver_boader_time_: 30
-    silver_reward_: 60
+    silver_reward_: 180
     bronze_boader_time_: 60
-    bronze_reward_: 30
+    bronze_reward_: 90
     other_reward_: -20
     developer_time_: 15
     next_scene_: TargetZakkyMiddleLevel
   - rank_name_: "\u4E0A\u7D1A"
     need_point_: 0
     gold_boader_time_: 20
-    gold_reward_: 150
+    gold_reward_: 450
     silver_boader_time_: 40
-    silver_reward_: 70
+    silver_reward_: 210
     bronze_boader_time_: 100
-    bronze_reward_: 35
+    bronze_reward_: 105
     other_reward_: -25
     developer_time_: 17
     next_scene_: Target_jokyu
