@@ -12,5 +12,7 @@ namespace Global
     {
         // 無敵かどうか
         public static bool IsMuteki = false;
+        // 行動できるかどうか
+        public static bool ActionEnabled = true;
     }
 }

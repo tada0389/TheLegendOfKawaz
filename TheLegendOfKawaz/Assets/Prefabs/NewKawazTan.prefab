@@ -796,7 +796,7 @@ MonoBehaviour:
   water_walk_state_:
     MaxAbsSpeed: {x: 0.15, y: 0.18}
     Accel: {x: 0.004, y: -0.012}
-    add_jump_time_: 0.075
+    add_jump_time_: 0.1
     cant_jump_time_: 0.075
   water_jump_state_:
     MaxAbsSpeed: {x: 0.15, y: 0.25}
@@ -3963,14 +3963,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4188868256673871528, guid: e7e350bfb76b84ff69e06c1991b258b6,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4188868256655421386, guid: e7e350bfb76b84ff69e06c1991b258b6,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188868256673871528, guid: e7e350bfb76b84ff69e06c1991b258b6,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

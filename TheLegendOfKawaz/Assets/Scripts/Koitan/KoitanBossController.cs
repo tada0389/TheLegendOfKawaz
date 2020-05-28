@@ -660,6 +660,7 @@ namespace Actor.Enemy
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
                 MessageManager.OpenMessageWindow(message[0], im);
                 ObjectPoolManager.Init(par, Parent, 1);
+                Global.GlobalPlayerInfo.ActionEnabled = false;
             }
 
             // 毎フレーム呼ばれる
@@ -696,6 +697,7 @@ namespace Actor.Enemy
             {
                 Parent.seq.Kill();
                 //Parent.animator.Play(hashStart);
+                Global.GlobalPlayerInfo.ActionEnabled = true;
             }
 
             private void EndSeq()

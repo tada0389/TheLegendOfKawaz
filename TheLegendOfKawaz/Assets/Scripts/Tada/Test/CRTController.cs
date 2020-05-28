@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using TadaScene;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 namespace Test
@@ -17,6 +18,8 @@ namespace Test
 
         private IEnumerator Start()
         {
+            DontDestroyOnLoad(this);
+
             yield return new WaitForSeconds(10.0f);
 
             DOTween.To(
@@ -30,14 +33,14 @@ namespace Test
             DOTween.To(
                () => crt_.sinNoiseScale,
                num => crt_.sinNoiseScale = num,
-               0.3f,
-               2.0f);
+               0.6f,
+               4.0f).SetEase(Ease.InQuart);
 
             DOTween.To(
               () => crt_.sinNoiseWidth,
               num => crt_.sinNoiseWidth = num,
-              5.0f,
-              2.0f);
+              8.0f,
+              4.0f).SetEase(Ease.InQuart);
 
             yield return new WaitForSeconds(8.0f);
 
@@ -56,6 +59,11 @@ namespace Test
             yield return new WaitForSeconds(5.0f);
 
             TadaSceneManager.LoadScene("ZakkyScene", 0.5f, Vector3.zero, true);
+
+            yield return new WaitForSeconds(0.6f);
+            AchievementManager.FireAchievement("Hidden");
+
+            Destroy(this);
         }
     }
 }

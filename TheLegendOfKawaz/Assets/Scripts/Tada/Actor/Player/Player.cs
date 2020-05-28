@@ -406,7 +406,7 @@ namespace Actor.Player
             state_machine_.AddState((int)eState.WaterJump, water_jump_state_);
 
             // 始めのステートを設定
-            state_machine_.SetInitialState((int)eState.Fall);
+            state_machine_.SetInitialState((int)eState.Wait);
 
             // デバッグ表示
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -100));
@@ -429,6 +429,7 @@ namespace Actor.Player
         // Update is called once per frame
         private void Update()
         {
+            if (!Global.GlobalPlayerInfo.ActionEnabled) return;
             if (Time.timeScale < 1e-6) return;
 
             // 接地しているかどうかなどで，状態を変更する

@@ -30,6 +30,7 @@ namespace Actor.Enemy.Purin
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
                 MessageManager.OpenMessageWindow(message[0], im);
+                Global.GlobalPlayerInfo.ActionEnabled = false;
             }
 
             // 毎フレーム呼ばれる
@@ -66,6 +67,7 @@ namespace Actor.Enemy.Purin
             private void EndSeq()
             {
                 ChangeState((int)eState.Think);
+                Global.GlobalPlayerInfo.ActionEnabled = true;
             }
 
         }

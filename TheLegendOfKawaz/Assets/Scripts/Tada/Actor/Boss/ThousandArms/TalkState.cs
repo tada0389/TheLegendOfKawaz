@@ -30,6 +30,8 @@ namespace Actor.Enemy.Thousand
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
                 MessageManager.OpenMessageWindow(message[0], im);
+
+                Global.GlobalPlayerInfo.ActionEnabled = false;
             }
 
             // 毎フレーム呼ばれる
@@ -61,6 +63,7 @@ namespace Actor.Enemy.Thousand
             public override void OnEnd()
             {
                 MessageManager.CloseMessageWindow();
+                Global.GlobalPlayerInfo.ActionEnabled = true;
             }
 
             private void EndSeq()
