@@ -5318,14 +5318,15 @@ MonoBehaviour:
   messages:
   - waitTime: 3
     bodyText: "\u3084\u3042\u3001\u307C\u304F\u306F\u304B\u308F\u305A\u305F\u3093\uFF01\n\u4EF2\u9593\u305F\u3061\u3068\u4E00\u7DD2\u306B\u30B1\u30ED\u30C3\u30C8\u30E9\u30F3\u30C9\u306B\u4F4F\u3093\u3067\u308B\u3093\u3060"
-  - waitTime: 3
-    bodyText: "\u305F\u3044\u3078\u3093\uFF01"
+  - waitTime: 1
+    bodyText: "<size=140>\u305F\u3044\u3078\u3093\uFF01</size>"
   - waitTime: 3
     bodyText: "\u307F\u3093\u306A\u306E\u3059\u304C\u305F\u304C\n\u304B\u308F\u3063\u3066\u3042\u3070\u308C\u3060\u3057\u3061\u3083\u3063\u305F\uFF01"
   - waitTime: 3
     bodyText: "\u3053\u308C\u306F\u3082\u3046\u3044\u3063\u305F\u3093\u305F\u304A\u3057\u3066\n\u3082\u3068\u306B\u3082\u3069\u3059\u3057\u304B\u306A\u3044\uFF01"
   - waitTime: 3
     bodyText: "\u3053\u3046\u3057\u3066\u304B\u308F\u305A\u305F\u3093\u306E\u3067\u3093\u305B\u3064(\u30EC\u30B8\u30A7\u30F3\u30C9)\u306F\n\u306F\u3058\u307E\u3063\u305F\u306E\u3067\u3042\u3063\u305F\u2026(\u4EEE)"
+  nextScene: ZakkyScene
 --- !u!4 &1072923247
 Transform:
   m_ObjectHideFlags: 0
@@ -8350,7 +8351,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u3053\u3053\u306B\u30C6\u30AD\u30B9\u30C8\u304C\u5165\u308A\u307E\u3059\n\uFF12\u884C\u76EE"
+  m_text: "\u3042\n\u3044"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 336d50f3f95934fa2876ad8f81b398e8, type: 2}
   m_sharedMaterial: {fileID: -777592172505063374, guid: 336d50f3f95934fa2876ad8f81b398e8,
@@ -8396,7 +8397,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 13
+  m_firstOverflowCharacterIndex: 2
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -8420,7 +8421,7 @@ MonoBehaviour:
   m_margin: {x: 20, y: 20, z: 20, w: 20}
   m_textInfo:
     textComponent: {fileID: 1741397178}
-    characterCount: 16
+    characterCount: 3
     spriteCount: 0
     spaceCount: 1
     wordCount: 2
