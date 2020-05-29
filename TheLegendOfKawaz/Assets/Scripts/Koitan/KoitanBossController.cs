@@ -697,13 +697,15 @@ namespace Actor.Enemy
             {
                 Parent.seq.Kill();
                 //Parent.animator.Play(hashStart);
-                Global.GlobalPlayerInfo.ActionEnabled = true;
             }
 
             private void EndSeq()
             {
                 MessageManager.FinishMessage();
                 MessageManager.CloseMessageWindow();
+                // プレイヤー動けなくさせる
+                Global.GlobalPlayerInfo.ActionEnabled = true;
+                Parent.player_.GetComponent<Player.Player>().DoRoarState();
                 Parent.seq = DOTween.Sequence()
                     .OnStart(() =>
                     {
@@ -725,6 +727,7 @@ namespace Actor.Enemy
             // 開始時に呼ばれる
             public override void OnStart()
             {
+
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
                 Parent.seq = DOTween.Sequence()

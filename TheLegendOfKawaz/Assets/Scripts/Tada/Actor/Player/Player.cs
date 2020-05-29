@@ -296,6 +296,7 @@ namespace Actor.Player
             WaterIdle, // 水中のアイドリング
             WaterWalk, // 水中の移動
             WaterJump, // 水中ジャンプ
+            CloseEar, // 咆哮とうで耳をふさぐステート
         }
 
         // ステートマシン
@@ -332,6 +333,8 @@ namespace Actor.Player
         private StateWaterWalk water_walk_state_;
         [SerializeField]
         private StateWaterJump water_jump_state_;
+        [SerializeField]
+        private StateCloseEar close_ear_state_;
 #endregion
 
         private Timer shot_anim_timer_;
@@ -415,6 +418,7 @@ namespace Actor.Player
             state_machine_.AddState((int)eState.WaterIdle, water_idle_state_);
             state_machine_.AddState((int)eState.WaterWalk, water_walk_state_);
             state_machine_.AddState((int)eState.WaterJump, water_jump_state_);
+            state_machine_.AddState((int)eState.CloseEar, close_ear_state_);
 
             // 始めのステートを設定
             state_machine_.SetInitialState((int)eState.Wait);
@@ -579,6 +583,12 @@ namespace Actor.Player
                 transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0f, transform.localEulerAngles.z);
                 if (not_reverse_) not_reverse_.localEulerAngles = new Vector3(not_reverse_.localEulerAngles.x, 0f, not_reverse_.localEulerAngles.z);
             }
+        }
+
+        // 咆哮を受けるステートに変更する
+        public void DoRoarState()
+        {
+            state_machine_.ChangeState((int)eState.CloseEar);
         }
 
         // ダメージを受ける
