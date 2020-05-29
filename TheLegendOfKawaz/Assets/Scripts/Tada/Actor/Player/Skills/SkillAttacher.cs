@@ -37,6 +37,8 @@ namespace Actor.Player
         private bool is_level_max_ = false;
         private bool is_has_point_ = false;
 
+        private int prev_level_;
+
         private void Start()
         {
             hit_box_ = GetComponent<BoxCollider2D>();
@@ -93,6 +95,7 @@ namespace Actor.Player
             ui_manager_.ChangeExplonation(skill_);
 
             if (is_level_max_) return;
+            prev_level_ = SkillManager.Instance.Skills[(int)skill_].Level;
             player_.AquireTemporarySkill(skill_);
             //MessageManager.OpenKanbanWindow(message_);
             otameshi_text_.gameObject.SetActive(true);
@@ -108,7 +111,11 @@ namespace Actor.Player
             ui_manager_.DeleteExplonation();
             purchase_manager_.DismissPurchase();
 
+            // スキルを試していない
             if (is_level_max_) return;
+            // レベルが上がったなら戻さない
+            if (prev_level_ != SkillManager.Instance.Skills[(int)skill_].Level) return;
+
             player_.ReleaseTemporarySkill(skill_);
             //MessageManager.CloseKanbanWindow();
         }
