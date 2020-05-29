@@ -59,6 +59,20 @@ public class SettingManager : MonoBehaviour
     private int ScreenSizeNum = 1;
     private bool isPostEffect = true;
 
+    static SettingManager Instance;
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -70,7 +84,6 @@ public class SettingManager : MonoBehaviour
         nowIndex = 0;
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(window);
-        //MusicManager.Play(MusicManager.Instance.bgm4);
 
         SceneManager.sceneLoaded += SetPost;
     }
@@ -82,10 +95,12 @@ public class SettingManager : MonoBehaviour
         {
             case OpenState.Closed:
                 //TimeScaleが小さいときメニューを開けないようにする(仮)
+                /*
                 if (ActionInput.GetButtonDown(ActionCode.Pause) && Time.timeScale > 0.5f && !FadeManager.is_fading)
                 {
                     OpenWindow();
                 }
+                */
                 break;
             case OpenState.Opened:
                 //項目が2個以上ないと動かせない
@@ -160,7 +175,7 @@ public class SettingManager : MonoBehaviour
             .OnStart(() =>
             {
                 openState = OpenState.Opening;
-                TadaLib.TimeScaler.Instance.RequestChange(0.0f);                
+                TadaLib.TimeScaler.Instance.RequestChange(0.0f);
             })
             .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.5f)).SetEase(Ease.OutBounce).SetUpdate(true)
             .AppendCallback(() =>
@@ -179,6 +194,11 @@ public class SettingManager : MonoBehaviour
             });
     }
 
+    public static void RequestOpenWindow()
+    {
+        Instance.OpenWindow();
+    }
+
     void CloseWindow()
     {
         Sequence seq = DOTween.Sequence()
@@ -192,7 +212,7 @@ public class SettingManager : MonoBehaviour
             .AppendCallback(() =>
             {
                 openState = OpenState.Closed;
-                TadaLib.TimeScaler.Instance.DismissRequest(0.0f);                
+                TadaLib.TimeScaler.Instance.DismissRequest(0.0f);
             });
     }
 
