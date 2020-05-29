@@ -22787,6 +22787,7 @@ MonoBehaviour:
   player_: {fileID: 0}
   muteki_time_: 1
   mesh_: {fileID: 1108786757}
+  not_reverse_: {fileID: 0}
   arms_: []
   think_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -61908,7 +61909,7 @@ PrefabInstance:
     - target: {fileID: 2198499733709103134, guid: fe28a0b3e279e4f1f911783dd3824996,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2198499733709103135, guid: fe28a0b3e279e4f1f911783dd3824996,
         type: 3}
@@ -62784,6 +62785,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.95166415
+      objectReference: {fileID: 0}
+    - target: {fileID: 2198499734584661120, guid: fe28a0b3e279e4f1f911783dd3824996,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2198499734694793242, guid: fe28a0b3e279e4f1f911783dd3824996,
         type: 3}
