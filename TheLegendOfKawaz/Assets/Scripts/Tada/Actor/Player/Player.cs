@@ -104,7 +104,7 @@ namespace Actor.Player
         private List<int> temporary_skills_;
 
         // コンストラクタ
-        public Data(Player body)
+        public Data(Player body, bool is_minigame_mode)
         {
             Dir = eDir.Right;
             transform = body.transform;
@@ -114,7 +114,9 @@ namespace Actor.Player
             trb = body.GetComponent<TadaRigidbody>();
             bullet_spawner_ = body.GetComponent<BulletSpawner>();
 
-            var Skills = SkillManager.Instance.Skills;
+            List<Skill> Skills;// = SkillManager.Instance.Skills;
+            if (is_minigame_mode) Skills = SkillManager.Instance.LevelOneSkills;
+            else Skills = SkillManager.Instance.Skills;
 
             MaxHP = Skills[(int)eSkill.HP].Value;
             HP = MaxHP;
@@ -184,7 +186,8 @@ namespace Actor.Player
 
         public bool AquireTmpSkill(eSkill skill)
         {
-            var Skills = SkillManager.Instance.Skills;
+            var Skills = SkillManager.Instance.LevelOneSkills;
+
             int v = ++temporary_skills_[(int)skill];
 
             // くそこーど
@@ -230,7 +233,7 @@ namespace Actor.Player
         {
             int v = --temporary_skills_[(int)skill];
 
-            var Skills = SkillManager.Instance.Skills;
+            var Skills = SkillManager.Instance.LevelOneSkills;
 
             // くそこーど
             switch (skill)
@@ -361,6 +364,9 @@ namespace Actor.Player
         private GameObject mesh_;
         private Timer muteki_timer_;
 
+        [SerializeField]
+        private bool is_minigame_mode_ = false;
+
         // 初期スキル
         #region debug
         [System.Serializable]
@@ -385,7 +391,7 @@ namespace Actor.Player
             shot_anim_timer_ = new Timer(0.3f);
             muteki_timer_ = new Timer(muteki_time_);
 
-            data_ = new Data(this);
+            data_ = new Data(this, is_minigame_mode_);
             HP = data_.HP;
             if (data_.AutoHealInterval > 0.01f)
             {
@@ -628,13 +634,13 @@ namespace Actor.Player
         // デバッグで最初に入手したスキルを開放する
         private void ReleaseSkillSet()
         {
-            foreach (InitialSkill skill in demo_skills_)
-            {
-                for (int i = 0; i < skill.level_; ++i)
-                {
-                    data_.ReleaseTmpSkill(skill.type_);
-                }
-            }
+            //foreach (InitialSkill skill in demo_skills_)
+            //{
+            //    for (int i = 0; i < skill.level_; ++i)
+            //    {
+            //        data_.ReleaseTmpSkill(skill.type_);
+            //    }
+            //}
         }
 
         // スキルを一時的に取得する
