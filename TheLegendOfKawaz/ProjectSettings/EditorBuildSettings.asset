@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TadaTest/ThousandBossScene.unity
     guid: 96c566c1d6a39db4a96f3fbf71d72292
   - enabled: 1
+    path: Assets/Scenes/Koitan/Epilogue.unity
+    guid: 6e5dfa14b224843b8af3be79b93d4f8e
+  - enabled: 1
     path: Assets/Scenes/Koitan/Ending.unity
     guid: cbba8340d15374312a207a9b264f6d92
   - enabled: 1

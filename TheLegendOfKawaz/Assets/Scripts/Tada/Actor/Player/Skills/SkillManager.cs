@@ -39,6 +39,9 @@ namespace Actor.Player
         // 使用するcsvファイル名
         [SerializeField]
         private string file_name_ = "PlayerSkills";
+
+        // 何も強化されていないスキル
+        public List<Skill> LevelOneSkills { private set; get; }
          
         protected override void Awake()
         {
@@ -49,6 +52,9 @@ namespace Actor.Player
             // パラメータを取得
             PlayerSkills reader = new PlayerSkills(file_name_);
             Skills = new List<Skill>(reader.Skills);
+
+            PlayerSkills reader_2 = new PlayerSkills(file_name_); // Skillが値渡しになってるからもう一度...
+            LevelOneSkills = new List<Skill>(reader_2.Skills);
         }
 
         // 指定したパラメータを取得する
