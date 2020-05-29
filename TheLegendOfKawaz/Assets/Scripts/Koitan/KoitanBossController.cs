@@ -878,6 +878,8 @@ namespace Actor.Enemy
             {
                 TadaLib.TimeScaler.Instance.RequestChange(0.3f, 1.5f);
                 Global.GlobalPlayerInfo.IsMuteki = true;
+                // 動きをとめる
+                Parent.trb_.Velocity = Vector2.zero;
             }
 
             // 毎フレーム呼ばれる
