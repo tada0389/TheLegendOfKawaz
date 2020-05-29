@@ -23,6 +23,8 @@ namespace Actor.Enemy.Thousand
 
             private bool a = false;
 
+            private bool isLoaded;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
@@ -46,7 +48,12 @@ namespace Actor.Enemy.Thousand
                 }
                 if (Timer > 6.0f)
                 {
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("Ending");
+                    //UnityEngine.SceneManagement.SceneManager.LoadScene("Ending");
+                    if(!isLoaded)
+                    {
+                        isLoaded = true;
+                        KoitanLib.FadeManager.FadeIn(2f, "Epilogue", 1);
+                    }
                 }
             }
 
