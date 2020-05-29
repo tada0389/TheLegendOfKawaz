@@ -19,6 +19,8 @@ namespace Actor.Enemy.Thousand
             [SerializeField]
             private float think_time_ = 0.5f;
 
+            private bool first_action_ = true;
+
             // ステートの初期化
             public override void OnInit()
             {
@@ -56,9 +58,11 @@ namespace Actor.Enemy.Thousand
                 else
                 {
                     // お経を唱えた後はすぐにお経を唱えない
-                    if (PrevStateId == (int)eState.Sutras) Decide();
+                    if (PrevStateId == (int)eState.Sutras || first_action_) Decide();
                     else ChangeState((int)eState.Sutras);
                 }
+
+                first_action_ = false;
             }
         }
     }
