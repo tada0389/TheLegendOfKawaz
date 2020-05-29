@@ -20,6 +20,9 @@ namespace KoitanLib
         [SerializeField]
         MsElem[] messages;
 
+        [SerializeField]
+        string nextScene;
+
         Sequence seq;
         int msIndex = 0;
         bool isLoaded = false;
@@ -43,11 +46,10 @@ namespace KoitanLib
 
         private void Update()
         {
-            if(ActionInput.GetButtonDown(ActionCode.Dash) && !isLoaded)
+            if (ActionInput.GetButtonDown(ActionCode.Dash) && !isLoaded)
             {
                 seq.Kill();
-                isLoaded = true;
-                FadeManager.FadeIn(1f, "ZakkyScene");                
+                LoadScene();
             }
         }
 
@@ -74,7 +76,7 @@ namespace KoitanLib
                         () => bottomTextMesh.maxVisibleCharacters,          // 何を対象にするのか
                         num => bottomTextMesh.maxVisibleCharacters = num,   // 値の更新
                         messages[msIndex].bodyText.Length,           // 最終的な値
-                        messages[msIndex].bodyText.Length / 10                 // アニメーション時間
+                        messages[msIndex].bodyText.Length / 15f                // アニメーション時間
                 ).SetEase(Ease.Linear))
                 .AppendInterval(messages[msIndex].waitTime)
                 .Append(bottomTextMesh.DOFade(0, 0.5f))
@@ -87,10 +89,18 @@ namespace KoitanLib
                     }
                     else
                     {
-                        isLoaded = true;
-                        FadeManager.FadeIn(1f, "ZakkyScene");
+                        LoadScene();
                     }
                 });
+        }
+
+        public void LoadScene()
+        {
+            if(!isLoaded)
+            {
+                isLoaded = true;
+                FadeManager.FadeIn(1f, nextScene);
+            }
         }
 
         [System.Serializable]
