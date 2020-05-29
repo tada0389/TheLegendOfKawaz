@@ -444,6 +444,11 @@ namespace Actor.Player
         // Update is called once per frame
         private void Update()
         {
+            //if (ActionInput.GetButtonDown(ActionCode.Pause) && Time.timeScale > 0.5f && !KoitanLib.FadeManager.is_fading)
+            //{
+            //    SettingManager.Instance.OpenWindow();
+            //}
+
             if (!Global.GlobalPlayerInfo.ActionEnabled)
             {
                 // 速度をゼロに
