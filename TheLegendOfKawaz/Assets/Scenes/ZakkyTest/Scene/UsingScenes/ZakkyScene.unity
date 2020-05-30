@@ -1188,27 +1188,26 @@ PolygonCollider2D:
       - {x: 6.942689, y: 0.11461946}
       - {x: 7.701226, y: 0.17452717}
       - {x: 8.015185, y: 0.087378144}
-      - {x: 8.914938, y: -0.56916475}
-      - {x: 10.751742, y: -2.0354352}
+      - {x: 8.914937, y: -0.5691645}
+      - {x: 10.58497, y: -1.9144036}
       - {x: 11.546785, y: -2.5849307}
       - {x: 12.502089, y: -3.1132138}
       - {x: 13.359524, y: -3.4013016}
-      - {x: 17.960941, y: -3.558525}
-      - {x: 19.696842, y: -3.5576196}
-      - {x: 20.503922, y: -3.4671476}
-      - {x: 20.818535, y: -3.3880286}
-      - {x: 20.742529, y: -0.55682504}
-      - {x: 20.623968, y: 1.3285956}
-      - {x: 20.479862, y: 2.3979173}
-      - {x: 20.259392, y: 3.1868784}
-      - {x: 19.219673, y: 3.2863803}
-      - {x: 15.845223, y: 3.2310305}
-      - {x: 14.83329, y: 3.2668173}
-      - {x: 13.986122, y: 3.4408295}
-      - {x: 13.593487, y: 3.6931233}
-      - {x: 13.367396, y: 4.121716}
+      - {x: 18.186247, y: -3.5313592}
+      - {x: 19.865944, y: -3.5052915}
+      - {x: 20.696674, y: -3.400784}
+      - {x: 20.953964, y: -3.328175}
+      - {x: 21.032269, y: -1.2434256}
+      - {x: 20.881922, y: 2.716807}
+      - {x: 20.874466, y: 2.9587524}
+      - {x: 17.157928, y: 3.012553}
+      - {x: 15.369743, y: 3.1162186}
+      - {x: 14.391366, y: 3.2826734}
+      - {x: 13.976358, y: 3.4279914}
+      - {x: 13.591555, y: 3.6933787}
+      - {x: 13.367734, y: 4.120233}
       - {x: 13.36714, y: 4.5658216}
-      - {x: 13.6215, y: 5.2440515}
+      - {x: 13.6215, y: 5.2440505}
       - {x: 14.06636, y: 5.8351517}
       - {x: 14.9616, y: 6.6437535}
       - {x: 16.021801, y: 7.383235}
@@ -1302,18 +1301,27 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: 21.401848, y: -3.4324603, z: 0}
-      leftTangent: {x: 0.074474335, y: -1.1771088, z: 0}
-      rightTangent: {x: -0.06802368, y: 1.0751362, z: 0}
+    - position: {x: 21.544266, y: -3.3442035, z: 0}
+      leftTangent: {x: 0.27057648, y: -1.1872368, z: 0}
+      rightTangent: {x: -0.04821396, y: 0.2115488, z: 0}
       mode: 1
       height: 1
       bevelCutoff: 0
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: 20.501282, y: 3.7195258, z: 0}
-      leftTangent: {x: 0.94314575, y: -0.2905059, z: 0}
-      rightTangent: {x: -1.5357952, y: 0.4730518, z: 0}
+    - position: {x: 21.588959, y: -0.3275938, z: 0}
+      leftTangent: {x: 0.0978775, y: -1.6165891, z: 0}
+      rightTangent: {x: -0.20722198, y: 3.4225287, z: 0}
+      mode: 1
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+    - position: {x: 20.923508, y: 3.541693, z: 0}
+      leftTangent: {x: 0.7419548, y: -0.0537405, z: 0}
+      rightTangent: {x: -1.6028004, y: 0.116092205, z: 0}
       mode: 1
       height: 1
       bevelCutoff: 0
@@ -4582,16 +4590,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewKawazTan
       objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: close_ear_state_.close_duration_
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: close_ear_state_.start_animation_time_
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4645,6 +4643,16 @@ PrefabInstance:
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: close_ear_state_.close_duration_
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: close_ear_state_.start_animation_time_
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5365672422518013126, guid: 185d8f59bce6ce0409df1fca3665c769,
@@ -10763,6 +10771,8 @@ GameObject:
   - component: {fileID: 1722790898}
   - component: {fileID: 1722790897}
   - component: {fileID: 1722790896}
+  - component: {fileID: 1722790900}
+  - component: {fileID: 1722790901}
   m_Layer: 8
   m_Name: New SpriteShapeController (2)
   m_TagString: Stage
@@ -10783,7 +10793,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.15}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -11007,6 +11017,61 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1722790900
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722790895}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -3.2, y: 3.4}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.77, y: 1.95}
+  m_EdgeRadius: 0
+--- !u!60 &1722790901
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722790895}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.15}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 13, y: 0.4}
+      - {x: 11.7, y: 1.18}
+      - {x: 11.7, y: -0.85}
+      - {x: 13, y: -0.85}
 --- !u!1 &1767226606
 GameObject:
   m_ObjectHideFlags: 0
@@ -14864,6 +14929,7 @@ GameObject:
   - component: {fileID: 1926178333}
   - component: {fileID: 1926178332}
   - component: {fileID: 1926178331}
+  - component: {fileID: 1926178335}
   m_Layer: 8
   m_Name: New SpriteShapeController (3)
   m_TagString: Stage
@@ -15043,6 +15109,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1926178335
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926178330}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 5.11, y: 4.03}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 8.12, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1989921735
 GameObject:
   m_ObjectHideFlags: 0

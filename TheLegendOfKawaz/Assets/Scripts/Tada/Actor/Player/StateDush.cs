@@ -92,6 +92,9 @@ namespace Actor.Player
                     return;
                 }
 
+                // 壁に当たってるなら速度ゼロ
+                if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
+
                 if (!is_air_dash_) ActorUtils.ProcSpeed(ref data.velocity, new Vector2(0f, Accel.y), MaxAbsSpeed);
                 data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
                 //ActorUtils.ProcSpeed(ref data.velocity, new Vector2(Mathf.Sign(-data.velocity.x), 1f) * Accel, MaxAbsSpeed);

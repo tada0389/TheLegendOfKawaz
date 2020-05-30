@@ -74,6 +74,9 @@ namespace Actor.Player
                     ChangeState((int)eState.Fall);
                 }
 
+                // 壁に当たってるなら速度ゼロ
+                if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
+
                 // 移動している方向に速度を加える
                 float dir = ActionInput.GetAxis(AxisCode.Horizontal);
                 if (Mathf.Abs(dir) < 0.2f) dir = 0f;
