@@ -107,6 +107,8 @@ namespace Actor.Player
                     data.velocity = new Vector2(data.velocity.x, 0f);
                 }
 
+                // 壁に当たってるなら速度ゼロ
+                if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
 
                 // ただし，頂点付近だと加速度を弱める
                 float accel_rate_y = 1.0f;
