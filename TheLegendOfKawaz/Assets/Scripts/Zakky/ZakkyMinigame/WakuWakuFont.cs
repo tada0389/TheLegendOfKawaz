@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using WallDefence;
+
 public class WakuWakuFont : MonoBehaviour
 {
     bool fiverCheck;

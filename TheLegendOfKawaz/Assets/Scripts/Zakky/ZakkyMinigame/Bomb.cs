@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; // コレ重要
+using WallDefence;
 //using TMPro;
 
 public class Bomb : PrimitiveTarget
@@ -32,6 +33,8 @@ public class Bomb : PrimitiveTarget
             //else if (Game.instance.state == Game.STATE.FEVER) m_scoreText.ScoreAdder(30);
             //爆破もする
             Explotion();
+            // 他よりも軽くする
+            CameraSpace.CameraShaker.Shake(0.3f, 0.2f);
         }
         else if (col.tag == "KawazWall" || col.tag == "Player") //プレイヤーか井戸に当たったらまけ
         {
@@ -46,7 +49,6 @@ public class Bomb : PrimitiveTarget
                         Game.instance.state = Game.STATE.GAMEOVER;
                     }
                 }
-                CameraSpace.CameraShaker.Shake(0.6f, 0.3f);
             }
             else if (Game.instance.state == Game.STATE.FEVER)
             {
@@ -57,6 +59,8 @@ public class Bomb : PrimitiveTarget
             }
             //爆弾ばくはつ
             Explotion();
+
+            CameraSpace.CameraShaker.Shake(0.6f, 0.3f);
         }
         else if (col.tag == "KawaztanShot")
         {
@@ -73,10 +77,18 @@ public class Bomb : PrimitiveTarget
                 GotPoint.PointInit(gotPoint, transform.position, Quaternion.Euler(Vector3.zero), score);
             }
             Explotion();
+
+            // 他よりも軽くする
+            CameraSpace.CameraShaker.Shake(0.3f, 0.2f);
         }
         else if (col.tag == "ToumeiStage" || col.tag == "Enemy")
         {
 
+        }
+        else if(col.tag == "DropZone") // by tada
+        {
+            // 消滅 
+            gameObject.SetActive(false);
         }
         else
         {

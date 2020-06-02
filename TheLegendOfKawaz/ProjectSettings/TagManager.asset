@@ -11,6 +11,7 @@ TagManager:
   - KawazWall
   - KawazCeil
   - ToumeiStage
+  - DropZone
   layers:
   - Default
   - TransparentFX
