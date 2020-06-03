@@ -17,6 +17,7 @@ namespace Actor.Enemy
         // Bossのステート一覧
         private enum eState
         {
+            Talk, // 戦闘前の会話
             Think, // 次の行動を考えるステート
             Idle, // 待機中のステート アイドリング
             Fall, // 落下中のステート
@@ -39,6 +40,8 @@ namespace Actor.Enemy
 
         // ステートのインスタンス
         #region state class
+        [SerializeField]
+        private TalkState state_talk_;
         [SerializeField]
         private StateThink state_think_;
         [SerializeField]
@@ -85,6 +88,7 @@ namespace Actor.Enemy
             state_machine_ = new StateMachine<KabtBossController>(this);
 
             // ステートを登録
+            state_machine_.AddState((int)eState.Talk, state_talk_);
             state_machine_.AddState((int)eState.Think, state_think_);
             state_machine_.AddState((int)eState.Idle, state_idle_);
             state_machine_.AddState((int)eState.Fall, state_fall_);
@@ -101,7 +105,7 @@ namespace Actor.Enemy
             state_machine_.AddState((int)eState.Jump, state_jump_);
 
             // 初期ステートを設定
-            state_machine_.SetInitialState((int)eState.Fall);
+            state_machine_.SetInitialState((int)eState.Talk);
 
             // デバッグ表示
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 0));
@@ -149,6 +153,66 @@ namespace Actor.Enemy
         // デフォルトで，加速度と移動速度の最大値などをInspectorでいじれる
 
         // ========================================================================================================
+
+        // 最初の会話
+        [System.Serializable]
+        private class TalkState : StateMachine<KabtBossController>.StateBase
+        {
+            [SerializeField]
+            Sprite im;
+            [SerializeField, Multiline(3)]
+            private string[] message;
+            private int index = 0;
+            private bool isEnd;
+
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                MessageManager.OpenMessageWindow(message[0], im);
+
+                Global.GlobalPlayerInfo.ActionEnabled = false;
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                if (!isEnd)
+                {
+                    if (ActionInput.GetButtonDown(ActionCode.Decide))
+                    {
+                        index++;
+                        if (index < message.Length)
+                        {
+                            MessageManager.InitMessage(message[index]);
+                        }
+                        else
+                        {
+                            EndSeq();
+                        }
+                    }
+
+                    if (ActionInput.GetButtonDown(ActionCode.Dash))
+                    {
+                        EndSeq();
+                    }
+                }
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+                MessageManager.CloseMessageWindow();
+                Global.GlobalPlayerInfo.ActionEnabled = true;
+            }
+
+            private void EndSeq()
+            {
+                ChangeState((int)eState.Think);
+            }
+
+        }
 
         // 次の行動を思考するステート
         [System.Serializable]

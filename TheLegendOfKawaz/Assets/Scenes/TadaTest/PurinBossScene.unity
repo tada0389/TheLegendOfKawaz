@@ -5424,7 +5424,7 @@ MonoBehaviour:
     punch_lock_time_: 0.2
     ik_: {fileID: 1386711678}
     ik_parent_: {fileID: 530133686}
-    punch_time_scale_: 0.35
+    punch_time_scale_: 0.4
   shot_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}

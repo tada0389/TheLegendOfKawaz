@@ -22,6 +22,9 @@ namespace SkillUI
         [SerializeField]
         private TextMeshProUGUI point_text_;
 
+        [SerializeField]
+        private Image icon_background_;
+
         // ポイントごとのアイコン数
         [SerializeField]
         private int icon_per_point_ = 10;
@@ -222,11 +225,13 @@ namespace SkillUI
             {
                 point_icon_.DOFade(1.0f, feed_duration_ * time_scale);
                 point_text_.DOFade(1.0f, feed_duration_ * time_scale);
+                icon_background_.DOFade(0.35f, feed_duration_ * time_scale);
             }
             else
             {
                 point_icon_.DOFade(0.0f, feed_duration_ * time_scale);
                 point_text_.DOFade(0.0f, feed_duration_ * time_scale);
+                icon_background_.DOFade(0.0f, feed_duration_ * time_scale);
             }
         }
 

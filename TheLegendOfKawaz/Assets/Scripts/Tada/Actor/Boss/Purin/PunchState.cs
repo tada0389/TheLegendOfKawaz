@@ -47,7 +47,7 @@ namespace Actor.Enemy.Purin
             {
                 // 真ん中に移動できた，もしくは壁に衝突したなら次へ
                 float dir = Mathf.Sign(stage_center_x - Parent.transform.position.x);
-                if (dir * dir_ < 0f || Parent.trb_.LeftCollide || Parent.trb_.RightCollide || Parent.trb_.TopCollide)
+                if (dir * dir_ < 0f || (dir_ < 0f && Parent.trb_.LeftCollide) || (dir_ > 0f && Parent.trb_.RightCollide) || Parent.trb_.TopCollide)
                 {
                     ChangeState((int)eState.Punch2);
                     return;

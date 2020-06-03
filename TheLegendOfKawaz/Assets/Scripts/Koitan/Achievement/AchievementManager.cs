@@ -26,7 +26,9 @@ public class AchievementManager : MonoBehaviour
     [SerializeField]
     private Transform achievementUiParent;
     private List<AchievementUi> achievementUis = new List<AchievementUi>();
-    private Dictionary<string, AchievementContent> achieveDict = new Dictionary<string, AchievementContent>();
+
+    private AchievementData achieve_data_; // by tada
+    //private Dictionary<string, AchievementContent> achieveDict = new Dictionary<string, AchievementContent>();
 
     // Start is called before the first frame update
     void Awake()
@@ -36,15 +38,20 @@ public class AchievementManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
             seq.SetUpdate(true);
+            // 実績情報をロード by tada
+            achieve_data_ = new AchievementData();
+            achieve_data_.Load();
             //Dictionaryに追加
             for (int i = 0; i < contents.Length; i++)
             {
                 AchievementContent c = contents[i];
-                achieveDict.Add(c.key, c);
+                //achieve_data_.dict_.Add(c.key, c);
+                if (achieve_data_.dict_.ContainsKey(c.key)) c = achieve_data_.dict_[c.key];
+                else achieve_data_.Add(c.key, c); // ロードですでに登録されている場合はスルーされる
                 AchievementUi au = Instantiate(achievementPrefab, achievementUiParent);
                 au.transform.localPosition = new Vector3(0, 350 - 200 * i, 0);
                 au.content = c;
-                achievementUis.Add(au);                
+                achievementUis.Add(au);
             }
         }
         else
@@ -67,9 +74,12 @@ public class AchievementManager : MonoBehaviour
                             eState = OpenState.Opening;
                             windowIm.gameObject.SetActive(true);
                             string key = que.Dequeue();
-                            AchievementContent c = achieveDict[key];
+                            //AchievementContent c = achieveDict[key];
+                            AchievementContent c = achieve_data_.dict_[key];
                             iconIm.sprite = c.icon;
                             textMesh.text = c.body;
+                            // セーブ申請を送る by tada
+                            achieve_data_.Save();
                         })
                         .Append(windowIm.transform.DOLocalMoveX(800, 0.3f).SetEase(Ease.OutCubic).SetRelative().SetUpdate(true))
                         .AppendCallback(() =>
@@ -106,7 +116,8 @@ public class AchievementManager : MonoBehaviour
     public static void FireAchievement(string key)
     {
         //すでに解除済みの場合発火しない
-        AchievementContent c = Instance.achieveDict[key];
+        //AchievementContent c = Instance.achieveDict[key];
+        AchievementContent c = Instance.achieve_data_.dict_[key];
         if (!c.isUnlocked)
         {
             c.isUnlocked = true;
@@ -154,4 +165,63 @@ public class AchievementContent
     public string body;
     public string detail;
     public bool isUnlocked;
+}
+
+// セーブするデータ本体
+[System.Serializable] // by tada
+public class AchievementData : TadaLib.Save.BaseSaver<AchievementData>
+{
+    // ディクショナリーはJsonUtilityに対応してないってまじ？？
+    public Dictionary<string, AchievementContent> dict_;
+
+    public List<string> keys_;
+    public List<AchievementContent> values_;
+
+    private const string kFileName = "Achievement";
+
+    // 辞書に新しい実績情報を登録する
+    public void Add(string key, AchievementContent value)
+    {
+        if (dict_.ContainsKey(key)) return;
+        keys_.Add(key);
+        values_.Add(value);
+        dict_.Add(key, value);
+    }
+
+    // 初期化する ロードできないならfalseを返す
+    public bool Load()
+    {
+        AchievementData data = Load(kFileName);
+        dict_ = new Dictionary<string, AchievementContent>();
+        if (data == null || data.keys_ == null || data.values_ == null || data.keys_.Count != data.values_.Count)
+        {
+            keys_ = new List<string>();
+            values_ = new List<AchievementContent>();
+            return false;
+        }
+        else
+        {
+            // 辞書型を形成
+            //UnityEngine.Assertions.Assert.IsTrue(data.keys_.Count == data.values_.Count);
+
+            keys_ = data.keys_;
+            values_ = data.values_;
+            for (int i = 0, n = keys_.Count; i < n; ++i)
+            {
+                dict_.Add(keys_[i], values_[i]);
+            }
+
+            return true;
+        }
+    }
+
+    // セーブする
+    public void Save()
+    {
+        if (save_completed_)
+        {
+            save_completed_ = false;
+            TadaLib.Save.SaveManager.Instance.RequestSave(() => { Save(kFileName); save_completed_ = true; });
+        }
+    }
 }
