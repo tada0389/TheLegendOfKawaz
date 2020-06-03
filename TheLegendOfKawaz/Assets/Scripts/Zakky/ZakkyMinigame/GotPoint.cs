@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using WallDefence;
 
 public class GotPoint : MonoBehaviour
 {

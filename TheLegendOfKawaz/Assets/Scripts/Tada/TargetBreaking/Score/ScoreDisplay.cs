@@ -17,6 +17,9 @@ namespace Result
 
         private ScoreManager score_manager_;
 
+        [SerializeField]
+        private bool IsTarget = true;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -26,19 +29,38 @@ namespace Result
 
         public void Display(string game_scene_name, string game_name, int rank = -1)
         {
-            string res = "";
-            res += game_name;
-            res += "\nスコアランキング\n";
-            Score score = score_manager_.GetScoreData(game_scene_name);
-            for (int i = 0, n = score.Scores.Count; i < n; ++i)
+            if (IsTarget)
             {
-                if (i == rank - 1) res += "<color=red>";
-                res += (i + 1).ToString() + "位";
-                res += String.Format("{0, 6}", (-score.Scores[i] / 10.0f).ToString("F1"));
-                if (i == rank - 1) res += "</color>";
-                res += "\n";
+                string res = "";
+                res += game_name;
+                res += "\nスコアランキング\n";
+                Score score = score_manager_.GetScoreData(game_scene_name);
+                for (int i = 0, n = score.Scores.Count; i < n; ++i)
+                {
+                    if (i == rank - 1) res += "<color=red>";
+                    res += (i + 1).ToString() + "位";
+                    res += String.Format("{0, 6}", (-score.Scores[i] / 10.0f).ToString("F1"));
+                    if (i == rank - 1) res += "</color>";
+                    res += "\n";
+                }
+                text_.text = res;
             }
-            text_.text = res;
+            else
+            {
+                string res = "";
+                res += game_name;
+                res += "\nスコアランキング\n";
+                Score score = score_manager_.GetScoreData(game_scene_name);
+                for (int i = 0, n = score.Scores.Count; i < n; ++i)
+                {
+                    if (i == rank - 1) res += "<color=red>";
+                    res += (i + 1).ToString() + "位";
+                    res += String.Format("{0, 8}", (score.Scores[i]).ToString());
+                    if (i == rank - 1) res += "</color>";
+                    res += "\n";
+                }
+                text_.text = res;
+            }
 
             // 順位の表示量に応じてテキストのフォントサイズを変更する
             //text_.fontSize = 50 - 3 * score.Scores.Count;

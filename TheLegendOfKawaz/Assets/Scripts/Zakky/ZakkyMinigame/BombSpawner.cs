@@ -23,6 +23,9 @@ public class BombSpawner : MonoBehaviour
     [SerializeField]
     Gage m_gage;
 
+    [SerializeField]
+    private MiniMapController mini_map_;
+
     //public int brokenBombsSum;
     // Start is called before the first frame update
     private float overTime;
@@ -64,6 +67,13 @@ public class BombSpawner : MonoBehaviour
                 }
                 obj.bounce = Random.Range(5f, 15f);
                 //obj.m_bombSpawner = this;
+
+                // ミニマップに登録されていないなら登録する by tada
+                if (!obj.IsRegisteredToMiniMap)
+                {
+                    mini_map_.RegisterObject(obj.gameObject);
+                    obj.IsRegisteredToMiniMap = true;
+                }
             }
 
             //Debug.Log(overTime.ToString());

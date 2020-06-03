@@ -31,6 +31,10 @@ public class PrimitiveTarget : MonoBehaviour
     //跳ねやすさ
     [HideInInspector]
     public float bounce;
+
+    // ミニマップに登録されているか by tada めちゃくちゃ強引でごめん
+    public bool IsRegisteredToMiniMap = false;
+
     // Start is called before the first frame update
     protected void Start()
     {

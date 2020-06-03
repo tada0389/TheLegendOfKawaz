@@ -22,11 +22,11 @@ namespace Actor.Player
             private float scene_transitioin_time_ = 3.0f;
 
             [SerializeField]
+            private bool GoNextScene = true;
+            [SerializeField]
             private string next_scene_ = "ZakkyScene";
 
             private bool is_feed_;
-
-            private bool dont_scene_transition_;
 
             [SerializeField]
             private BaseParticle dead_eff_;
@@ -39,8 +39,6 @@ namespace Actor.Player
                 data.animator.Play("Cry");
 
                 is_feed_ = false;
-
-                dont_scene_transition_ = (next_scene_ == "");
 
                 EffectPlayer.Play(dead_eff_, Parent.transform.position, Vector3.zero, Parent.transform);
             }
@@ -56,7 +54,8 @@ namespace Actor.Player
             {
                 ActorUtils.ProcSpeed(ref data.velocity, Accel, MaxAbsSpeed);
 
-                if (dont_scene_transition_) return;
+                if (!GoNextScene) return;
+
                 if (!is_feed_ && Timer > scene_transitioin_time_)
                 {
                     KoitanLib.FadeManager.FadeIn(0.5f, next_scene_, 0);

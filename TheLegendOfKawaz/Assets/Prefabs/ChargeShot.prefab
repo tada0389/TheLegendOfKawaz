@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3452550336109702563}
   m_Layer: 0
   m_Name: sizuku
-  m_TagString: Untagged
+  m_TagString: KawaztanShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4766,7 +4766,7 @@ GameObject:
   - component: {fileID: 3452550336696211740}
   m_Layer: 0
   m_Name: waku2
-  m_TagString: Untagged
+  m_TagString: KawaztanShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9520,7 +9520,7 @@ GameObject:
   - component: {fileID: 6286268628962322538}
   m_Layer: 0
   m_Name: charge_mame
-  m_TagString: Untagged
+  m_TagString: KawaztanShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14293,7 +14293,7 @@ GameObject:
   - component: {fileID: 3452550337518970897}
   m_Layer: 0
   m_Name: waku
-  m_TagString: Untagged
+  m_TagString: KawaztanShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19046,7 +19046,7 @@ GameObject:
   - component: {fileID: 3976904480002893424}
   m_Layer: 0
   m_Name: wakka
-  m_TagString: Untagged
+  m_TagString: KawaztanShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

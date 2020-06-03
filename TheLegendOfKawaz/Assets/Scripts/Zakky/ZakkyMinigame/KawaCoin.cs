@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; // コレ重要
+using WallDefence;
 
 public class KawaCoin : PrimitiveTarget
 {

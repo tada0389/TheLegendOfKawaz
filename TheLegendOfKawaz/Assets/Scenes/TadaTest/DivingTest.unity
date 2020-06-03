@@ -320,6 +320,7 @@ MonoBehaviour:
   doorNum: 1
   next_scene_: TadaBossScene
   message: 
+  save_position_: 1
 --- !u!61 &27257729
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -671,6 +672,7 @@ MonoBehaviour:
   doorNum: 0
   next_scene_: KoitanBossTestScene
   message: "<size=300>\u3078\u3073</size>"
+  save_position_: 1
 --- !u!61 &313935944
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -939,6 +941,7 @@ MonoBehaviour:
   doorNum: 5
   next_scene_: PurinBossScene
   message: "<size=300>\u30D7\u30EA\u30F3</size>"
+  save_position_: 1
 --- !u!61 &438255267
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9990,6 +9993,7 @@ MonoBehaviour:
   doorNum: 6
   next_scene_: ThousandBossScene
   message: 
+  save_position_: 1
 --- !u!61 &669713043
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11413,6 +11417,7 @@ MonoBehaviour:
   doorNum: 7
   next_scene_: TadaBossScene
   message: 
+  save_position_: 1
 --- !u!61 &1056370567
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12018,6 +12023,7 @@ MonoBehaviour:
   doorNum: 2
   next_scene_: TadaBossScene
   message: 
+  save_position_: 1
 --- !u!61 &1599592292
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12914,6 +12920,7 @@ MonoBehaviour:
   message: "<sprite=\"ps4\" index=25> \u6C7A\u5B9A\n<sprite=\"ps4\" index=26> \u30B8\u30E3\u30F3\u30D7\t\t<sprite=\"ps4\"
     index=23> \u30B7\u30E7\u30C3\u30C8\n<sprite=\"ps4\" index=15> \u30C0\u30C3\u30B7\u30E5\t\t<sprite=\"ps4\"
     index=16> \u30B5\u30D7\u30A6\u30A8\u30DD\u30F3"
+  save_position_: 1
 --- !u!61 &1882176423
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -13305,6 +13312,7 @@ MonoBehaviour:
   doorNum: 4
   next_scene_: TadaBossScene
   message: "<size=300>\u304B\u3076\u3068</size>"
+  save_position_: 1
 --- !u!61 &1954498228
 BoxCollider2D:
   m_ObjectHideFlags: 0
