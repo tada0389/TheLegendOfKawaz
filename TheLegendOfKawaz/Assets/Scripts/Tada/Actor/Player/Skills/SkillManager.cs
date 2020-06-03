@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Actor.Player;
 using TadaLib;
+using UnityEngine.InputSystem.Utilities;
 
 /// <summary>
 /// プレイヤーのパラメータを管理するクラス
@@ -23,11 +24,68 @@ namespace Actor.Player
         ShotNum = 8, // ショット数
     }
 
+    public class SkillData : TadaLib.Save.BaseSaver<SkillData>
+    {
+        //// 現在保持しているスキルレベル
+        //[SerializeField]
+        //private List<Skill> skills_;
+        //public List<Skill> Skill => skills_;
+        public List<Skill> Skills;
+
+        //// 現在の保持スキルコイン
+        //[SerializeField]
+        //private int skill_point_;
+        //public int SkillPoint => skill_point_;
+        public int SkillPoint;
+
+        private const string kFileName = "Skill";
+
+        public bool Init()
+        {
+            SkillData data = Load(kFileName);
+            if (data == null)
+            {
+                Debug.Log("データ読み込み失敗");
+                return false;
+            }
+            else
+            {
+                // スキルレベルだけレベルアップ
+                int cnt = 0;
+                foreach(var skill in data.Skills)
+                {
+                    for(int i = 0; i < skill.Level; ++i)
+                    {
+                        Skills[cnt].LevelUp();
+                    }
+                    ++cnt;
+                }
+                SkillPoint = data.SkillPoint;
+                return true;
+            }
+        }
+
+        // セーブリクエストを送る
+        public void Save()
+        {
+            if (save_completed_)
+            {
+                save_completed_ = false;
+                TadaLib.Save.SaveManager.Instance.RequestSave(() => { Save(kFileName); save_completed_ = true; });
+            }
+        }
+    }
+
     public class SkillManager : SingletonMonoBehaviour<SkillManager>
     {
+        [SerializeField]
+        [HideInInspector]
+        private SkillData data_;
+
         // パラメータ情報
-        public List<Skill> Skills { private set; get; }
-        public int SkillPoint { private set; get; }
+        public List<Skill> Skills => data_.Skills;
+        public int SkillPoint => data_.SkillPoint;
+
 
         [SerializeField]
         private int initial_skill_point_ = 500;
@@ -42,16 +100,20 @@ namespace Actor.Player
 
         // 何も強化されていないスキル
         public List<Skill> LevelOneSkills { private set; get; }
-         
+
         protected override void Awake()
         {
             base.Awake();
-            // ポイントをゼロに
-            SkillPoint = initial_skill_point_;
 
-            // パラメータを取得
+            data_ = new SkillData();
             PlayerSkills reader = new PlayerSkills(file_name_);
-            Skills = new List<Skill>(reader.Skills);
+            data_.Skills = new List<Skill>(reader.Skills);
+            // セーブデータがあるならそれを呼び出す
+            //if (!data_.Init())
+            {
+                // ポイントをゼロに
+                data_.SkillPoint = initial_skill_point_;
+            }
 
             PlayerSkills reader_2 = new PlayerSkills(file_name_); // Skillが値渡しになってるからもう一度...
             LevelOneSkills = new List<Skill>(reader_2.Skills);
@@ -61,14 +123,18 @@ namespace Actor.Player
         public Skill GetSkill(int id) => Skills[id];
 
         // 指定したパラメータのレベルを上げる
-        public bool LevelUp(int id) => Skills[id].LevelUp();
+        public bool LevelUp(int id) {
+            bool ret = Skills[id].LevelUp(); 
+            data_.Save();
+            return ret;
+        }
 
         // スキルポイントを獲得する
         public void GainSkillPoint(int point, Vector3 point_spawner_pos, float time_scale = 1.0f)
         {
             if (time_scale < 1e-6) return;
             skill_point_ctrl_.GainSkillPoint(point, point_spawner_pos, time_scale);
-            SkillPoint += point;
+            data_.SkillPoint += point;
         }
 
         // スキルポイントを消費する できないならfalse
@@ -76,7 +142,7 @@ namespace Actor.Player
         {
             if (time_scale < 1e-6) return;
             skill_point_ctrl_.SpendSkillPoint(point, time_scale);
-            SkillPoint = Mathf.Max(0, SkillPoint - point);
+            data_.SkillPoint = Mathf.Max(0, SkillPoint - point);
         }
     }
 } // namespace Actor.Player
