@@ -81,7 +81,7 @@ public class Bomb : PrimitiveTarget
             // 他よりも軽くする
             CameraSpace.CameraShaker.Shake(0.3f, 0.2f);
         }
-        else if (col.tag == "ToumeiStage" || col.tag == "Enemy")
+        else if (col.tag == "ToumeiStage" || col.tag == "Bomb" || col.tag == "Coin")
         {
 
         }

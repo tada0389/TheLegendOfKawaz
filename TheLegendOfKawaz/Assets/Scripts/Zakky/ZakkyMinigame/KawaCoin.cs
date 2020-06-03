@@ -61,7 +61,7 @@ public class KawaCoin : PrimitiveTarget
 
             gameObject.SetActive(false);
         }
-        else if (col.tag == "ToumeiStage" || col.tag == "Enemy")
+        else if (col.tag == "ToumeiStage" || col.tag == "Bomb" || col.tag == "Coin")
         {
 
         }
