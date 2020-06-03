@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1008020056236594123}
   - component: {fileID: 1008020056236594120}
   - component: {fileID: -4096486554652576994}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: bomb
-  m_TagString: Enemy
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -140,6 +140,7 @@ MonoBehaviour:
   gotPoint: {fileID: 7705360564555343293, guid: d73872298742d1f46b8560eb6a9561e1,
     type: 3}
   bounce: 0
+  IsRegisteredToMiniMap: 0
 --- !u!1001 &4985915968667716703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -151,6 +152,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Purin_Trail
+      objectReference: {fileID: 0}
+    - target: {fileID: 5785984583658946357, guid: 9bfeba8b4abc94493ad7a7ba71c3d1d2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 5785984583658946355, guid: 9bfeba8b4abc94493ad7a7ba71c3d1d2,
         type: 3}

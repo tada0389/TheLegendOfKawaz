@@ -12,6 +12,8 @@ TagManager:
   - KawazCeil
   - ToumeiStage
   - DropZone
+  - Bomb
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -30,7 +32,7 @@ TagManager:
   - Water
   - Player
   - Kamihubuki
-  - 
+  - DynamicObject
   - 
   - 
   - 

@@ -64,7 +64,7 @@ namespace Bullet
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.tag == "Stage" || collider.tag == opponent_tag_)
+            if (collider.tag == "Stage" || collider.tag == opponent_tag_ || collider.tag == "Bomb" || collider.tag == "Coin")
             {
                 if (collider.tag == opponent_tag_)
                 {
