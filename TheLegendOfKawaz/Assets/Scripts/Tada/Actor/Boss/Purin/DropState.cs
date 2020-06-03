@@ -53,7 +53,7 @@ namespace Actor.Enemy.Purin
                 // プレイヤーが下にいるもしくは，壁に衝突したなら終了
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
 
-                if (dir * dir_ < 0f || Parent.trb_.LeftCollide || Parent.trb_.RightCollide || Parent.trb_.TopCollide)
+                if (dir * dir_ < 0f || (dir_ < 0f && Parent.trb_.LeftCollide) || (dir_ > 0f && Parent.trb_.RightCollide) || Parent.trb_.TopCollide)
                 {
                     ChangeState((int)eState.Drop2);
                     return;

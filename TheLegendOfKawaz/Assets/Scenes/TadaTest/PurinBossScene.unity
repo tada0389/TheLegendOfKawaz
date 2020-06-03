@@ -5394,6 +5394,7 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     think_time_: 0.5
+    drop_boader_y_: 5
   walk_state_:
     MaxAbsSpeed: {x: 0.2, y: 0.2}
     Accel: {x: 0.01, y: 0}
@@ -5423,6 +5424,7 @@ MonoBehaviour:
     punch_lock_time_: 0.2
     ik_: {fileID: 1386711678}
     ik_parent_: {fileID: 530133686}
+    punch_time_scale_: 0.35
   shot_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}

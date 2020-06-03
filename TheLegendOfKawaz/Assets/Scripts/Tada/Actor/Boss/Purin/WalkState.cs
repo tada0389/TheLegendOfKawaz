@@ -47,7 +47,7 @@ namespace Actor.Enemy.Purin
             public override void Proc()
             {
                 // 移動時間を超えた，壁に衝突したなら終了
-                if(Timer > move_duration_ || Parent.trb_.LeftCollide || Parent.trb_.RightCollide || Parent.trb_.TopCollide)
+                if(Timer > move_duration_ || (dir_ < 0f && Parent.trb_.LeftCollide) || (dir_ > 0f && Parent.trb_.RightCollide) || Parent.trb_.TopCollide)
                 {
                     ChangeState((int)eState.Think);
                     return;

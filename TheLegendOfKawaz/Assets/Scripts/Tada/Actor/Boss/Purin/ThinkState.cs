@@ -19,6 +19,9 @@ namespace Actor.Enemy.Purin
             [SerializeField]
             private float think_time_ = 0.5f;
 
+            [SerializeField]
+            private float drop_boader_y_ = 10.0f;
+
             // ステートの初期化
             public override void OnInit()
             {
@@ -48,12 +51,17 @@ namespace Actor.Enemy.Purin
 
             private void Decide()
             {
+                if(Parent.transform.position.y >= drop_boader_y_)
+                {
+                    ChangeState((int)eState.Drop1);
+                    return;
+                }
 
                 float value = Random.value;
-                Debug.Log(value);
-                if (value < 0.25f) ChangeState((int)eState.Shot);
-                else if (value < 0.50f) ChangeState((int)eState.Punch1);
-                else if (value < 0.75f) ChangeState((int)eState.Drop1);
+                //Debug.Log(value);
+                if (value < 0.29f) ChangeState((int)eState.Shot);
+                else if (value < 0.51f) ChangeState((int)eState.Punch1);
+                else if (value < 0.80f) ChangeState((int)eState.Drop1);
                 else ChangeState((int)eState.Walk);
             }
         }
