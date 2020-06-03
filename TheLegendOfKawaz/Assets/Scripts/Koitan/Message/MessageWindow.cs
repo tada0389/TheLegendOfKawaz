@@ -21,6 +21,7 @@ public class MessageWindow : MonoBehaviour
     public bool isOpening { private set; get; }
     public Vector2 initDeltaSize;
     private Vector2 targetDeltaSize;
+    public Color initColor;
 
     private Sequence seq;
 
@@ -67,7 +68,7 @@ public class MessageWindow : MonoBehaviour
         isSending = false;
         windowImage.enabled = true;
         windowImage.rectTransform.sizeDelta = initDeltaSize;
-
+        windowImage.color = initColor;
         messageTextMesh.enabled = false;
         if (narratorImage != null) narratorImage.enabled = false;
     }
@@ -81,6 +82,7 @@ public class MessageWindow : MonoBehaviour
             //.Append(windowImage.DOFade(1,duration))
             //.Join(narratorImage.DOFade(1, duration))
             .Append(windowImage.rectTransform.DOSizeDelta(targetDeltaSize, duration)).SetEase(ease).SetUpdate(true)
+            .Join(windowImage.DOColor(Color.white, duration))
             //.Join(windowImage.rectTransform.DORotate(new Vector3(0, 0, 360), duration).SetRelative())
             .AppendCallback(() =>
             {
@@ -111,6 +113,7 @@ public class MessageWindow : MonoBehaviour
             //.Append(windowImage.DOFade(1,duration))
             //.Join(narratorImage.DOFade(1, duration))
             .Append(windowImage.rectTransform.DOSizeDelta(initDeltaSize, duration).SetUpdate(true)).SetEase(ease).SetUpdate(true)
+            .Join(windowImage.DOColor(initColor, duration))
             //.Join(windowImage.rectTransform.DORotate(new Vector3(0, 0, 360), duration).SetRelative())
             .AppendCallback(() =>
             {

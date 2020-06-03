@@ -544,6 +544,31 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1699007339123358845, guid: 4587c7a8837a6e74b896b2d402fce562,
+        type: 3}
+      propertyPath: initColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699007339123358845, guid: 4587c7a8837a6e74b896b2d402fce562,
+        type: 3}
+      propertyPath: initColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699007339123358845, guid: 4587c7a8837a6e74b896b2d402fce562,
+        type: 3}
+      propertyPath: initColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699007339123358845, guid: 4587c7a8837a6e74b896b2d402fce562,
+        type: 3}
+      propertyPath: initColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699007339123358845, guid: 4587c7a8837a6e74b896b2d402fce562,
+        type: 3}
+      propertyPath: duration
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4587c7a8837a6e74b896b2d402fce562, type: 3}
 --- !u!224 &166445588 stripped
@@ -2364,6 +2389,36 @@ PrefabInstance:
     - target: {fileID: 7743353183237575638, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
         type: 3}
       propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743353183237575639, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
+        type: 3}
+      propertyPath: initDeltaSize.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743353183237575639, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
+        type: 3}
+      propertyPath: initDeltaSize.y
+      value: 310
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743353183237575639, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
+        type: 3}
+      propertyPath: initColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743353183237575639, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
+        type: 3}
+      propertyPath: initColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743353183237575639, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
+        type: 3}
+      propertyPath: initColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743353183237575639, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
+        type: 3}
+      propertyPath: duration
       value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
