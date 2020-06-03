@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &18621621
 Animator:
   serializedVersion: 3
@@ -23090,7 +23090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1031122480
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -61909,7 +61909,7 @@ PrefabInstance:
     - target: {fileID: 2198499733709103134, guid: fe28a0b3e279e4f1f911783dd3824996,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2198499733709103135, guid: fe28a0b3e279e4f1f911783dd3824996,
         type: 3}
@@ -63003,6 +63003,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bakuhatu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2693594771475485237, guid: 6cbd488ca3b314d2d979b6f1c57db9ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2693594771475485192, guid: 6cbd488ca3b314d2d979b6f1c57db9ea,
         type: 3}
