@@ -116,7 +116,7 @@ namespace WallDefence
             if(point > 0 && point % 5 != 0) point += 5 - point % 5;
             if (point < 0 && (-point) % 5 != 0) point += (-point) % 5;
             if (point > 0) SkillManager.Instance.GainSkillPoint(point, spawn_pos, 0.02f);
-            else if (point < 0) SkillManager.Instance.SpendSkillPoint(point, 0.02f);
+            else if (point < 0) SkillManager.Instance.SpendSkillPoint(-point, 0.02f);
             TadaLib.Save.SaveManager.Instance.Save();
             // 実績解除
             //AchievementManager.FireAchievement("key");

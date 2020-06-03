@@ -13,6 +13,7 @@ using TadaLib;
 namespace Actor.Player
 { 
     // 一つのステータス
+    [System.Serializable]
     public class Skill
     {
         // パラメータの名前
@@ -22,7 +23,9 @@ namespace Actor.Player
         // 現在の能力値
         public int Value { private set; get; }
         // レベル
-        public int Level { private set; get; }
+        [SerializeField]
+        private int level_;
+        public int Level => level_;
         // スキルの最大レベル
         public int LevelLimit => Sheet.Count - 1;
         // スキルレベルが最大化
@@ -40,7 +43,7 @@ namespace Actor.Player
             Sheet = list.AsReadOnly();
             Value = Sheet[0].Item1;
             NextValue = (Sheet.Count <= 1) ? -1 : Sheet[1].Item1;
-            Level = 0;
+            level_ = 0;
         }
 
         // レベルを1つ上げる できなければfalseを返す
@@ -50,7 +53,7 @@ namespace Actor.Player
             if (Level + 1 >= Sheet.Count) return false;
 
             Value = Sheet[Level + 1].Item1;
-            ++Level;
+            ++level_;
 
             return true;
         }
