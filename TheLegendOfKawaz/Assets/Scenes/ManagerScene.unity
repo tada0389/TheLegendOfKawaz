@@ -2985,7 +2985,7 @@ MonoBehaviour:
     isUnlocked: 0
   - key: Kabt
     icon: {fileID: 21300000, guid: 01b6a8edc393a4392a4436d8f1c6eec6, type: 3}
-    body: "\u6539\u9020\u4EBA\u9593\u304B\u308F\u305A\u305F\u3093\u03B2"
+    body: "\u6539\u9020\u4EBA\u9593\u304B\u308F\u305A\u305F\u3093\u03B2\u8A0E\u4F10"
     detail: "\u6539\u9020\u4EBA\u9593\u304B\u308F\u305A\u305F\u3093\u03B2\u3092\u5012\u3059\u3002"
     isUnlocked: 0
   - key: Kabt_nodamage
