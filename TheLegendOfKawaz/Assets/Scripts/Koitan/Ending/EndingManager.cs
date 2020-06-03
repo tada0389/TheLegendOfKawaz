@@ -20,6 +20,7 @@ public class EndingManager : MonoBehaviour
     [SerializeField]
     private TextMeshPro timeMesh;
     private bool canSkip;
+    private bool isLoaded;
     // Start is called before the first frame update
     void Start()
     {
@@ -69,14 +70,20 @@ public class EndingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canSkip & ActionInput.GetButtonDown(ActionCode.Decide))
+        if (canSkip & ActionInput.GetButtonDown(ActionCode.Decide) && !isLoaded)
         {
-            FadeManager.FadeIn(2f, "ZakkyTitle");
+            LoadTitle();            
         }
 
-        if (ActionInput.GetButtonDown(ActionCode.Dash))
+        if (ActionInput.GetButtonDown(ActionCode.Dash) && !isLoaded)
         {
-            FadeManager.FadeIn(2f, "ZakkyTitle");
+            LoadTitle();
         }
+    }
+
+    private void LoadTitle()
+    {
+        isLoaded = true;
+        FadeManager.FadeIn(2f, "ZakkyTitle");
     }
 }
