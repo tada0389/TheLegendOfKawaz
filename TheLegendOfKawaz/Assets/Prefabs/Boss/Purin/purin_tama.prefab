@@ -14340,7 +14340,7 @@ MonoBehaviour:
   gravity_: -0.98
   bounceness_: 0.8
   init_speed_: 25
-  init_damage_: 4
+  init_damage_: 3
   life_time_: 3
   shot_effect_: {fileID: 3515330427051013070, guid: 18bdeb2fbafa2cb44850f891f1d9a94f,
     type: 3}

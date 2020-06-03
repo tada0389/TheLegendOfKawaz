@@ -93,6 +93,9 @@ namespace Actor.Enemy.Purin
             [SerializeField]
             private GameObject ik_parent_;
 
+            [SerializeField]
+            private float punch_time_scale_ = 0.75f;
+
             // ステートの初期化
             public override void OnInit()
             {
@@ -139,8 +142,12 @@ namespace Actor.Enemy.Purin
                         yield return new WaitForSeconds(Random.Range(punch_charge_time_range_.x, punch_charge_time_range_.y));
 
                         mark.TenmetuStart();
+                        // 時間を少しゆっくりにする
+                        TadaLib.TimeScaler.Instance.RequestChange(punch_time_scale_, punch_tenmetu_time_ * 1.2f);
 
                         yield return new WaitForSeconds(punch_tenmetu_time_);
+
+                        //TadaLib.TimeScaler.Instance.DismissRequest(punch_time_scale_);
 
                         mark.LockPosition();
                         ik_parent_.SetActive(true);

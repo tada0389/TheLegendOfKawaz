@@ -2768,7 +2768,7 @@ MonoBehaviour:
     silver_reward_: 150
     bronze_boader_time_: 30
     bronze_reward_: 75
-    other_reward_: -15
+    other_reward_: 0
     developer_time_: 7.9
     next_scene_: TargetTest
   - rank_name_: "\u4E2D\u7D1A"
@@ -2779,7 +2779,7 @@ MonoBehaviour:
     silver_reward_: 180
     bronze_boader_time_: 60
     bronze_reward_: 90
-    other_reward_: -20
+    other_reward_: 0
     developer_time_: 15
     next_scene_: TargetZakkyMiddleLevel
   - rank_name_: "\u4E0A\u7D1A"
@@ -2790,7 +2790,7 @@ MonoBehaviour:
     silver_reward_: 210
     bronze_boader_time_: 100
     bronze_reward_: 105
-    other_reward_: -25
+    other_reward_: 0
     developer_time_: 17
     next_scene_: Target_jokyu
   explonation_box_: {fileID: 1883229694}
