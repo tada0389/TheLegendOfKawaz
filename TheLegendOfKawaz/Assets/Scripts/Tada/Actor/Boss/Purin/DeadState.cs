@@ -34,6 +34,7 @@ namespace Actor.Enemy.Purin
                 TadaLib.TimeScaler.Instance.RequestChange(0.3f, 1.5f);
                 explosion_effect_.gameObject.SetActive(true);
                 Global.GlobalPlayerInfo.IsMuteki = true;
+                Parent.animator_.Play("Dead");
             }
 
             // 毎フレーム呼ばれる
