@@ -36,6 +36,10 @@ namespace TadaLib
 
             // 今後セーブ予定のクラス
             private Queue<Action> save_action_queue_;
+
+            // セーブのアニメーション
+            [SerializeField]
+            private Animator save_ui_;
             #endregion
 
             private void Awake()
@@ -45,6 +49,7 @@ namespace TadaLib
                     Instance = this;
                     save_action_queue_ = new Queue<Action>();
                     DontDestroyOnLoad(this);
+                    DontDestroyOnLoad(save_ui_);
                 }
                 else Destroy(gameObject);
             }
@@ -52,10 +57,11 @@ namespace TadaLib
             // セーブ予定のデータをすべてセーブする
             public void Save()
             {
+                ShowSaveUI();
                 if (save_action_queue_.Count >= 1)
                 {
                     DebugNotificationGenerator.Notify("セーブしました");
-                    Debug.Log("セーブのあれ出すはず");
+                    ShowSaveUI();
                 }
 
                 while (save_action_queue_.Count >= 1)
@@ -103,6 +109,20 @@ namespace TadaLib
 
                 //中が空になったらディレクトリ自身も削除
                 Directory.Delete(targetDirectoryPath, false);
+            }
+
+            // セーブのUIを表示する
+            private void ShowSaveUI()
+            {
+                if (save_ui_ == null) return;
+                Camera cam = Camera.main;
+                if (cam == null) return;
+                // 画面の左下に出す
+                float height = 10.0f * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+                float width = height / cam.aspect;
+                save_ui_.transform.parent = cam.transform;
+                save_ui_.transform.localPosition = new Vector3(-width * 0.8f, -height * 0.8f, 10f);
+                save_ui_.Play("AutoSave");
             }
         }
     } // namespace Save

@@ -4,6 +4,7 @@ using UnityEngine;
 using TadaLib;
 using KoitanLib;
 using Bullet;
+using CameraSpace;
 
 /// <summary>
 /// ロックマンゼロ 減らくリウスのパクリ
@@ -496,6 +497,8 @@ namespace Actor.Enemy
                 // 壁にぶつかったら次のステートへ
                 if((Parent.trb_.LeftCollide && Parent.dir_ < 0f) || (Parent.trb_.RightCollide && Parent.dir_ > 0f))
                 {
+                    // カメラを揺らす
+                    CameraShaker.Shake(0.6f, 0.3f);
                     EffectPlayer.Play(wall_hit_eff_, Parent.transform.position + new Vector3(Parent.dir_, 0f, 0f), new Vector3(Parent.dir_, 0f, 0f));
                     ChangeState((int)eState.Tackle3);
                     return;
@@ -688,6 +691,8 @@ namespace Actor.Enemy
 
                 if (Parent.trb_.LeftCollide || Parent.trb_.RightCollide || Parent.trb_.TopCollide)
                 {
+                    // カメラを揺らす
+                    CameraShaker.Shake(0.6f, 0.3f);
                     EffectPlayer.Play(wall_hit_eff_, Parent.transform.position + new Vector3(Parent.dir_, 0f, 0f), new Vector3(Parent.dir_, 0f, 0f));
                     // 使いまわし
                     ChangeState((int)eState.Tackle3);

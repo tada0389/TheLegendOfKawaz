@@ -107,7 +107,6 @@ namespace SkillUI
         // ポイントの減少を開始する
         public void SpendSkillPoint(int point, float time_scale = 1.0f)
         {
-            cam_ = Camera.main;
             int add = 0;
             point_ = Actor.Player.SkillManager.Instance.SkillPoint;
             if (now_spending_) // 今払っているやつとの差を見る

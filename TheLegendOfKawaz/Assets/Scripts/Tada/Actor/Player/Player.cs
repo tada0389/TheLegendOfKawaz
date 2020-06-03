@@ -439,6 +439,9 @@ namespace Actor.Player
 
             Vector3 new_pos = TadaScene.TadaSceneManager.GetPrevPosition();
             if (new_pos != Vector3.zero) transform.position = new_pos;
+
+            // 現在のシーンがステージセレクト画面だったらセーブする
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ZakkyScene") TadaLib.Save.SaveManager.Instance.Save();
         }
 
         private void OnDestroy()
