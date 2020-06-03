@@ -32,6 +32,7 @@ namespace Actor.Enemy.Thousand
                 explosion_effect_.gameObject.SetActive(true);
                 TadaLib.TimeScaler.Instance.RequestChange(0.3f, 1.5f);
                 Global.GlobalPlayerInfo.IsMuteki = true;
+                Parent.animator_.Play("Dead2");
             }
 
             // 毎フレーム呼ばれる
