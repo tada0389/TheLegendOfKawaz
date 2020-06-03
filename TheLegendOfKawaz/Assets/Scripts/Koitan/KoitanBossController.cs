@@ -108,6 +108,7 @@ namespace Actor.Enemy
         private static readonly int hashFly = Animator.StringToHash("Fly");
         private static readonly int hashFlying = Animator.StringToHash("Flying");
         private static readonly int hashFlyAttack = Animator.StringToHash("FlyAttack");
+        private static readonly int hashDead = Animator.StringToHash("Dead");
 
         //オブジェクトプール
         [SerializeField]
@@ -880,6 +881,7 @@ namespace Actor.Enemy
                 Global.GlobalPlayerInfo.IsMuteki = true;
                 // 動きをとめる
                 Parent.trb_.Velocity = Vector2.zero;
+                Parent.animator.CrossFade(hashDead, 0.5f);
             }
 
             // 毎フレーム呼ばれる
