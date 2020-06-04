@@ -28,8 +28,8 @@ public class ScoreText : MonoBehaviour
         m_score,                  // 最終的な値
         1f                  // アニメーション時間
         );
-        m_text.text = "Score:       " + Mathf.RoundToInt(m_scoreTween).ToString("D5") + "Pt\n"
-            + "HighScore:" + m_highScore.ToString("D5") + "Pt";
+        m_text.text = "Score:   " + Mathf.RoundToInt(m_scoreTween).ToString("D5") + "Pt";
+        //    + "HighScore:" + m_highScore.ToString("D5") + "Pt";
 
         if (m_highScore < m_score) m_highScore = m_score;
     }
