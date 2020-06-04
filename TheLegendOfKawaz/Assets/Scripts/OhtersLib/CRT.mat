@@ -72,8 +72,8 @@ Material:
     - _ScanLineSpeed: 10
     - _ScanLineTail: 1.5
     - _SinNoiseOffset: 0.1
-    - _SinNoiseScale: 0.071290605
-    - _SinNoiseWidth: 0.8957451
+    - _SinNoiseScale: 0.005
+    - _SinNoiseWidth: 0.005
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
