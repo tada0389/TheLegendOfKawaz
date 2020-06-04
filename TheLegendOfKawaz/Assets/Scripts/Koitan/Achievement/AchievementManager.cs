@@ -146,6 +146,18 @@ public class AchievementManager : MonoBehaviour
         return Instance.contents.Count(c => c.isUnlocked);
     }
 
+    // セーブデータを削除する by tada
+    public static void DeleteSaveData()
+    {
+        Instance.achieve_data_.DeleteSaveData();
+
+        // さらにアンロック状態をリセットする
+        foreach(var c in Instance.achieve_data_.dict_)
+        {
+            c.Value.isUnlocked = false;
+        }
+    }
+
     enum OpenState
     {
         Closed,
@@ -233,5 +245,11 @@ public class AchievementData : TadaLib.Save.BaseSaver<AchievementData>
             save_completed_ = false;
             TadaLib.Save.SaveManager.Instance.RequestSave(() => { Save(kFileName); save_completed_ = true; });
         }
+    }
+
+    // データを削除する
+    public void DeleteSaveData()
+    {
+        TadaLib.Save.SaveManager.Instance.DeleteData(kFileName);
     }
 }

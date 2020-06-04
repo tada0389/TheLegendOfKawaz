@@ -150,7 +150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   save_ui_: {fileID: 2016040456}
-  ui_appear_pos_: {fileID: 813475219}
 --- !u!4 &38577565
 Transform:
   m_ObjectHideFlags: 0

@@ -117,7 +117,6 @@ namespace WallDefence
             if (point < 0 && (-point) % 5 != 0) point += (-point) % 5;
             if (point > 0) SkillManager.Instance.GainSkillPoint(point, spawn_pos, 0.02f);
             else if (point < 0) SkillManager.Instance.SpendSkillPoint(-point, 0.02f);
-            TadaLib.Save.SaveManager.Instance.Save();
             // 実績解除
             //AchievementManager.FireAchievement("key");
             //if (grade == "Gold") AchievementManager.FireAchievement("key");
@@ -125,6 +124,8 @@ namespace WallDefence
             float time_duration = 3.5f * new_time_scale;
 
             yield return new WaitForSeconds(time_duration);
+
+            TadaLib.Save.SaveManager.Instance.Save();
 
             // 時間をもとに戻す
             TadaLib.TimeScaler.Instance.DismissRequest(new_time_scale);

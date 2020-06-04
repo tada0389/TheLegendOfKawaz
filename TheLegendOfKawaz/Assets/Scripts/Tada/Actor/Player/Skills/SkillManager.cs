@@ -40,7 +40,7 @@ namespace Actor.Player
 
         private const string kFileName = "Skill";
 
-        public bool Init()
+        public bool Load()
         {
             SkillData data = Load(kFileName);
             if (data == null)
@@ -73,6 +73,11 @@ namespace Actor.Player
                 save_completed_ = false;
                 TadaLib.Save.SaveManager.Instance.RequestSave(() => { Save(kFileName); save_completed_ = true; });
             }
+        }
+
+        public void DeleteSaveData()
+        {
+            TadaLib.Save.SaveManager.Instance.DeleteData(kFileName);
         }
     }
 
@@ -109,7 +114,7 @@ namespace Actor.Player
             PlayerSkills reader = new PlayerSkills(file_name_);
             data_.Skills = new List<Skill>(reader.Skills);
             // セーブデータがあるならそれを呼び出す
-            //if (!data_.Init())
+            if (!data_.Load())
             {
                 // ポイントをゼロに
                 data_.SkillPoint = initial_skill_point_;
@@ -135,6 +140,7 @@ namespace Actor.Player
             if (time_scale < 1e-6) return;
             skill_point_ctrl_.GainSkillPoint(point, point_spawner_pos, time_scale);
             data_.SkillPoint += point;
+            data_.Save();
         }
 
         // スキルポイントを消費する できないならfalse
@@ -143,6 +149,20 @@ namespace Actor.Player
             if (time_scale < 1e-6) return;
             skill_point_ctrl_.SpendSkillPoint(point, time_scale);
             data_.SkillPoint = Mathf.Max(0, SkillPoint - point);
+            data_.Save();
+        }
+
+        // スコアのセーブデータを削除する
+        public void DeleteSaveData()
+        {
+            data_.DeleteSaveData();
+
+            // スキル状態をリセット
+            foreach(var skill in data_.Skills)
+            {
+                skill.LevelReset();
+            }
+            data_.SkillPoint = initial_skill_point_;
         }
     }
 } // namespace Actor.Player

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TadaLib.Save;
+using Actor.Player;
 
 /// <summary>
 /// スコアデータを管理するクラス
@@ -80,9 +81,15 @@ public class Score
             // 適当なデータを追加する
             for (int i = 0, n = length - scores_.Count; i < n; ++i)
             {
-                scores_.Add(-2222);
+                scores_.Add(-9999);
             }
         }
+    }
+
+    // スコアデータをリセットする
+    public void ResetScore()
+    {
+        for (int i = 0; i < rank_length_; ++i) scores_[i] = -9999;
     }
 }
 
@@ -171,6 +178,18 @@ public class ScoreData : BaseSaver<ScoreData>
             SaveManager.Instance.RequestSave(() => { Save(kFileName); save_completed_ = true; });
         }
     }
+
+    // セーブデータを削除する
+    public void DeleteSaveData()
+    {
+        TadaLib.Save.SaveManager.Instance.DeleteData(kFileName);
+    }
+
+    // スコアをリセットする
+    public void ScoreReset()
+    {
+        foreach (var score in scores_) score.ResetScore();
+    }
 }
 
 [System.Serializable]
@@ -252,7 +271,8 @@ public class ScoreManager : MonoBehaviour
     // スコアデータをリロードする
     public void Reload()
     {
-        data_.Init(games_.Count, display_rank_length_);
+        //data_.Init(games_.Count, display_rank_length_);
+        data_.ScoreReset();
     }
 
     // シーン名からゲーム名を取得する
@@ -269,5 +289,12 @@ public class ScoreManager : MonoBehaviour
             dic_to_id_.Add(games_[i].SceneName, i);
             dic_to_name_.Add(games_[i].SceneName, games_[i].GameName);
         }
+    }
+
+    // セーブデータを削除する
+    public void DeleteSaveData()
+    {
+        data_.DeleteSaveData();
+        Reload();
     }
 }

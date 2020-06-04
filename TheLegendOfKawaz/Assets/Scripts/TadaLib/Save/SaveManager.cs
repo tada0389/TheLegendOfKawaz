@@ -78,6 +78,21 @@ namespace TadaLib
                 Debug.Log("セーブデータを全削除しました");
             }
 
+            // 指定したパスのデータを削除する
+            public void DeleteData(string file_name)
+            {
+                string file_path = Application.persistentDataPath + "/Documents/Data\\" + file_name;
+                if (!File.Exists(file_path))
+                {
+                    return;
+                }
+
+                File.SetAttributes(file_path, FileAttributes.Normal);
+                File.Delete(file_path);
+
+                Debug.Log(file_path + "を削除しました");
+            }
+
             // セーブしたいデータを持つクラスのセーブ関数を登録する
 
             public void RequestSave(Action save_method)
