@@ -90,6 +90,7 @@ public class SettingManager : MonoBehaviour
         window.rectTransform.sizeDelta = defaultDeltaSize;
         window.color = defaultColor;
         window.gameObject.SetActive(false);
+        item.SetActive(false);
 
         SceneManager.sceneLoaded += SetPost;
     }
