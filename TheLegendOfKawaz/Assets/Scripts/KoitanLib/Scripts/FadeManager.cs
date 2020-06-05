@@ -77,8 +77,7 @@ namespace KoitanLib
 
         public static void FadeIn(float duration, string next_scene_name, int maskNum = 0)
         {
-            //if (openState != OpenState.Opened) return;
-            Time.timeScale = 0.1f;
+            //if (openState != OpenState.Opened) return;            
             openState = OpenState.Closing;
             m_duration = duration;
             async = SceneManager.LoadSceneAsync(next_scene_name);
