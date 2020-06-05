@@ -122,7 +122,6 @@ namespace Actor.Enemy
 
         private void Start()
         {
-            HP = 25;
             trb_ = GetComponent<TadaRigidbody>();
             bullet_spawner_ = GetComponent<BulletSpawner>();
             mesh = transform.GetChild(0).gameObject;//危険!
@@ -903,6 +902,8 @@ namespace Actor.Enemy
                 {
                     UnityEngine.SceneManagement.SceneManager.LoadScene("ZakkyScene");
                 }
+
+                ActorUtils.ProcSpeed(ref Parent.trb_.Velocity, new Vector2(0f, 1f) * Accel, MaxAbsSpeed);
             }
 
             // 終了時に呼ばれる
