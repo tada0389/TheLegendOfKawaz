@@ -54,10 +54,6 @@ namespace KoitanLib
         {
             if (openState == OpenState.Closed && async.progress >= 0.9f)
             {
-                if (Time.timeScale == 0.1f)
-                {
-                    Time.timeScale = 1.0f;
-                }
                 openState = OpenState.Opening;
                 async.allowSceneActivation = true;
                 DOTween.To(
@@ -65,7 +61,7 @@ namespace KoitanLib
                 num => Instance.fadeImage.Range = num,   // 値の更新
                 0,                  // 最終的な値
                 m_duration - 0.1f                // アニメーション時間
-                ).SetUpdate(true).SetDelay(0.1f)
+                ).SetUpdate(true).SetDelay(0.1f).SetUpdate(true)
                 .OnComplete(() =>
                 {
                     is_fading = false;

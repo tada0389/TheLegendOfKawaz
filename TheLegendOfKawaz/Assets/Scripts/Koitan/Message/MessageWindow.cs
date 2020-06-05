@@ -119,7 +119,7 @@ public class MessageWindow : MonoBehaviour
             {
                 windowImage.enabled = false;
                 isOpening = false;
-                if (isTimeScale) Time.timeScale = 1.0f;
+                if (isTimeScale) TadaLib.TimeScaler.Instance.DismissRequest(0f);
             });
 
 
