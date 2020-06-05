@@ -40,6 +40,10 @@ namespace TadaLib
             // セーブのアニメーション
             [SerializeField]
             private Animator save_ui_;
+
+            // セーブアイコンが出る座標
+            [SerializeField]
+            private RectTransform save_ui_spawner_pos_;
             #endregion
 
             private void Awake()
@@ -130,13 +134,12 @@ namespace TadaLib
             private void ShowSaveUI()
             {
                 if (save_ui_ == null) return;
-                Camera cam = Camera.main;
-                if (cam == null) return;
                 // 画面の左下に出す
-                float height = 10.0f * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-                float width = height / cam.aspect;
-                save_ui_.transform.parent = cam.transform;
-                save_ui_.transform.localPosition = new Vector3(-width * 0.8f, -height * 0.8f, 10f);
+                Vector3 pos = (save_ui_spawner_pos_ != null) ? save_ui_spawner_pos_.position : Camera.main.transform.position;
+                //float height = 10.0f * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+                //float width = height / cam.aspect;
+                //save_ui_.transform.parent = cam.transform;
+                save_ui_.transform.position = pos;
                 save_ui_.Play("AutoSave");
             }
         }
