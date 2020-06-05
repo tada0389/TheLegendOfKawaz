@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using WallDefence;
 
 public class BombSpawner : MonoBehaviour
 {
@@ -50,7 +51,7 @@ public class BombSpawner : MonoBehaviour
         tmp = 0f;
 
         yield return new WaitForSeconds(interval);
-        while (true)
+        while (Game.instance.state != Game.STATE.GAMEOVER)
         {
             overTime += _overTime;
             //処理
