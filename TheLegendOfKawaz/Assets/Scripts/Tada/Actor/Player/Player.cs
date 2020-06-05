@@ -452,11 +452,11 @@ namespace Actor.Player
         // Update is called once per frame
         private void Update()
         {
-            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
-            {
-                //TadaLib.Save.SaveManager.Instance.DeleteAllData();
-                AchievementManager.DeleteSaveData();
-            }
+            //if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
+            //{
+            //    //TadaLib.Save.SaveManager.Instance.DeleteAllData();
+            //    AchievementManager.DeleteSaveData();
+            //}
             if (ActionInput.GetButtonDown(ActionCode.Pause) && Time.timeScale > 0.5f && !KoitanLib.FadeManager.is_fading)
             {
                 SettingManager.RequestOpenWindow();
