@@ -9,7 +9,7 @@ using System;
 using DG.Tweening;
 using KoitanLib;
 using UnityEngine.Rendering.PostProcessing;
-using System.IO;
+
 
 public class SettingManager : MonoBehaviour
 {
@@ -32,8 +32,11 @@ public class SettingManager : MonoBehaviour
     private int nowIndex = 0;
     private int maxIndex;
     private Vector3 cursorDefaultPos;
+    public Vector2 defaultDeltaSize;
     public Vector2 targetDeltaSize;
     public Ease ease;
+    public Color defaultColor;
+    public Color targetColor;
 
     delegate void OnPush();
     delegate void OnSelected();
@@ -84,6 +87,9 @@ public class SettingManager : MonoBehaviour
         nowIndex = 0;
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(window);
+        window.rectTransform.sizeDelta = defaultDeltaSize;
+        window.color = defaultColor;
+        window.gameObject.SetActive(false);
 
         SceneManager.sceneLoaded += SetPost;
     }
@@ -175,9 +181,11 @@ public class SettingManager : MonoBehaviour
             .OnStart(() =>
             {
                 openState = OpenState.Opening;
+                window.gameObject.SetActive(true);
                 TadaLib.TimeScaler.Instance.RequestChange(0.0f);
             })
-            .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.5f)).SetEase(Ease.OutBounce).SetUpdate(true)
+            .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.25f)).SetEase(ease).SetUpdate(true)
+            .Join(window.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
             .AppendCallback(() =>
             {
                 if (isTargetScene())
@@ -208,10 +216,12 @@ public class SettingManager : MonoBehaviour
                 item.SetActive(false);
                 openState = OpenState.Closing;
             })
-            .Append(window.rectTransform.DOSizeDelta(Vector2.zero, 0.25f)).SetEase(Ease.InOutSine).SetUpdate(true)
+            .Append(window.rectTransform.DOSizeDelta(defaultDeltaSize, 0.25f)).SetEase(Ease.InOutSine).SetUpdate(true)
+            .Join(window.DOColor(defaultColor, 0.25f)).SetEase(Ease.InOutSine).SetUpdate(true)
             .AppendCallback(() =>
             {
                 openState = OpenState.Closed;
+                window.gameObject.SetActive(false);
                 TadaLib.TimeScaler.Instance.DismissRequest(0.0f);
             });
     }
@@ -241,7 +251,7 @@ public class SettingManager : MonoBehaviour
     void StartPlacement()
     {
         cursor.gameObject.SetActive(true);
-        skillItem.SetActive(true);
+        //skillItem.SetActive(true);
         achievementItem.gameObject.SetActive(false);
         maxIndex = 4;
         headUi.text = "メニュー";

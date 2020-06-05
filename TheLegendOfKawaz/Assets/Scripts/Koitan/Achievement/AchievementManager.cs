@@ -46,7 +46,7 @@ public class AchievementManager : MonoBehaviour
                 AchievementContent c = contents[i];
                 achieve_data_.Add(c.key, c);
                 AchievementUi au = Instantiate(achievementPrefab, achievementUiParent);
-                au.transform.localPosition = new Vector3(0, 350 - 200 * i, 0);
+                au.transform.localPosition = new Vector3(-50, 350 - 200 * i, 0);
                 au.content = c;
                 achievementUis.Add(au);
             }
@@ -125,7 +125,7 @@ public class AchievementManager : MonoBehaviour
 
     public static void UpdateUis()
     {
-        foreach(AchievementUi ui in Instance.achievementUis)
+        foreach (AchievementUi ui in Instance.achievementUis)
         {
             ui.UpdateUi();
         }
@@ -133,7 +133,7 @@ public class AchievementManager : MonoBehaviour
 
     public static float GetScrollMaxY()
     {
-        return Mathf.Max(-450 - 850 + Instance.contents.Length * 200, -450);
+        return Mathf.Max(-475 - 750 + Instance.contents.Length * 200, -475);
     }
 
     public static int GetAchieveMax()
@@ -152,7 +152,7 @@ public class AchievementManager : MonoBehaviour
         Instance.achieve_data_.DeleteSaveData();
 
         // さらにアンロック状態をリセットする
-        foreach(var c in Instance.achieve_data_.dict_)
+        foreach (var c in Instance.achieve_data_.dict_)
         {
             c.Value.isUnlocked = false;
         }
@@ -219,7 +219,7 @@ public class AchievementData : TadaLib.Save.BaseSaver<AchievementData>
             // 辞書型を形成
             //UnityEngine.Assertions.Assert.IsTrue(data.keys_.Count == data.values_.Count);
 
-            for(int i = 0, n = data.keys_.Count; i < n; ++i)
+            for (int i = 0, n = data.keys_.Count; i < n; ++i)
             {
                 if (!dict_.ContainsKey(data.keys_[i])) continue;
                 // アンロック情報を更新
