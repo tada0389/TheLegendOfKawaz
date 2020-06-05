@@ -152,8 +152,6 @@ namespace Target
                     if (grade_ui_animator_ != null) grade_ui_animator_.Play(grade_name);
                     if (grade_name != "Other") SkillManager.Instance.GainSkillPoint(reward, spawn_pos, 0.02f);
                     else SkillManager.Instance.SpendSkillPoint(-reward, 0.03f);
-                    // お試し
-                    TadaLib.Save.SaveManager.Instance.Save();
                     // 実績解除
                     AchievementManager.FireAchievement(achievement_key_);
                     if(grade_name == "Gold") AchievementManager.FireAchievement(achievement_key_ + "_Gold");
@@ -169,6 +167,9 @@ namespace Target
             //clear_text_.rectTransform.DOPunchScale(Vector3.one, 3.0f * Time.timeScale);
 
             yield return new WaitForSeconds(time_change_duration);
+            
+            // お試し
+            TadaLib.Save.SaveManager.Instance.Save();
 
             // もどったゆ「
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);

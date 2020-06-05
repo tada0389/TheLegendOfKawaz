@@ -73,6 +73,13 @@ namespace Actor.Player
             return Sheet[level].Item1;
         }
 
+        // レベル情報をリセットする
+        public void LevelReset()
+        {
+            Value = Sheet[0].Item1;
+            level_ = 0;
+        }
+
         public override string ToString() => Name  +
             " Level : " + Level.ToString() +
             " Value : " + Value.ToString();

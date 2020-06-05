@@ -40,19 +40,17 @@ public class AchievementManager : MonoBehaviour
             seq.SetUpdate(true);
             // 実績情報をロード by tada
             achieve_data_ = new AchievementData();
-            achieve_data_.Load();
             //Dictionaryに追加
             for (int i = 0; i < contents.Length; i++)
             {
                 AchievementContent c = contents[i];
-                //achieve_data_.dict_.Add(c.key, c);
-                if (achieve_data_.dict_.ContainsKey(c.key)) c = achieve_data_.dict_[c.key];
-                else achieve_data_.Add(c.key, c); // ロードですでに登録されている場合はスルーされる
+                achieve_data_.Add(c.key, c);
                 AchievementUi au = Instantiate(achievementPrefab, achievementUiParent);
                 au.transform.localPosition = new Vector3(0, 350 - 200 * i, 0);
                 au.content = c;
                 achievementUis.Add(au);
             }
+            achieve_data_.Load();
         }
         else
         {
@@ -148,6 +146,18 @@ public class AchievementManager : MonoBehaviour
         return Instance.contents.Count(c => c.isUnlocked);
     }
 
+    // セーブデータを削除する by tada
+    public static void DeleteSaveData()
+    {
+        Instance.achieve_data_.DeleteSaveData();
+
+        // さらにアンロック状態をリセットする
+        foreach(var c in Instance.achieve_data_.dict_)
+        {
+            c.Value.isUnlocked = false;
+        }
+    }
+
     enum OpenState
     {
         Closed,
@@ -167,7 +177,7 @@ public class AchievementContent
     public bool isUnlocked;
 }
 
-// セーブするデータ本体
+// セーブするデータ本体 キーとそれに対応する解放フラグだけを保存 前のは無駄が多すぎる
 [System.Serializable] // by tada
 public class AchievementData : TadaLib.Save.BaseSaver<AchievementData>
 {
@@ -175,16 +185,23 @@ public class AchievementData : TadaLib.Save.BaseSaver<AchievementData>
     public Dictionary<string, AchievementContent> dict_;
 
     public List<string> keys_;
-    public List<AchievementContent> values_;
+    public List<bool> values_;
 
     private const string kFileName = "Achievement";
+
+    public AchievementData()
+    {
+        dict_ = new Dictionary<string, AchievementContent>();
+        keys_ = new List<string>();
+        values_ = new List<bool>();
+    }
 
     // 辞書に新しい実績情報を登録する
     public void Add(string key, AchievementContent value)
     {
         if (dict_.ContainsKey(key)) return;
         keys_.Add(key);
-        values_.Add(value);
+        values_.Add(value.isUnlocked);
         dict_.Add(key, value);
     }
 
@@ -192,11 +209,9 @@ public class AchievementData : TadaLib.Save.BaseSaver<AchievementData>
     public bool Load()
     {
         AchievementData data = Load(kFileName);
-        dict_ = new Dictionary<string, AchievementContent>();
+
         if (data == null || data.keys_ == null || data.values_ == null || data.keys_.Count != data.values_.Count)
         {
-            keys_ = new List<string>();
-            values_ = new List<AchievementContent>();
             return false;
         }
         else
@@ -204,11 +219,12 @@ public class AchievementData : TadaLib.Save.BaseSaver<AchievementData>
             // 辞書型を形成
             //UnityEngine.Assertions.Assert.IsTrue(data.keys_.Count == data.values_.Count);
 
-            keys_ = data.keys_;
-            values_ = data.values_;
-            for (int i = 0, n = keys_.Count; i < n; ++i)
+            for(int i = 0, n = data.keys_.Count; i < n; ++i)
             {
-                dict_.Add(keys_[i], values_[i]);
+                if (!dict_.ContainsKey(data.keys_[i])) continue;
+                // アンロック情報を更新
+                dict_[data.keys_[i]].isUnlocked = data.values_[i];
+                values_[i] = data.values_[i];
             }
 
             return true;
@@ -218,10 +234,22 @@ public class AchievementData : TadaLib.Save.BaseSaver<AchievementData>
     // セーブする
     public void Save()
     {
+        // アンロック情報を共有する
+        for (int i = 0, n = values_.Count; i < n; ++i)
+        {
+            values_[i] = dict_[keys_[i]].isUnlocked;
+        }
+
         if (save_completed_)
         {
             save_completed_ = false;
             TadaLib.Save.SaveManager.Instance.RequestSave(() => { Save(kFileName); save_completed_ = true; });
         }
+    }
+
+    // データを削除する
+    public void DeleteSaveData()
+    {
+        TadaLib.Save.SaveManager.Instance.DeleteData(kFileName);
     }
 }

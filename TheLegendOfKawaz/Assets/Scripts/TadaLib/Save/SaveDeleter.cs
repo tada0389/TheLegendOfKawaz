@@ -7,19 +7,23 @@ namespace Save
 {
     public class SaveDeleter : MonoBehaviour
     {
-        public void DeleteData()
+        private void Start()
         {
-            StartCoroutine(Delete());
+            DeleteAllData();
         }
 
-        private IEnumerator Delete()
+        // セーブデータをすべて削除する
+        public void DeleteAllData()
         {
-            SaveManager.Instance.DeleteAllData();
+            AchievementManager.DeleteSaveData();
+            ScoreManager.Instance.DeleteSaveData();
+            Actor.Player.SkillManager.Instance.DeleteSaveData();
+        }
 
-            // データが削除されるまで待つ
-            yield return new WaitForSeconds(0.2f);
-
-            ScoreManager.Instance.Reload();
+        // 一部だけ 今はスキル情報のみ
+        public void DeleteData()
+        {
+            Actor.Player.SkillManager.Instance.DeleteSaveData();
         }
     }
 }
