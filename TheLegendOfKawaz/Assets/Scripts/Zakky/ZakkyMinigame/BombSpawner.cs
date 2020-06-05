@@ -26,6 +26,10 @@ public class BombSpawner : MonoBehaviour
     [SerializeField]
     private MiniMapController mini_map_;
 
+    private float _overTime = 0;
+
+    private float tmp;
+
     //public int brokenBombsSum;
     // Start is called before the first frame update
     private float overTime;
@@ -43,11 +47,12 @@ public class BombSpawner : MonoBehaviour
         KoitanLib.ObjectPoolManager.Init(gotPoint, this, 5);
 
         overTime = 0f;
-        //brokenBombsSum = 0;
+        tmp = 0f;
+
         yield return new WaitForSeconds(interval);
         while (true)
         {
-            overTime += interval;
+            overTime += _overTime;
             //処理
             float randomX = Random.Range(-50f, 50f);
 
@@ -75,9 +80,20 @@ public class BombSpawner : MonoBehaviour
                     obj.IsRegisteredToMiniMap = true;
                 }
             }
-
+            
             //Debug.Log(overTime.ToString());
-            yield return new WaitForSeconds(Mathf.Max(interval - overTimeCoe * overTime, finalInterval));
+            if (interval - overTimeCoe * overTime < finalInterval && tmp == 0)
+            {
+                tmp = interval - finalInterval;
+                overTimeCoe *= 0.01f;
+                overTime = 0f;
+                Debug.Log("yobareta" + (interval - overTimeCoe * overTime));
+            }
+            _overTime = interval - overTimeCoe * overTime - tmp;
+
+            Debug.Log(_overTime);
+
+            yield return new WaitForSeconds(_overTime);
         }
     }
 }
