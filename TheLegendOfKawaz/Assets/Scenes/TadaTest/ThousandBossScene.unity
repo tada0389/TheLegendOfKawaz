@@ -4340,6 +4340,11 @@ MonoBehaviour:
   muteki_time_: 1
   mesh_: {fileID: 564111982}
   not_reverse_: {fileID: 0}
+  state_talk_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    im: {fileID: 0}
+    message: []
   state_think_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
