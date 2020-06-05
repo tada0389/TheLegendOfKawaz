@@ -11,6 +11,10 @@ public class ZakkyTitleSceneManager : MonoBehaviour
     public GameObject mySceneManager;
     public GameObject[] iconID;
 
+    // セーブデータを削除するクラス
+    [SerializeField]
+    private Save.SaveDeleter save_deleter_; // by tada
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,18 +42,31 @@ public class ZakkyTitleSceneManager : MonoBehaviour
                 case 0:
                     //stateを操作受け付けないやつにする
                     TitleState.m_state = TitleState.State.Decided;
+                    // スキル情報や部屋情報のセーブデータを削除
+                    save_deleter_.DeleteTempData();
                     //Fadeout関数でフェードアウト
                     //STARTのシーン遷移KoitanLibの方つかう(その方が演出がシームレス)
                     FadeManager.FadeIn(1f, "Prologue");
                     break;
                 case 1:
-                    TitleState.m_state = TitleState.State.Story;
+                    //TitleState.m_state = TitleState.State.Story;
+                    //stateを操作受け付けないやつにする
+                    TitleState.m_state = TitleState.State.Decided;
+                    // セーブデータを削除せずに始める
+                    //save_deleter_.DeleteTempData();
+                    //Fadeout関数でフェードアウト
+                    //STARTのシーン遷移KoitanLibの方つかう(その方が演出がシームレス)
+                    FadeManager.FadeIn(1f, "ZakkyScene");
                     break;
                 case 2:
                     //stateを操作受け付けないやつにする
                     TitleState.m_state = TitleState.State.Decided;
                     //Fadeout関数でフェードアウト
                     mySceneManager.GetComponent<MySceneManager>().Fadeout(null);
+                    break;
+                case 3: // セーブデータをすべて削除 by tada
+                    save_deleter_.DeleteAllData();
+                    // TODO ここにContinueの選択肢をなくす処理を実装する
                     break;
             }
         }

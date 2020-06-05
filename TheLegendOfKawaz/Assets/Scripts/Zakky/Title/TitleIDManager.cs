@@ -35,13 +35,13 @@ public class TitleIDManager : MonoBehaviour
         {
             ChoiceID--;
             if (ChoiceID < 0)
-                ChoiceID = 2;
+                ChoiceID = 3;
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) || ActionInput.GetButtonDown(ButtonCode.Down))
         {
             ChoiceID++;
-            if (ChoiceID > 2)
+            if (ChoiceID > 3)
                 ChoiceID = 0;
         }
         

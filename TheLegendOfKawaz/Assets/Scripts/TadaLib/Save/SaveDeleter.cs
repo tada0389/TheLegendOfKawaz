@@ -7,10 +7,10 @@ namespace Save
 {
     public class SaveDeleter : MonoBehaviour
     {
-        private void Start()
-        {
-            DeleteAllData();
-        }
+        //private void Start()
+        //{
+        //    DeleteAllData();
+        //}
 
         // セーブデータをすべて削除する
         public void DeleteAllData()
@@ -21,7 +21,7 @@ namespace Save
         }
 
         // 一部だけ 今はスキル情報のみ
-        public void DeleteData()
+        public void DeleteTempData()
         {
             Actor.Player.SkillManager.Instance.DeleteSaveData();
         }
