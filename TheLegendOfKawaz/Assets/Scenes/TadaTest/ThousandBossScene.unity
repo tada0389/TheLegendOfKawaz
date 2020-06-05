@@ -1231,6 +1231,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &184074461
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2058,6 +2070,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &258258118
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2540,6 +2564,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &285036238
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3655,6 +3691,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &372998772
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4902,6 +4950,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &487818805
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14827,6 +14887,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &731517138
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14984,6 +15056,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &732659765
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15267,6 +15351,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &755804394
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16798,6 +16894,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &859167310
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16982,6 +17090,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &882431809
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17404,6 +17524,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &949576962
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28902,6 +29034,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1244878913
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29204,6 +29348,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1296068165
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29361,6 +29517,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1299038946
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -29900,6 +30068,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1331837760
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -30057,6 +30237,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1334651092
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -36118,6 +36310,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1465678586
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -37014,6 +37218,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1546211280
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -38009,6 +38225,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1637006134
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -38439,6 +38667,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1660906774
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39156,6 +39396,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1691492722
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -39643,6 +39895,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1730297575
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45104,6 +45368,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1813906242
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -51621,6 +51897,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &1953455381
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -52470,6 +52758,18 @@ MonoBehaviour:
     back_duration_: 1
     speed_: 360
     rigidy_time_: 1
+  burst_state1_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    face_time_: 0.3
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
+  burst_state2_:
+    MaxAbsSpeed: {x: 1, y: 1}
+    Accel: {x: 0, y: 0}
+    accel_: 100
+    stage_boader_x: {x: -10, y: 15}
+    stage_boader_y: {x: -5, y: 7}
 --- !u!61 &2046756573
 BoxCollider2D:
   m_ObjectHideFlags: 0
