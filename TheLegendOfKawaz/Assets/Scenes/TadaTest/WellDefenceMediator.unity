@@ -2546,6 +2546,7 @@ MonoBehaviour:
   score_displayer_: {fileID: 997294645}
   stage_texts_: {fileID: 194562539}
   score_texts_: {fileID: 357239567}
+  IsTargetMode: 0
 --- !u!4 &1422875396
 Transform:
   m_ObjectHideFlags: 0

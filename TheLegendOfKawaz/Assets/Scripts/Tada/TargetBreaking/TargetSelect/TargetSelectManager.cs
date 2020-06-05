@@ -133,12 +133,20 @@ namespace TargetBreaking
         [SerializeField]
         private GameObject score_texts_;
 
+        [SerializeField]
+        private bool IsTargetMode = true;
+
         // Start is called before the first frame update
         private void Awake()
         {
-            index_ = new TadaLib.Pair<int, int>(prev_stage_index_, 0);
+            if (IsTargetMode) index_ = new TadaLib.Pair<int, int>(prev_stage_index_, 0);
+            else {
+                index_ = new TadaLib.Pair<int, int>(0, 0); 
+                //prev_stage_index_ = 0;
+            }
             selecting_grade_ = true;
-            grades_[prev_stage_index_].color = Color.red;
+            if(IsTargetMode) grades_[prev_stage_index_].color = Color.red;
+            else grades_[0].color = Color.red;
         }
 
         private void Start()
@@ -219,7 +227,7 @@ namespace TargetBreaking
                     is_feeding_ = true;
                     // 実際に遊ぶ
                     CurStageData = stages_[index_.first];
-                    prev_stage_index_ = index_.first;
+                    if(IsTargetMode) prev_stage_index_ = index_.first;
                     KoitanLib.FadeManager.FadeIn(0.5f, stages_[index_.first].NextScene);
 
                 }
