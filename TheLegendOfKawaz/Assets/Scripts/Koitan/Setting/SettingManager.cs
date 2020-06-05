@@ -302,7 +302,7 @@ public class SettingManager : MonoBehaviour
         audioMixer.GetFloat("BGMVol", out bgmVol);
         audioMixer.GetFloat("SEVol", out seVol);
         headUi.text = "おんりょうせってい";
-        textStr = () => "全体 < " + (masterVol + 80) + " >\nBGM < " + (bgmVol + 80) + " >\nこうかおん < " + (seVol + 80) + " >\n元にもどす";
+        textStr = () => "全体 < " + (masterVol / 10 + 8) + " >\nBGM < " + (bgmVol / 10 + 8) + " >\nこうかおん < " + (seVol / 10 + 8) + " >\n元にもどす";
         onSelecteds[0] = () => SetVol("MasterVol", ref masterVol);
         onSelecteds[1] = () => SetVol("BGMVol", ref bgmVol);
         onSelecteds[2] = () => SetVol("SEVol", ref seVol);
@@ -353,16 +353,16 @@ public class SettingManager : MonoBehaviour
 
     void SetVol(string mixerName, ref float vol)
     {
-        if (ActionInput.GetButton(ButtonCode.Right))
+        if (ActionInput.GetButtonDown(ButtonCode.Right))
         {
-            vol++;
+            vol += 10;
             vol = Mathf.Min(vol, 20);
             audioMixer.SetFloat(mixerName, vol);
             PlaySe(drumSe);
         }
-        if (ActionInput.GetButton(ButtonCode.Left))
+        if (ActionInput.GetButtonDown(ButtonCode.Left))
         {
-            vol--;
+            vol -= 10;
             vol = Math.Max(vol, -80);
             audioMixer.SetFloat(mixerName, vol);
             PlaySe(drumSe);
@@ -501,7 +501,7 @@ public class SettingManager : MonoBehaviour
     {
         return SetButtonPush(() =>
         {
-            masterVol = bgmVol = seVol = 0;
+            masterVol = bgmVol = seVol = -10;
             audioMixer.SetFloat("MasterVol", masterVol);
             audioMixer.SetFloat("BGMVol", bgmVol);
             audioMixer.SetFloat("SEVol", seVol);
