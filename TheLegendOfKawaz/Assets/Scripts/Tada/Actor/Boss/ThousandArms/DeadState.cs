@@ -33,6 +33,12 @@ namespace Actor.Enemy.Thousand
                 TadaLib.TimeScaler.Instance.RequestChange(0.3f, 1.5f);
                 Global.GlobalPlayerInfo.IsMuteki = true;
                 Parent.animator_.Play("Dead2");
+
+                // 手を全部吹き飛ばす
+                foreach(var arm in Parent.arms_)
+                {
+                    arm.Burst();
+                }
             }
 
             // 毎フレーム呼ばれる

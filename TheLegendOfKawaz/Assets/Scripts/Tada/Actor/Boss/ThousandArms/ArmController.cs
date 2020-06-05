@@ -20,6 +20,8 @@ namespace Actor.Enemy.Thousand
             Throw1,
             Throw2,
             Throw3,
+            Burst1,
+            Burst2,
         }
 
         private StateMachine<ArmController> state_machine_;
@@ -61,11 +63,17 @@ namespace Actor.Enemy.Thousand
         private ThrowState2 throw_state2_;
         [SerializeField]
         private ThrowState3 throw_state3_;
+        [SerializeField]
+        private BurstState1 burst_state1_;
+        [SerializeField]
+        private BurstState2 burst_state2_;
         #endregion
 
         private float degree_ = 0f;
 
         private bool move_stop_ = false;
+
+        private bool is_burst_ = false;
 
         private BoxCollider2D hit_box_;
 
@@ -92,6 +100,8 @@ namespace Actor.Enemy.Thousand
             state_machine_.AddState((int)eState.Throw1, throw_state1_);
             state_machine_.AddState((int)eState.Throw2, throw_state2_);
             state_machine_.AddState((int)eState.Throw3, throw_state3_);
+            state_machine_.AddState((int)eState.Burst1, burst_state1_);
+            state_machine_.AddState((int)eState.Burst2, burst_state2_);
 
             state_machine_.SetInitialState((int)eState.Idle);
 
@@ -113,8 +123,9 @@ namespace Actor.Enemy.Thousand
         // 死亡
         protected override void Dead()
         {
+            if (is_burst_) return;
             // ダメージを受けない
-            if(state_machine_.CurrentStateId == (int)eState.Stretch)
+            if (state_machine_.CurrentStateId == (int)eState.Stretch)
             {
                 HP = 1;
                 return;
@@ -128,6 +139,7 @@ namespace Actor.Enemy.Thousand
         // 腕の動きを止める
         public void Stop(float stop_duration_from_order = 0.5f)
         {
+            if (is_burst_) return;
             if (dead_) return;
             if (action_) return;
             move_stop_ = true;
@@ -136,6 +148,7 @@ namespace Actor.Enemy.Thousand
         // 腕を赤くする
         public void ChargeStart()
         {
+            if (is_burst_) return;
             if (dead_) return;
             body_.DOColor(Color.red, 0.5f);
             transform.DOScale(default_scale_.x * 2.0f, 0.5f);
@@ -151,6 +164,7 @@ namespace Actor.Enemy.Thousand
         // 腕を伸ばす
         public void Stretch()
         {
+            if (is_burst_) return;
             if (dead_) return;
             if (action_) return;
             state_machine_.ChangeState((int)eState.Stretch);
@@ -158,6 +172,7 @@ namespace Actor.Enemy.Thousand
 
         public void Move()
         {
+            if (is_burst_) return;
             if (dead_) return;
             if (action_) return;
             state_machine_.ChangeState((int)eState.Idle);
@@ -165,9 +180,16 @@ namespace Actor.Enemy.Thousand
 
         public void Throw()
         {
+            if (is_burst_) return;
             if (dead_) return;
             if (action_) return;
             state_machine_.ChangeState((int)eState.Throw1);
+        }
+
+        // 千手観音が飛んでぶっ飛ばす
+        public void Burst()
+        {
+            state_machine_.ChangeState((int)eState.Burst1);
         }
 
         public override string ToString()
@@ -419,7 +441,7 @@ namespace Actor.Enemy.Thousand
 
                 yield return new WaitForSeconds(stretch_duration_ + 0.1f);
 
-                if(!Parent.dead_)
+                if(!Parent.dead_ && !Parent.is_burst_)
                     ChangeState((int)eState.Idle);
             }
         }
@@ -539,6 +561,84 @@ namespace Actor.Enemy.Thousand
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
 
                 //Parent.hit_box_.enabled = true;
+            }
+        }
+
+        // 千手観音が死んだときに手が弾け飛ぶステート
+        [System.Serializable]
+        private class BurstState1 : StateMachine<ArmController>.StateBase
+        {
+            private float face_target_degree_per_s_;
+
+            [SerializeField]
+            private float face_time_ = 0.5f;
+
+            [SerializeField]
+            private Vector2 stage_boader_x = new Vector2(-5.0f, 15.0f);
+
+            [SerializeField]
+            private Vector2 stage_boader_y = new Vector2(-5.0f, 5.0f);
+
+            public override void OnStart()
+            {
+                float target_degree = Parent.degree_ - 90f;
+
+                face_target_degree_per_s_ = (target_degree - Parent.degree_) / face_time_;
+
+                Parent.is_burst_ = true;
+            }
+
+            public override void Proc()
+            {
+                if (Parent.transform.position.y < stage_boader_y.x || Parent.transform.position.y > stage_boader_y.y ||
+                    Parent.transform.position.x < stage_boader_x.x || Parent.transform.position.x > stage_boader_x.y)
+                {
+                    return;
+                }
+
+                if (Timer > face_time_)
+                {
+                    ChangeState((int)eState.Burst2);
+                    return;
+                }
+
+                Parent.degree_ += face_target_degree_per_s_ * Time.deltaTime;
+                Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
+            }
+        }
+
+        // 千手観音が死んだときに手が弾け飛ぶステート
+        [System.Serializable]
+        private class BurstState2 : StateMachine<ArmController>.StateBase
+        {
+            [SerializeField]
+            private float accel_ = 0.1f;
+
+            [SerializeField]
+            private Vector2 stage_boader_x = new Vector2(-5.0f, 15.0f);
+
+            [SerializeField]
+            private Vector2 stage_boader_y = new Vector2(-5.0f, 5.0f);
+
+            private Vector2 velocity_ = new Vector2(0f, 0f);
+
+            public override void OnStart()
+            {
+                // 進む方向
+
+            }
+
+            public override void Proc()
+            {
+                if (Parent.transform.position.y < stage_boader_y.x || Parent.transform.position.y > stage_boader_y.y ||
+                     Parent.transform.position.x < stage_boader_x.x || Parent.transform.position.x > stage_boader_x.y)
+                {
+                    return;
+                }
+
+                float target_degree = Parent.degree_ + 90f;
+                velocity_ += accel_ * Time.deltaTime * new Vector2(Mathf.Cos(target_degree * Mathf.Deg2Rad), Mathf.Sin(target_degree * Mathf.Deg2Rad));
+                Parent.transform.position += (Vector3)velocity_ * Time.deltaTime;
             }
         }
 
