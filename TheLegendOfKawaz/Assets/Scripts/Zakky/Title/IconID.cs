@@ -13,6 +13,9 @@ public class IconID : MonoBehaviour
 
     //MyIDで番号を決める
     public int MyID;
+
+    [SerializeField]
+    private float defaultScale;
     private float θ;
     private float ω;
 
@@ -34,12 +37,12 @@ public class IconID : MonoBehaviour
         {    //今選ばれてるButtonIDが自分のと一致するなら
             θ += ω * Time.deltaTime;
 
-            this.transform.localScale = new Vector2(2f, 2f);
+            this.transform.localScale = Vector2.one * defaultScale * 1.2f;
         }
         else
         {    //IDが一致しないなら
             θ = 0f;
-            this.transform.localScale = new Vector2(1.5f, 1.5f);
+            this.transform.localScale = Vector2.one * defaultScale;
 
         }
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, 10f * Mathf.Sin(θ)));

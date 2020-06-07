@@ -840,6 +840,7 @@ MonoBehaviour:
   m_particle: {fileID: 7591784361316441586, guid: 5564d05569fd502479ef5bbb053bb1fa,
     type: 3}
   MyID: 1
+  defaultScale: 1.5
 --- !u!1001 &655565479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1205,6 +1206,7 @@ MonoBehaviour:
   m_particle: {fileID: 7591784361316441586, guid: 5564d05569fd502479ef5bbb053bb1fa,
     type: 3}
   MyID: 0
+  defaultScale: 1.5
 --- !u!1001 &844151901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2555,8 +2557,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294960195}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.79, y: -5.94, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalPosition: {x: 1.79, y: -5.42, z: 0}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 934227635}
   m_Father: {fileID: 1471442209}
@@ -2606,6 +2608,7 @@ MonoBehaviour:
   m_particle: {fileID: 7591784361316441586, guid: 5564d05569fd502479ef5bbb053bb1fa,
     type: 3}
   MyID: 3
+  defaultScale: 0.7
 --- !u!212 &1294960199
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3079,7 +3082,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598571173}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.68, y: -5.2, z: 0}
+  m_LocalPosition: {x: 7.54, y: -4.99, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 1471442209}
@@ -3178,6 +3181,7 @@ MonoBehaviour:
   m_particle: {fileID: 7591784361316441586, guid: 5564d05569fd502479ef5bbb053bb1fa,
     type: 3}
   MyID: 2
+  defaultScale: 1.5
 --- !u!1001 &1678621291
 PrefabInstance:
   m_ObjectHideFlags: 0
