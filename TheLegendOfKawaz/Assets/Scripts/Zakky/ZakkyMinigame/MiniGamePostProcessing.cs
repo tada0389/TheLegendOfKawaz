@@ -30,7 +30,7 @@ public class MiniGamePostProcessing : MonoBehaviour
             () => postProcesser.weight,          // 何を対象にするのか
             num => postProcesser.weight = num,   // 値の更新
             0.1f,                  // 最終的な値
-            5f                  // アニメーション時間
+            1f                  // アニメーション時間
         );
     }
 }

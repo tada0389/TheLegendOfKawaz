@@ -60,7 +60,7 @@ public class Bomb : PrimitiveTarget
             //爆弾ばくはつ
             Explotion();
 
-            CameraSpace.CameraShaker.Shake(0.6f, 0.3f);
+            CameraSpace.CameraShaker.Shake(0.7f, 0.3f);
         }
         else if (col.tag == "KawaztanShot")
         {
