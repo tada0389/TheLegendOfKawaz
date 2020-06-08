@@ -1294,6 +1294,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: dead_state_.GoNextScene
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5365672422518013126, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_Mesh
@@ -37364,6 +37369,13 @@ MonoBehaviour:
     - "\u30AB\u30EF\u30BA\u30BF\u30F3\u3000\u30D5\u30BF\u30EA\u3000\u30E2\u3000\u30A4\u30E9\u30CA\u30A4"
     - "\u30AB\u30EF\u30BA\u3000\u30CF\u3000\u30D2\u30C8\u30EA\u3000\u30C7\u3000\u30A4\u30A4"
     - "\u30B5\u30E8\u30A6\u30CA\u30E9\u3000\u30EF\u30BF\u30B7\u3000\u30CE\u3000\u30C8\u30E2\u3000\u30E8"
+  state_win_talk_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    im: {fileID: 21300000, guid: 01b6a8edc393a4392a4436d8f1c6eec6, type: 3}
+    message:
+    - "\u30EF\u30BF\u30B7\u3000\u30CF\u3000\u30AB\u30EF\u30BA\u30BF\u30F3\u3000\u30CA\u30F3\u30C0\u3000\u30C0\u30EC\u30AC\u30CA\u30F3\u30C8\u30A4\u30AA\u30A6\u30C8\u3000\u30DB\u30F3\u30E2\u30CE\u3000\u30CE\u3000\u30AB\u30EF\u30BA\u30BF\u30F3\u3000\u30CA\u30F3\u30C0"
+    talk_wait_time_: 1.5
   state_think_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}

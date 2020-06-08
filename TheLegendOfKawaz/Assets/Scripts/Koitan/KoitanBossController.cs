@@ -35,7 +35,8 @@ namespace Actor.Enemy
             Start,
             Fly,
             FlyAttack,
-            Dead
+            Dead,
+            WinTalk,
         }
 
         // 向いている方向
@@ -52,6 +53,8 @@ namespace Actor.Enemy
         #region state class
         [SerializeField]
         private StateThink state_think_;
+        [SerializeField]
+        private WinTalkState state_win_talk_;
         [SerializeField]
         private StateIdle state_idle_;
         [SerializeField]
@@ -147,6 +150,7 @@ namespace Actor.Enemy
             state_machine_.AddState((int)eState.Fly, state_fly_);
             state_machine_.AddState((int)eState.FlyAttack, state_fly_attack_);
             state_machine_.AddState((int)eState.Dead, state_dead_);
+            state_machine_.AddState((int)eState.WinTalk, state_win_talk_);
 
             // 初期ステートを設定
             state_machine_.SetInitialState((int)eState.Start);
@@ -170,6 +174,9 @@ namespace Actor.Enemy
             {
                 mutekiTime -= Time.deltaTime;
             }
+
+            // 敵を倒していたら勝利のセリフを吐く
+            CheckWin();
         }
 
         // 向いている方向を変更する
@@ -211,8 +218,22 @@ namespace Actor.Enemy
         // 死亡したときに呼ばれる関数 基底クラスから呼ばれる わかりにくい
         private void Dead()
         {
-            if (state_machine_.CurrentStateId != (int)eState.Dead)
+            int cur_state = state_machine_.CurrentStateId;
+            if (cur_state != (int)eState.Dead && cur_state != (int)eState.WinTalk)
+            {
                 state_machine_.ChangeState((int)eState.Dead);
+            }
+        }
+
+        private void CheckWin()
+        {
+            // 敵を倒していたら勝利のセリフを吐く
+            int cur_state = state_machine_.CurrentStateId;
+            if (cur_state != (int)eState.Dead && cur_state != (int)eState.WinTalk &&
+                player_.GetComponent<Actor.Player.Player>().IsDead())
+            {
+                state_machine_.ChangeState((int)eState.WinTalk);
+            }
         }
 
         // このボスにぶつかるとダメージを受ける
@@ -977,6 +998,85 @@ namespace Actor.Enemy
                 {
                     AchievementManager.FireAchievement("VenomDrake_nodamage");
                 }
+            }
+        }
+
+        // プレイヤー撃墜後のセリフ
+        [System.Serializable]
+        private class WinTalkState : StateMachine<KoitanBossController>.StateBase
+        {
+            [SerializeField]
+            Sprite im;
+            [SerializeField, Multiline(3)]
+            private string[] message;
+            private int index = 0;
+            private bool isEnd;
+            private bool open_window_ = false;
+            [SerializeField]
+            private float talk_wait_time_ = 1.5f;
+
+            // 開始時に呼ばれる
+            public override void OnStart()
+            {
+                Parent.trb_.Velocity = Vector2.zero;
+                float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
+                Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+            }
+
+            // 毎フレーム呼ばれる
+            public override void Proc()
+            {
+                // セリフを出してすぐにスキップされるのを防ぐ (ジャンプとかダッシュキーを押すと進んでしまうため)
+                if (Timer > talk_wait_time_ / 2f)
+                {
+                    if (!open_window_)
+                    {
+                        MessageManager.OpenMessageWindow(message[0], im);
+                        open_window_ = true;
+                    }
+                }
+
+                // 死亡アニメーションが終わるまでまつ
+                if (Timer < talk_wait_time_) return;
+
+                if (!isEnd)
+                {
+                    if (!open_window_)
+                    {
+                        MessageManager.OpenMessageWindow(message[0], im);
+                        open_window_ = true;
+                    }
+
+                    if (ActionInput.GetButtonDown(ActionCode.Decide))
+                    {
+                        index++;
+                        if (index < message.Length)
+                        {
+                            MessageManager.InitMessage(message[index]);
+                        }
+                        else
+                        {
+                            EndSeq();
+                        }
+                    }
+
+                    if (ActionInput.GetButtonDown(ActionCode.Dash))
+                    {
+                        EndSeq();
+                    }
+                }
+            }
+
+            // 終了時に呼ばれる
+            public override void OnEnd()
+            {
+            }
+
+            private void EndSeq()
+            {
+                isEnd = true;
+                MessageManager.CloseMessageWindow();
+                FadeManager.FadeIn(0.5f, "ZakkyScene");
             }
         }
 

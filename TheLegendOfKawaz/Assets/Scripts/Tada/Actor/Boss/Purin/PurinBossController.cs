@@ -20,6 +20,7 @@ namespace Actor.Enemy.Purin
         {
             Think,
             Walk,
+            WinTalk,
             Dead,
             Punch1,
             Punch2,
@@ -47,6 +48,8 @@ namespace Actor.Enemy.Purin
         private ThinkState think_state_;
         [SerializeField]
         private WalkState walk_state_;
+        [SerializeField]
+        private WinTalkState win_talk_state_;
         [SerializeField]
         private DeadState dead_state_;
         [SerializeField]
@@ -85,6 +88,7 @@ namespace Actor.Enemy.Purin
             state_machine_.AddState((int)eState.Drop2, drop_state2_);
             state_machine_.AddState((int)eState.Drop3, drop_state3_);
             state_machine_.AddState((int)eState.Talk, talk_state_);
+            state_machine_.AddState((int)eState.WinTalk, win_talk_state_);
             // 初期ステートの設定
             state_machine_.SetInitialState((int)eState.Talk);
             
@@ -97,13 +101,29 @@ namespace Actor.Enemy.Purin
         {
             // ステートの更新
             state_machine_.Proc();
+
+            // 敵を倒していたら勝利のセリフを吐く
+            CheckWin();
         }
 
         // 死亡したときに呼ばれる関数 基底クラスから呼ばれる わかりにくい
         protected override void Dead()
         {
-            if(state_machine_.CurrentStateId != (int)eState.Dead)
+            int cur_state = state_machine_.CurrentStateId;
+            if (cur_state != (int)eState.Dead && cur_state != (int)eState.WinTalk)
+            {
                 state_machine_.ChangeState((int)eState.Dead);
+            }
+        }
+
+        private void CheckWin() {
+            // 敵を倒していたら勝利のセリフを吐く
+            int cur_state = state_machine_.CurrentStateId;
+            if (cur_state != (int)eState.Dead && cur_state != (int)eState.WinTalk &&
+                player_.GetComponent<Actor.Player.Player>().IsDead())
+            {
+                state_machine_.ChangeState((int)eState.WinTalk);
+            }
         }
 
         public override string ToString()

@@ -21,6 +21,7 @@ namespace Actor.Enemy.Thousand
             Walk,
             Dead,
             Talk,
+            WinTalk,
             ArmStretch, // 腕が伸びる
             ArmThrow, // 腕を飛ばす
             Sutras, // お経
@@ -52,6 +53,8 @@ namespace Actor.Enemy.Thousand
         [SerializeField]
         private TalkState talk_state_;
         [SerializeField]
+        private WinTalkState win_talk_state_;
+        [SerializeField]
         private ArmStretchState arm_stretch_state_;
         [SerializeField]
         private ArmThrowState arm_throw_state_;
@@ -73,6 +76,7 @@ namespace Actor.Enemy.Thousand
             state_machine_.AddState((int)eState.Walk, walk_state_);
             state_machine_.AddState((int)eState.Dead, dead_state_);
             state_machine_.AddState((int)eState.Talk, talk_state_);
+            state_machine_.AddState((int)eState.WinTalk, win_talk_state_);
             state_machine_.AddState((int)eState.ArmStretch, arm_stretch_state_);
             state_machine_.AddState((int)eState.ArmThrow, arm_throw_state_);
             state_machine_.AddState((int)eState.Sutras, sutras_state_);
@@ -88,13 +92,30 @@ namespace Actor.Enemy.Thousand
         {
             // ステートの更新
             state_machine_.Proc();
+
+            // 敵を倒していたら勝利のセリフを吐く
+            CheckWin();
         }
 
         // 死亡したときに呼ばれる関数 基底クラスから呼ばれる わかりにくい
         protected override void Dead()
         {
-            if (state_machine_.CurrentStateId != (int)eState.Dead)
+            int cur_state = state_machine_.CurrentStateId;
+            if (cur_state != (int)eState.Dead && cur_state != (int)eState.WinTalk)
+            {
                 state_machine_.ChangeState((int)eState.Dead);
+            }
+        }
+
+        private void CheckWin()
+        {
+            // 敵を倒していたら勝利のセリフを吐く
+            int cur_state = state_machine_.CurrentStateId;
+            if (cur_state != (int)eState.Dead && cur_state != (int)eState.WinTalk &&
+                player_.GetComponent<Actor.Player.Player>().IsDead())
+            {
+                state_machine_.ChangeState((int)eState.WinTalk);
+            }
         }
 
         public override string ToString()

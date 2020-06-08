@@ -127,12 +127,12 @@ namespace Actor.Enemy.Purin
 
                 for(int i = 0; i < punch_num_; ++i)
                 {
-                    if (state_machine_.CurrentStateId == (int)eState.Dead) break;
+                    if (state_machine_.CurrentStateId == (int)eState.Dead || state_machine_.CurrentStateId == (int)eState.WinTalk) break;
 
                     // マークを出す
                     PunchMarkController mark = KoitanLib.ObjectPoolManager.GetInstance<PunchMarkController>(punch_mark_);
 
-                    if (state_machine_.CurrentStateId != (int)eState.Dead)
+                    //if (state_machine_.CurrentStateId != (int)eState.Dead)
                         Parent.animator_.Play("cherry_attack", 0, 0.25f);
 
                     if (mark != null)
@@ -170,7 +170,7 @@ namespace Actor.Enemy.Purin
                     ik_.position = new Vector3(1f, 3f);
                 }
 
-                if(state_machine_.CurrentStateId != (int)eState.Dead)
+                if(state_machine_.CurrentStateId != (int)eState.Dead && state_machine_.CurrentStateId != (int)eState.WinTalk)
                     ChangeState((int)eState.Think);
             }
         }

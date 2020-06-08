@@ -2289,6 +2289,13 @@ MonoBehaviour:
     im: {fileID: 21300000, guid: a2758bf12459afc4c94e74d8e2830252, type: 3}
     message:
     - "\u304B\u304B\u3063\u3066\u3053\u3044"
+  win_talk_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    im: {fileID: 21300000, guid: a2758bf12459afc4c94e74d8e2830252, type: 3}
+    message:
+    - "\u8CB4\u69D8\u306E\u7F6A\u3092\u6D88\u3057\u3066\u3084\u308D\u3046\u2026\u547D\u306E\u706F\u706B\u3054\u3068\u306A\u2026\uFF01\uFF01\uFF01"
+    talk_wait_time_: 1.5
   arm_stretch_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -4400,6 +4407,12 @@ MonoBehaviour:
     Accel: {x: 0, y: 0}
     im: {fileID: 0}
     message: []
+  state_win_talk_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    im: {fileID: 0}
+    message: []
+    talk_wait_time_: 1.5
   state_think_:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
@@ -51438,6 +51451,11 @@ PrefabInstance:
         type: 3}
       propertyPath: demo_skills_.Array.data[2].level_
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: dead_state_.GoNextScene
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5365672422518013126, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
