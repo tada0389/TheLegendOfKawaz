@@ -37384,6 +37384,16 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     explosion_effect_: {fileID: 1280246251}
+    new_time_scale_: 0.45
+    time_change_duration_: 1.5
+    talk_wait_time_: 2
+    im: {fileID: 21300000, guid: 01b6a8edc393a4392a4436d8f1c6eec6, type: 3}
+    message:
+    - "\u30EF\u30BF\u30B7\u3000\u30CF\u3000\u30AB\u30EF\u30BA\u30BF\u30F3\u3000\u30B8\u30E3\u30CA\u30A4\u30CE\uFF1F"
+    - "\u30EF\u30BF\u30B7\u3000\u30CF\u3000\u30AB\u30EF\u30BA\u30BF\u30F3\u3000\u30B8\u30E3\u30CA\u30A4\u30CE\uFF1F"
+    - "\u30EF\u30BF\u30B7\u3000\u30CF\u3000\u30AB\u30EF\u30BA\u30BF\u30F3\u3000\u30B8\u30E3\u30CA\u30A4\u30CE\uFF1F"
+    - Error Error Error Error Error Error Error Error Error Error Error Error ...
+    scene_transition_time_: 4
   state_tackle1_:
     MaxAbsSpeed: {x: 0, y: 0.1}
     Accel: {x: 0, y: 0.01}

@@ -771,7 +771,7 @@ MonoBehaviour:
     dash_effect_: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
       type: 3}
   dashjump_state_:
-    MaxAbsSpeed: {x: 0.25, y: 0.28}
+    MaxAbsSpeed: {x: 0.28, y: 0.28}
     Accel: {x: 0.01, y: -0.04}
     jump_power: 0.26
     jump_input_time: 0.25
@@ -787,6 +787,7 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0, y: 0.2}
     Accel: {x: 0, y: -0.015}
     scene_transitioin_time_: 2.5
+    GoNextScene: 1
     next_scene_: ZakkyScene
     dead_eff_: {fileID: -2234600912201988019, guid: 1fb4e3712d88944b3a42f7c5cc18604a,
       type: 3}
@@ -803,6 +804,11 @@ MonoBehaviour:
     Accel: {x: 0.008, y: -0.012}
     jump_power_: 0.1
     rigity_time_: 0.05
+  close_ear_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    close_duration_: 3
+    start_animation_time_: 0.7
   charge_shot_pre_: {fileID: 5178167681758080773}
   charge_shot_end_: {fileID: 5586593142362632429}
   normal_bullet_: {fileID: 2435905680674071023, guid: ee7bea3bd0273494bbbfee5f664028b0,
@@ -813,6 +819,7 @@ MonoBehaviour:
   not_reverse_: {fileID: 819803753}
   muteki_time_: 2
   mesh_: {fileID: 5644076340926306882}
+  is_minigame_mode_: 0
   demo_skills_: []
 --- !u!114 &2131037086634868346
 MonoBehaviour:
@@ -3822,6 +3829,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heal_always
       objectReference: {fileID: 0}
+    - target: {fileID: 6850620256162399257, guid: 50d7a42776b8a4f92885ff1eedc12443,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6850620256161912891, guid: 50d7a42776b8a4f92885ff1eedc12443,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3877,11 +3889,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6850620256162399257, guid: 50d7a42776b8a4f92885ff1eedc12443,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50d7a42776b8a4f92885ff1eedc12443, type: 3}
 --- !u!4 &6850620255999401478 stripped
@@ -3907,6 +3914,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Heal
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188868256673871528, guid: e7e350bfb76b84ff69e06c1991b258b6,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4188868256655520744, guid: e7e350bfb76b84ff69e06c1991b258b6,
         type: 3}
@@ -3966,11 +3978,6 @@ PrefabInstance:
     - target: {fileID: 4188868256655421386, guid: e7e350bfb76b84ff69e06c1991b258b6,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4188868256673871528, guid: e7e350bfb76b84ff69e06c1991b258b6,
-        type: 3}
-      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

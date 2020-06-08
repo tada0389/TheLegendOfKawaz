@@ -4647,13 +4647,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
-      propertyPath: close_ear_state_.close_duration_
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: close_ear_state_.start_animation_time_
-      value: 0
+      propertyPath: dashjump_state_.jump_power
+      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 5365672422518013126, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}

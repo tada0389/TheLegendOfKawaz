@@ -6544,6 +6544,13 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0.3}
     Accel: {x: 0, y: -0.04}
     explosion_effect_: {fileID: 0}
+    new_time_scale_: 0.45
+    time_change_duration_: 1.5
+    talk_wait_time_: 2
+    im: {fileID: 21300000, guid: efd25df7f643f4999b64cdf1f53024fb, type: 3}
+    message:
+    - "\u3044\u305F\u3044\u3088\u30DE\u30DE\u30FC\u30FC\u30FC\uFF01\uFF01\uFF01"
+    scene_transition_time_: 4
   player_: {fileID: 833600609}
   venomBullet: {fileID: 366738011581893803, guid: 47f7f28e565b149afb13f05712207c06,
     type: 3}
