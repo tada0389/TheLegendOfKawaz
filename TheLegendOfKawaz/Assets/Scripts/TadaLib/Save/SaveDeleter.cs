@@ -17,13 +17,15 @@ namespace Save
         {
             AchievementManager.DeleteSaveData();
             ScoreManager.Instance.DeleteSaveData();
+            TadaScene.TadaSceneManager.DeleteSaveData();
             Actor.Player.SkillManager.Instance.DeleteSaveData();
         }
 
-        // 一部だけ 今はスキル情報のみ
+        // 一部だけ スキル情報をプレイヤーの座標情報を削除
         public void DeleteTempData()
         {
             Actor.Player.SkillManager.Instance.DeleteSaveData();
+            TadaScene.TadaSceneManager.DeleteSaveData();
         }
     }
 }
