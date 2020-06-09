@@ -107,12 +107,26 @@ namespace Global
             ++ending_cnt_;
         }
 
-        public void StoryTimerReset()
+        public void RestartStoryTimer()
         {
             story_timer_ = 0.0;
             eternal_timer_ += Time.time - prev_time_;
             prev_time_ = Time.time;
         }
+
+        //public void StopStoryTimer()
+        //{
+        //    story_timer_ = 0.0;
+        //    eternal_timer_ += Time.time - prev_time_;
+        //    prev_time_ = Time.time;
+        //}
+
+        //public void StartStoryTimer()
+        //{
+        //    story_timer_ = 0.0;
+        //    eternal_timer_ += Time.time - prev_time_;
+        //    prev_time_ = Time.time;
+        //}
     }
 
     public class GlobalDataManager : TadaLib.SingletonMonoBehaviour<GlobalDataManager>
@@ -167,9 +181,19 @@ namespace Global
         }
 
         // 現在のストーリー内でのタイマーをリセットする
-        public static void ResetStoryTimer()
+        public static void RestartStoryTimer()
         {
-            Instance.data_.StoryTimerReset();
+            Instance.data_.RestartStoryTimer();
         }
+        //// 現在のストーリー内でのタイマーをストップする
+        //public static void StopStoryTimer()
+        //{
+        //    Instance.data_.StopStoryTimer();
+        //}
+        //// 現在のストーリー内でのタイマーを再開する
+        //public static void StartStoryTimer()
+        //{
+        //    Instance.data_.StartStoryTimer();
+        //}
     }
 } // namespace Global

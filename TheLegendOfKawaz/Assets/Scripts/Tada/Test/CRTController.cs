@@ -18,7 +18,6 @@ namespace Test
 
         private IEnumerator Start()
         {
-            DontDestroyOnLoad(this);
 
             yield return new WaitForSeconds(10.0f);
 
@@ -58,11 +57,13 @@ namespace Test
 
             yield return new WaitForSeconds(5.0f);
 
+            DontDestroyOnLoad(this);
             TadaSceneManager.LoadScene("ZakkyScene", 0.5f, Vector3.zero, true);
 
             yield return new WaitForSeconds(0.6f);
             AchievementManager.FireAchievement("Hidden");
 
+            TadaLib.Save.SaveManager.Instance.Save();
             Destroy(this);
         }
     }

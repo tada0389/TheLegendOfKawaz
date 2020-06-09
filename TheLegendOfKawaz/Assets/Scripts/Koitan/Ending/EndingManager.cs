@@ -21,20 +21,33 @@ public class EndingManager : MonoBehaviour
     private TextMeshPro timeMesh;
     private bool canSkip;
     private bool isLoaded;
+
+    // 隠しのエンディングシーンじゃないかどうか by tada
+    [SerializeField]
+    private bool IsTrueEnding = true;
+
     // Start is called before the first frame update
     void Start()
     {
-        TimeRecoder.Stop();
-        AchievementManager.FireAchievement("GameClear");
-        if (TimeRecoder.GlobalTime <= 3600)
+        //TimeRecoder.Stop();
+
+        // クリアタイムを別の方法で取得 by tada
+        double clear_time = Global.GlobalDataManager.StoryTimer;
+        if (IsTrueEnding)
         {
-            AchievementManager.FireAchievement("Kagawa");
+            AchievementManager.FireAchievement("GameClear");
+            if (clear_time <= 3600)
+            {
+                AchievementManager.FireAchievement("Kagawa");
+            }
+            if (clear_time <= 300)
+            {
+                AchievementManager.FireAchievement("RTA");
+            }
+
+            CheckNoSkillClear();
         }
-        if (TimeRecoder.GlobalTime <= 300)
-        {
-            AchievementManager.FireAchievement("RTA");
-        }
-        TimeSpan ts = new TimeSpan(0, 0, (int)TimeRecoder.GlobalTime);
+        TimeSpan ts = new TimeSpan(0, 0, (int)clear_time);
         timeMesh.text = ts.ToString() + "\n" + AchievementManager.GetAchieveNowUnlockedNum().ToString() + "/" + AchievementManager.GetAchieveMax();
         lastObj.SetActive(false);
         exObj.SetActive(false);
@@ -70,6 +83,8 @@ public class EndingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!IsTrueEnding) return;
+
         if (canSkip & ActionInput.GetButtonDown(ActionCode.Decide) && !isLoaded)
         {
             LoadTitle();            
@@ -85,5 +100,12 @@ public class EndingManager : MonoBehaviour
     {
         isLoaded = true;
         FadeManager.FadeIn(2f, "ZakkyTitle");
+    }
+
+    // ノースキルでクリアしたかをチェックする by tada
+    private void CheckNoSkillClear()
+    {
+        bool no_skill = Actor.Player.SkillManager.Instance.IsNoSkill();
+        if (no_skill) AchievementManager.FireAchievement("Hadaka");
     }
 }

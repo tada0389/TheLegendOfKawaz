@@ -164,5 +164,28 @@ namespace Actor.Player
             }
             data_.SkillPoint = initial_skill_point_;
         }
+
+        // 指定したスキルのレベルを返す
+        public int GetSkillLevel(eSkill skill)
+        {
+            var skills = data_.Skills[(int)skill];
+
+            return skills.Level;
+        }
+
+        // スキルレベルがすべて1なのか返す
+        public bool IsNoSkill()
+        {
+            bool res = true;
+            foreach(var skill in data_.Skills)
+            {
+                if(skill.Level != 0)
+                {
+                    res = false;
+                    break;
+                }
+            }
+            return res;
+        }
     }
 } // namespace Actor.Player

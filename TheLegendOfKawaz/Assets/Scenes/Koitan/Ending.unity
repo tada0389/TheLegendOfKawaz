@@ -10246,6 +10246,7 @@ MonoBehaviour:
   exObj: {fileID: 951735615}
   makuSpr: {fileID: 962109188}
   timeMesh: {fileID: 2112839900}
+  IsTrueEnding: 1
 --- !u!4 &1086298574
 Transform:
   m_ObjectHideFlags: 0
