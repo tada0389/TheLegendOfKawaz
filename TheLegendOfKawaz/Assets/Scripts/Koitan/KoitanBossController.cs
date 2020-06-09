@@ -922,6 +922,9 @@ namespace Actor.Enemy
                 // 動きをとめる
                 Parent.trb_.Velocity = Vector2.zero;
                 Parent.animator.CrossFade(hashDead, 0.5f);
+
+                // ボスが死んだ回数を加算する
+                Global.GlobalDataManager.AddBossDefeatCnt();
             }
 
             // 毎フレーム呼ばれる

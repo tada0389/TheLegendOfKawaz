@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using TadaLib.Save;
 using System.IO;
+using System.Runtime.InteropServices;
 
 /// <summary>
 /// データをセーブ・ロードするクラス
@@ -37,6 +38,9 @@ namespace TadaLib
             // 今後セーブ予定のクラス
             private Queue<Action> save_action_queue_;
 
+            // どんなときにもセーブするクラス
+            private List<Action> save_action_;
+
             // セーブのアニメーション
             [SerializeField]
             private Animator save_ui_;
@@ -52,6 +56,7 @@ namespace TadaLib
                 {
                     Instance = this;
                     save_action_queue_ = new Queue<Action>();
+                    save_action_ = new List<Action>();
                     DontDestroyOnLoad(this);
                 }
                 else Destroy(gameObject);
@@ -60,10 +65,15 @@ namespace TadaLib
             // セーブ予定のデータをすべてセーブする
             public void Save()
             {
-                if (save_action_queue_.Count >= 1)
+                if (save_action_.Count >= 1 || save_action_queue_.Count >= 1)
                 {
                     DebugNotificationGenerator.Notify("セーブしました");
                     ShowSaveUI();
+                }
+
+                foreach(var act in save_action_)
+                {
+                    act();
                 }
 
                 while (save_action_queue_.Count >= 1)
@@ -100,6 +110,12 @@ namespace TadaLib
             public void RequestSave(Action save_method)
             {
                 save_action_queue_.Enqueue(save_method);
+            }
+
+            // 常にセーブしたいデータを持つクラスのセーブ関数を登録する
+            public void RequestSaveAlways(Action save_method)
+            {
+                save_action_.Add(save_method);
             }
 
             private void Delete(string targetDirectoryPath)

@@ -55,6 +55,9 @@ namespace Actor.Enemy.Purin
                 explosion_effect_.gameObject.SetActive(true);
                 Global.GlobalPlayerInfo.IsMuteki = true;
                 Parent.animator_.Play("Dead");
+
+                // ボスが死んだ回数を加算する
+                Global.GlobalDataManager.AddBossDefeatCnt();
             }
 
             // 毎フレーム呼ばれる

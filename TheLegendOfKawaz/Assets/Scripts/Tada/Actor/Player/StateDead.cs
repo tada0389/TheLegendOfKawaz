@@ -41,6 +41,9 @@ namespace Actor.Player
                 is_feed_ = false;
 
                 EffectPlayer.Play(dead_eff_, Parent.transform.position, Vector3.zero, Parent.transform);
+
+                // 死亡回数を加算する
+                Global.GlobalDataManager.AddDeathCnt();
             }
 
             // ステートが終了したときに呼ばれるメソッド

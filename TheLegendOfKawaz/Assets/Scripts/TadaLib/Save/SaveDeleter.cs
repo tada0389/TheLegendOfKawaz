@@ -19,6 +19,7 @@ namespace Save
             ScoreManager.Instance.DeleteSaveData();
             TadaScene.TadaSceneManager.DeleteSaveData();
             Actor.Player.SkillManager.Instance.DeleteSaveData();
+            //Global.GlobalDataManager.DeleteSaveData();
         }
 
         // 一部だけ スキル情報をプレイヤーの座標情報を削除
@@ -26,6 +27,8 @@ namespace Save
         {
             Actor.Player.SkillManager.Instance.DeleteSaveData();
             TadaScene.TadaSceneManager.DeleteSaveData();
+            // ストーリー内でのタイマーをリセットする
+            Global.GlobalDataManager.ResetStoryTimer();
         }
     }
 }

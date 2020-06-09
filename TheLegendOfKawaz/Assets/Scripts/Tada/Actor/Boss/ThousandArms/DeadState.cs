@@ -63,6 +63,9 @@ namespace Actor.Enemy.Thousand
                 {
                     arm.Burst();
                 }
+
+                // ボスが死んだ回数を加算する
+                Global.GlobalDataManager.AddBossDefeatCnt();
             }
 
             // 毎フレーム呼ばれる
