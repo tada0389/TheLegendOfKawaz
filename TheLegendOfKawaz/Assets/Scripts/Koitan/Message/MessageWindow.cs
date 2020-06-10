@@ -120,6 +120,7 @@ public class MessageWindow : MonoBehaviour
                 windowImage.enabled = false;
                 isOpening = false;
                 if (isTimeScale) TadaLib.TimeScaler.Instance.DismissRequest(0f);
+                gameObject.SetActive(false);
             });
 
 

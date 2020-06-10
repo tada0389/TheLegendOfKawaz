@@ -14,12 +14,14 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
 
     public static void OpenMessageWindow(string textStr)
     {
+        Instance.messageWindow.gameObject.SetActive(true);
         Instance.messageWindow.WindowOpen(textStr);
         Time.timeScale = 0.0f;
     }
 
     public static void OpenMessageWindow(string textStr, Sprite sprite)
     {
+        Instance.messageWindow.gameObject.SetActive(true);
         Instance.messageWindow.WindowOpen(textStr, sprite);
         Time.timeScale = 0.0f;
     }
@@ -31,6 +33,7 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
 
     public static void OpenKanbanWindow(string textStr)
     {
+        Instance.kanbanWindow.gameObject.SetActive(true);
         Instance.kanbanWindow.WindowOpen(textStr);
     }
 
