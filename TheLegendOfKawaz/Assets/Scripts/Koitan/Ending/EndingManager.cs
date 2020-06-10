@@ -30,6 +30,7 @@ public class EndingManager : MonoBehaviour
     void Start()
     {
         //TimeRecoder.Stop();
+        Global.GlobalDataManager.StopStoryTimer();
 
         // クリアタイムを別の方法で取得 by tada
         double clear_time = Global.GlobalDataManager.StoryTimer;
