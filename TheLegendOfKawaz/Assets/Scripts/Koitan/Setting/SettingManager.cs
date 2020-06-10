@@ -44,6 +44,7 @@ public class SettingManager : MonoBehaviour
     OnPush onCancel;
     Func<string> textStr;
     string exitSceneStr;
+    int vSyncCount = 1;
 
     [SerializeField]
     private AudioClip decisionSe;
@@ -92,6 +93,7 @@ public class SettingManager : MonoBehaviour
         window.color = defaultColor;
         window.gameObject.SetActive(false);
         item.SetActive(false);
+        QualitySettings.vSyncCount = vSyncCount;
 
         SceneManager.sceneLoaded += SetPost;
     }
@@ -302,13 +304,14 @@ public class SettingManager : MonoBehaviour
     void VideoOption()
     {
         cursor.gameObject.SetActive(true);
-        maxIndex = 3;
+        maxIndex = 4;
         nowIndex = 0;
         headUi.text = "がめんせってい";
-        textStr = () => "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >";
+        textStr = () => "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >\n垂直同期 < " + VsyncString() + " >";
         onSelecteds[0] = SetFullScreen();
         onSelecteds[1] = SetScreenSize();
         onSelecteds[2] = SetPostEffect();
+        onSelecteds[3] = SetVsync();
         onCancel = Option;
         onCancel += () => nowIndex = 0;
     }
@@ -517,6 +520,45 @@ public class SettingManager : MonoBehaviour
                 Screen.SetResolution(1920, 1080, Screen.fullScreen);
                 break;
         }
+    }
+
+    OnSelected SetVsync()
+    {
+        return () =>
+        {
+            if (ActionInput.GetButtonDown(ButtonCode.Right))
+            {
+                vSyncCount++;
+                vSyncCount = (vSyncCount + 4) % 4;
+                QualitySettings.vSyncCount = vSyncCount;
+                PlaySe(drumSe);
+                ScreenSizeChange();
+            }
+            if (ActionInput.GetButtonDown(ButtonCode.Left))
+            {
+                vSyncCount--;
+                vSyncCount = (vSyncCount + 4) % 4;
+                QualitySettings.vSyncCount = vSyncCount;
+                PlaySe(drumSe);
+                ScreenSizeChange();
+            }
+        };
+    }
+
+    string VsyncString()
+    {
+        switch (vSyncCount)
+        {
+            case 0:
+                return "OFF";
+            case 1:
+                return "1回ごと";
+            case 2:
+                return "2回ごと";
+            case 3:
+                return "3回ごと";
+        }
+        return "";
     }
 
     OnSelected SetDefault()
