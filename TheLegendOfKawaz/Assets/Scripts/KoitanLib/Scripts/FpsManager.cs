@@ -12,13 +12,13 @@ public class FpsManager : MonoBehaviour
         DontDestroyOnLoad(this);
         vSync = 1;
         DebugTextManager.Display(() => { return "Target FPS " + framerate.ToString() + "\n"; }, -2);
-        DebugTextManager.Display(() => { return "vSyncCount " + vSync.ToString() + "\n"; }, -2);
+        DebugTextManager.Display(() => { return "vSyncCount " + QualitySettings.vSyncCount.ToString() + "\n"; }, -2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        /*
         if (Input.GetKey(KeyCode.W))
         {
             framerate++;
@@ -38,6 +38,7 @@ public class FpsManager : MonoBehaviour
         
         Application.targetFrameRate = framerate; //60FPSに設定
         QualitySettings.vSyncCount = vSync;
+        */
     }
 
     /*
