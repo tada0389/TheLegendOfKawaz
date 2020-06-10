@@ -5263,6 +5263,8 @@ MonoBehaviour:
   gotPoint: {fileID: 7705360564555343293, guid: d73872298742d1f46b8560eb6a9561e1,
     type: 3}
   m_gage: {fileID: 1137173831}
+  m_miniPostProcessing: {fileID: 1573816318}
+  m_scoreText: {fileID: 1557613049}
   mini_map_: {fileID: 1385873382}
 --- !u!4 &532370632
 Transform:
@@ -10561,6 +10563,8 @@ MonoBehaviour:
   gotPoint: {fileID: 7705360564555343293, guid: d73872298742d1f46b8560eb6a9561e1,
     type: 3}
   m_gage: {fileID: 1137173831}
+  m_miniPostProcessing: {fileID: 1573816318}
+  m_scoreText: {fileID: 1557613049}
   mini_map_: {fileID: 1385873382}
 --- !u!4 &2015080765
 Transform:

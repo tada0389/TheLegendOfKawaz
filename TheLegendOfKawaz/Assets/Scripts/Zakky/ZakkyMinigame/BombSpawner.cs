@@ -24,6 +24,13 @@ public class BombSpawner : MonoBehaviour
     [SerializeField]
     Gage m_gage;
 
+    //ポストプロセシング
+    [SerializeField]
+    private MiniGamePostProcessing m_miniPostProcessing;
+    //スコアテキスト
+    [SerializeField]
+    protected ScoreText m_scoreText;
+
     [SerializeField]
     private MiniMapController mini_map_;
 
@@ -60,6 +67,9 @@ public class BombSpawner : MonoBehaviour
             PrimitiveTarget obj = KoitanLib.ObjectPoolManager.GetInstance<PrimitiveTarget>(bomb);
             if (obj != null)
             {
+                // 爆弾を初期化する by tada
+                obj.Init(m_miniPostProcessing, m_gage, m_scoreText);
+
                 obj.transform.position = new Vector2(randomX, 35f);
                 //もし井戸の真ん中らへんなら速度ゼロ
                 if (Mathf.Abs(obj.transform.position.x) < 10)
