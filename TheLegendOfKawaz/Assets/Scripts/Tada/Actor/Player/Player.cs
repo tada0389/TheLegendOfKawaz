@@ -479,7 +479,7 @@ namespace Actor.Player
 
             //if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
             //{
-            //    state_machine_.ChangeState((int)eState.Damage);
+            //    state_machine_.ChangeState((int)eState.Dead);
             //}
 
             // 状態を更新する
