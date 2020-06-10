@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TadaLib;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MessageManager : SingletonMonoBehaviour<MessageManager>
 {
@@ -11,6 +12,12 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
 
     [SerializeField]
     private MessageWindow kanbanWindow;
+
+    private void Start()
+    {
+        //シーンが切り替わったときに閉じる
+        SceneManager.sceneLoaded += Close;
+    }
 
     public static void OpenMessageWindow(string textStr)
     {
@@ -55,5 +62,11 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
     public static void FinishMessage()
     {
         Instance.messageWindow.MessageFinish();
+    }
+
+    void Close(Scene nextScene, LoadSceneMode mode)
+    {
+        CloseMessageWindow();
+        CloseKanbanWindow();
     }
 }
