@@ -43,6 +43,7 @@ public class SettingManager : MonoBehaviour
     OnSelected[] onSelecteds;
     OnPush onCancel;
     Func<string> textStr;
+    string exitSceneStr;
 
     [SerializeField]
     private AudioClip decisionSe;
@@ -189,9 +190,17 @@ public class SettingManager : MonoBehaviour
             .Join(window.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
             .AppendCallback(() =>
             {
-                if (isTargetScene())
+                if (isTargetScene("Target"))
                 {
-                    RetryMenu();
+                    RetryMenu("TargetMediator");
+                }
+                else if (isTargetScene("WellDefence"))
+                {
+                    RetryMenu("WellDefenceMediator");
+                }
+                else if (isTargetScene("Boss"))
+                {
+                    RetryMenu("ZakkyScene");
                 }
                 else
                 {
@@ -380,23 +389,25 @@ public class SettingManager : MonoBehaviour
         }
     }
 
-    void RetryMenu()
+    void RetryMenu(string eScene)
     {
+        exitSceneStr = eScene;
         cursor.gameObject.SetActive(true);
-        skillItem.SetActive(true);
+        //skillItem.SetActive(true);
         achievementItem.gameObject.SetActive(false);
         maxIndex = 3;
         headUi.text = "メニュー";
-        textStr = () => "リトライ\nターゲットを壊せをやめる\nメニューをとじる";
+        textStr = () => "リトライ\nあきらめる\nメニューをとじる";
         onSelecteds[0] = SetButtonPush(Retry);
-        onSelecteds[1] = SetButtonPush(ExitTargetMode);
+        onSelecteds[1] = SetButtonPush(ExitScene);
         onSelecteds[2] = SetButtonPush(CloseWindow);
         onCancel = CloseWindow;
     }
 
-    void ExitTargetMode()
+
+    void ExitScene()
     {
-        FadeManager.FadeIn(1.0f, "ZakkyScene");
+        FadeManager.FadeIn(1.0f, exitSceneStr);
         CloseWindow();
     }
 
@@ -407,9 +418,9 @@ public class SettingManager : MonoBehaviour
 
     }
 
-    bool isTargetScene()
+    bool isTargetScene(string str)
     {
-        return SceneManager.GetActiveScene().name.IndexOf("Target") >= 0;
+        return SceneManager.GetActiveScene().name.IndexOf(str) >= 0;
     }
 
     OnSelected SetFullScreen()
