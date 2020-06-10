@@ -35,6 +35,7 @@ namespace KoitanLib
         public static void Init(MonoBehaviour o, MonoBehaviour p, int maxNum)
         {
             int key = o.gameObject.GetInstanceID();
+            Release(o);
             //Debug.Log(o.name + o.GetInstanceID());
             if (poolDic.ContainsKey(key))
             {
