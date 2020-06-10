@@ -28,6 +28,9 @@ public class PrimitiveTarget : MonoBehaviour
     //rigidbody2D
     protected Rigidbody2D m_rigidbody2D;
 
+    // 既に必要なコンポーネントを取得しているか
+    bool IsInited = false;
+
     //跳ねやすさ
     [HideInInspector]
     public float bounce;
@@ -35,10 +38,16 @@ public class PrimitiveTarget : MonoBehaviour
     // ミニマップに登録されているか by tada めちゃくちゃ強引でごめん
     public bool IsRegisteredToMiniMap = false;
 
-    protected void Awake()
+    // 初期化で必要なオブジェクトを取得する by tada
+    public void Init(MiniGamePostProcessing mini_post, Gage gage, ScoreText text)
     {
-        // 爆弾がロードされたときのみオブジェクト取得
-        GetComponenter();
+        if (IsInited) return;
+        m_rigidbody2D = GetComponent<Rigidbody2D>();
+        m_miniPostProcessing = mini_post;
+        m_gage = gage;
+        m_scoreText = text;
+
+        IsInited = true;
     }
 
     // Start is called before the first frame update
@@ -61,14 +70,14 @@ public class PrimitiveTarget : MonoBehaviour
 
     }
 
-    void GetComponenter()
-    {
-        //Rigidbody2D、MiniGamePostProcessing、Gage、ScoreTextとる
-        m_rigidbody2D = GetComponent<Rigidbody2D>();
-        m_miniPostProcessing = GameObject.Find("PostProcessVolumeIdo").GetComponent<MiniGamePostProcessing>();
-        m_gage = GameObject.Find("Gage").GetComponent<Gage>();
-        m_scoreText = GameObject.Find("ScoreText").GetComponent<ScoreText>();
-    }
+    //void GetComponenter()
+    //{
+    //    //Rigidbody2D、MiniGamePostProcessing、Gage、ScoreTextとる
+    //    m_rigidbody2D = GetComponent<Rigidbody2D>();
+    //    m_miniPostProcessing = GameObject.Find("PostProcessVolumeIdo").GetComponent<MiniGamePostProcessing>();
+    //    m_gage = GameObject.Find("Gage").GetComponent<Gage>();
+    //    m_scoreText = GameObject.Find("ScoreText").GetComponent<ScoreText>();
+    //}
 
     void TeritoryCheck()
     {
