@@ -33,14 +33,15 @@ namespace TadaLib
             text_ = GetComponent<TextMeshProUGUI>();
             cam_ = Camera.main;
             text_.rectTransform.SetParent(canvas.transform);
-            duration_ = duration;
-
             text_.text = damage.ToString();
             text_.fontSize = size;
+            duration_ = duration;
+
             timer_ = new TadaLib.Timer(duration);
             gameObject.SetActive(true);
 
             Vector3 new_pos = cam_.WorldToScreenPoint(pos);
+            new_pos.z = 0f;
             text_.rectTransform.position = new_pos;
             text_.rectTransform.DOMoveY(new_pos.y + up_dist_, move_duration_).SetEase(ease);
             text_.color = new Color(text_.color.r, text_.color.g, text_.color.b, 0.0f);

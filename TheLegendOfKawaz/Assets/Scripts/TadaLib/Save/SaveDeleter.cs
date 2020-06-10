@@ -27,8 +27,6 @@ namespace Save
         {
             Actor.Player.SkillManager.Instance.DeleteSaveData();
             TadaScene.TadaSceneManager.DeleteSaveData();
-            // ストーリー内でのタイマーをリセットする
-            Global.GlobalDataManager.RestartStoryTimer();
         }
     }
 }

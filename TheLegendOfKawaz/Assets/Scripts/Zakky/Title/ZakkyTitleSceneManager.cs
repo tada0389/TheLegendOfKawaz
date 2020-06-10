@@ -18,7 +18,8 @@ public class ZakkyTitleSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // タイマーを止める by tada
+        Global.GlobalDataManager.StopStoryTimer();
     }
 
     // Update is called once per frame
@@ -44,6 +45,8 @@ public class ZakkyTitleSceneManager : MonoBehaviour
                     TitleState.m_state = TitleState.State.Decided;
                     // スキル情報や部屋情報のセーブデータを削除
                     save_deleter_.DeleteTempData();
+                    // ストーリー内でのタイマーをリセットする
+                    Global.GlobalDataManager.RestartStoryTimer();
                     //Fadeout関数でフェードアウト
                     //STARTのシーン遷移KoitanLibの方つかう(その方が演出がシームレス)
                     FadeManager.FadeIn(1f, "Prologue");
@@ -56,6 +59,7 @@ public class ZakkyTitleSceneManager : MonoBehaviour
                     //save_deleter_.DeleteTempData();
                     //Fadeout関数でフェードアウト
                     //STARTのシーン遷移KoitanLibの方つかう(その方が演出がシームレス)
+                    Global.GlobalDataManager.StartStoryTimer();
                     FadeManager.FadeIn(1f, "ZakkyScene");
                     break;
                 case 2:

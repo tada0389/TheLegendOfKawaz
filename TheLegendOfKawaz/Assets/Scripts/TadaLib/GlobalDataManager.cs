@@ -19,7 +19,7 @@ namespace Global
         // 現在のストーリーでのゲームのプレイ時間 (s)
         [SerializeField]
         private double story_timer_ = 0.0;
-        public double StoryTimer => story_timer_ + (Time.time - prev_time_);
+        public double StoryTimer => story_timer_ + ((is_story_timer_stoped_)? 0f : (Time.time - prev_time_));
 
         // 死亡回数
         [SerializeField]
@@ -41,6 +41,8 @@ namespace Global
         // 前回セーブが完了したときのプレイ時間
         private float prev_time_ = 0.0f;
 
+        private bool is_story_timer_stoped_ = false;
+
         // ロードする
         public bool Load()
         {
@@ -48,7 +50,7 @@ namespace Global
             TadaLib.Save.SaveManager.Instance.RequestSaveAlways(() => 
             {
                 eternal_timer_ += Time.time - prev_time_;
-                story_timer_ += Time.time - prev_time_;
+                if(!is_story_timer_stoped_) story_timer_ += Time.time - prev_time_;
                 prev_time_ = Time.time;
                 Save(kFileName); 
             });
@@ -114,19 +116,17 @@ namespace Global
             prev_time_ = Time.time;
         }
 
-        //public void StopStoryTimer()
-        //{
-        //    story_timer_ = 0.0;
-        //    eternal_timer_ += Time.time - prev_time_;
-        //    prev_time_ = Time.time;
-        //}
+        public void StopStoryTimer()
+        {
+            is_story_timer_stoped_ = true;
+        }
 
-        //public void StartStoryTimer()
-        //{
-        //    story_timer_ = 0.0;
-        //    eternal_timer_ += Time.time - prev_time_;
-        //    prev_time_ = Time.time;
-        //}
+        public void StartStoryTimer()
+        {
+            is_story_timer_stoped_ = false;
+            eternal_timer_ += Time.time - prev_time_;
+            prev_time_ = Time.time;
+        }
     }
 
     public class GlobalDataManager : TadaLib.SingletonMonoBehaviour<GlobalDataManager>
@@ -185,15 +185,15 @@ namespace Global
         {
             Instance.data_.RestartStoryTimer();
         }
-        //// 現在のストーリー内でのタイマーをストップする
-        //public static void StopStoryTimer()
-        //{
-        //    Instance.data_.StopStoryTimer();
-        //}
-        //// 現在のストーリー内でのタイマーを再開する
-        //public static void StartStoryTimer()
-        //{
-        //    Instance.data_.StartStoryTimer();
-        //}
+        // 現在のストーリー内でのタイマーをストップする
+        public static void StopStoryTimer()
+        {
+            Instance.data_.StopStoryTimer();
+        }
+        // 現在のストーリー内でのタイマーを再開する
+        public static void StartStoryTimer()
+        {
+            Instance.data_.StartStoryTimer();
+        }
     }
 } // namespace Global
