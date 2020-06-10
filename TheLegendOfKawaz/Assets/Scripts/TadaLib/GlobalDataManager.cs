@@ -114,6 +114,7 @@ namespace Global
             story_timer_ = 0.0;
             eternal_timer_ += Time.time - prev_time_;
             prev_time_ = Time.time;
+            is_story_timer_stoped_ = false;
         }
 
         public void StopStoryTimer()
