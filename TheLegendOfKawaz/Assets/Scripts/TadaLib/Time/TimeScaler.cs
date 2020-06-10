@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Time.timeScaleを変更させるクラス
@@ -19,6 +20,9 @@ namespace TadaLib
         {
             base.Awake();
             values_ = new MultiSet<float>();
+
+            // シーンが切り替わったらタイムスケールを1にする
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ActiveSceneChanged;
         }
 
         private void LateUpdate()
@@ -62,6 +66,12 @@ namespace TadaLib
             values_.Insert(time_scale);
             yield return new WaitForSeconds(duration);
             values_.Remove(time_scale);
+        }
+
+        // シーンが切り替わったら今までの申請をなくす
+        private void ActiveSceneChanged(Scene cur_scene, Scene next_scene)
+        {
+            values_.Clear();
         }
     }
 }
