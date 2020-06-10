@@ -416,7 +416,8 @@ public class SettingManager : MonoBehaviour
 
     void Retry()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        FadeManager.FadeIn(0.25f, SceneManager.GetActiveScene().name, 2);
         CloseWindow();
 
     }
