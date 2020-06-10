@@ -7,16 +7,16 @@ using WallDefence;
 public class KawaCoin : PrimitiveTarget
 {
     // Start is called before the first frame update
-    void Start()
-    {
-        base.Start();
-    }
+    //void Start()
+    //{
+    //    base.Start();
+    //}
 
     // Update is called once per frame
-    void Update()
-    {
-        base.Update();
-    }
+    //void Update()
+    //{
+    //    base.Update();
+    //}
 
     private void OnTriggerEnter2D(Collider2D col)
     {
