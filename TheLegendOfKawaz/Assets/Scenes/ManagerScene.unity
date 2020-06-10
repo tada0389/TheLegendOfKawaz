@@ -3930,6 +3930,7 @@ MonoBehaviour:
   masks:
   - {fileID: 2800000, guid: d75592d3cd4da4260bc481f847a3c70b, type: 3}
   - {fileID: 2800000, guid: 69b4be69dff0b4dbea0d758e878d8c47, type: 3}
+  - {fileID: 2800000, guid: f56b3d529d22d184dbc46ac81f777207, type: 3}
 --- !u!4 &1993729322
 Transform:
   m_ObjectHideFlags: 0
