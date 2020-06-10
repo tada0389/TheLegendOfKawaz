@@ -209,11 +209,10 @@ namespace TargetBreaking
             {
                 if(index_.first == grades_.Length - 1 && !is_feeding_)
                 {
-                    is_feeding_ = true;
                     // 前のシーンに戻る
-                    KoitanLib.FadeManager.FadeIn(0.5f, "ZakkyScene");
+                    is_feeding_ = KoitanLib.FadeManager.FadeIn(0.5f, "ZakkyScene");
                 }
-                else
+                else if(index_.first < grades_.Length - 1)
                 {
                     OpenExplonation(stages_[index_.first]);
                 }
