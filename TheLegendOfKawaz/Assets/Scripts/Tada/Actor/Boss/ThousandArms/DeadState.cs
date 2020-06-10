@@ -117,6 +117,7 @@ namespace Actor.Enemy.Thousand
 
                 if (talk_end_timer_ > scene_transition_time_)
                 {
+                    KoitanLib.FadeManager.ChangeFadeColor(Color.white);
                     KoitanLib.FadeManager.FadeIn(2f, "Epilogue", 1);
                     talk_end_timer_ = -10000f;
                 }

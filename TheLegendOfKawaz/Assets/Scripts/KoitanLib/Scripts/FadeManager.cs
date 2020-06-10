@@ -26,7 +26,7 @@ namespace KoitanLib
         public static bool is_fading { private set; get; }
         public static OpenState openState = OpenState.Opened;
         //static AsyncOperation async = new AsyncOperation();
-        static float m_duration;        
+        static float m_duration;
 
 
         private void Awake()
@@ -48,6 +48,7 @@ namespace KoitanLib
         {
             DebugTextManager.Display(() => "FadeState:" + openState.ToString() + "\n");
             //DebugTextManager.Display(() => "NowLoading..." + (async.priority * 100f).ToString() + "%\n");
+            //ChangeFadeColor(Color.white);
         }
 
         // Update is called once per frame
@@ -73,13 +74,18 @@ namespace KoitanLib
             */
         }
 
+        public static void ChangeFadeColor(Color c)
+        {
+            Instance.fadeImage.color = c;
+        }
+
         public static bool FadeIn(float duration, string next_scene_name, int maskNum = 0)
         {
             //if (openState != OpenState.Opened) return false;
             openState = OpenState.Closing;
             //m_duration = duration;
             AsyncOperation async = SceneManager.LoadSceneAsync(next_scene_name);
-            async.allowSceneActivation = false;            
+            async.allowSceneActivation = false;
             Sequence seq = DOTween.Sequence();
             seq.SetUpdate(true);
             seq.OnStart(() =>
