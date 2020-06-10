@@ -96,9 +96,10 @@ namespace KoitanLib
 
         public void LoadScene()
         {
-            if(!isLoaded)
+            if (!isLoaded)
             {
                 isLoaded = true;
+                FadeManager.ChangeFadeColor(Color.black);
                 FadeManager.FadeIn(1f, nextScene);
             }
         }
