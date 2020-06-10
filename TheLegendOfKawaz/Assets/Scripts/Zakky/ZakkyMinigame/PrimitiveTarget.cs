@@ -35,11 +35,15 @@ public class PrimitiveTarget : MonoBehaviour
     // ミニマップに登録されているか by tada めちゃくちゃ強引でごめん
     public bool IsRegisteredToMiniMap = false;
 
+    protected void Awake()
+    {
+        // 爆弾がロードされたときのみオブジェクト取得
+        GetComponenter();
+    }
+
     // Start is called before the first frame update
     protected void Start()
     {
-        GetComponenter();
-
         //最初のまがまがしい登場エフェクト
         TadaLib.EffectPlayer.Play(bomStartFX, transform.position, Vector3.zero);
 
@@ -61,7 +65,7 @@ public class PrimitiveTarget : MonoBehaviour
     {
         //Rigidbody2D、MiniGamePostProcessing、Gage、ScoreTextとる
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-        m_miniPostProcessing = GameObject.Find("PostProcessVolume").GetComponent<MiniGamePostProcessing>();
+        m_miniPostProcessing = GameObject.Find("PostProcessVolumeIdo").GetComponent<MiniGamePostProcessing>();
         m_gage = GameObject.Find("Gage").GetComponent<Gage>();
         m_scoreText = GameObject.Find("ScoreText").GetComponent<ScoreText>();
     }

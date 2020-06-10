@@ -88,11 +88,11 @@ public class BombSpawner : MonoBehaviour
                 tmp = interval - finalInterval;
                 overTimeCoe *= 0.01f;
                 overTime = 0f;
-                Debug.Log("yobareta" + (interval - overTimeCoe * overTime));
+                //Debug.Log("yobareta" + (interval - overTimeCoe * overTime));
             }
             _overTime = interval - overTimeCoe * overTime - tmp;
 
-            Debug.Log(_overTime);
+            //Debug.Log(_overTime);
 
             yield return new WaitForSeconds(_overTime);
         }
