@@ -7351,7 +7351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241428575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.59, y: 42.2, z: 0}
+  m_LocalPosition: {x: -26.59, y: 142.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8168,7 +8168,8 @@ PolygonCollider2D:
       - {x: 0, y: 67}
       - {x: -0.00999999, y: 60}
       - {x: -16.358383, y: 34.07898}
-      - {x: -37.340042, y: 34.177868}
+      - {x: -36.188053, y: 34.177868}
+      - {x: -36.26927, y: 32.29345}
       - {x: -26.370335, y: 14.872573}
       - {x: -34, y: -3}
       - {x: -7.0550213, y: -3}
@@ -8176,7 +8177,8 @@ PolygonCollider2D:
       - {x: 8.903589, y: -3}
       - {x: 34, y: -3}
       - {x: 24.552221, y: 14.51133}
-      - {x: 39.70394, y: 34.002213}
+      - {x: 38.22013, y: 32.093464}
+      - {x: 37.946373, y: 34.002213}
       - {x: 16.679565, y: 33.963696}
       - {x: 0.00999999, y: 60}
       - {x: 0, y: 67}
@@ -8292,7 +8294,16 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: -37.340042, y: 34.177868, z: 0}
+    - position: {x: -36.188053, y: 34.177868, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+    - position: {x: -36.26927, y: 32.29345, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -8364,7 +8375,16 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
-    - position: {x: 39.70394, y: 34.002213, z: 0}
+    - position: {x: 38.22013, y: 32.093464, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+    - position: {x: 37.946373, y: 34.002213, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -8494,8 +8514,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 8a213466b4b3642faa34dd7853586d96, type: 3}
   - {fileID: 21300000, guid: 8c2b3b75a86844168b54c83f67a5fe8e, type: 3}
   m_LocalAABB:
-    m_Center: {x: 0.33991623, y: 20.573576, z: -0.00512}
-    m_Extent: {x: 49.540684, y: 46.428257, z: 0.00512}
+    m_Center: {x: 0.33991623, y: 20.573576, z: -0.00513}
+    m_Extent: {x: 49.540684, y: 46.428257, z: 0.00513}
 --- !u!4 &1645921759
 Transform:
   m_ObjectHideFlags: 0
@@ -10003,7 +10023,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2095007925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.65, y: 43.72, z: 0}
+  m_LocalPosition: {x: -26.65, y: 143.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
