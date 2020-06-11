@@ -133,7 +133,7 @@ public class AchievementManager : MonoBehaviour
 
     public static float GetScrollMaxY()
     {
-        return Mathf.Max(-475 - 725 + Instance.contents.Length * 200, -475);
+        return Mathf.Max(-450 - 725 + Instance.contents.Length * 200, -450);
     }
 
     public static int GetAchieveMax()
