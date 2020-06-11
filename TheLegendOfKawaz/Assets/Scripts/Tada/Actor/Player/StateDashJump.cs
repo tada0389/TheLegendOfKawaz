@@ -102,6 +102,14 @@ namespace Actor.Player
                     return;
                 }
 
+                // ダッシュステート
+                if (data.CanAirDash() && Parent.input_.GetButtonDown(ActionCode.Dash))
+                {
+                    data.AirDashCalled();
+                    ChangeState((int)eState.Dush);
+                    return;
+                }
+
                 // 天井に頭がついていたら落ちる
                 if (data.IsHead && data.velocity.y > 0f)
                 {

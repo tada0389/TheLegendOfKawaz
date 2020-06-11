@@ -768,11 +768,11 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0.2}
     Accel: {x: 0, y: -0.005}
     dush_time_: 0.25
-    dush_speed_: 0.28
+    dush_speed_: 0.27
     dash_effect_: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
       type: 3}
   dashjump_state_:
-    MaxAbsSpeed: {x: 0.26, y: 0.28}
+    MaxAbsSpeed: {x: 0.27, y: 0.28}
     Accel: {x: 0.01, y: -0.04}
     jump_power: 0.26
     jump_input_time: 0.25
@@ -4103,12 +4103,7 @@ PrefabInstance:
     - target: {fileID: 7230252909227425876, guid: 9164951ae22c54227a2aaccb4e669f24,
         type: 3}
       propertyPath: m_Volume
-      value: 0.225
-      objectReference: {fileID: 0}
-    - target: {fileID: 7230252909227425876, guid: 9164951ae22c54227a2aaccb4e669f24,
-        type: 3}
-      propertyPath: m_Pitch
-      value: 2
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4373248624384023771, guid: 9164951ae22c54227a2aaccb4e669f24,
         type: 3}
@@ -4226,11 +4221,6 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: ecfa11ec7afec46aea5349edebabcd45, type: 3}
-    - target: {fileID: 2921679403833801105, guid: 59595a94e5b6b49d49ef994d83515d69,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.15
-      objectReference: {fileID: 0}
     - target: {fileID: 4569949776021631417, guid: 59595a94e5b6b49d49ef994d83515d69,
         type: 3}
       propertyPath: m_SortingOrder
