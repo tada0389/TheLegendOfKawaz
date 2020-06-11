@@ -70,7 +70,7 @@ namespace Actor.Player
                 }
 
                 // 移動している方向に速度を加える
-                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
+                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
                 if (Mathf.Abs(dir) < 0.2f) dir = 0f;
                 if (dir < -0f) data.ChangeDirection(eDir.Left);
                 if (dir > 0f) data.ChangeDirection(eDir.Right);

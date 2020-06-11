@@ -74,7 +74,7 @@ namespace Actor.Player
                 }
 
                 // 移動している方向に速度を加える
-                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
+                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
                 // もし壁キック後なら一定時間は移動は固定
                 if (is_kicked_ && Timer < kick_wait_time_) dir = 0f;
                 if (Mathf.Abs(dir) < 0.2f) dir = 0f;
@@ -91,33 +91,38 @@ namespace Actor.Player
 
                 // 壁に沿っている ただし，速度が一定以下の時
                 if(data.CanWallKick && data.velocity.y < wall_thr &&
-                    ((data.IsLeft && ActionInput.GetButton(ButtonCode.Left)) || (data.IsRight && ActionInput.GetButton(ButtonCode.Right))))
+                    ((data.IsLeft && Parent.input_.GetButton(ButtonCode.Left)) || (data.IsRight && Parent.input_.GetButton(ButtonCode.Right))))
                 {
                     ChangeState((int)eState.Wall);
                     return;
                 }
 
-                // ジャンプ
-                if (ActionInput.GetButtonDown(ActionCode.Jump))
+                // 壁キック
+                if (data.CanWallKick && (data.IsLeft || data.IsRight))
                 {
-                    // 壁キック
-                    if (data.CanWallKick && (data.IsLeft || data.IsRight))
+                    if (Parent.input_.GetButtonDown(ActionCode.Jump, false))
                     {
                         ChangeState((int)eState.Wall);
                         return;
                     }
+                }
 
-                    // 空中ジャンプ
-                    if (data.RequestArialJump())
+
+                // 空中ジャンプ
+                if (data.RequestArialJump())
+                {
+                    if (Parent.input_.GetButtonDown(ActionCode.Jump))
                     {
+                        data.ArialJumpCalled();
                         ChangeState((int)eState.Jump);
                         return;
                     }
                 }
 
                 // ダッシュステート
-                if (ActionInput.GetButtonDown(ActionCode.Dash) && data.CanAirDash())
+                if (data.CanAirDash() && Parent.input_.GetButtonDown(ActionCode.Dash))
                 {
+                    data.AirDashCalled();
                     ChangeState((int)eState.Dush);
                     return;
                 }
@@ -137,7 +142,7 @@ namespace Actor.Player
                 ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed);
 
                 // ある程度の時間はジャンプボタン長押しでジャンプ飛距離を伸ばせる
-                if (Timer < jump_input_time && !data.IsHead && ActionInput.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
+                if (Timer < jump_input_time && !data.IsHead && Parent.input_.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
             }
         }
     }

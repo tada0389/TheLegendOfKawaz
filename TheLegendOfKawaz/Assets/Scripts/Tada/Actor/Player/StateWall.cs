@@ -47,7 +47,7 @@ namespace Actor.Player
                 }
 
                 // 即ジャンプする場合もある (落下状態から壁ジャンプなど)
-                if (ActionInput.GetButtonDown(ActionCode.Jump))
+                if (Parent.input_.GetButtonDown(ActionCode.Jump))
                 {
                     WallKick();
                     return;
@@ -64,7 +64,7 @@ namespace Actor.Player
             public override void Proc()
             {
                 // 壁に接しているほうを押さなかったら落下する
-                if(!(data.IsLeft && ActionInput.GetButton(ButtonCode.Left) || data.IsRight && ActionInput.GetButton(ButtonCode.Right))){
+                if(!(data.IsLeft && Parent.input_.GetButton(ButtonCode.Left) || data.IsRight && Parent.input_.GetButton(ButtonCode.Right))){
                     ChangeState((int)eState.Fall);
                     return;
                 }
@@ -84,14 +84,14 @@ namespace Actor.Player
                 }
 
                 // 壁ジャンプ
-                if (ActionInput.GetButtonDown(ActionCode.Jump))
+                if (Parent.input_.GetButtonDown(ActionCode.Jump))
                 {
                     WallKick();
                     return;
                 }
 
                 // ダッシュステート
-                if (ActionInput.GetButtonDown(ActionCode.Dash))
+                if (Parent.input_.GetButtonDown(ActionCode.Dash))
                 {
                     //data.ReverseFaceDirection();
                     ChangeState((int)eState.Dush);
@@ -99,7 +99,7 @@ namespace Actor.Player
                 }
 
                 // 移動している方向に速度を加える
-                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
+                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
 
                 float accel_dir = 1.0f;
                 if (data.velocity.y < -MaxAbsSpeed.y) accel_dir = -1f;

@@ -67,7 +67,7 @@ namespace Actor.Player
                 }
 
                 // 移動している方向に速度を加える
-                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
+                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
                 if (Mathf.Abs(dir) < 0.2f) dir = 0f;
                 if (dir < -0f) data.ChangeDirection(eDir.Left);
                 if (dir > 0f) data.ChangeDirection(eDir.Right);
@@ -82,21 +82,22 @@ namespace Actor.Player
 
                 // 壁に沿っている ただし，速度が一定以下の時
                 if (data.CanWallKick && data.velocity.y < wall_thr &&
-                    ((data.IsLeft && ActionInput.GetButton(ButtonCode.Left)) || (data.IsRight && ActionInput.GetButton(ButtonCode.Right))))
+                    ((data.IsLeft && Parent.input_.GetButton(ButtonCode.Left)) || (data.IsRight && Parent.input_.GetButton(ButtonCode.Right))))
                 {
                     ChangeState((int)eState.Wall);
                 }
 
                 // 空中ジャンプ
-                if (ActionInput.GetButtonDown(ActionCode.Jump) && data.RequestArialJump())
+                if (data.RequestArialJump() && Parent.input_.GetButtonDown(ActionCode.Jump))
                 {
                     ChangeState((int)eState.Jump);
                     return;
                 }
 
                 // ダッシュステート
-                if (ActionInput.GetButtonDown(ActionCode.Dash) && data.CanGroundDash())
+                if (data.CanGroundDash() && Parent.input_.GetButtonDown(ActionCode.Dash))
                 {
+                    data.DashCalled();
                     ChangeState((int)eState.Dush);
                     return;
                 }
@@ -116,7 +117,7 @@ namespace Actor.Player
                 ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed);
 
                 // ある程度の時間はジャンプボタン長押しでジャンプ飛距離を伸ばせる
-                if (Timer < jump_input_time && !data.IsHead && ActionInput.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
+                if (Timer < jump_input_time && !data.IsHead && Parent.input_.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
             }
         }
     }

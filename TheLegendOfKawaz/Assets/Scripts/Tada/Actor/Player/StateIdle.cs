@@ -44,16 +44,24 @@ namespace Actor.Player
             public override void Proc()
             {
                 // ジャンプ入力ならジャンプステートへ
-                if (ActionInput.GetButtonDown(ActionCode.Jump))
+                if (Parent.input_.GetButtonDown(ActionCode.Jump))
                 {
                     ChangeState((int)eState.Jump);
                     return;
                 }
 
                 // ダッシュステート
-                if (ActionInput.GetButtonDown(ActionCode.Dash) && data.CanGroundDash())
+                if (data.CanGroundDash() && Parent.input_.GetButtonDown(ActionCode.Dash))
                 {
+                    data.DashCalled();
                     ChangeState((int)eState.Dush);
+                    return;
+                }
+
+                // 左右に押したら歩くステートに変更
+                if (Mathf.Abs(Parent.input_.GetAxis(AxisCode.Horizontal)) > 0.2f)
+                {
+                    ChangeState((int)eState.Walk);
                     return;
                 }
 
@@ -61,12 +69,6 @@ namespace Actor.Player
                 if (!data.IsGround)
                 {
                     ChangeState((int)eState.Fall);
-                }
-
-                // 左右に押したら歩くステートに変更
-                if (Mathf.Abs(ActionInput.GetAxis(AxisCode.Horizontal)) > 0.2f)
-                {
-                    ChangeState((int)eState.Walk);
                     return;
                 }
 

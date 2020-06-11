@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TadaLib;
 using Bullet;
+using TadaInput;
 
 /// <summary>
 /// キャラクターを動かす元となるクラス
@@ -143,8 +144,12 @@ namespace Actor.Player
             if (!IsGround) return false;
             if (is_dashed_ || (IsGround && Time.time - prev_dash_time_ < 0.5f)) return false;
             if(!IsGround) is_dashed_ = true;
-            prev_dash_time_ = Time.time;
             return true;
+        }
+
+        public void DashCalled()
+        {
+            prev_dash_time_ = Time.time;
         }
 
         // 空中ダッシュできるか
@@ -153,8 +158,12 @@ namespace Actor.Player
             if (IsGround) return false;
             if (!CanAirDashMove || is_dashed_) return false;
             is_dashed_ = true;
-            prev_dash_time_ = Time.time;
             return true;
+        }
+
+        public void AirDashCalled()
+        {
+            prev_dash_time_ = Time.time;
         }
 
         public void ResetDash() => is_dashed_ = false;
@@ -168,8 +177,12 @@ namespace Actor.Player
         // 空中ジャンプができるか？
         public bool RequestArialJump()
         {
-            --air_jump_num_;
             return air_jump_num_ >= 0;
+        }
+
+        public void ArialJumpCalled()
+        {
+            --air_jump_num_;
         }
 
         public void ReflectVelocity(bool is_in)
@@ -283,6 +296,7 @@ namespace Actor.Player
     // プレイヤークラス partialによりファイル間で分割してクラスを実装
     [RequireComponent(typeof(Animator))]
     [RequireComponent(typeof(BulletSpawner))]
+//    [RequireComponent(typeof(BasePlayerInput))]
     public partial class Player : BaseActorController
     {
         // プレイヤーのステート一覧
@@ -387,10 +401,15 @@ namespace Actor.Player
         private InitialSkill[] demo_skills_;
         #endregion
 
+        // プレイヤーの入力クラス
+        private TadaInput.BasePlayerInput input_;
+
         private void Awake()
         {
             Global.GlobalPlayerInfo.IsMuteki = false;
             Global.GlobalPlayerInfo.ActionEnabled = true;
+
+            input_ = GetComponent<BasePlayerInput>();
         }
 
         // Start is called before the first frame update
@@ -457,10 +476,12 @@ namespace Actor.Player
             //    //TadaLib.Save.SaveManager.Instance.DeleteAllData();
             //    AchievementManager.DeleteSaveData();
             //}
-            if (ActionInput.GetButtonDown(ActionCode.Pause) && Time.timeScale > 0.5f && !KoitanLib.FadeManager.is_fading)
+            if (Time.timeScale > 0.5f && !KoitanLib.FadeManager.is_fading && input_.GetButtonDown(ActionCode.Pause))
             {
                 SettingManager.RequestOpenWindow();
             }
+
+            if (Time.timeScale < 1e-6) return;
 
             if (!Global.GlobalPlayerInfo.ActionEnabled)
             {
@@ -469,7 +490,6 @@ namespace Actor.Player
                 data_.ReflectVelocity(true);
                 return;
             }
-            if (Time.timeScale < 1e-6) return;
 
             // 接地しているかどうかなどで，状態を変更する
             RefectRigidbody();
@@ -518,12 +538,12 @@ namespace Actor.Player
         // ショットするかをチェックする
         private void CheckShot()
         {
-            if (ActionInput.GetButtonDown(ActionCode.Shot))
+            if (input_.GetButtonDown(ActionCode.Shot))
             {
                 charge_timer_ = 0.0f;
                 Shot(false);
             }
-            else if (ActionInput.GetButton(ActionCode.Shot))
+            else if (input_.GetButton(ActionCode.Shot))
             {
                 charge_timer_ += Time.deltaTime;
                 if(charge_timer_ >= data_.ChargeEndTime / 4f && !charge_shot_pre_.activeSelf)
@@ -536,7 +556,7 @@ namespace Actor.Player
                 }
             }
 
-            if (ActionInput.GetButtonUp(ActionCode.Shot))
+            if (input_.GetButtonUp(ActionCode.Shot))
             {
                 if(charge_timer_ >= data_.ChargeEndTime / 4f)
                     Shot(charge_timer_ >= data_.ChargeEndTime);
@@ -575,7 +595,7 @@ namespace Actor.Player
         private void RefectRigidbody()
         {
 
-            data_.IsThrough = (ActionInput.GetAxis(AxisCode.Vertical) < -0.5f);
+            data_.IsThrough = (input_.GetAxis(AxisCode.Vertical) < -0.5f);
 
             data_.animator.SetBool("isGround", data_.IsGround);
             if (data_.IsGround)

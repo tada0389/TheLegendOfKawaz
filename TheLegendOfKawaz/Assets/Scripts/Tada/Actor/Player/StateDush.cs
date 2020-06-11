@@ -78,8 +78,9 @@ namespace Actor.Player
                 }
 
                 // ジャンプ
-                if (ActionInput.GetButtonDown(ActionCode.Jump) && (data.IsGround || data.RequestArialJump()))
+                if ((data.IsGround || data.RequestArialJump()) && Parent.input_.GetButtonDown(ActionCode.Jump))
                 {
+                    if(!data.IsGround) data.ArialJumpCalled();
                     ChangeState((int)eState.DashJump);
                     return;
                 }
