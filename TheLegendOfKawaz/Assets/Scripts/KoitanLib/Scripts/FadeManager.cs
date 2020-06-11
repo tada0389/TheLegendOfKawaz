@@ -22,10 +22,11 @@ namespace KoitanLib
         [SerializeField]
         private Texture[] masks;
 
-        public static RawImage image;
+        [SerializeField]
+        private TMPro.TextMeshProUGUI loadingTextMesh;
         public static bool is_fading { private set; get; }
         public static OpenState openState = OpenState.Opened;
-        //static AsyncOperation async = new AsyncOperation();
+        static AsyncOperation async;
         static float m_duration;
 
 
@@ -39,8 +40,6 @@ namespace KoitanLib
                 DontDestroyOnLoad(fadeCanvas);
             }
             else Destroy(gameObject);
-
-            image = GetComponent<RawImage>();
         }
 
         // Start is called before the first frame update
@@ -54,7 +53,6 @@ namespace KoitanLib
         // Update is called once per frame
         void Update()
         {
-            /*
             if (openState == OpenState.Closed && async.progress >= 0.9f)
             {
                 openState = OpenState.Opening;
@@ -63,15 +61,19 @@ namespace KoitanLib
                 () => Instance.fadeImage.Range = 1,          // 何を対象にするのか
                 num => Instance.fadeImage.Range = num,   // 値の更新
                 0,                  // 最終的な値
-                m_duration - 0.1f                // アニメーション時間
-                ).SetUpdate(true).SetDelay(0.1f).SetUpdate(true)
+                m_duration               // アニメーション時間
+                ).SetUpdate(true)
                 .OnComplete(() =>
                 {
                     is_fading = false;
                     openState = OpenState.Opened;
+                    loadingTextMesh.gameObject.SetActive(false);
                 });
             }
-            */
+            if (async != null)
+            {
+                loadingTextMesh.text = (async.progress * 100).ToString("0") + "%";
+            }
         }
 
         public static void ChangeFadeColor(Color c)
@@ -83,9 +85,10 @@ namespace KoitanLib
         {
             //if (openState != OpenState.Opened) return false;
             openState = OpenState.Closing;
-            //m_duration = duration;
-            AsyncOperation async = SceneManager.LoadSceneAsync(next_scene_name);
+            m_duration = duration;
+            async = SceneManager.LoadSceneAsync(next_scene_name);
             async.allowSceneActivation = false;
+            instance.loadingTextMesh.gameObject.SetActive(true);
             Sequence seq = DOTween.Sequence();
             seq.SetUpdate(true);
             seq.OnStart(() =>
@@ -104,29 +107,8 @@ namespace KoitanLib
             .AppendCallback(() =>
             {
                 openState = OpenState.Closed;
-                openState = OpenState.Opening;
-                Debug.Log("シーン読み込み許可: +" + async.ToString());
-                async.allowSceneActivation = true;
-                DOTween.To(
-                () => Instance.fadeImage.Range = 1,          // 何を対象にするのか
-                num => Instance.fadeImage.Range = num,   // 値の更新
-                0,                  // 最終的な値
-                duration                // アニメーション時間
-                ).SetUpdate(true)
-                .OnComplete(() =>
-                {
-                    is_fading = false;
-                    openState = OpenState.Opened;
-                });
             });
             return true;
-        }
-
-        public static void FadeOut(float duration, string next_scene_name)
-        {
-            if (is_fading) return;
-            is_fading = true;
-            image.DOFade(1, duration).OnComplete(() => SceneManager.LoadScene(next_scene_name)).SetUpdate(true);
         }
     }
 

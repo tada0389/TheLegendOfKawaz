@@ -59,6 +59,7 @@ MonoBehaviour:
   ease: 9
   duration: 0.5
   initDeltaSize: {x: 1800, y: 0}
+  initColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!82 &7743353183237575638
 AudioSource:
   m_ObjectHideFlags: 0
@@ -71,7 +72,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c2b17d79c5d4748bf84a9b6c01daab78, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 2
   Loop: 0
   Mute: 0
