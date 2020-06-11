@@ -48,27 +48,31 @@ namespace Actor.Player
                     return;
                 }
 
-                // ジャンプ
-                if (ActionInput.GetButtonDown(ActionCode.Jump))
+                // 壁キック
+                if (data.CanWallKick && (data.IsLeft || data.IsRight))
                 {
-                    // 壁キック
-                    if(data.CanWallKick && (data.IsLeft || data.IsRight))
+                    if (Parent.input_.GetButtonDown(ActionCode.Jump, false))
                     {
                         ChangeState((int)eState.Wall);
                         return;
                     }
+                }
 
-                    // 空中ジャンプ
-                    if (data.RequestArialJump())
+                // 空中ジャンプ
+                if (data.RequestArialJump())
+                {
+                    if (Parent.input_.GetButtonDown(ActionCode.Jump))
                     {
+                        data.ArialJumpCalled();
                         ChangeState((int)eState.Jump);
                         return;
                     }
                 }
 
                 // ダッシュステート
-                if (ActionInput.GetButtonDown(ActionCode.Dash) && data.CanAirDash())
+                if (data.CanAirDash() && Parent.input_.GetButtonDown(ActionCode.Dash))
                 {
+                    data.AirDashCalled();
                     ChangeState((int)eState.Dush);
                     return;
                 }
@@ -81,7 +85,7 @@ namespace Actor.Player
                 }
 
                 // 落下開始の始めはジャンプができる (イライラ防止のため)
-                if (PrevStateId == (int)eState.Walk && Timer < can_jump_time && ActionInput.GetButtonDown(ActionCode.Jump))
+                if (PrevStateId == (int)eState.Walk && Timer < can_jump_time && (Parent.input_.GetButtonDown(ActionCode.Jump)))
                 {
                     ChangeState((int)eState.Jump);
                     return;
@@ -89,13 +93,14 @@ namespace Actor.Player
 
                 // 壁に沿っている 
                 if (data.CanWallKick &&
-                    ((data.IsLeft && ActionInput.GetButton(ButtonCode.Left)) || (data.IsRight && ActionInput.GetButton(ButtonCode.Right))))
+                    ((data.IsLeft && Parent.input_.GetButton(ButtonCode.Left)) || (data.IsRight && Parent.input_.GetButton(ButtonCode.Right))))
                 {
                     ChangeState((int)eState.Wall);
+                    return;
                 }
 
                 // 空中ジャンプ
-                if (ActionInput.GetButtonDown(ActionCode.Jump) && data.RequestArialJump())
+                if (data.RequestArialJump() && Parent.input_.GetButtonDown(ActionCode.Jump))
                 {
                     ChangeState((int)eState.Jump);
                     return;
@@ -105,7 +110,7 @@ namespace Actor.Player
                 if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
 
                 // 移動している方向に速度を加える
-                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
+                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
                 if (Mathf.Abs(dir) < 0.2f) dir = 0f;
                 if (dir < -0f) data.ChangeDirection(eDir.Left);
                 if (dir > 0f) data.ChangeDirection(eDir.Right);

@@ -46,14 +46,14 @@ namespace Actor.Player
                 }
 
                 // ジャンプ入力ならジャンプステートへ
-                if (ActionInput.GetButtonDown(ActionCode.Jump))
+                if (Parent.input_.GetButtonDown(ActionCode.Jump))
                 {
                     ChangeState((int)eState.WaterJump);
                     return;
                 }
 
                 // 左右に押したら歩くステートに変更
-                if (Mathf.Abs(ActionInput.GetAxis(AxisCode.Horizontal)) > 0.2f)
+                if (Mathf.Abs(Parent.input_.GetAxis(AxisCode.Horizontal)) > 0.2f)
                 {
                     ChangeState((int)eState.WaterWalk);
                     return;

@@ -654,6 +654,7 @@ GameObject:
   - component: {fileID: 2131037086634868346}
   - component: {fileID: 69060419}
   - component: {fileID: 1421661576}
+  - component: {fileID: 1079471587883194094}
   m_Layer: 0
   m_Name: NewKawazTan
   m_TagString: Player
@@ -767,11 +768,11 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0.2}
     Accel: {x: 0, y: -0.005}
     dush_time_: 0.25
-    dush_speed_: 0.27
+    dush_speed_: 0.28
     dash_effect_: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
       type: 3}
   dashjump_state_:
-    MaxAbsSpeed: {x: 0.28, y: 0.28}
+    MaxAbsSpeed: {x: 0.26, y: 0.28}
     Accel: {x: 0.01, y: -0.04}
     jump_power: 0.26
     jump_input_time: 0.25
@@ -970,6 +971,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1079471587883194094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131037086634868350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb48c49bc5bbdf4eac62c0aca422d93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persude_time_: 0.1
 --- !u!1 &2137500911764863794
 GameObject:
   m_ObjectHideFlags: 0
@@ -4229,15 +4243,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59595a94e5b6b49d49ef994d83515d69, type: 3}
---- !u!1 &5178167681758080773 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4569949775547949339, guid: 59595a94e5b6b49d49ef994d83515d69,
-    type: 3}
-  m_PrefabInstance: {fileID: 8698479522329153054}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5178167681758080774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4569949775547949336, guid: 59595a94e5b6b49d49ef994d83515d69,
+    type: 3}
+  m_PrefabInstance: {fileID: 8698479522329153054}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5178167681758080773 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4569949775547949339, guid: 59595a94e5b6b49d49ef994d83515d69,
     type: 3}
   m_PrefabInstance: {fileID: 8698479522329153054}
   m_PrefabAsset: {fileID: 0}

@@ -52,15 +52,16 @@ namespace Actor.Player
             public override void Proc()
             {
                 // ジャンプ入力ならジャンプステートへ
-                if (ActionInput.GetButtonDown(ActionCode.Jump))
+                if (Parent.input_.GetButtonDown(ActionCode.Jump))
                 {
                     ChangeState((int)eState.Jump);
                     return;
                 }
 
                 // ダッシュステート
-                if (ActionInput.GetButtonDown(ActionCode.Dash) && data.CanGroundDash())
+                if (data.CanGroundDash() && Parent.input_.GetButtonDown(ActionCode.Dash))
                 {
+                    data.DashCalled();
                     ChangeState((int)eState.Dush);
                     return;
                 }
@@ -69,16 +70,11 @@ namespace Actor.Player
                 if (!data.IsGround) not_ground_time_ += Time.deltaTime;
                 else not_ground_time_ = 0.0f;
 
-                if(not_ground_time_ > 0.0f)
-                {
-                    ChangeState((int)eState.Fall);
-                }
-
                 // 壁に当たってるなら速度ゼロ
                 if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
 
                 // 移動している方向に速度を加える
-                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
+                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
                 if (Mathf.Abs(dir) < 0.2f) dir = 0f;
                 if (dir == 0.0f) { // 良くない
                     // 何も押していないならWait状態に
@@ -89,6 +85,12 @@ namespace Actor.Player
                 if (dir > 0f) data.ChangeDirection(eDir.Right);
 
                 ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, 1f) * Accel * data.GroundFriction, MaxAbsSpeed * (1 / (Mathf.Max(0.5f, data.GroundFriction))));
+
+                if (not_ground_time_ > 0.0f)
+                {
+                    ChangeState((int)eState.Fall);
+                    return;
+                }
             }
         }
     }

@@ -56,18 +56,18 @@ namespace Actor.Player
 
                 // ジャンプ入力ならジャンプステートへ
                 // ただし，水中に入ったばかりだとジャンプできない
-                if (ActionInput.GetButtonDown(ActionCode.Jump))
+                if (PrevStateId != (int)eState.WaterJump && PrevStateId != (int)eState.WaterIdle && Timer < cant_jump_time_) ;
+                else
                 {
-                    if (PrevStateId != (int)eState.WaterJump && PrevStateId != (int)eState.WaterIdle && Timer < cant_jump_time_) ;
-                    else
-                    {
+                    if (Parent.input_.GetButtonDown(ActionCode.Jump))
+                    { 
                         ChangeState((int)eState.WaterJump);
                         return;
                     }
                 }
 
                 // 移動している方向に速度を加える
-                float dir = ActionInput.GetAxis(AxisCode.Horizontal);
+                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
                 if (Mathf.Abs(dir) < 0.2f) dir = 0f;
                 if (dir == 0.0f)
                 { // 良くない
