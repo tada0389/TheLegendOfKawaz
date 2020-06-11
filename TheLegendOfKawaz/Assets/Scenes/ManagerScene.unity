@@ -714,7 +714,7 @@ PrefabInstance:
     - target: {fileID: 1699007339123358844, guid: 4587c7a8837a6e74b896b2d402fce562,
         type: 3}
       propertyPath: m_Volume
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1699007339123358845, guid: 4587c7a8837a6e74b896b2d402fce562,
         type: 3}
@@ -2772,7 +2772,7 @@ PrefabInstance:
     - target: {fileID: 7743353183237575638, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
         type: 3}
       propertyPath: m_Volume
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7743353183237575639, guid: 09d9ce4dccde24b5287c2066a8ea1f45,
         type: 3}
@@ -2875,7 +2875,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3413,7 +3413,7 @@ MonoBehaviour:
     isUnlocked: 0
   - key: Target_Clear_jokyu
     icon: {fileID: 21300000, guid: 0d8bde14b2ee03d4991210c73555fa2f, type: 3}
-    body: "\u30BF\u30FC\u30B2\u30C3\u30C8\u7834\u58CA\u30DE\u30B9\u30BF\u30FC(\u4E0A\u7D1A)"
+    body: "\u30BF\u30FC\u30B2\u30C3\u30C8\u7834\u58CA\u5B8C\u4E86(\u4E0A\u7D1A)"
     detail: "\u300C\u30BF\u30FC\u30B2\u30C3\u30C8\u3092\u58CA\u305B\uFF01(\u4E0A\u7D1A)\u300D\u3092\u30AF\u30EA\u30A2\u3059\u308B\u3002"
     isUnlocked: 0
   - key: Target_Clear_jokyu_Gold

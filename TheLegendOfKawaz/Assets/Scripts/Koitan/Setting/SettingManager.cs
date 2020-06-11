@@ -95,6 +95,12 @@ public class SettingManager : MonoBehaviour
         item.SetActive(false);
         QualitySettings.vSyncCount = vSyncCount;
 
+        //音量
+        masterVol = bgmVol = seVol = 8;
+        audioMixer.SetFloat("MasterVol", VolToDb(masterVol / 10));
+        audioMixer.SetFloat("BGMVol", VolToDb(bgmVol / 10));
+        audioMixer.SetFloat("SEVol", VolToDb(seVol / 10));
+
         SceneManager.sceneLoaded += SetPost;
     }
 
@@ -146,6 +152,8 @@ public class SettingManager : MonoBehaviour
                     onCancel();
                     PlaySe(cancelSe);
                 }
+
+                //カーソルの更新
                 cursor.transform.localPosition = cursorDefaultPos + Vector3.down * width * nowIndex;
 
                 if (ActionInput.GetButtonDown(ActionCode.Pause))
@@ -187,11 +195,7 @@ public class SettingManager : MonoBehaviour
                 openState = OpenState.Opening;
                 window.gameObject.SetActive(true);
                 TadaLib.TimeScaler.Instance.RequestChange(0.0f);
-            })
-            .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.25f)).SetEase(ease).SetUpdate(true)
-            .Join(window.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
-            .AppendCallback(() =>
-            {
+                //初期化
                 if (isTargetScene("Target"))
                 {
                     RetryMenu("TargetMediator");
@@ -208,7 +212,18 @@ public class SettingManager : MonoBehaviour
                 {
                     StartPlacement();
                 }
+
                 nowIndex = 0;
+                //テキストの更新
+                titleUi.text = textStr();
+                //カーソルの更新
+                cursor.transform.localPosition = cursorDefaultPos + Vector3.down * width * nowIndex;
+
+            })
+            .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.25f)).SetEase(ease).SetUpdate(true)
+            .Join(window.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
+            .AppendCallback(() =>
+            {
                 item.SetActive(true);
                 openState = OpenState.Opened;
             });
@@ -321,15 +336,17 @@ public class SettingManager : MonoBehaviour
         cursor.gameObject.SetActive(true);
         maxIndex = 4;
         nowIndex = 0;
+        /*
         audioMixer.GetFloat("MasterVol", out masterVol);
         audioMixer.GetFloat("BGMVol", out bgmVol);
         audioMixer.GetFloat("SEVol", out seVol);
+        */
         headUi.text = "おんりょうせってい";
-        textStr = () => "全体 < " + (masterVol / 10 + 8) + " >\nBGM < " + (bgmVol / 10 + 8) + " >\nこうかおん < " + (seVol / 10 + 8) + " >\n元にもどす";
+        textStr = () => "全体 < " + (masterVol) + " >\nBGM < " + (bgmVol) + " >\nこうかおん < " + (seVol) + " >\n元にもどす";
         onSelecteds[0] = () => SetVol("MasterVol", ref masterVol);
         onSelecteds[1] = () => SetVol("BGMVol", ref bgmVol);
         onSelecteds[2] = () => SetVol("SEVol", ref seVol);
-        onSelecteds[3] = SetDefault();
+        onSelecteds[3] = SetDefaultVol();
         onCancel = Option;
         onCancel += () => nowIndex = 1;
     }
@@ -374,20 +391,22 @@ public class SettingManager : MonoBehaviour
 
     }
 
+
     void SetVol(string mixerName, ref float vol)
     {
         if (ActionInput.GetButtonDown(ButtonCode.Right))
         {
-            vol += 10;
-            vol = Mathf.Min(vol, 20);
-            audioMixer.SetFloat(mixerName, vol);
+            vol += 1f;
+            vol = Mathf.Min(vol, 10f);
+            audioMixer.SetFloat(mixerName, VolToDb(vol / 10));
             PlaySe(drumSe);
         }
         if (ActionInput.GetButtonDown(ButtonCode.Left))
         {
-            vol -= 10;
-            vol = Math.Max(vol, -80);
-            audioMixer.SetFloat(mixerName, vol);
+            vol -= 1f;
+            vol = Math.Max(vol, 0f);
+            float db = (vol + 80f) / 80f;
+            audioMixer.SetFloat(mixerName, VolToDb(vol / 10));
             PlaySe(drumSe);
         }
     }
@@ -562,16 +581,24 @@ public class SettingManager : MonoBehaviour
         return "";
     }
 
-    OnSelected SetDefault()
+    OnSelected SetDefaultVol()
     {
         return SetButtonPush(() =>
         {
-            masterVol = bgmVol = seVol = -10;
-            audioMixer.SetFloat("MasterVol", masterVol);
-            audioMixer.SetFloat("BGMVol", bgmVol);
-            audioMixer.SetFloat("SEVol", seVol);
+            masterVol = bgmVol = seVol = 8;
+            audioMixer.SetFloat("MasterVol", VolToDb(masterVol / 10));
+            audioMixer.SetFloat("BGMVol", VolToDb(bgmVol / 10));
+            audioMixer.SetFloat("SEVol", VolToDb(seVol / 10));
         });
     }
+
+    //デシベルへの変換は平方根でごまかす
+    //[0,1]→[-80,0]
+    float VolToDb(float vol)
+    {
+        return Mathf.Sqrt(vol) * 80f - 80f;
+    }
+
 
     void Quit()
     {
