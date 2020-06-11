@@ -41,10 +41,16 @@ public class SettingManager : MonoBehaviour
     delegate void OnPush();
     delegate void OnSelected();
     OnSelected[] onSelecteds;
-    OnPush onCancel;
     Func<string> textStr;
     string exitSceneStr;
     int vSyncCount = 1;
+
+    //前のページを覚えておく
+    Stack<Action> pageActStack = new Stack<Action>();
+    Stack<int> pageIndexStack = new Stack<int>();
+
+    //現在のメニューを覚えておく
+    Action nowMenu;
 
     [SerializeField]
     private AudioClip decisionSe;
@@ -84,7 +90,7 @@ public class SettingManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         cursorDefaultPos = cursor.transform.localPosition;
-        onSelecteds = new OnSelected[4];
+        onSelecteds = new OnSelected[6];
         StartPlacement();
         nowIndex = 0;
         DontDestroyOnLoad(this);
@@ -147,11 +153,29 @@ public class SettingManager : MonoBehaviour
                 //テキストの更新
                 titleUi.text = textStr();
 
+                //キャンセル
+                if (ActionInput.GetButtonDown(ActionCode.Back))
+                {
+                    if (pageActStack.Count > 0)
+                    {                        
+                        nowMenu = pageActStack.Pop();
+                        nowMenu();
+                        nowIndex = pageIndexStack.Pop();
+                    }
+                    else
+                    {
+                        CloseWindow();
+                    }
+                    PlaySe(cancelSe);
+                }
+
+                /*
                 if (onCancel != null && ActionInput.GetButtonDown(ActionCode.Back))
                 {
                     onCancel();
                     PlaySe(cancelSe);
                 }
+                */
 
                 //カーソルの更新
                 cursor.transform.localPosition = cursorDefaultPos + Vector3.down * width * nowIndex;
@@ -196,21 +220,32 @@ public class SettingManager : MonoBehaviour
                 window.gameObject.SetActive(true);
                 TadaLib.TimeScaler.Instance.RequestChange(0.0f);
                 //初期化
+                Instance.pageActStack.Clear();
+                Instance.pageIndexStack.Clear();
+
+                //現在のシーン名で戻るシーンを変える
                 if (isTargetScene("Target"))
                 {
-                    RetryMenu("TargetMediator");
+                    exitSceneStr = "TargetMediator";
+                    RetryMenu();
+                    nowMenu = RetryMenu;
                 }
                 else if (isTargetScene("WellDefence"))
                 {
-                    RetryMenu("WellDefenceMediator");
+                    exitSceneStr = "WellDefenceMediator";
+                    RetryMenu();
+                    nowMenu = RetryMenu;
                 }
                 else if (isTargetScene("Boss"))
                 {
-                    RetryMenu("ZakkyScene");
+                    exitSceneStr = "ZakkyScene";
+                    RetryMenu();
+                    nowMenu = RetryMenu;
                 }
                 else
                 {
                     StartPlacement();
+                    nowMenu = StartPlacement;
                 }
 
                 nowIndex = 0;
@@ -267,9 +302,10 @@ public class SettingManager : MonoBehaviour
         {
             if (ActionInput.GetButtonDown(ActionCode.Decide))
             {
+                pageActStack.Push(new Action(nowMenu));
+                pageIndexStack.Push(nowIndex);
+                nowMenu = onPush;
                 onPush();
-                //audioSource.PlayOneShot(decisionSe);
-                //AudioSource.PlayClipAtPoint(decisionSe, transform.position);
                 PlaySe(decisionSe);
             }
         };
@@ -287,7 +323,6 @@ public class SettingManager : MonoBehaviour
         onSelecteds[1] = SetButtonPush(Option);
         onSelecteds[2] = SetButtonPush(AchievementScreen);
         onSelecteds[3] = SetButtonPush(CloseWindow);
-        onCancel = CloseWindow;
     }
 
 
@@ -297,8 +332,6 @@ public class SettingManager : MonoBehaviour
         nowIndex = 0;
         headUi.text = "そうさほうほう";
         textStr = () => ActionInput.GetSpriteCode(ActionCode.Jump) + "ジャンプ\n" + ActionInput.GetSpriteCode(ActionCode.Shot) + "ショット\n" + ActionInput.GetSpriteCode(ActionCode.Dash) + "ダッシュ";
-        onCancel = StartPlacement;
-        onCancel += () => nowIndex = 0;
         cursor.gameObject.SetActive(false);
     }
 
@@ -312,8 +345,6 @@ public class SettingManager : MonoBehaviour
         onSelecteds[0] = SetButtonPush(VideoOption);
         onSelecteds[1] = SetButtonPush(BgmOption);
         onSelecteds[2] = SetButtonPush(ReturnTitle);
-        onCancel = StartPlacement;
-        onCancel += () => nowIndex = 1;
     }
 
     void VideoOption()
@@ -327,8 +358,6 @@ public class SettingManager : MonoBehaviour
         onSelecteds[1] = SetScreenSize();
         onSelecteds[2] = SetPostEffect();
         onSelecteds[3] = SetVsync();
-        onCancel = Option;
-        onCancel += () => nowIndex = 0;
     }
 
     void BgmOption()
@@ -347,8 +376,6 @@ public class SettingManager : MonoBehaviour
         onSelecteds[1] = () => SetVol("BGMVol", ref bgmVol);
         onSelecteds[2] = () => SetVol("SEVol", ref seVol);
         onSelecteds[3] = SetDefaultVol();
-        onCancel = Option;
-        onCancel += () => nowIndex = 1;
     }
 
     void AchievementScreen()
@@ -365,8 +392,6 @@ public class SettingManager : MonoBehaviour
         onSelecteds[0] = ScrollView;
         headUi.text = "じっせき";
         textStr = () => "";
-        onCancel = StartPlacement;
-        onCancel += () => nowIndex = 2;
     }
 
     void ScrollView()
@@ -411,32 +436,33 @@ public class SettingManager : MonoBehaviour
         }
     }
 
-    void RetryMenu(string eScene)
+    void RetryMenu()
     {
-        exitSceneStr = eScene;
         cursor.gameObject.SetActive(true);
         //skillItem.SetActive(true);
         achievementItem.gameObject.SetActive(false);
-        maxIndex = 3;
+        maxIndex = 6;
         headUi.text = "メニュー";
-        textStr = () => "リトライ\nあきらめる\nメニューをとじる";
+        textStr = () => "リトライ\nあきらめる\nそうさほうほう\nオプション\nじっせき\nメニューをとじる";
         onSelecteds[0] = SetButtonPush(Retry);
         onSelecteds[1] = SetButtonPush(ExitScene);
-        onSelecteds[2] = SetButtonPush(CloseWindow);
-        onCancel = CloseWindow;
+        onSelecteds[2] = SetButtonPush(Manual);
+        onSelecteds[3] = SetButtonPush(Option);
+        onSelecteds[4] = SetButtonPush(AchievementScreen);
+        onSelecteds[5] = SetButtonPush(CloseWindow);
     }
 
 
     void ExitScene()
     {
-        FadeManager.FadeIn(1.0f, exitSceneStr);
+        FadeManager.FadeIn(0.5f, exitSceneStr, 1);
         CloseWindow();
     }
 
     void Retry()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        FadeManager.FadeIn(0.25f, SceneManager.GetActiveScene().name, 2);
+        FadeManager.FadeIn(0.3f, SceneManager.GetActiveScene().name, 2);
         CloseWindow();
 
     }
