@@ -177,7 +177,7 @@ namespace Actor.Player
         // 空中ジャンプができるか？
         public bool RequestArialJump()
         {
-            return air_jump_num_ >= 0;
+            return air_jump_num_ >= 1;
         }
 
         public void ArialJumpCalled()
@@ -387,6 +387,9 @@ namespace Actor.Player
         private Timer muteki_timer_;
 
         [SerializeField]
+        private string enemy_tag_ = "Enemy";
+
+        [SerializeField]
         private bool is_minigame_mode_ = false;
 
         // 初期スキル
@@ -576,7 +579,7 @@ namespace Actor.Player
             float speed = (dashed) ? 1.5f : 1.0f;
             NormalBullet bullet = (is_charged) ? charge_bullet_ : normal_bullet_;
             bool can_shot = data_.bullet_spawner_.Shot(bullet, transform.position + new Vector3(dir * 1.5f, 0f, 0f),
-                new Vector2(dir, 0f), "Enemy", not_reverse_, speed, -1, speed * data_.Power);
+                new Vector2(dir, 0f), enemy_tag_, not_reverse_, speed, -1, speed * data_.Power);
             if (!can_shot) return;
             if (data_.animator.GetLayerWeight(1) == 0)
             {

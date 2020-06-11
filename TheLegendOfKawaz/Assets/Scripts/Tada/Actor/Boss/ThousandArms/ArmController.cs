@@ -4,6 +4,7 @@ using UnityEngine;
 using Actor;
 using TadaLib;
 using DG.Tweening;
+using System;
 
 namespace Actor.Enemy.Thousand
 {
@@ -190,6 +191,11 @@ namespace Actor.Enemy.Thousand
         public void Burst()
         {
             state_machine_.ChangeState((int)eState.Burst1);
+        }
+
+        private bool NotActive()
+        {
+            return is_burst_ || dead_;
         }
 
         public override string ToString()
@@ -435,8 +441,10 @@ namespace Actor.Enemy.Thousand
 
                 yield return new WaitForSeconds(stretch_duration_ + 0.1f);
 
-                Parent.transform.DOMove(from, stretch_duration_).SetEase(ease_);
-
+                if (!Parent.NotActive())
+                {
+                    Parent.transform.DOMove(from, stretch_duration_).SetEase(ease_);
+                }
                 Parent.ChargeEnd();
 
                 yield return new WaitForSeconds(stretch_duration_ + 0.1f);
@@ -586,19 +594,21 @@ namespace Actor.Enemy.Thousand
                 face_target_degree_per_s_ = (target_degree - Parent.degree_) / face_time_;
 
                 Parent.is_burst_ = true;
+
+                Parent.transform.DOKill();
             }
 
             public override void Proc()
             {
-                if (Parent.transform.position.y < stage_boader_y.x || Parent.transform.position.y > stage_boader_y.y ||
-                    Parent.transform.position.x < stage_boader_x.x || Parent.transform.position.x > stage_boader_x.y)
-                {
-                    return;
-                }
-
                 if (Timer > face_time_)
                 {
                     ChangeState((int)eState.Burst2);
+                    return;
+                }
+
+                if (Parent.transform.position.y < stage_boader_y.x || Parent.transform.position.y > stage_boader_y.y ||
+                    Parent.transform.position.x < stage_boader_x.x || Parent.transform.position.x > stage_boader_x.y)
+                {
                     return;
                 }
 
@@ -630,15 +640,24 @@ namespace Actor.Enemy.Thousand
 
             public override void Proc()
             {
-                if (Parent.transform.position.y < stage_boader_y.x || Parent.transform.position.y > stage_boader_y.y ||
-                     Parent.transform.position.x < stage_boader_x.x || Parent.transform.position.x > stage_boader_x.y)
+                float target_degree = Parent.degree_ + 90f;
+                velocity_ += accel_ * Time.deltaTime * new Vector2(Mathf.Cos(target_degree * Mathf.Deg2Rad), Mathf.Sin(target_degree * Mathf.Deg2Rad));
+
+                if (OutOfRange())
                 {
                     return;
                 }
 
-                float target_degree = Parent.degree_ + 90f;
-                velocity_ += accel_ * Time.deltaTime * new Vector2(Mathf.Cos(target_degree * Mathf.Deg2Rad), Mathf.Sin(target_degree * Mathf.Deg2Rad));
                 Parent.transform.position += (Vector3)velocity_ * Time.deltaTime;
+            }
+
+            private bool OutOfRange()
+            {
+                if (Parent.transform.position.y < stage_boader_y.x && velocity_.y < 0f) return true;
+                if (Parent.transform.position.y > stage_boader_y.y && velocity_.y > 0f) return true;
+                if (Parent.transform.position.x < stage_boader_x.x && velocity_.x < 0f) return true;
+                if (Parent.transform.position.x > stage_boader_x.y && velocity_.x > 0f) return true;
+                return false;
             }
         }
 

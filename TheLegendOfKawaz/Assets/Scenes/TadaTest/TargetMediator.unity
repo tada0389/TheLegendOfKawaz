@@ -2773,7 +2773,7 @@ MonoBehaviour:
     next_scene_: TargetTest
   - rank_name_: "\u4E2D\u7D1A"
     need_point_: 0
-    gold_boader_time_: 20
+    gold_boader_time_: 18
     gold_reward_: 360
     silver_boader_time_: 30
     silver_reward_: 180
