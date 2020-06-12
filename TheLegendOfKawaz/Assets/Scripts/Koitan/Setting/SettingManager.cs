@@ -71,6 +71,7 @@ public class SettingManager : MonoBehaviour
     public TextMeshProUGUI headUi;
     public Image cursor;
     public Image window;
+    public Image curtain;
     public GameObject item;
     public GameObject skillItem;
     public RectTransform achievementItem;
@@ -90,6 +91,9 @@ public class SettingManager : MonoBehaviour
     public Ease ease;
     public Color defaultColor;
     public Color targetColor;
+    public Material blurMat;
+    public float defaultBlur;
+    public float targetBlur;
 
     delegate void OnPush();
     delegate void OnSelected();
@@ -152,7 +156,8 @@ public class SettingManager : MonoBehaviour
         DontDestroyOnLoad(this);
         DontDestroyOnLoad(window);
         window.rectTransform.sizeDelta = defaultDeltaSize;
-        window.color = defaultColor;
+        curtain.color = defaultColor;
+        blurMat.SetFloat("_Blur", defaultBlur);
         window.gameObject.SetActive(false);
         item.SetActive(false);
         QualitySettings.vSyncCount = data.vSyncCount;
@@ -336,7 +341,8 @@ public class SettingManager : MonoBehaviour
 
             })
             .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.25f)).SetEase(ease).SetUpdate(true)
-            .Join(window.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
+            .Join(curtain.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
+            .Join(blurMat.DOFloat(targetBlur,"_Blur",0.25f)).SetEase(ease).SetUpdate(true)
             .AppendCallback(() =>
             {
                 item.SetActive(true);
@@ -365,7 +371,8 @@ public class SettingManager : MonoBehaviour
 
             })
             .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.25f)).SetEase(ease).SetUpdate(true)
-            .Join(window.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
+            .Join(curtain.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
+            .Join(blurMat.DOFloat(targetBlur, "_Blur", 0.25f)).SetEase(ease).SetUpdate(true)
             .AppendCallback(() =>
             {
                 item.SetActive(true);
@@ -403,7 +410,8 @@ public class SettingManager : MonoBehaviour
                 openState = OpenState.Closing;
             })
             .Append(window.rectTransform.DOSizeDelta(defaultDeltaSize, 0.25f)).SetEase(Ease.InOutSine).SetUpdate(true)
-            .Join(window.DOColor(defaultColor, 0.25f)).SetEase(Ease.InOutSine).SetUpdate(true)
+            .Join(curtain.DOColor(defaultColor, 0.25f)).SetEase(Ease.InOutSine).SetUpdate(true)
+            .Join(blurMat.DOFloat(defaultBlur, "_Blur", 0.25f)).SetEase(ease).SetUpdate(true)
             .AppendCallback(() =>
             {
                 openState = OpenState.Closed;

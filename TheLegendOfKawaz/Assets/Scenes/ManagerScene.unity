@@ -367,8 +367,11 @@ MonoBehaviour:
   pages:
   - pageTitle: "\u305D\u3046\u3055\u307B\u3046\u307B\u3046"
     pageParent: {fileID: 1477627877}
+    isOpen: 0
   - pageTitle: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB2"
     pageParent: {fileID: 2128723939}
+    isOpen: 0
+  openedList: []
 --- !u!4 &100100699
 Transform:
   m_ObjectHideFlags: 0
@@ -517,6 +520,80 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &161820081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 161820082}
+  - component: {fileID: 161820084}
+  - component: {fileID: 161820083}
+  m_Layer: 5
+  m_Name: curtain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &161820082
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161820081}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1077648630}
+  m_Father: {fileID: 668547408}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &161820083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161820081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: a37e43ac914194a4db6748074334294a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &161820084
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161820081}
+  m_CullTransparentMesh: 0
 --- !u!1 &164286033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,7 +1894,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1077648630}
+  - {fileID: 161820082}
   m_Father: {fileID: 1411305536}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1838,8 +1915,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.7529412}
+  m_Material: {fileID: 2100000, guid: 52cd7f8f625584248acf177e9736f37b, type: 2}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2878,13 +2955,13 @@ RectTransform:
   - {fileID: 1028838112}
   - {fileID: 1892861223}
   - {fileID: 1623367486}
-  m_Father: {fileID: 668547408}
+  m_Father: {fileID: 161820082}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1800, y: 1020}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1077648631
 CanvasRenderer:
@@ -3380,17 +3457,21 @@ MonoBehaviour:
   headUi: {fileID: 706572406}
   cursor: {fileID: 2079343118}
   window: {fileID: 668547409}
+  curtain: {fileID: 161820083}
   item: {fileID: 1077648629}
   skillItem: {fileID: 1028838111}
   achievementItem: {fileID: 361327148}
   scrollMinY: -475
   scrollSpeed: 900
   width: 120
-  defaultDeltaSize: {x: 960, y: 540}
+  defaultDeltaSize: {x: 1920, y: 1080}
   targetDeltaSize: {x: 1920, y: 1080}
   ease: 3
   defaultColor: {r: 0, g: 0, b: 0, a: 0}
-  targetColor: {r: 0, g: 0, b: 0, a: 0.7490196}
+  targetColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+  blurMat: {fileID: 2100000, guid: 52cd7f8f625584248acf177e9736f37b, type: 2}
+  defaultBlur: 0
+  targetBlur: 30
   tutorial: {fileID: 100100698}
   decisionSe: {fileID: 8300000, guid: 4b1283488ffeb4b2aa892d97d9301a4e, type: 3}
   cancelSe: {fileID: 8300000, guid: 5b97853db0a6a4db1a84d426db6ba52d, type: 3}
