@@ -8,6 +8,7 @@ public class TutorialManager : MonoBehaviour
     public static TutorialManager Instance;
 
     public TutorialPage[] pages;
+    public List<TutorialPage> openedList;
 
     private int pageIndex;
     private GameObject pageObj;
@@ -25,7 +26,23 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public void OpenedPageUpdate()
+    {
+        openedList.Clear();
+        for (int i = 0; i < pages.Length; i++)
+        {
+            if (pages[i].isOpen) openedList.Add(pages[i]);
+        }
+    }
+
     public void PageOpen(int index)
+    {
+        pageIndex = index;
+        pageObj = openedList[index].pageParent;
+        pageObj.SetActive(true);
+    }
+
+    public void PageOpenFirst(int index)
     {
         pageIndex = index;
         pageObj = pages[index].pageParent;
@@ -41,7 +58,7 @@ public class TutorialManager : MonoBehaviour
     {
         pageObj.SetActive(false);
         pageIndex++;
-        pageObj = pages[pageIndex].pageParent;
+        pageObj = openedList[pageIndex].pageParent;
         pageObj.SetActive(true);
     }
 
@@ -49,7 +66,7 @@ public class TutorialManager : MonoBehaviour
     {
         pageObj.SetActive(false);
         pageIndex--;
-        pageObj = pages[pageIndex].pageParent;
+        pageObj = openedList[pageIndex].pageParent;
         pageObj.SetActive(true);
     }
 
@@ -68,5 +85,6 @@ public class TutorialManager : MonoBehaviour
     {
         public string pageTitle;
         public GameObject pageParent;
+        public bool isOpen = false;
     }
 }
