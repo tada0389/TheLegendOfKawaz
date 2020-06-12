@@ -81,7 +81,6 @@ public class SettingManager : MonoBehaviour
     [SerializeField]
     private float scrollSpeed = 100;
     private OpenState openState = OpenState.Closed;
-    private SceneState sceneState = SceneState.Game;
     public float width;
     private int nowIndex = 0;
     private int maxIndex;
@@ -97,6 +96,7 @@ public class SettingManager : MonoBehaviour
     OnSelected[] onSelecteds;
     Func<string> textStr;
     string exitSceneStr;
+    Action onCancel;
 
     //前のページを覚えておく
     Stack<Action> pageActStack = new Stack<Action>();
@@ -104,6 +104,11 @@ public class SettingManager : MonoBehaviour
 
     //現在のメニューを覚えておく
     Action nowMenu;
+
+    //チュートリアル
+    [SerializeField]
+    TutorialManager tutorial;
+    int pageIndex;
 
     [SerializeField]
     private AudioClip decisionSe;
@@ -156,9 +161,9 @@ public class SettingManager : MonoBehaviour
         Screen.fullScreen = data.isFullScreen;
 
         //音量
-        audioMixer.SetFloat("MasterVol", VolToDb(data.masterVol / 10));
-        audioMixer.SetFloat("BGMVol", VolToDb(data.bgmVol / 10));
-        audioMixer.SetFloat("SEVol", VolToDb(data.seVol / 10));
+        audioMixer.SetFloat("MasterVol", VolToDb(data.masterVol / 10f));
+        audioMixer.SetFloat("BGMVol", VolToDb(data.bgmVol / 10f));
+        audioMixer.SetFloat("SEVol", VolToDb(data.seVol / 10f));
 
         SceneManager.sceneLoaded += SetPost;
     }
@@ -176,6 +181,18 @@ public class SettingManager : MonoBehaviour
                     OpenWindow();
                 }
                 */
+
+                /*
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    RequestOpenTutorial(0);
+                }
+                if (Input.GetKeyDown(KeyCode.T))
+                {
+                    RequestOpenTutorial(1);
+                }
+                */
+
                 break;
             case OpenState.Opened:
                 //項目が2個以上ないと動かせない
@@ -210,7 +227,7 @@ public class SettingManager : MonoBehaviour
                 if (ActionInput.GetButtonDown(ActionCode.Back))
                 {
                     if (pageActStack.Count > 0)
-                    {                        
+                    {
                         nowMenu = pageActStack.Pop();
                         nowMenu();
                         nowIndex = pageIndexStack.Pop();
@@ -219,6 +236,11 @@ public class SettingManager : MonoBehaviour
                     {
                         CloseWindow();
                     }
+                    if (onCancel != null)
+                    {
+                        onCancel();
+                    }
+                    onCancel = null;
                     PlaySe(cancelSe);
                 }
 
@@ -236,6 +258,11 @@ public class SettingManager : MonoBehaviour
                 if (ActionInput.GetButtonDown(ActionCode.Pause))
                 {
                     CloseWindow();
+                    if (onCancel != null)
+                    {
+                        onCancel();
+                    }
+                    onCancel = null;
                 }
                 break;
             default:
@@ -317,9 +344,46 @@ public class SettingManager : MonoBehaviour
             });
     }
 
+    void OpenTutorial(int index)
+    {
+        //tutorial.pages[index].isOpen = true;
+        Sequence seq = DOTween.Sequence()
+            .OnStart(() =>
+            {
+                openState = OpenState.Opening;
+                window.gameObject.SetActive(true);
+                TadaLib.TimeScaler.Instance.RequestChange(0.0f);
+                //初期化
+                Instance.pageActStack.Clear();
+                Instance.pageIndexStack.Clear();
+
+                pageIndex = index;
+                Instance.TutorialPageOpenFirst();
+
+                //テキストの更新
+                titleUi.text = textStr();
+
+            })
+            .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.25f)).SetEase(ease).SetUpdate(true)
+            .Join(window.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
+            .AppendCallback(() =>
+            {
+                item.SetActive(true);
+                openState = OpenState.Opened;
+            });
+    }
+
     public static void RequestOpenWindow()
     {
         Instance.OpenWindow();
+    }
+
+    public static void RequestOpenTutorial(int index)
+    {
+        if (!Instance.tutorial.pages[index].isOpen)
+        {
+            Instance.OpenTutorial(index);
+        }
     }
 
     public static bool WindowOpened()
@@ -380,13 +444,101 @@ public class SettingManager : MonoBehaviour
         achievementItem.gameObject.SetActive(false);
         maxIndex = 4;
         headUi.text = "メニュー";
-        textStr = () => "そうさほうほう\nオプション\nじっせき\nメニューをとじる";
-        onSelecteds[0] = SetButtonPush(Manual);
+        textStr = () => "チュートリアル\nオプション\nじっせき\nメニューをとじる";
+        onSelecteds[0] = SetButtonPush(TutorialTop);
         onSelecteds[1] = SetButtonPush(Option);
         onSelecteds[2] = SetButtonPush(AchievementScreen);
         onSelecteds[3] = SetButtonPush(CloseWindow);
     }
 
+    void TutorialTop()
+    {
+        tutorial.OpenedPageUpdate();
+        maxIndex = tutorial.openedList.Count;
+        nowIndex = 0;
+        headUi.text = "チュートリアル";
+        string str = "";
+        if (tutorial.openedList.Count > 0)
+        {
+            for (int i = 0; i < tutorial.openedList.Count; i++)
+            {
+                str += tutorial.openedList[i].pageTitle + "\n";
+                onSelecteds[i] = SetButtonPush(TutorialPageOpen);
+            }
+            cursor.gameObject.SetActive(true);
+        }
+        else
+        {
+            str = "まだありません…";
+            cursor.gameObject.SetActive(false);
+        }
+        textStr = () => str;
+    }
+
+    void TutorialPageOpen()
+    {
+        pageIndex = nowIndex;
+        maxIndex = 1;
+        nowIndex = 0;
+        headUi.text = tutorial.openedList[pageIndex].pageTitle;
+        textStr = () => "";
+        tutorial.PageOpen(pageIndex);
+        onSelecteds[0] = TutorialPage();
+        onCancel = tutorial.PageClose;
+        cursor.gameObject.SetActive(false);
+    }
+
+    void TutorialPageOpenFirst()
+    {
+        //フラグを建てる
+        tutorial.pages[pageIndex].isOpen = true;
+        maxIndex = 0;
+        nowIndex = 0;
+        headUi.text = tutorial.pages[pageIndex].pageTitle;
+        textStr = () => "";
+        tutorial.PageOpenFirst(pageIndex);
+        onCancel = tutorial.PageClose;
+        cursor.gameObject.SetActive(false);
+    }
+
+    OnSelected TutorialPage()
+    {
+        return () =>
+        {
+            if (ActionInput.GetButtonDown(ButtonCode.Right))
+            {
+                if (pageIndex < tutorial.openedList.Count - 1)
+                {
+                    pageIndex++;
+                    tutorial.PageNext();
+                    PlaySe(drumSe);
+                    headUi.text = tutorial.openedList[pageIndex].pageTitle;
+                    pageIndexStack.Pop();
+                    pageIndexStack.Push(pageIndex);
+                }
+                else
+                {
+                    PlaySe(cancelSe);
+                }
+            }
+            if (ActionInput.GetButtonDown(ButtonCode.Left))
+            {
+                if (pageIndex > 0)
+                {
+                    pageIndex--;
+                    tutorial.PagePrev();
+                    PlaySe(drumSe);
+                    headUi.text = tutorial.openedList[pageIndex].pageTitle;
+                    pageIndexStack.Pop();
+                    pageIndexStack.Push(pageIndex);
+                }
+                else
+                {
+                    PlaySe(cancelSe);
+                }
+            }
+        };
+    }
 
     void Manual()
     {
@@ -732,12 +884,4 @@ public class SettingManager : MonoBehaviour
         Opened,
         Closing
     }
-}
-
-public enum SceneState
-{
-    Title,
-    Game,
-    Target,
-    None
 }
