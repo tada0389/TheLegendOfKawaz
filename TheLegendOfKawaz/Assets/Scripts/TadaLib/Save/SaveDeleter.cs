@@ -7,11 +7,6 @@ namespace Save
 {
     public class SaveDeleter : MonoBehaviour
     {
-        //private void Start()
-        //{
-        //    DeleteAllData();
-        //}
-
         // セーブデータをすべて削除する
         public void DeleteAllData()
         {

@@ -99,6 +99,8 @@ public class EndingManager : MonoBehaviour
 
     private void LoadTitle()
     {
+        // セーブもする
+        TadaLib.Save.SaveManager.Instance.Save();
         isLoaded = true;
         FadeManager.FadeIn(2f, "ZakkyTitle");
     }

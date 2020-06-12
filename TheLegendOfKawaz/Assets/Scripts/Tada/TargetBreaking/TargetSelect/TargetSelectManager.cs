@@ -63,6 +63,16 @@ namespace TargetBreaking
         [SerializeField]
         private string next_scene_;
         public string NextScene => next_scene_;
+
+        public string PopOutText;
+        public List<string> OverViewText;
+
+        public bool is_rule_ = false;
+
+        // 使用できるスキルたち
+        [SerializeField]
+        private List<Image> skill_icons_;
+        public List<Image> SkillIcons => skill_icons_;
     }
 
     // ステージ説明欄を開くときのイージング情報
@@ -106,17 +116,7 @@ namespace TargetBreaking
         [SerializeField]
         private TextMeshProUGUI grade_text_;
         [SerializeField]
-        private TextMeshProUGUI needpoint_text_;
-        [SerializeField]
-        private TextMeshProUGUI gold_text_;
-        [SerializeField]
-        private TextMeshProUGUI silver_text_;
-        [SerializeField]
-        private TextMeshProUGUI bronze_text_;
-        [SerializeField]
-        private TextMeshProUGUI other_text_;
-        [SerializeField]
-        private TextMeshProUGUI developer_text_;
+        private TextMeshProUGUI explonation_text_;
 
         [SerializeField]
         private TextMeshProUGUI skill_point_text_;
@@ -134,7 +134,16 @@ namespace TargetBreaking
         private GameObject score_texts_;
 
         [SerializeField]
+        private List<Image> skill_icons_;
+        [SerializeField]
+        private float icon_distance_ = 50f;
+
+        [SerializeField]
         private bool IsTargetMode = true;
+
+        [SerializeField]
+        private List<string> rule_text_;
+
 
         // Start is called before the first frame update
         private void Awake()
@@ -179,7 +188,7 @@ namespace TargetBreaking
                     grades_[prev].color = Color.white;
                 }
             }
-            else
+            else if(index_.first != 0)
             {
                 // スコアを表示
                 if (ActionInput.GetButtonDown(ActionCode.Dash))
@@ -194,7 +203,7 @@ namespace TargetBreaking
                     if (prev != index_.second)
                     {
                         go_back_texts_[index_.second].color = Color.red;
-                        go_back_texts_[prev].color = Color.white;
+                        go_back_texts_[prev].color = new Color(56 / 255f, 56 / 255f, 56 / 255f);
                     }
                 }
             }
@@ -221,7 +230,7 @@ namespace TargetBreaking
             {
                 if (score_texts_.activeSelf) return; // ランキング表示
 
-                if(index_.second == 0 && !is_feeding_)
+                if(index_.second == 0 && !is_feeding_ && index_.first != 0)
                 {
                     is_feeding_ = true;
                     // 実際に遊ぶ
@@ -257,20 +266,50 @@ namespace TargetBreaking
         // 説明欄を更新する
         private void OpenExplonation(StageData data)
         {
+            foreach(var icon in skill_icons_)
+            {
+                icon.gameObject.SetActive(false);
+            }
             selecting_grade_ = false;
-            go_back_texts_[0].color = Color.red;
-            go_back_texts_[1].color = Color.white;
-            index_.second = 0;
-            //explonation_box_.gameObject.SetActive(true);
+            if (!data.is_rule_)
+            {
+                go_back_texts_[0].color = Color.red;
+                go_back_texts_[1].color = new Color(56 / 255f, 56 / 255f, 56 / 255f);
+                index_.second = 0;
+                //explonation_box_.gameObject.SetActive(true);
 
-            // 中身を変更する
-            grade_text_.text = data.RankName;
-            needpoint_text_.text = "必要SP : " + data.NeedPoint.ToString();
-            gold_text_.text =   "Gold      " + data.GoldBoaderTime.ToString("F1") + "s以内   -> " + data.GoldReward + "SP";
-            silver_text_.text = "Silver    " + data.SilverBoaderTime.ToString("F1") + "s以内   -> " + data.SilverReward + "SP";
-            bronze_text_.text = "Bronze   " + data.BronzeBoaderTime.ToString("F1") + "s以内   -> " + data.BronzeReward + "SP";
-            other_text_.text =  "Other     " + data.OtherReward + "SP";
-            developer_text_.text = "Developer Time  :  " + data.DeveloperTime.ToString("F1") + "s";
+                string text = "<size=20>【" + data.PopOutText + "】</size>\n";
+                text += "・概要\n";
+                foreach (var str in data.OverViewText)
+                    text += "   " + str + "\n";
+                text += "・報酬\n";
+                text += "   Gold : " + data.GoldReward.ToString() + "SP\n";
+                text += "   Silver : " + data.SilverReward.ToString() + "SP\n";
+                text += "   Bronze : " + data.BronzeReward.ToString() + "SP\n";
+                text += "・所持スキル\n";
+                explonation_text_.text = text;
+
+                // スキルアイコンを表示
+                float x = -130f;
+                float y = -110f;
+                foreach (var icon in data.SkillIcons)
+                {
+                    icon.gameObject.SetActive(true);
+                    icon.rectTransform.localPosition = new Vector3(x, y, 0f);
+                    x += icon_distance_;
+                }
+            }
+            else
+            {
+                go_back_texts_[0].color = new Color(0f, 0f, 0f, 0f);
+                go_back_texts_[1].color = new Color(0f, 0f, 0f, 0f);
+
+                string text = "<size=20>【" + data.PopOutText + "】</size>\n";
+                text += "・概要\n";
+                foreach (var str in data.OverViewText)
+                    text += "   " + str + "\n";
+                explonation_text_.text = text;
+            }
 
             explonation_box_.rectTransform.DOKill();
             explonation_box_.rectTransform.DOLocalRotate(Vector3.zero, box_data_.open_duration_).SetEase(box_data_.ease_);
