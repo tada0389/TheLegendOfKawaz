@@ -19,6 +19,7 @@ namespace Save
             ScoreManager.Instance.DeleteSaveData();
             TadaScene.TadaSceneManager.DeleteSaveData();
             Actor.Player.SkillManager.Instance.DeleteSaveData();
+            SettingManager.DeleteSaveData();
             //Global.GlobalDataManager.DeleteSaveData();
         }
 

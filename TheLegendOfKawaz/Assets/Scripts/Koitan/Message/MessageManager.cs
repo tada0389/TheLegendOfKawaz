@@ -23,14 +23,14 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
     {
         Instance.messageWindow.gameObject.SetActive(true);
         Instance.messageWindow.WindowOpen(textStr);
-        Time.timeScale = 0.0f;
+        // Time.timeScale = 0.0f; // 変更 tada
     }
 
     public static void OpenMessageWindow(string textStr, Sprite sprite)
     {
         Instance.messageWindow.gameObject.SetActive(true);
         Instance.messageWindow.WindowOpen(textStr, sprite);
-        Time.timeScale = 0.0f;
+        // Time.timeScale = 0.0f; // 変更 tada
     }
 
     public static void CloseMessageWindow()

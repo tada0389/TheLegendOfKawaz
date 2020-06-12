@@ -54,6 +54,7 @@ namespace Actor.Enemy.Purin
                 TadaLib.TimeScaler.Instance.RequestChange(new_time_scale_, time_change_duration_);
                 explosion_effect_.gameObject.SetActive(true);
                 Global.GlobalPlayerInfo.IsMuteki = true;
+                Global.GlobalPlayerInfo.BossDefeated = true;
                 Parent.animator_.Play("Dead");
 
                 // ボスが死んだ回数を加算する

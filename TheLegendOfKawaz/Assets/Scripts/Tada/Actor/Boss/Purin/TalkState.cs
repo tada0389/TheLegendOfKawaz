@@ -36,6 +36,8 @@ namespace Actor.Enemy.Purin
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                //if (SettingManager.WindowOpened()) return;
+
                 if (!isEnd)
                 {
                     if (ActionInput.GetButtonDown(ActionCode.Decide))
