@@ -9,6 +9,7 @@ using System;
 using DG.Tweening;
 using KoitanLib;
 using UnityEngine.Rendering.PostProcessing;
+using Actor.Player;
 
 // 設定のセーブデータ by tada
 [Serializable]
@@ -18,9 +19,9 @@ public class SettingData : TadaLib.Save.BaseSaver<SettingData>
     public int bgmVol = 8;
     public int seVol = 8;
     public int masterVol = 8;
-    public bool postEfectEnable = true;
-
-    // 解像度はUnity側が覚えてくれてるらしい？
+    public int screenSizeNum = 1;
+    public bool isFullScreen = false;
+    public bool postEffectEnable = true;
 
     private const string kFileName = "Setting";
 
@@ -33,7 +34,9 @@ public class SettingData : TadaLib.Save.BaseSaver<SettingData>
         bgmVol = data.bgmVol;
         seVol = data.seVol;
         masterVol = data.masterVol;
-        postEfectEnable = data.postEfectEnable;
+        screenSizeNum = data.screenSizeNum;
+        isFullScreen = data.isFullScreen;
+        postEffectEnable = data.postEffectEnable;
         return true;
     }
 
@@ -56,7 +59,9 @@ public class SettingData : TadaLib.Save.BaseSaver<SettingData>
         bgmVol = 8;
         seVol = 8;
         masterVol = 8;
-        postEfectEnable = true;
+        screenSizeNum = 1;
+        isFullScreen = false;
+        postEffectEnable = true;
     }
 }
 
@@ -92,7 +97,6 @@ public class SettingManager : MonoBehaviour
     OnSelected[] onSelecteds;
     Func<string> textStr;
     string exitSceneStr;
-    int vSyncCount = 1;
 
     //前のページを覚えておく
     Stack<Action> pageActStack = new Stack<Action>();
@@ -110,16 +114,12 @@ public class SettingManager : MonoBehaviour
     [SerializeField]
     private AudioMixer audioMixer;
 
-    private float bgmVol;
-    private float seVol;
-    private float masterVol;
-
     private AudioSource audioSource;
 
-    private int ScreenSizeNum = 1;
-    private bool isPostEffect = true;
-
     static SettingManager Instance;
+
+    // 設定データ by tada
+    private SettingData data;
 
 
     private void Awake()
@@ -127,6 +127,8 @@ public class SettingManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            data = new SettingData();
+            data.Load();
         }
         else
         {
@@ -148,13 +150,15 @@ public class SettingManager : MonoBehaviour
         window.color = defaultColor;
         window.gameObject.SetActive(false);
         item.SetActive(false);
-        QualitySettings.vSyncCount = vSyncCount;
+        QualitySettings.vSyncCount = data.vSyncCount;
+
+        SetScreenSize();
+        Screen.fullScreen = data.isFullScreen;
 
         //音量
-        masterVol = bgmVol = seVol = 8;
-        audioMixer.SetFloat("MasterVol", VolToDb(masterVol / 10));
-        audioMixer.SetFloat("BGMVol", VolToDb(bgmVol / 10));
-        audioMixer.SetFloat("SEVol", VolToDb(seVol / 10));
+        audioMixer.SetFloat("MasterVol", VolToDb(data.masterVol / 10));
+        audioMixer.SetFloat("BGMVol", VolToDb(data.bgmVol / 10));
+        audioMixer.SetFloat("SEVol", VolToDb(data.seVol / 10));
 
         SceneManager.sceneLoaded += SetPost;
     }
@@ -246,7 +250,7 @@ public class SettingManager : MonoBehaviour
         //Debug.Log(ppl);
         if (ppl != null)
         {
-            ppl.enabled = isPostEffect;
+            ppl.enabled = data.postEffectEnable;
         }
     }
 
@@ -256,7 +260,7 @@ public class SettingManager : MonoBehaviour
         //Debug.Log(ppl);
         if (ppl != null)
         {
-            ppl.enabled = isPostEffect;
+            ppl.enabled = data.postEffectEnable;
         }
     }
 
@@ -328,6 +332,8 @@ public class SettingManager : MonoBehaviour
         Sequence seq = DOTween.Sequence()
             .OnStart(() =>
             {
+                // セーブ申請を送る by tada
+                data.RequestSave();
                 nowIndex = 0;
                 item.SetActive(false);
                 openState = OpenState.Closing;
@@ -339,6 +345,8 @@ public class SettingManager : MonoBehaviour
                 openState = OpenState.Closed;
                 window.gameObject.SetActive(false);
                 TadaLib.TimeScaler.Instance.DismissRequest(0.0f);
+                // セーブする
+                TadaLib.Save.SaveManager.Instance.Save();
             });
     }
 
@@ -425,10 +433,10 @@ public class SettingManager : MonoBehaviour
         audioMixer.GetFloat("SEVol", out seVol);
         */
         headUi.text = "おんりょうせってい";
-        textStr = () => "全体 < " + (masterVol) + " >\nBGM < " + (bgmVol) + " >\nこうかおん < " + (seVol) + " >\n元にもどす";
-        onSelecteds[0] = () => SetVol("MasterVol", ref masterVol);
-        onSelecteds[1] = () => SetVol("BGMVol", ref bgmVol);
-        onSelecteds[2] = () => SetVol("SEVol", ref seVol);
+        textStr = () => "全体 < " + (data.masterVol) + " >\nBGM < " + (data.bgmVol) + " >\nこうかおん < " + (data.seVol) + " >\n元にもどす";
+        onSelecteds[0] = () => SetVol("MasterVol", ref data.masterVol);
+        onSelecteds[1] = () => SetVol("BGMVol", ref data.bgmVol);
+        onSelecteds[2] = () => SetVol("SEVol", ref data.seVol);
         onSelecteds[3] = SetDefaultVol();
     }
 
@@ -471,21 +479,21 @@ public class SettingManager : MonoBehaviour
     }
 
 
-    void SetVol(string mixerName, ref float vol)
+    void SetVol(string mixerName, ref int vol)
     {
         if (ActionInput.GetButtonDown(ButtonCode.Right))
         {
-            vol += 1f;
-            vol = Mathf.Min(vol, 10f);
-            audioMixer.SetFloat(mixerName, VolToDb(vol / 10));
+            vol += 1;
+            vol = Mathf.Min(vol, 10);
+            audioMixer.SetFloat(mixerName, VolToDb(vol / 10f));
             PlaySe(drumSe);
         }
         if (ActionInput.GetButtonDown(ButtonCode.Left))
         {
-            vol -= 1f;
-            vol = Math.Max(vol, 0f);
+            vol -= 1;
+            vol = Math.Max(vol, 0);
             float db = (vol + 80f) / 80f;
-            audioMixer.SetFloat(mixerName, VolToDb(vol / 10));
+            audioMixer.SetFloat(mixerName, VolToDb(vol / 10f));
             PlaySe(drumSe);
         }
     }
@@ -532,7 +540,8 @@ public class SettingManager : MonoBehaviour
         {
             if (ActionInput.GetButtonDown(ButtonCode.Right) || ActionInput.GetButtonDown(ButtonCode.Left))
             {
-                Screen.fullScreen = !Screen.fullScreen;
+                data.isFullScreen = !data.isFullScreen;
+                Screen.fullScreen = data.isFullScreen;
                 PlaySe(drumSe);
             }
         };
@@ -553,15 +562,15 @@ public class SettingManager : MonoBehaviour
         {
             if (ActionInput.GetButtonDown(ButtonCode.Right))
             {
-                ScreenSizeNum++;
-                ScreenSizeNum = (ScreenSizeNum + 4) % 4;
+                data.screenSizeNum++;
+                data.screenSizeNum = (data.screenSizeNum + 4) % 4;
                 PlaySe(drumSe);
                 ScreenSizeChange();
             }
             if (ActionInput.GetButtonDown(ButtonCode.Left))
             {
-                ScreenSizeNum--;
-                ScreenSizeNum = (ScreenSizeNum + 4) % 4;
+                data.screenSizeNum--;
+                data.screenSizeNum = (data.screenSizeNum + 4) % 4;
                 PlaySe(drumSe);
                 ScreenSizeChange();
             }
@@ -574,7 +583,7 @@ public class SettingManager : MonoBehaviour
         {
             if (ActionInput.GetButtonDown(ButtonCode.Right) || ActionInput.GetButtonDown(ButtonCode.Left))
             {
-                isPostEffect = !isPostEffect;
+                data.postEffectEnable = !data.postEffectEnable;
                 PlaySe(drumSe);
                 SetPost();
             }
@@ -583,7 +592,7 @@ public class SettingManager : MonoBehaviour
 
     string ScreenSizeString()
     {
-        switch (ScreenSizeNum)
+        switch (data.screenSizeNum)
         {
             case 0:
                 return "720 × 405";
@@ -599,13 +608,13 @@ public class SettingManager : MonoBehaviour
 
     string PostEffectString()
     {
-        if (isPostEffect) return "ON";
+        if (data.postEffectEnable) return "ON";
         else return "OFF";
     }
 
     void ScreenSizeChange()
     {
-        switch (ScreenSizeNum)
+        switch (data.screenSizeNum)
         {
             case 0:
                 Screen.SetResolution(720, 405, Screen.fullScreen);
@@ -628,17 +637,17 @@ public class SettingManager : MonoBehaviour
         {
             if (ActionInput.GetButtonDown(ButtonCode.Right))
             {
-                vSyncCount++;
-                vSyncCount = (vSyncCount + 4) % 4;
-                QualitySettings.vSyncCount = vSyncCount;
+                data.vSyncCount++;
+                data.vSyncCount = (data.vSyncCount + 4) % 4;
+                QualitySettings.vSyncCount = data.vSyncCount;
                 PlaySe(drumSe);
                 ScreenSizeChange();
             }
             if (ActionInput.GetButtonDown(ButtonCode.Left))
             {
-                vSyncCount--;
-                vSyncCount = (vSyncCount + 4) % 4;
-                QualitySettings.vSyncCount = vSyncCount;
+                data.vSyncCount--;
+                data.vSyncCount = (data.vSyncCount + 4) % 4;
+                QualitySettings.vSyncCount = data.vSyncCount;
                 PlaySe(drumSe);
                 ScreenSizeChange();
             }
@@ -647,7 +656,7 @@ public class SettingManager : MonoBehaviour
 
     string VsyncString()
     {
-        switch (vSyncCount)
+        switch (data.vSyncCount)
         {
             case 0:
                 return "OFF";
@@ -665,10 +674,10 @@ public class SettingManager : MonoBehaviour
     {
         return SetButtonPush(() =>
         {
-            masterVol = bgmVol = seVol = 8;
-            audioMixer.SetFloat("MasterVol", VolToDb(masterVol / 10));
-            audioMixer.SetFloat("BGMVol", VolToDb(bgmVol / 10));
-            audioMixer.SetFloat("SEVol", VolToDb(seVol / 10));
+            data.masterVol = data.bgmVol = data.seVol = 8;
+            audioMixer.SetFloat("MasterVol", VolToDb(data.masterVol / 10f));
+            audioMixer.SetFloat("BGMVol", VolToDb(data.bgmVol / 10f));
+            audioMixer.SetFloat("SEVol", VolToDb(data.seVol / 10f));
         });
     }
 
@@ -693,6 +702,27 @@ public class SettingManager : MonoBehaviour
     {
         FadeManager.FadeIn(0.5f, "ZakkyTitle", 1);
         CloseWindow();
+    }
+
+    // セーブデータを削除する
+    public static void DeleteSaveData()
+    {
+        Instance.data.DeleteSaveData();
+        // 設定データをもとに戻す
+        Instance.InitSetting();
+    }
+
+    public void InitSetting()
+    {
+        QualitySettings.vSyncCount = data.vSyncCount;
+
+        SetScreenSize();
+        Screen.fullScreen = data.isFullScreen;
+
+        //音量
+        audioMixer.SetFloat("MasterVol", VolToDb(data.masterVol / 10));
+        audioMixer.SetFloat("BGMVol", VolToDb(data.bgmVol / 10));
+        audioMixer.SetFloat("SEVol", VolToDb(data.seVol / 10));
     }
 
     enum OpenState
