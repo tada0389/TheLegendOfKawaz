@@ -7,14 +7,9 @@ public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager Instance;
 
-    [SerializeField]
-    private TutorialPage[] pages;
-
-    [SerializeField]
-    private Transform uiParent;
+    public TutorialPage[] pages;
 
     private int pageIndex;
-    private int headIndex;
     private GameObject pageObj;
 
     private void Awake()
@@ -30,47 +25,48 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    public static void PageOpen(int index)
+    public void PageOpen(int index)
     {
-        Instance.headIndex = index;
-        Instance.pageIndex = 0;
-        Instance.pageObj =  Instantiate(Instance.pages[index].pageParetns[0], Instance.uiParent);
+        pageIndex = index;
+        pageObj = pages[index].pageParent;
+        pageObj.SetActive(true);
     }
 
-    public static void PageClose()
+    public void PageClose()
     {
-        Destroy(Instance.pageObj);
+        pageObj.SetActive(false);
     }
 
-    public static void PageNext()
+    public void PageNext()
     {
-        Destroy(Instance.pageObj);        
-        Instance.pageIndex++;
-        Instance.pageObj = Instantiate(Instance.pages[Instance.headIndex].pageParetns[Instance.pageIndex], Instance.uiParent);
+        pageObj.SetActive(false);
+        pageIndex++;
+        pageObj = pages[pageIndex].pageParent;
+        pageObj.SetActive(true);
     }
 
-    public static void PagePrev()
+    public void PagePrev()
     {
-        Destroy(Instance.pageObj);
-        Instance.pageIndex--;
-        Instance.pageObj = Instantiate(Instance.pages[Instance.headIndex].pageParetns[Instance.pageIndex], Instance.uiParent);
+        pageObj.SetActive(false);
+        pageIndex--;
+        pageObj = pages[pageIndex].pageParent;
+        pageObj.SetActive(true);
     }
 
-    public static bool PageTop()
+    public bool PageTop()
     {
-        return Instance.pageIndex == 0;
+        return pageIndex == 0;
     }
 
-    public static bool PageTail()
+    public bool PageTail()
     {
-        return Instance.pageIndex == Instance.pages[Instance.headIndex].pageWidth - 1;
+        return pageIndex == pages.Length - 1;
     }
 
     [Serializable]
     public class TutorialPage
     {
         public string pageTitle;
-        public int pageWidth;
-        public GameObject[] pageParetns;
+        public GameObject pageParent;
     }
 }

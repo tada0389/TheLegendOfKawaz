@@ -97,6 +97,7 @@ public class SettingManager : MonoBehaviour
     OnSelected[] onSelecteds;
     Func<string> textStr;
     string exitSceneStr;
+    Action onCancel;
 
     //前のページを覚えておく
     Stack<Action> pageActStack = new Stack<Action>();
@@ -104,6 +105,11 @@ public class SettingManager : MonoBehaviour
 
     //現在のメニューを覚えておく
     Action nowMenu;
+
+    //チュートリアル
+    [SerializeField]
+    TutorialManager tutorial;
+    int pageIndex;
 
     [SerializeField]
     private AudioClip decisionSe;
@@ -210,7 +216,7 @@ public class SettingManager : MonoBehaviour
                 if (ActionInput.GetButtonDown(ActionCode.Back))
                 {
                     if (pageActStack.Count > 0)
-                    {                        
+                    {
                         nowMenu = pageActStack.Pop();
                         nowMenu();
                         nowIndex = pageIndexStack.Pop();
@@ -219,6 +225,11 @@ public class SettingManager : MonoBehaviour
                     {
                         CloseWindow();
                     }
+                    if (onCancel != null)
+                    {
+                        onCancel();
+                    }
+                    onCancel = null;
                     PlaySe(cancelSe);
                 }
 
@@ -380,13 +391,79 @@ public class SettingManager : MonoBehaviour
         achievementItem.gameObject.SetActive(false);
         maxIndex = 4;
         headUi.text = "メニュー";
-        textStr = () => "そうさほうほう\nオプション\nじっせき\nメニューをとじる";
-        onSelecteds[0] = SetButtonPush(Manual);
+        textStr = () => "チュートリアル\nオプション\nじっせき\nメニューをとじる";
+        onSelecteds[0] = SetButtonPush(TutorialTop);
         onSelecteds[1] = SetButtonPush(Option);
         onSelecteds[2] = SetButtonPush(AchievementScreen);
         onSelecteds[3] = SetButtonPush(CloseWindow);
     }
 
+    void TutorialTop()
+    {
+        maxIndex = tutorial.pages.Length;
+        nowIndex = 0;
+        headUi.text = "チュートリアル";
+        string str = "";
+        for (int i = 0; i < tutorial.pages.Length; i++)
+        {
+            str += tutorial.pages[i].pageTitle + "\n";
+            onSelecteds[i] = SetButtonPush(TutorialPageOpen);
+        }
+        textStr = () => str;
+        cursor.gameObject.SetActive(true);
+    }
+
+    void TutorialPageOpen()
+    {
+        pageIndex = nowIndex;
+        maxIndex = 1;
+        nowIndex = 0;
+        headUi.text = tutorial.pages[pageIndex].pageTitle;
+        textStr = () => "";
+        tutorial.PageOpen(pageIndex);
+        onSelecteds[0] = TutorialPage();
+        onCancel = tutorial.PageClose;
+        cursor.gameObject.SetActive(false);
+    }
+
+    OnSelected TutorialPage()
+    {
+        return () =>
+        {
+            if (ActionInput.GetButtonDown(ButtonCode.Right))
+            {
+                if (pageIndex < tutorial.pages.Length - 1)
+                {
+                    pageIndex++;
+                    tutorial.PageNext();
+                    PlaySe(drumSe);
+                    headUi.text = tutorial.pages[pageIndex].pageTitle;
+                    pageIndexStack.Pop();
+                    pageIndexStack.Push(pageIndex);
+                }
+                else
+                {
+                    PlaySe(cancelSe);                    
+                }
+            }
+            if (ActionInput.GetButtonDown(ButtonCode.Left))
+            {
+                if (pageIndex > 0)
+                {
+                    pageIndex--;
+                    tutorial.PagePrev();
+                    PlaySe(drumSe);
+                    headUi.text = tutorial.pages[pageIndex].pageTitle;
+                    pageIndexStack.Pop();
+                    pageIndexStack.Push(pageIndex);
+                }
+                else
+                {
+                    PlaySe(cancelSe);
+                }
+            }
+        };
+    }
 
     void Manual()
     {
