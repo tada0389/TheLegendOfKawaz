@@ -14,5 +14,7 @@ namespace Global
         public static bool IsMuteki = false;
         // 行動できるかどうか
         public static bool ActionEnabled = true;
+        // ボスを倒したかどうか
+        public static bool BossDefeated = false;
     }
 }

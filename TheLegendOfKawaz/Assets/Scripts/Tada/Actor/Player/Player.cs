@@ -411,6 +411,7 @@ namespace Actor.Player
         {
             Global.GlobalPlayerInfo.IsMuteki = false;
             Global.GlobalPlayerInfo.ActionEnabled = true;
+            Global.GlobalPlayerInfo.BossDefeated = false;
 
             input_ = GetComponent<BasePlayerInput>();
         }
@@ -479,10 +480,6 @@ namespace Actor.Player
             //    //TadaLib.Save.SaveManager.Instance.DeleteAllData();
             //    AchievementManager.DeleteSaveData();
             //}
-            if (Time.timeScale > 0.5f && !KoitanLib.FadeManager.is_fading && input_.GetButtonDown(ActionCode.Pause))
-            {
-                SettingManager.RequestOpenWindow();
-            }
 
             if (Time.timeScale < 1e-6) return;
 
@@ -492,6 +489,12 @@ namespace Actor.Player
                 data_.velocity = Vector2.zero;
                 data_.ReflectVelocity(true);
                 return;
+            }
+
+            if (!Global.GlobalPlayerInfo.BossDefeated && !IsDead() && 
+                Time.timeScale > 0.5f && !KoitanLib.FadeManager.is_fading && input_.GetButtonDown(ActionCode.Pause))
+            {
+                SettingManager.RequestOpenWindow();
             }
 
             // 接地しているかどうかなどで，状態を変更する

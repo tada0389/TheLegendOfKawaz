@@ -919,6 +919,7 @@ namespace Actor.Enemy
                 // 時間をゆっくりにする
                 TadaLib.TimeScaler.Instance.RequestChange(new_time_scale_, time_change_duration_);
                 Global.GlobalPlayerInfo.IsMuteki = true;
+                Global.GlobalPlayerInfo.BossDefeated = true;
                 // 動きをとめる
                 Parent.trb_.Velocity = Vector2.zero;
                 Parent.animator.CrossFade(hashDead, 0.5f);

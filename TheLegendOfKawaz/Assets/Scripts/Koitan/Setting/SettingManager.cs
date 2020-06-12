@@ -10,6 +10,55 @@ using DG.Tweening;
 using KoitanLib;
 using UnityEngine.Rendering.PostProcessing;
 
+// 設定のセーブデータ by tada
+[Serializable]
+public class SettingData : TadaLib.Save.BaseSaver<SettingData>
+{
+    public int vSyncCount = 1;
+    public int bgmVol = 8;
+    public int seVol = 8;
+    public int masterVol = 8;
+    public bool postEfectEnable = true;
+
+    // 解像度はUnity側が覚えてくれてるらしい？
+
+    private const string kFileName = "Setting";
+
+    // ロードする ロードが正常に完了したら true それ以外は false
+    public bool Load()
+    {
+        SettingData data = Load(kFileName);
+        if (data == null) return false;
+        vSyncCount = data.vSyncCount;
+        bgmVol = data.bgmVol;
+        seVol = data.seVol;
+        masterVol = data.masterVol;
+        postEfectEnable = data.postEfectEnable;
+        return true;
+    }
+
+    // セーブ申請を送る
+    public void RequestSave()
+    {
+        if (save_completed_)
+        {
+            save_completed_ = false;
+            TadaLib.Save.SaveManager.Instance.RequestSave(() => { Save(kFileName); save_completed_ = true; });
+        }
+    }
+
+    // セーブデータを削除する
+    public void DeleteSaveData()
+    {
+        TadaLib.Save.SaveManager.Instance.DeleteData(kFileName);
+        // 初期値に戻す 戻す必要ない？
+        vSyncCount = 1;
+        bgmVol = 8;
+        seVol = 8;
+        masterVol = 8;
+        postEfectEnable = true;
+    }
+}
 
 public class SettingManager : MonoBehaviour
 {
@@ -267,6 +316,11 @@ public class SettingManager : MonoBehaviour
     public static void RequestOpenWindow()
     {
         Instance.OpenWindow();
+    }
+
+    public static bool WindowOpened()
+    {
+        return Instance.openState != OpenState.Closed;
     }
 
     void CloseWindow()
