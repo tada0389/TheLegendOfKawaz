@@ -4,357 +4,226 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace TargetBreaking
 {
-
-    public enum eGrade
-    {
-        Gold,
-        Silver,
-        Bronze,
-    }
-
     [System.Serializable]
-    public class StageData
+    public abstract class BaseItem : MonoBehaviour
     {
-        [SerializeField]
-        private string rank_name_;
-        public string RankName => rank_name_;
+        [field:SerializeField]
+        public string Name { private set; get; }
 
-        [SerializeField]
-        private int need_point_;
-        public int NeedPoint => need_point_;
+        [System.NonSerialized]
+        public RectTransform rectTransform;
 
-        [SerializeField]
-        private float gold_boader_time_;
-        public float GoldBoaderTime => gold_boader_time_;
+        // 初期化
+        public abstract void Init(TargetSelectManager parent);
 
-        [SerializeField]
-        private int gold_reward_;
-        public int GoldReward => gold_reward_;
+        // 始まった時
+        public abstract void OnStart();
 
-        [SerializeField]
-        private float silver_boader_time_;
-        public float SilverBoaderTime => silver_boader_time_;
+        // 状態を更新する
+        public abstract void Proc();
 
-        [SerializeField]
-        private int silver_reward_;
-        public int SilverReward => silver_reward_;
-
-        [SerializeField]
-        private float bronze_boader_time_;
-        public float BronzeBoaderTime => bronze_boader_time_;
-
-        [SerializeField]
-        private int bronze_reward_;
-        public int BronzeReward => bronze_reward_;
-
-        [SerializeField]
-        private int other_reward_;
-        public int OtherReward => other_reward_;
-
-        [SerializeField]
-        private float developer_time_;
-        public float DeveloperTime => developer_time_;
-
-        [SerializeField]
-        private string next_scene_;
-        public string NextScene => next_scene_;
-
-        public string PopOutText;
-        public List<string> OverViewText;
-
-        public bool is_rule_ = false;
-
-        // 使用できるスキルたち
-        [SerializeField]
-        private List<Image> skill_icons_;
-        public List<Image> SkillIcons => skill_icons_;
+        // 終わった時
+        public abstract void OnEnd();
     }
 
-    // ステージ説明欄を開くときのイージング情報
-    [Serializable]
-    public class ExplonationBoxData
-    {
-        public Ease ease_ = Ease.OutQuart;
-        public float open_duration_ = 0.5f;
-        public float close_duration_ = 0.3f;
-        public float inverse_duration_ = 0.5f;
-        public Ease inverse_ease_ = Ease.InOutBack;
-    }
 
     public class TargetSelectManager : MonoBehaviour
     {
         // 現在のステージを得る
-        public static StageData CurStageData = null;
+        public static RewardData CurStageData = null;
+        // 前回に選んだ難易度のインデックス
+        private static int[] prev_game_index_ = new int[3] { 0, 0, 0 };
+        [SerializeField]
+        private int game_index_ = 0;
 
         [SerializeField]
-        private StageData[] stages_;
-
-        // 今見てるインデックス // firstがグレード選び secondが始めるかどうか
-        private TadaLib.Pair<int, int> index_;
-
-        private static int prev_stage_index_;
-
-        // 難易度選択中か
-        private bool selecting_grade_;
-
-        private bool is_feeding_ = false;
+        private List<BaseItem> items_;
 
         [SerializeField]
-        private Image explonation_box_;
+        private Vector3 item_top_pos_;
 
         [SerializeField]
-        private TextMeshProUGUI[] grades_;
+        private float item_distance_ = 80f;
 
         [SerializeField]
-        private TextMeshProUGUI[] go_back_texts_;
+        private float item_move_cursor_dist_ = 20f;
+        [SerializeField]
+        private float item_move_selected_dist_ = 20f;
 
         [SerializeField]
-        private TextMeshProUGUI grade_text_;
+        private float item_default_scale_;
         [SerializeField]
-        private TextMeshProUGUI explonation_text_;
+        private float item_cursor_scale_;
+        [SerializeField]
+        private float item_selected_scale_;
 
         [SerializeField]
-        private TextMeshProUGUI skill_point_text_;
+        private float item_move_duration_ = 0.2f;
+        [SerializeField]
+        private Ease ease_;
+
+        public TextMeshProUGUI explonation_text_;
+
+        public TextMeshProUGUI header_text_;
+
+        public RectTransform box_;
+        [SerializeField]
+        private Vector3 box_default_pos_;
+        [SerializeField]
+        private Vector3 box_destination_pos_;
 
         [SerializeField]
-        private ExplonationBoxData box_data_;
+        private TextMeshProUGUI coin_text_;
 
-        // スコアデータ
-        [SerializeField]
-        private Result.ScoreDisplay score_displayer_;
+        private BaseItem cur_item_;
 
-        [SerializeField]
-        private GameObject stage_texts_;
-        [SerializeField]
-        private GameObject score_texts_;
+        private int item_num_;
 
-        [SerializeField]
-        private List<Image> skill_icons_;
-        [SerializeField]
-        private float icon_distance_ = 50f;
-
-        [SerializeField]
-        private bool IsTargetMode = true;
-
-        [SerializeField]
-        private List<string> rule_text_;
-
-
-        // Start is called before the first frame update
-        private void Awake()
-        {
-            if (IsTargetMode) index_ = new TadaLib.Pair<int, int>(prev_stage_index_, 0);
-            else {
-                index_ = new TadaLib.Pair<int, int>(0, 0); 
-                //prev_stage_index_ = 0;
-            }
-            selecting_grade_ = true;
-            if(IsTargetMode) grades_[prev_stage_index_].color = Color.red;
-            else grades_[0].color = Color.red;
-        }
+        private int index_;
 
         private void Start()
         {
-            skill_point_text_.text = SkillManager.Instance.SkillPoint.ToString();
+            item_num_ = items_.Count;
+            index_ = 0;
+            // もしすでにこのゲームを遊んだことがあったら，前回の選択肢に合わせる
+            if (game_index_ < prev_game_index_.Length) index_ = prev_game_index_[game_index_];
+
+            foreach (var item in items_) item.Init(this);
+
+            cur_item_ = null;
+            ChangeIndex();
+
+            box_.localPosition = box_default_pos_;
+
+            coin_text_.text = SkillManager.Instance.SkillPoint.ToString();
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
+            if (cur_item_ != null)
+            {
+                cur_item_.Proc();
+                return;
+            }
+
             if (ActionInput.GetButtonDown(ActionCode.Decide))
             {
                 GoNext();
                 return;
             }
-            if (ActionInput.GetButtonDown(ActionCode.Back))
-            {
+            if (ActionInput.GetButtonDown(ActionCode.Back)){
                 GoBack();
                 return;
             }
 
-            if (selecting_grade_)
+            int prev_index = index_;
+            if (ActionInput.GetButtonDown(ButtonCode.Down))
             {
-                int prev = index_.first;
-                if (ActionInput.GetButtonDown(ButtonCode.Up)) index_.first = (index_.first + grades_.Length - 1) % grades_.Length;
-                else if (ActionInput.GetButtonDown(ButtonCode.Down)) index_.first = (index_.first + 1) % grades_.Length;
-                if (prev != index_.first)
-                {
-                    grades_[index_.first].color = Color.red;
-                    grades_[prev].color = Color.white;
-                }
+                index_ = (index_ + 1) % item_num_;
             }
-            else if(index_.first != 0)
+            else if (ActionInput.GetButtonDown(ButtonCode.Up))
             {
-                // スコアを表示
-                if (ActionInput.GetButtonDown(ActionCode.Dash))
-                {
-                    ChangeStageDataDisplay();
-                    return;
-                }
-                if (!score_texts_.activeSelf)
-                {
-                    int prev = index_.second;
-                    if (ActionInput.GetButtonDown(ButtonCode.Left) || ActionInput.GetButtonDown(ButtonCode.Right)) index_.second = 1 - index_.second;
-                    if (prev != index_.second)
-                    {
-                        go_back_texts_[index_.second].color = Color.red;
-                        go_back_texts_[prev].color = new Color(56 / 255f, 56 / 255f, 56 / 255f);
-                    }
-                }
+                index_ = (index_ - 1 + item_num_) % item_num_;
             }
 
-            CheckStageData();
+            if (index_ != prev_index) ChangeIndex();
         }
 
-        // 現在のインデックスで決定する
         private void GoNext()
         {
-            if (selecting_grade_)
-            {
-                if(index_.first == grades_.Length - 1 && !is_feeding_)
-                {
-                    // 前のシーンに戻る
-                    is_feeding_ = KoitanLib.FadeManager.FadeIn(0.5f, "ZakkyScene");
-                }
-                else if(index_.first < grades_.Length - 1)
-                {
-                    OpenExplonation(stages_[index_.first]);
-                }
-            }
-            else
-            {
-                if (score_texts_.activeSelf) return; // ランキング表示
-
-                if(index_.second == 0 && !is_feeding_ && index_.first != 0)
-                {
-                    is_feeding_ = true;
-                    // 実際に遊ぶ
-                    CurStageData = stages_[index_.first];
-                    if(IsTargetMode) prev_stage_index_ = index_.first;
-                    KoitanLib.FadeManager.FadeIn(0.5f, stages_[index_.first].NextScene);
-
-                }
-                else
-                {
-                    // 戻る
-                    GoBack();
-                }
-            }
+            SelectItem();
+            cur_item_ = items_[index_];
+            // やめるの場合は保存しない　よくない
+            if(index_ != item_num_ - 1) prev_game_index_[game_index_] = index_;
+            cur_item_.OnStart();
         }
 
-        // ひとつ前に戻る
         private void GoBack()
         {
-            if (selecting_grade_)
-            {
-                // やめるにカーソルを合わせる
-                grades_[index_.first].color = Color.white;
-                index_.first = grades_.Length - 1;
-                grades_[index_.first].color = Color.red;
-            }
-            else
-            {
-                CloseExplonation();
-            }
+            index_ = item_num_ - 1;
+            ChangeIndex();
         }
 
-        // 説明欄を更新する
-        private void OpenExplonation(StageData data)
+        // 選択肢を戻す
+        public void BackState()
         {
-            foreach(var icon in skill_icons_)
-            {
-                icon.gameObject.SetActive(false);
-            }
-            selecting_grade_ = false;
-            if (!data.is_rule_)
-            {
-                go_back_texts_[0].color = Color.red;
-                go_back_texts_[1].color = new Color(56 / 255f, 56 / 255f, 56 / 255f);
-                index_.second = 0;
-                //explonation_box_.gameObject.SetActive(true);
+            cur_item_.OnEnd();
+            cur_item_ = null;
+            ChangeIndex();
+            box_.DOKill();
+            box_.DOLocalMove(box_default_pos_, item_move_duration_).SetEase(ease_);
+        }
 
-                string text = "<size=20>【" + data.PopOutText + "】</size>\n";
-                text += "・概要\n";
-                foreach (var str in data.OverViewText)
-                    text += "   " + str + "\n";
-                text += "・報酬\n";
-                text += "   Gold : " + data.GoldReward.ToString() + "SP\n";
-                text += "   Silver : " + data.SilverReward.ToString() + "SP\n";
-                text += "   Bronze : " + data.BronzeReward.ToString() + "SP\n";
-                text += "・所持スキル\n";
-                explonation_text_.text = text;
+        private void ChangeIndex()
+        {
+            // 選択肢のアイコンを少し移動させる
+            for(int i = 0, n = items_.Count; i < n; ++i)
+            {
+                BaseItem item = items_[i];
 
-                // スキルアイコンを表示
-                float x = -130f;
-                float y = -110f;
-                foreach (var icon in data.SkillIcons)
+                Vector3 pos = item_top_pos_;
+                pos.y -= i * item_distance_;
+
+                item.rectTransform.DOKill();
+
+                float target_scale = item_default_scale_;
+                if (index_ == i)
                 {
-                    icon.gameObject.SetActive(true);
-                    icon.rectTransform.localPosition = new Vector3(x, y, 0f);
-                    x += icon_distance_;
+                    target_scale = item_cursor_scale_;
                 }
-            }
-            else
-            {
-                go_back_texts_[0].color = new Color(0f, 0f, 0f, 0f);
-                go_back_texts_[1].color = new Color(0f, 0f, 0f, 0f);
+                else if(index_ < i)
+                {
+                    pos.y -= item_move_cursor_dist_;
+                }
+                else if(index_ > i)
+                {
+                    pos.y += item_move_cursor_dist_;
+                }
 
-                string text = "<size=20>【" + data.PopOutText + "】</size>\n";
-                text += "・概要\n";
-                foreach (var str in data.OverViewText)
-                    text += "   " + str + "\n";
-                explonation_text_.text = text;
+                item.rectTransform.DOScale(target_scale, item_move_duration_).SetEase(ease_);
+                item.rectTransform.DOLocalMove(pos, item_move_duration_).SetEase(ease_);
+                //item.rectTransform.DOMove(pos, item_move_duration_).SetEase(ease_);
             }
-
-            explonation_box_.rectTransform.DOKill();
-            explonation_box_.rectTransform.DOLocalRotate(Vector3.zero, box_data_.open_duration_).SetEase(box_data_.ease_);
         }
 
-        // 説明欄を閉じる
-        private void CloseExplonation()
+        private void SelectItem()
         {
-            selecting_grade_ = true;
-            //explonation_box_.gameObject.SetActive(false);
-            explonation_box_.rectTransform.DOKill();
-            explonation_box_.rectTransform.DOLocalRotate(new Vector3(0f, -90f, 0f), box_data_.close_duration_).SetEase(box_data_.ease_);
-
-            //// ランキング表示からステージ詳細に戻す
-            //score_texts_.SetActive(false);
-            //stage_texts_.SetActive(true);
-        }
-
-        // ステージの詳細を変更する
-        private void ChangeStageDataDisplay()
-        {
-            explonation_box_.rectTransform.DOKill();
-            if(stage_texts_.activeSelf) explonation_box_.rectTransform.DOLocalRotate(new Vector3(0f, -180f, 0f), box_data_.inverse_duration_).SetEase(box_data_.inverse_ease_);
-            else explonation_box_.rectTransform.DOLocalRotate(new Vector3(0f,    0f, 0f), box_data_.inverse_duration_).SetEase(box_data_.inverse_ease_);
-        }
-        
-        // ステージの詳細を表示するか，スコア表を表示するか確認する
-        private void CheckStageData()
-        {
-            if (selecting_grade_) return;
-            float r_y = explonation_box_.rectTransform.localEulerAngles.y;
-            //Debug.Log(r_y);
-            if (stage_texts_.activeSelf && (r_y > 90f && r_y < 270f))
+            // 選択肢のアイコンを少し移動させる
+            for (int i = 0, n = items_.Count; i < n; ++i)
             {
-                //Debug.Log("ランク");
-                score_displayer_.Display(stages_[index_.first].NextScene, ScoreManager.Instance.GetGameName(stages_[index_.first].NextScene));
-                score_texts_.SetActive(true);
-                stage_texts_.SetActive(false);
+                BaseItem item = items_[i];
+
+                Vector3 pos = item_top_pos_;
+                pos.y -= i * item_distance_;
+
+                item.rectTransform.DOKill();
+
+                float target_scale = item_default_scale_;
+                if (index_ == i)
+                {
+                    target_scale = item_selected_scale_;
+                }
+                else if (index_ < i)
+                {
+                    pos.y -= item_move_selected_dist_;
+                }
+                else if (index_ > i)
+                {
+                    pos.y += item_move_selected_dist_;
+                }
+
+                item.rectTransform.DOScale(target_scale, item_move_duration_).SetEase(ease_);
+                item.rectTransform.DOLocalMove(pos, item_move_duration_).SetEase(ease_);
             }
-            else if(score_texts_.activeSelf && (r_y < 90f || r_y > 270f))
-            {
-                //Debug.Log("データ");
-                score_texts_.SetActive(false);
-                stage_texts_.SetActive(true);
-            }
+            box_.DOKill();
+            box_.DOLocalMove(box_destination_pos_, item_move_duration_).SetEase(ease_);
         }
     }
 }

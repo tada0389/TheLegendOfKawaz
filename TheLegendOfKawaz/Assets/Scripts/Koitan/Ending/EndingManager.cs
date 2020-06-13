@@ -31,6 +31,7 @@ public class EndingManager : MonoBehaviour
     {
         //TimeRecoder.Stop();
         Global.GlobalDataManager.StopStoryTimer();
+        Global.GlobalDataManager.AddEndingCnt();
 
         // クリアタイムを別の方法で取得 by tada
         double clear_time = Global.GlobalDataManager.StoryTimer;
