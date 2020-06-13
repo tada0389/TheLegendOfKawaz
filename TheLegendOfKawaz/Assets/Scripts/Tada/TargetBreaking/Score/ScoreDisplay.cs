@@ -65,5 +65,25 @@ namespace Result
             // 順位の表示量に応じてテキストのフォントサイズを変更する
             //text_.fontSize = 50 - 3 * score.Scores.Count;
         }
+
+        public string GetScoreRanking(string game_scene_name, string game_name, int rank = -1)
+        {
+            string res = "";
+            //res += game_name + "\n";
+            res += "<size=26>【スコアランキング】</size>\n";
+            res += "<size=6>\n</size>";
+            Score score = score_manager_.GetScoreData(game_scene_name);
+            for (int i = 0, n = score.Scores.Count; i < n; ++i)
+            {
+                if (i == rank - 1) res += "<color=red>";
+                res += "  " + (i + 1).ToString() + "位";
+                if(IsTarget) res += String.Format("{0, 6}", (-score.Scores[i] / 10.0f).ToString("F1")) + " (s)";
+                else res += String.Format("{0, 8}", (score.Scores[i]).ToString()) + " (pt)";
+                if (i == rank - 1) res += "</color>";
+                res += "\n";
+            }
+
+            return res;
+        }
     }
 } // namespace Result

@@ -31,6 +31,7 @@ public class EndingManager : MonoBehaviour
     {
         //TimeRecoder.Stop();
         Global.GlobalDataManager.StopStoryTimer();
+        Global.GlobalDataManager.AddEndingCnt();
 
         // クリアタイムを別の方法で取得 by tada
         double clear_time = Global.GlobalDataManager.StoryTimer;
@@ -99,6 +100,8 @@ public class EndingManager : MonoBehaviour
 
     private void LoadTitle()
     {
+        // セーブもする
+        TadaLib.Save.SaveManager.Instance.Save();
         isLoaded = true;
         FadeManager.FadeIn(2f, "ZakkyTitle");
     }

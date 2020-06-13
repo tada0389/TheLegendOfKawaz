@@ -250,7 +250,7 @@ MonoBehaviour:
     targets_:
     - {fileID: 789709156}
     offset_: {x: 0, y: -1, z: 0}
-    smooth_time_: 0.3
+    smooth_time_: 0.2
     min_zoom_: 90
     max_zoom_: 80
     zoom_limiter_: 60
@@ -2045,7 +2045,7 @@ MonoBehaviour:
     targets_:
     - {fileID: 789709156}
     offset_: {x: 0, y: 0, z: 0}
-    smooth_time_: 0.3
+    smooth_time_: 0.2
     min_zoom_: 85
     max_zoom_: 75
     zoom_limiter_: 60
@@ -3993,7 +3993,7 @@ MonoBehaviour:
     targets_:
     - {fileID: 789709156}
     offset_: {x: 0, y: 0, z: 0}
-    smooth_time_: 0.3
+    smooth_time_: 0.2
     min_zoom_: 85
     max_zoom_: 75
     zoom_limiter_: 60
@@ -4382,7 +4382,7 @@ MonoBehaviour:
     targets_:
     - {fileID: 789709156}
     offset_: {x: 0, y: 0, z: 0}
-    smooth_time_: 0.3
+    smooth_time_: 0.2
     min_zoom_: 85
     max_zoom_: 75
     zoom_limiter_: 60
