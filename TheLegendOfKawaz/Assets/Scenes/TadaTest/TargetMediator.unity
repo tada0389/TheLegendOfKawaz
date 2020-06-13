@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Name>k__BackingField: "\u521D\u7D1A"
+  is_target_mode_: 1
   reward_:
     <GoldBoaderTime>k__BackingField: 10
     <GoldReward>k__BackingField: 300
@@ -1065,6 +1066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Name>k__BackingField: "\u4E2D\u7D1A"
+  is_target_mode_: 1
   reward_:
     <GoldBoaderTime>k__BackingField: 18
     <GoldReward>k__BackingField: 360
@@ -1076,7 +1078,7 @@ MonoBehaviour:
   <NextScene>k__BackingField: TargetZakkyMiddleLevel
   PopOutText: "\u30EB\u30FC\u30EB\u3092\u7406\u89E3\u3057\u305F\u3042\u306A\u305F\u3078\uFF01"
   OverViewText:
-  - "\u304B\u3093\u304C\u308B\u30FC"
+  - "\u5927\u5909\u7D20\u6575\u306A\u6587\u7AE0"
   skill_icons_:
   - {fileID: 1623125980}
   - {fileID: 696652724}
@@ -1302,6 +1304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Name>k__BackingField: "\u4E0A\u7D1A"
+  is_target_mode_: 1
   reward_:
     <GoldBoaderTime>k__BackingField: 20
     <GoldReward>k__BackingField: 450
@@ -1311,9 +1314,9 @@ MonoBehaviour:
     <BronzeReward>k__BackingField: 105
     <OtherReward>k__BackingField: 0
   <NextScene>k__BackingField: Target_jokyu
-  PopOutText: "\u5411\u4E0A\u5FC3\u306E\u3042\u308B\u3042\u306A\u305F\u3078\uFF01"
+  PopOutText: "\u3068\u3066\u3082\u7D20\u6575\u306A\u547C\u3073\u639B\u3051\u6587\uFF01"
   OverViewText:
-  - "\u304B\u3093\u304C\u308B\u30FC"
+  - "\u5927\u5909\u7D20\u6575\u306A\u6587\u7AE0"
   skill_icons_:
   - {fileID: 1623125980}
   - {fileID: 696652724}
@@ -3850,9 +3853,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: "\u30EB\u30FC\u30EB"
   OverViewText:
-  - aiueo
-  - kakikukeko
-  - sashisuseso
+  - "\u306A\u306B\u304B\u826F\u3044\u6587\u7AE0"
+  - "\u601D\u3044\u3064\u3044\u305F\u3089"
+  - "\u6559\u3048\u3066\u304F\u3060\u3055\u3044"
   tag_:
   - {fileID: 1682820379}
   - {fileID: 1294671271}

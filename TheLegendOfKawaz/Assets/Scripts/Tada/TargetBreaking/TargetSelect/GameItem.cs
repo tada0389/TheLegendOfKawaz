@@ -37,10 +37,14 @@ namespace TargetBreaking
     public class GameItem : BaseItem
     {
         [SerializeField]
+        private bool is_target_mode_ = true;
+
+        [SerializeField]
         private RewardData reward_;
 
         [field: SerializeField]
         public string NextScene { private set; get; }
+
 
         [SerializeField]
         private string PopOutText;
@@ -206,9 +210,17 @@ namespace TargetBreaking
                 foreach (var str in OverViewText)
                     text += "   " + str + "\n";
                 text += "・報酬\n";
-                text += "   Gold : " + reward_.GoldReward.ToString() + "SP\n";
-                text += "   Silver : " + reward_.SilverReward.ToString() + "SP\n";
-                text += "   Bronze : " + reward_.BronzeReward.ToString() + "SP\n";
+                if (is_target_mode_)
+                {
+                    text += "   Gold : " + reward_.GoldReward.ToString() + "SP\n";
+                    text += "   Silver : " + reward_.SilverReward.ToString() + "SP\n";
+                    text += "   Bronze : " + reward_.BronzeReward.ToString() + "SP\n";
+                }
+                else
+                {
+                    text += "   完全歩合制です\n";
+                    text += "   頑張ればその分だけ貰えます\n";
+                }
                 text += "・所持スキル\n";
                 parent_.explonation_text_.text = text;
                 parent_.explonation_text_.fontSize = explonation_font_size_;

@@ -81,6 +81,7 @@ namespace TargetBreaking
                 tag_shadow_[i].color = color;
             }
 
+            index_ = 0;
             ShowExplonation(index_);
         }
 
