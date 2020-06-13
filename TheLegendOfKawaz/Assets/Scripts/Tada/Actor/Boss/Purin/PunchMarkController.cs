@@ -37,6 +37,11 @@ namespace Actor.Enemy.Purin
 
         private bool lock_ = false;
 
+        [SerializeField]
+        private float hit_box_duration_ = 0.1f;
+
+        private float hit_box_timer_ = 100f;
+
         private void Start()
         {
             timer_ = new TadaLib.Timer(tenmetu_interval_);
@@ -60,6 +65,12 @@ namespace Actor.Enemy.Purin
                         renderer_.color = new Color(1f, 1f, 1f, 1f);
                     ++cnt_;
                 }
+            }
+
+            if (hit_box_.gameObject.activeSelf)
+            {
+                hit_box_timer_ += Time.deltaTime;
+                if (hit_box_timer_ >= hit_box_duration_) hit_box_.gameObject.SetActive(false);
             }
         }
 
@@ -98,6 +109,7 @@ namespace Actor.Enemy.Purin
         public void Punch()
         {
             hit_box_.gameObject.SetActive(true);
+            hit_box_timer_ = 0f;
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
