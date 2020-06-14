@@ -10326,7 +10326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66bc041c650595d4c9acc34b957647e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  achievement_key_: Target_Clear_jokyu
   timer_text_: {fileID: 1417128166}
   player_: {fileID: 865562795}
   bottom_boader_: -25

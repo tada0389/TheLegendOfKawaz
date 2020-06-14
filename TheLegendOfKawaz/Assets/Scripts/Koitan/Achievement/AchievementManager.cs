@@ -123,6 +123,13 @@ public class AchievementManager : MonoBehaviour
         }
     }
 
+    // 指定した実績が解放されているか by tada
+    public static bool IsUnlocked(string key)
+    {
+        UnityEngine.Assertions.Assert.IsTrue(Instance.achieve_data_.dict_.ContainsKey(key), "指定したキーが登録されてません");
+        return Instance.achieve_data_.dict_[key].isUnlocked;
+    }
+
     public static void UpdateUis()
     {
         foreach (AchievementUi ui in Instance.achievementUis)

@@ -77,21 +77,23 @@ namespace Actor.Player
                     return;
                 }
 
-                // ジャンプ
-                if ((data.IsGround || data.RequestArialJump()) && Parent.input_.GetButtonDown(ActionCode.Jump))
-                {
-                    if(!data.IsGround) data.ArialJumpCalled();
-                    ChangeState((int)eState.DashJump);
-                    return;
-                }
-
                 // 時間経過でステート以降
-                if(Timer > dush_time_)
+                if (Timer > dush_time_)
                 {
                     if (data.IsGround) ChangeState((int)eState.Walk);
                     else ChangeState((int)eState.Fall);
                     return;
                 }
+
+                // ジャンプ
+                if ((data.IsGround || data.RequestArialJump()) && Parent.input_.GetButtonDown(ActionCode.Jump))
+                {
+                    Parent.dash_remain_time_ = 1 - Timer / dush_time_;
+                    if(!data.IsGround) data.ArialJumpCalled();
+                    ChangeState((int)eState.DashJump);
+                    return;
+                }
+
 
                 // 壁に当たってるなら速度ゼロ
                 if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;

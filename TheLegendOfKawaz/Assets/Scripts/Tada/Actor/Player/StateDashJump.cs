@@ -49,7 +49,13 @@ namespace Actor.Player
                 // 上向きに速度を加える
                 data.velocity = new Vector2(data.velocity.x, jump_power);
                 // 地上でダッシュジャンプすると急加速 Celesteみたいな
-                if(data.IsGround) data.velocity.x *= 1.5f;
+                //if(data.IsGround) data.velocity.x *= 1.5f;
+                // 計算式変更
+                float x = Parent.dash_remain_time_;
+                if (x > 0.75f) x = 1.0f;
+                x = Mathf.Sqrt(x);
+                //Debug.Log(x);
+                if (data.IsGround) data.velocity.x *= (1.0f + x * 0.5f);
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -92,6 +98,7 @@ namespace Actor.Player
                 // 空中ジャンプ
                 if (data.RequestArialJump() && Parent.input_.GetButtonDown(ActionCode.Jump))
                 {
+                    data.ArialJumpCalled();
                     ChangeState((int)eState.Jump);
                     return;
                 }
@@ -124,7 +131,7 @@ namespace Actor.Player
                 // ただし，頂点付近だと加速度を弱める
                 float accel_rate_y = 1.0f;
                 if (data.velocity.y < 0.15f) accel_rate_y = 0.5f;
-                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed, 0.75f);
+                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed, 0.72f);
 
                 // ある程度の時間はジャンプボタン長押しでジャンプ飛距離を伸ばせる
                 if (Timer < jump_input_time && !data.IsHead && Parent.input_.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);

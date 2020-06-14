@@ -31,6 +31,14 @@ namespace TargetBreaking
 
         [field: SerializeField]
         public int OtherReward { private set; get; }
+
+        [field:SerializeField]
+        public float DeveloperTime { private set; get; }
+        [field: SerializeField]
+        public int DeveloperScore { private set; get; }
+
+        [field:SerializeField]
+        public string AchievementKey { private set; get; }
     }
 
     [System.Serializable]
@@ -242,6 +250,20 @@ namespace TargetBreaking
                     icon.gameObject.SetActive(false);
                 }
                 string text = score_displayer_.GetScoreRanking(NextScene, ScoreManager.Instance.GetGameName(NextScene));
+                if (is_target_mode_)
+                {
+                    text += "<color=#666666> 開発者タイム ";
+                    if (AchievementManager.IsUnlocked(reward_.AchievementKey + "_Gold")) text += System.String.Format("{0, 6}", reward_.DeveloperTime.ToString("F2"));
+                    else text += "??????";
+                    text += " (s)</color>";
+                }
+                else
+                {
+                    text += "<color=#666666> 開発者スコア ";
+                    if (true || AchievementManager.IsUnlocked(reward_.AchievementKey + "_Gold")) text += System.String.Format("{0, 8}", reward_.DeveloperScore.ToString());
+                    else text += "??????";
+                    text += " (pt)</color>";
+                }
                 parent_.explonation_text_.text = text;
                 parent_.explonation_text_.fontSize = ranking_font_size_;
             }

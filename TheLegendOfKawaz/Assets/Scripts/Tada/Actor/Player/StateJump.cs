@@ -26,6 +26,10 @@ namespace Actor.Player
             [SerializeField]
             private float wall_thr = 0.05f;
 
+            // ジャンプした直後にダッシュすると，ジャンプが消えたようになるのを防ぐ
+            [SerializeField]
+            private float jump_reuse_time_ = 0.1f;
+
             [SerializeField]
             private AudioClip jump_se_1;
             [SerializeField]
@@ -123,6 +127,8 @@ namespace Actor.Player
                 if (data.CanAirDash() && Parent.input_.GetButtonDown(ActionCode.Dash))
                 {
                     data.AirDashCalled();
+                    // もしジャンプ後すぐにダッシュしたならジャンプをなかったことにする
+                    if (Timer < jump_reuse_time_) data.ArialJumpDismissed();
                     ChangeState((int)eState.Dush);
                     return;
                 }

@@ -181,8 +181,11 @@ MonoBehaviour:
     <BronzeBoaderTime>k__BackingField: -1
     <BronzeReward>k__BackingField: -1
     <OtherReward>k__BackingField: -1
+    <DeveloperTime>k__BackingField: 0
+    <DeveloperScore>k__BackingField: 10000
+    <AchievementKey>k__BackingField: WellDefence
   <NextScene>k__BackingField: WellDefenceMiniGame
-  PopOutText: "\u521D\u5FC3\u8005\u306E\u65B9\u3082\u5FC5\u898B\uFF01"
+  PopOutText: "\u3068\u3066\u3082\u7D20\u6575\u306A\u547C\u3073\u639B\u3051\u6587\uFF01"
   OverViewText:
   - "\u306A\u306B\u304B\u826F\u3044\u6587\u7AE0"
   - "\u8003\u3048\u3066\u304F\u3060\u3055\u3044"

@@ -39,7 +39,7 @@ namespace Result
                 {
                     if (i == rank - 1) res += "<color=red>";
                     res += (i + 1).ToString() + "位";
-                    res += String.Format("{0, 6}", (-score.Scores[i] / 10.0f).ToString("F1"));
+                    res += String.Format("{0, 6}", (-score.Scores[i] / 100.0f).ToString("F1"));
                     if (i == rank - 1) res += "</color>";
                     res += "\n";
                 }
@@ -77,7 +77,7 @@ namespace Result
             {
                 if (i == rank - 1) res += "<color=red>";
                 res += "  " + (i + 1).ToString() + "位";
-                if(IsTarget) res += String.Format("{0, 6}", (-score.Scores[i] / 10.0f).ToString("F1")) + " (s)";
+                if(IsTarget) res += String.Format("{0, 6}", (-score.Scores[i] / 100.0f).ToString("F2")) + " (s)";
                 else res += String.Format("{0, 8}", (score.Scores[i]).ToString()) + " (pt)";
                 if (i == rank - 1) res += "</color>";
                 res += "\n";

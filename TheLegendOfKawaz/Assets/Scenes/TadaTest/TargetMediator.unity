@@ -175,12 +175,15 @@ MonoBehaviour:
   is_target_mode_: 1
   reward_:
     <GoldBoaderTime>k__BackingField: 10
-    <GoldReward>k__BackingField: 300
+    <GoldReward>k__BackingField: 250
     <SilverBoaderTime>k__BackingField: 15
-    <SilverReward>k__BackingField: 150
+    <SilverReward>k__BackingField: 100
     <BronzeBoaderTime>k__BackingField: 30
-    <BronzeReward>k__BackingField: 75
+    <BronzeReward>k__BackingField: 50
     <OtherReward>k__BackingField: 0
+    <DeveloperTime>k__BackingField: 7.98
+    <DeveloperScore>k__BackingField: 0
+    <AchievementKey>k__BackingField: Target_Clear_shokyu
   <NextScene>k__BackingField: TargetTest
   PopOutText: "\u521D\u5FC3\u8005\u306E\u65B9\u3082\u5FC5\u898B\uFF01"
   OverViewText:
@@ -1068,13 +1071,16 @@ MonoBehaviour:
   <Name>k__BackingField: "\u4E2D\u7D1A"
   is_target_mode_: 1
   reward_:
-    <GoldBoaderTime>k__BackingField: 18
-    <GoldReward>k__BackingField: 360
-    <SilverBoaderTime>k__BackingField: 30
-    <SilverReward>k__BackingField: 180
+    <GoldBoaderTime>k__BackingField: 17
+    <GoldReward>k__BackingField: 300
+    <SilverBoaderTime>k__BackingField: 25
+    <SilverReward>k__BackingField: 120
     <BronzeBoaderTime>k__BackingField: 60
-    <BronzeReward>k__BackingField: 90
+    <BronzeReward>k__BackingField: 60
     <OtherReward>k__BackingField: 0
+    <DeveloperTime>k__BackingField: 10.97
+    <DeveloperScore>k__BackingField: 0
+    <AchievementKey>k__BackingField: Target_Clear_tyukyu
   <NextScene>k__BackingField: TargetZakkyMiddleLevel
   PopOutText: "\u30EB\u30FC\u30EB\u3092\u7406\u89E3\u3057\u305F\u3042\u306A\u305F\u3078\uFF01"
   OverViewText:
@@ -1306,13 +1312,16 @@ MonoBehaviour:
   <Name>k__BackingField: "\u4E0A\u7D1A"
   is_target_mode_: 1
   reward_:
-    <GoldBoaderTime>k__BackingField: 20
-    <GoldReward>k__BackingField: 450
-    <SilverBoaderTime>k__BackingField: 40
-    <SilverReward>k__BackingField: 210
+    <GoldBoaderTime>k__BackingField: 16
+    <GoldReward>k__BackingField: 350
+    <SilverBoaderTime>k__BackingField: 25
+    <SilverReward>k__BackingField: 150
     <BronzeBoaderTime>k__BackingField: 100
-    <BronzeReward>k__BackingField: 105
+    <BronzeReward>k__BackingField: 75
     <OtherReward>k__BackingField: 0
+    <DeveloperTime>k__BackingField: 10.34
+    <DeveloperScore>k__BackingField: 0
+    <AchievementKey>k__BackingField: Target_Clear_jokyu
   <NextScene>k__BackingField: Target_jokyu
   PopOutText: "\u3068\u3066\u3082\u7D20\u6575\u306A\u547C\u3073\u639B\u3051\u6587\uFF01"
   OverViewText:

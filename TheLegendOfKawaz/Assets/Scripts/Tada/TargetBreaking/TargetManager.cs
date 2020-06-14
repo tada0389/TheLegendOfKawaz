@@ -14,8 +14,8 @@ namespace Target
     public class TargetManager : MonoBehaviour
     {
         // 実績のキー
-        [SerializeField]
-        private string achievement_key_ = "Target_Clear_syokyu";
+        //[SerializeField]
+        //private string achievement_key_ = "Target_Clear_syokyu";
 
         private int target_num_ = 0;
 
@@ -85,7 +85,7 @@ namespace Target
 
             if (!started_ || finished_) return;
             timer_ += Time.deltaTime;
-            timer_text_.text = timer_.ToString("f1");
+            timer_text_.text = timer_.ToString("f2");
 
             if (player_.transform.position.y < bottom_boader_) Finish(false);
         }
@@ -128,7 +128,7 @@ namespace Target
                 if (clear)
                 {
                     get_point = true;
-                    ScoreManager.Instance.RegisterScore((int)(-(timer_ + 0.05f) * 10.0f), SceneManager.GetActiveScene().name);
+                    ScoreManager.Instance.RegisterScore((int)(-(timer_ + 0.005f) * 100.0f), SceneManager.GetActiveScene().name);
                     new_time_scale = 0.06f;
                     var data = TargetSelectManager.CurStageData;
                     int reward = data.OtherReward;
@@ -153,8 +153,8 @@ namespace Target
                     if (grade_name != "Other") SkillManager.Instance.GainSkillPoint(reward, spawn_pos, 0.02f);
                     else SkillManager.Instance.SpendSkillPoint(-reward, 0.03f);
                     // 実績解除
-                    AchievementManager.FireAchievement(achievement_key_);
-                    if(grade_name == "Gold") AchievementManager.FireAchievement(achievement_key_ + "_Gold");
+                    AchievementManager.FireAchievement(data.AchievementKey);
+                    if(grade_name == "Gold") AchievementManager.FireAchievement(data.AchievementKey+ "_Gold");
                 }
                 else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
             }

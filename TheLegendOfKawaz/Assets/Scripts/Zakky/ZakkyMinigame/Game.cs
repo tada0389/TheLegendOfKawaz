@@ -112,7 +112,7 @@ namespace WallDefence
             if (grade_animator_) grade_animator_.Play(grade);
             // コイン出現
             Vector3 spawn_pos = (coin_spawer_pos_ != null) ? coin_spawer_pos_.position : Camera.main.transform.position;
-            int point = score / 10;
+            int point = score / 5;
             if(point > 0 && point % 5 != 0) point += 5 - point % 5;
             if (point < 0 && (-point) % 5 != 0) point += (-point) % 5;
             if (point > 0) SkillManager.Instance.GainSkillPoint(point, spawn_pos, 0.02f);

@@ -33,6 +33,13 @@ namespace TadaInput
 
         private void Update()
         {
+            if (!ActionEnabled)
+            {
+                jump_buff_.Clear();
+                dash_buff_.Clear();
+                return;
+            }
+
             // 制限時間を超えているものはあるか
             while(jump_buff_.Count >= 1)
             {
@@ -52,27 +59,32 @@ namespace TadaInput
 
         public override float GetAxis(AxisCode code)
         {
+            if (!ActionEnabled) return 0.0f;
             return ActionInput.GetAxis(code);
         }
 
         public override bool GetButton(ButtonCode code)
         {
+            if (!ActionEnabled) return false;
             return ActionInput.GetButton(code);
         }
 
         public override bool GetButton(ActionCode code)
         {
+            if (!ActionEnabled) return false;
             return ActionInput.GetButton(code);
         }
 
         public override bool GetButtonDown(ButtonCode code, bool use = true)
         {
+            if (!ActionEnabled) return false;
             return ActionInput.GetButtonDown(code);
         }
 
         public override bool GetButtonDown(ActionCode code, bool use = true)
         {
-            if(code == ActionCode.Jump)
+            if (!ActionEnabled) return false;
+            if (code == ActionCode.Jump)
             {
                 bool res = (jump_buff_.Count >= 1);
                 if (use && res) jump_buff_.Dequeue();
@@ -89,11 +101,13 @@ namespace TadaInput
 
         public override bool GetButtonUp(ButtonCode code)
         {
+            if (!ActionEnabled) return false;
             return ActionInput.GetButtonUp(code);
         }
 
         public override bool GetButtonUp(ActionCode code)
         {
+            if (!ActionEnabled) return false;
             return ActionInput.GetButtonUp(code);
         }
     }

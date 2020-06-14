@@ -33891,7 +33891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1173401709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33904,6 +33904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a141ebf41e13654891ca2d7ce82ce96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActionEnabled: 1
 --- !u!82 &1173401710
 AudioSource:
   m_ObjectHideFlags: 0
@@ -49320,41 +49321,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[0].type_
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[0].level_
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[1].type_
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[1].level_
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[2].type_
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
-        type: 3}
-      propertyPath: demo_skills_.Array.data[2].level_
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5365672422518013126, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_Mesh
@@ -49434,6 +49400,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[0].type_
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[0].level_
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[1].type_
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[1].level_
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[2].type_
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131037086634868345, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: demo_skills_.Array.data[2].level_
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868346, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}

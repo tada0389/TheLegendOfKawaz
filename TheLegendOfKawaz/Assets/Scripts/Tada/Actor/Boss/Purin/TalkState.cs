@@ -64,12 +64,12 @@ namespace Actor.Enemy.Purin
             public override void OnEnd()
             {
                 MessageManager.CloseMessageWindow();
+                Global.GlobalPlayerInfo.ActionEnabled = true;
             }
 
             private void EndSeq()
             {
                 ChangeState((int)eState.Think);
-                Global.GlobalPlayerInfo.ActionEnabled = true;
             }
 
         }

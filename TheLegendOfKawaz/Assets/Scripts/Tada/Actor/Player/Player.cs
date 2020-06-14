@@ -185,6 +185,11 @@ namespace Actor.Player
             --air_jump_num_;
         }
 
+        public void ArialJumpDismissed()
+        {
+            air_jump_num_ = Mathf.Min(air_jump_num_ + 1, AirJumpNumMax);
+        }
+
         public void ReflectVelocity(bool is_in)
         {
             if (is_in) trb.Velocity = velocity;
@@ -392,6 +397,9 @@ namespace Actor.Player
         [SerializeField]
         private bool is_minigame_mode_ = false;
 
+        // ダッシュ時間がどれくらい残っているか ダッシュジャンプに使う
+        private float dash_remain_time_;
+
         // 初期スキル
         #region debug
         [System.Serializable]
@@ -475,21 +483,24 @@ namespace Actor.Player
         // Update is called once per frame
         private void Update()
         {
-            //if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
-            //{
-            //    //TadaLib.Save.SaveManager.Instance.DeleteAllData();
-            //    AchievementManager.DeleteSaveData();
-            //}
+            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
+            {
+                //TadaLib.Save.SaveManager.Instance.DeleteAllData();
+                //AchievementManager.DeleteSaveData();
+                ScoreManager.Instance.DeleteSaveData();
+            }
 
             if (Time.timeScale < 1e-6) return;
 
             if (!Global.GlobalPlayerInfo.ActionEnabled)
             {
+                input_.ActionEnabled = false;
                 // 速度をゼロに
                 data_.velocity = Vector2.zero;
                 data_.ReflectVelocity(true);
                 return;
             }
+            else input_.ActionEnabled = true;
 
             if (!Global.GlobalPlayerInfo.BossDefeated && !IsDead() && 
                 Time.timeScale > 0.5f && !KoitanLib.FadeManager.is_fading && input_.GetButtonDown(ActionCode.Pause))

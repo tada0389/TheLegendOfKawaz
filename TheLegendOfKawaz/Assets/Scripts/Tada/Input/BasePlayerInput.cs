@@ -18,6 +18,8 @@ namespace TadaInput
 
     public abstract class BasePlayerInput : MonoBehaviour
     {
+        public bool ActionEnabled = true;
+
         /// <summary>
         /// 指定したボタンが入力されたかを取得する
         /// </summary>
