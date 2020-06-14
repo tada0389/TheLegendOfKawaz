@@ -194,14 +194,12 @@ public class SettingManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.R))
                 {
                     //RequestOpenTutorial(0);
-                    //OpenTutorialBookFirst(0);
-                    RequestOpenTutorial(0);
+                    //RequestOpenTutorial(0);
                 }
                 if (Input.GetKeyDown(KeyCode.T))
                 {
                     //RequestOpenTutorial(1);
-                    //OpenTutorialBookFirst(1);
-                    RequestOpenTutorial(1);
+                    //RequestOpenTutorial(1);
                 }
 
 
@@ -470,6 +468,7 @@ public class SettingManager : MonoBehaviour
     void TutorialTop()
     {
         maxIndex = unlockedBooks.Count;
+        nowIndex = 0;
         headUi.text = "チュートリアル";
         string str = string.Empty;
         if (maxIndex > 0)
@@ -686,10 +685,10 @@ public class SettingManager : MonoBehaviour
         achievementItem.gameObject.SetActive(false);
         maxIndex = 6;
         headUi.text = "メニュー";
-        textStr = () => "リトライ\nあきらめる\nそうさほうほう\nオプション\nじっせき\nメニューをとじる";
+        textStr = () => "リトライ\nあきらめる\nチュートリアル\nオプション\nじっせき\nメニューをとじる";
         onSelecteds[0] = SetButtonPush(Retry);
         onSelecteds[1] = SetButtonPush(ExitScene);
-        onSelecteds[2] = SetButtonPush(Manual);
+        onSelecteds[2] = SetButtonPush(TutorialTop);
         onSelecteds[3] = SetButtonPush(Option);
         onSelecteds[4] = SetButtonPush(AchievementScreen);
         onSelecteds[5] = SetButtonPush(CloseWindow);
