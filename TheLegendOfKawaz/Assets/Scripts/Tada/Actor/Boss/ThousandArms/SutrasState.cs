@@ -103,7 +103,7 @@ namespace Actor.Enemy.Thousand
 
                 if (is_knock_down_)
                 {
-                    knock_timer_ += Time.deltaTime;
+                    knock_timer_ += Time.fixedDeltaTime;
                     Parent.transform.localEulerAngles = new Vector3(0f, 0f, knock_timer_ * 360f);
                     if (knock_timer_ > knock_down_duration_)
                     {
@@ -114,7 +114,7 @@ namespace Actor.Enemy.Thousand
                 }
                 if (is_burst_)
                 {
-                    knock_timer_ += Time.deltaTime;
+                    knock_timer_ += Time.fixedDeltaTime;
                     if (knock_timer_ > knock_down_duration_ / 2f)
                     {
                         ChangeState((int)eState.Think);

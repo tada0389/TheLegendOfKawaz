@@ -20,6 +20,9 @@ namespace TadaInput
     {
         public bool ActionEnabled = true;
 
+        // 入力状態をリセットする
+        public abstract void Reset();
+
         /// <summary>
         /// 指定したボタンが入力されたかを取得する
         /// </summary>

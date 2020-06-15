@@ -110,7 +110,7 @@ namespace Actor.Enemy.Thousand
             //DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 0));
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             state_machine_.Proc();
         }
@@ -231,7 +231,7 @@ namespace Actor.Enemy.Thousand
             {
                 if (Parent.move_stop_) return;
 
-                Parent.degree_ += Time.deltaTime * speed_;
+                Parent.degree_ += Time.fixedDeltaTime * speed_;
                 float degree = Parent.degree_;
                 Parent.transform.position = Parent.boss_.position + radius_ * new Vector3(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad), 0f);
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, degree);
@@ -289,7 +289,7 @@ namespace Actor.Enemy.Thousand
             {
                 if(Timer < flip_time_)
                 {
-                    Parent.degree_ += face_down_degree_per_s_ * Time.deltaTime;
+                    Parent.degree_ += face_down_degree_per_s_ * Time.fixedDeltaTime;
                     Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
                 }
 
@@ -299,9 +299,9 @@ namespace Actor.Enemy.Thousand
                     return;
                 }
 
-                velocity_.y += gravity_ * Time.deltaTime;
+                velocity_.y += gravity_ * Time.fixedDeltaTime;
 
-                Parent.transform.position += (Vector3)velocity_ * Time.deltaTime;
+                Parent.transform.position += (Vector3)velocity_ * Time.fixedDeltaTime;
             }
         }
 
@@ -383,7 +383,7 @@ namespace Actor.Enemy.Thousand
                     ChangeState((int)eState.Idle);
                     return;
                 }
-                Parent.degree_ += speed_ * Time.deltaTime;
+                Parent.degree_ += speed_ * Time.fixedDeltaTime;
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
 
                 Vector3 to = Parent.boss_.position + 3.0f * new Vector3(Mathf.Cos(target_degree_ * Mathf.Deg2Rad), Mathf.Sin(target_degree_ * Mathf.Deg2Rad), 0f);
@@ -479,7 +479,7 @@ namespace Actor.Enemy.Thousand
                     return;
                 }
 
-                Parent.degree_ += face_target_degree_per_s_ * Time.deltaTime;
+                Parent.degree_ += face_target_degree_per_s_ * Time.fixedDeltaTime;
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
             }
         }
@@ -509,9 +509,9 @@ namespace Actor.Enemy.Thousand
             {
                 Vector2 dir = Parent.player_.position - Parent.transform.position;
                 float target_degree = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                velocity_ += accel_ * Time.deltaTime * new Vector2(Mathf.Cos(target_degree * Mathf.Deg2Rad), Mathf.Sin(target_degree * Mathf.Deg2Rad));
+                velocity_ += accel_ * Time.fixedDeltaTime * new Vector2(Mathf.Cos(target_degree * Mathf.Deg2Rad), Mathf.Sin(target_degree * Mathf.Deg2Rad));
 
-                Parent.transform.position += (Vector3)velocity_ * Time.deltaTime * 60f;
+                Parent.transform.position += (Vector3)velocity_ * Time.fixedDeltaTime * 60f;
                 target_degree = Mathf.Atan2(velocity_.y, velocity_.x) * Mathf.Rad2Deg;
                 Parent.degree_ = target_degree;
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_ - 90f);
@@ -555,7 +555,7 @@ namespace Actor.Enemy.Thousand
                     ChangeState((int)eState.Idle);
                     return;
                 }
-                Parent.degree_ += speed_ * Time.deltaTime;
+                Parent.degree_ += speed_ * Time.fixedDeltaTime;
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
 
                 Vector3 to = Parent.boss_.position + 3.0f * new Vector3(Mathf.Cos(target_degree_ * Mathf.Deg2Rad), Mathf.Sin(target_degree_ * Mathf.Deg2Rad), 0f);
@@ -612,7 +612,7 @@ namespace Actor.Enemy.Thousand
                     return;
                 }
 
-                Parent.degree_ += face_target_degree_per_s_ * Time.deltaTime;
+                Parent.degree_ += face_target_degree_per_s_ * Time.fixedDeltaTime;
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
             }
         }
@@ -641,14 +641,14 @@ namespace Actor.Enemy.Thousand
             public override void Proc()
             {
                 float target_degree = Parent.degree_ + 90f;
-                velocity_ += accel_ * Time.deltaTime * new Vector2(Mathf.Cos(target_degree * Mathf.Deg2Rad), Mathf.Sin(target_degree * Mathf.Deg2Rad));
+                velocity_ += accel_ * Time.fixedDeltaTime * new Vector2(Mathf.Cos(target_degree * Mathf.Deg2Rad), Mathf.Sin(target_degree * Mathf.Deg2Rad));
 
                 if (OutOfRange())
                 {
                     return;
                 }
 
-                Parent.transform.position += (Vector3)velocity_ * Time.deltaTime;
+                Parent.transform.position += (Vector3)velocity_ * Time.fixedDeltaTime;
             }
 
             private bool OutOfRange()

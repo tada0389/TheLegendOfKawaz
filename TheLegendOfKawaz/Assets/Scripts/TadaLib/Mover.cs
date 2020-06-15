@@ -15,8 +15,14 @@ namespace TadaLib
         // 数フレーム前の座標
         private Vector2 prev_pos_;
 
-        // 移動量
         public Vector2 Diff => current_pos_ - prev_pos_;
+        // 移動量
+        public Vector2 GetDiff()
+        {
+            var res = (Vector2)transform.position - prev_pos_;
+            prev_pos_ = transform.position;
+            return res;
+        }
 
         protected virtual void Start()
         {
@@ -24,16 +30,10 @@ namespace TadaLib
             prev_pos_ = Vector2.zero;
         }
 
-        protected virtual void Update()
+        protected virtual void FixedUpdate()
         {
-            // 座標の更新
-            //prev_pos_ = current_pos_;
+            prev_pos_ = current_pos_;
             current_pos_ = transform.position;
-        }
-
-        public void RideOn()
-        {
-            prev_pos_ = transform.position;
         }
     }
 }

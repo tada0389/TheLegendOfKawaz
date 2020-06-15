@@ -116,7 +116,7 @@ namespace Actor.Enemy
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 0));
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             // 即死コマンド
             //if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.K].wasPressedThisFrame) state_machine_.ChangeState((int)eState.Dead);
@@ -489,7 +489,7 @@ namespace Actor.Enemy
                     return;
                 }
 
-                talk_end_timer_ += Time.deltaTime;
+                talk_end_timer_ += Time.fixedDeltaTime;
 
                 if (talk_end_timer_ > scene_transition_time_)
                 {

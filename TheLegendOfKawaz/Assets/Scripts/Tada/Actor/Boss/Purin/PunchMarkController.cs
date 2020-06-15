@@ -69,7 +69,7 @@ namespace Actor.Enemy.Purin
 
             if (hit_box_.gameObject.activeSelf)
             {
-                hit_box_timer_ += Time.deltaTime;
+                hit_box_timer_ += Time.fixedDeltaTime;
                 if (hit_box_timer_ >= hit_box_duration_) hit_box_.gameObject.SetActive(false);
             }
         }

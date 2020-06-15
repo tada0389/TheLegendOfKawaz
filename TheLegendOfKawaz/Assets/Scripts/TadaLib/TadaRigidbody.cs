@@ -109,6 +109,7 @@ namespace TadaLib
             if (riding_mover_)
             {
                 d += riding_mover_.Diff;
+                //Debug.Log(riding_mover_.Diff.x + " " + riding_mover_.Diff.y);
                 //transform.position += (Vector3)riding_mover_.Diff;
                 //Debug.Log(riding_mover_.Diff.x + " , " + riding_mover_.Diff.y + " 追加");
             }
@@ -158,7 +159,6 @@ namespace TadaLib
                 if (ButtomCollide && (most_top_hit.collider.gameObject.layer == 10 || most_top_hit.collider.gameObject.layer == 11))
                 {
                     riding_mover_ = most_top_hit.collider.gameObject.GetComponent<Mover>();
-                    riding_mover_.RideOn();
                 }
                 else riding_mover_ = null;
 

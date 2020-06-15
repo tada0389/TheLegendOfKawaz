@@ -35,7 +35,7 @@ namespace Bullet
 
         private Transform owner_;
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move();
         }
@@ -58,7 +58,7 @@ namespace Bullet
 
         protected override void Move()
         {
-            move_body_.transform.position += (Vector3)dir_ * speed_ * 60f * Time.deltaTime;
+            move_body_.transform.position += (Vector3)dir_ * speed_ * 60f * Time.fixedDeltaTime;
             if (timer_.IsTimeout()) Dead();
         }
 

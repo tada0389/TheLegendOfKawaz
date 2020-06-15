@@ -39,7 +39,7 @@ namespace Bullet
         private float speed_;
         private float prev_target_angle_;
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move();
         }
@@ -70,7 +70,7 @@ namespace Bullet
 
             if (target_ == null)
             {
-                move_body_.transform.position += (Vector3)dir_ * speed_ * 60f * Time.deltaTime;
+                move_body_.transform.position += (Vector3)dir_ * speed_ * 60f * Time.fixedDeltaTime;
             }
             else
             {
@@ -85,7 +85,7 @@ namespace Bullet
 
                 Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
-                move_body_.transform.position += (Vector3)dir * speed_ * 60f * Time.deltaTime;
+                move_body_.transform.position += (Vector3)dir * speed_ * 60f * Time.fixedDeltaTime;
             }
         }
 

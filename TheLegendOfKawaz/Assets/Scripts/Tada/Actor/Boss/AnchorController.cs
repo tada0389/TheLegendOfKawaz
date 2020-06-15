@@ -51,7 +51,7 @@ namespace Actor.Enemy
             setted_effects_ = new List<AnchorEffect>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if(!stoped_) Move();
             if (back_) MoveReverse();
@@ -95,7 +95,7 @@ namespace Actor.Enemy
 
         private void Move()
         {
-            Vector3 d = (Vector3)dir_ * speed_ * 60f * Time.deltaTime;
+            Vector3 d = (Vector3)dir_ * speed_ * 60f * Time.fixedDeltaTime;
             move_body_.transform.position += d;
             move_sum_ += d.magnitude;
             if (move_sum_ > effect_interval_length_ * (1 + setted_effects_.Count)) SetEffect();
@@ -104,7 +104,7 @@ namespace Actor.Enemy
         // 今までの移動方向と逆側に進む
         private void MoveReverse()
         {
-            Vector3 d = -(Vector3)dir_ * speed_ * 60f * Time.deltaTime * init_back_speed_;
+            Vector3 d = -(Vector3)dir_ * speed_ * 60f * Time.fixedDeltaTime * init_back_speed_;
             move_body_.transform.position += d;
             move_sum_ -= d.magnitude;
             if (move_sum_ < effect_interval_length_ * (1 + setted_effects_.Count)) RemoveEffect();

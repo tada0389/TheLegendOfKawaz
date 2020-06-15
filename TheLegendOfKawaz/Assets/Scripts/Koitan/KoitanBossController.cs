@@ -167,12 +167,12 @@ namespace Actor.Enemy
             DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, -100));
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             state_machine_.Proc();
             if (mutekiTime > 0)
             {
-                mutekiTime -= Time.deltaTime;
+                mutekiTime -= Time.fixedDeltaTime;
             }
 
             // 敵を倒していたら勝利のセリフを吐く
@@ -975,7 +975,7 @@ namespace Actor.Enemy
                     return;
                 }
 
-                talk_end_timer_ += Time.deltaTime;
+                talk_end_timer_ += Time.fixedDeltaTime;
 
                 if (talk_end_timer_ > scene_transition_time_)
                 {

@@ -45,7 +45,7 @@ namespace TadaLib
             Assert.IsTrue(state_queue_.Count >= 1, "初期のステートが登録されていません");
 
             state_.Proc(); // ステートの状態を更新
-            state_.TimerUpdate(Time.deltaTime); // ステート経過時間を更新
+            state_.TimerUpdate(Time.fixedDeltaTime); // ステート経過時間を更新
 
             CheckState(); // ステートの変更要求があるか確かめる
         }

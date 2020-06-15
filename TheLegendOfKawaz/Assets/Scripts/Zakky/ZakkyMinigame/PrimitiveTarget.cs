@@ -59,7 +59,7 @@ public class PrimitiveTarget : MonoBehaviour
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected void FixedUpdate()
     {
         TeritoryCheck();
     }

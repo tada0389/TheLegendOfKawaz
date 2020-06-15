@@ -23,12 +23,12 @@ namespace Test
         {
             base.Start();
             to_ = transform.position + move_distance_;
-            transform.DOMove(to_, duration_).SetLoops(-1, LoopType.Yoyo).SetEase(ease_);
+            transform.DOMove(to_, duration_).SetLoops(-1, LoopType.Yoyo).SetEase(ease_).SetUpdate(UpdateType.Fixed);
         }
 
-        protected override void Update()
+        protected override void FixedUpdate()
         {
-            base.Update();
+            base.FixedUpdate();
         }
 
         private void OnDrawGizmos()

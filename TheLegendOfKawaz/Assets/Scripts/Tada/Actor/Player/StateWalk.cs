@@ -67,7 +67,7 @@ namespace Actor.Player
                 }
 
                 // 地面から離れたらふぉるステートへ
-                if (!data.IsGround) not_ground_time_ += Time.deltaTime;
+                if (!data.IsGround) not_ground_time_ += Time.fixedDeltaTime;
                 else not_ground_time_ = 0.0f;
 
                 // 壁に当たってるなら速度ゼロ

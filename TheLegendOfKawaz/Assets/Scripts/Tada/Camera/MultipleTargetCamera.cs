@@ -70,7 +70,7 @@ namespace CameraSpace
             shake_powers_ = new TadaLib.MultiSet<float>();
         }
 
-        private void LateUpdate()
+        private void FixedUpdate()
         {
             CheckTargetsDestroyed();
             if (data_.Targets.Count == 0) return;
@@ -130,7 +130,7 @@ namespace CameraSpace
         private void Zoom()
         {
             var new_zoom = Mathf.Lerp(data_.MaxZoom, data_.MinZoom, GetGreatestDistance() / data_.ZoomLimiter);
-            cam_.fieldOfView = Mathf.Lerp(cam_.fieldOfView, new_zoom, Time.deltaTime);
+            cam_.fieldOfView = Mathf.Lerp(cam_.fieldOfView, new_zoom, Time.fixedDeltaTime);
         }
 
         private void Move()
@@ -166,7 +166,7 @@ namespace CameraSpace
                 if(bottom_c < bottom_limit) new_position.y -= bottom_c - bottom_limit;
                 else if(top_c > top_limit) new_position.y -= top_c - top_limit;
             }
-            Position = Vector3.SmoothDamp(Position, new_position, ref velocity, data_.SmoothTime);
+            Position = Vector3.SmoothDamp(Position, new_position, ref velocity, data_.SmoothTime, Mathf.Infinity, Time.fixedDeltaTime);
         }
 
         // 縦横ともに考慮して最も長い方を返す

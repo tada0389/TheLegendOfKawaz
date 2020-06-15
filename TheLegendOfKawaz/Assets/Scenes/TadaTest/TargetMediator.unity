@@ -211,7 +211,7 @@ MonoBehaviour:
   tag_distance_: 100
   score_displayer_: {fileID: 1181422142}
   explonation_font_size_: 16
-  ranking_font_size_: 22
+  ranking_font_size_: 20
 --- !u!114 &63404833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1108,7 +1108,7 @@ MonoBehaviour:
   tag_distance_: 100
   score_displayer_: {fileID: 1181422142}
   explonation_font_size_: 16
-  ranking_font_size_: 22
+  ranking_font_size_: 20
 --- !u!114 &410636712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1350,7 +1350,7 @@ MonoBehaviour:
   tag_distance_: 100
   score_displayer_: {fileID: 1181422142}
   explonation_font_size_: 16
-  ranking_font_size_: 22
+  ranking_font_size_: 20
 --- !u!114 &561050656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2361,8 +2361,8 @@ MonoBehaviour:
   explonation_text_: {fileID: 1034142390}
   header_text_: {fileID: 1814126016}
   box_: {fileID: 1883229693}
-  box_default_pos_: {x: 750, y: -50, z: 0}
-  box_destination_pos_: {x: 230, y: -50, z: 0}
+  box_default_pos_: {x: 750, y: -20, z: 0}
+  box_destination_pos_: {x: 230, y: -20, z: 0}
   coin_text_: {fileID: 1194484091}
 --- !u!4 &1209192128
 Transform:
@@ -2725,7 +2725,7 @@ RectTransform:
   m_GameObject: {fileID: 1428104003}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children:
   - {fileID: 1194484090}
   m_Father: {fileID: 1442620866}
@@ -2733,7 +2733,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -220, y: -70}
+  m_AnchoredPosition: {x: -200, y: -60}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1428104005
@@ -4430,7 +4430,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 230, y: -30}
+  m_AnchoredPosition: {x: 230, y: -20}
   m_SizeDelta: {x: 500, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1883229695

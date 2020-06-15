@@ -60,7 +60,7 @@ namespace Bullet
             prev_hit_wall_y_ = false;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move();
         }
@@ -84,8 +84,8 @@ namespace Bullet
         protected override void Move()
         {
             Bound();
-            velocity_ += new Vector2(0f, gravity_) * Time.deltaTime * 60f;
-            move_body_.transform.position += (Vector3)velocity_ * Time.deltaTime;
+            velocity_ += new Vector2(0f, gravity_) * Time.fixedDeltaTime * 60f;
+            move_body_.transform.position += (Vector3)velocity_ * Time.fixedDeltaTime;
             if (timer_.IsTimeout()) Dead();
         }
 

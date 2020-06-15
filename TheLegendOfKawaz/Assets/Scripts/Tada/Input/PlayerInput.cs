@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 /// 入力情報を管理するクラス
 /// 先行入力などに対応している
 /// 先行入力は，ジャンプとダッシュのみ対応
+/// また，Updateで受け取った入力をFixedUpdateへの入力に変換している
 /// 
 /// 先行入力に関して
 /// ・タイムスケールが通常とは異なった時はどうなるか
@@ -25,10 +26,34 @@ namespace TadaInput
         private Queue<float> jump_buff_;
         private Queue<float> dash_buff_;
 
+        private Dictionary<ButtonCode, bool> button_down_;
+        private Dictionary<ButtonCode, bool> button_released_;
+        private Dictionary<ActionCode, bool> action_down_;
+        private Dictionary<ActionCode, bool> action_released_;
+
+
         private void Awake()
         {
             jump_buff_ = new Queue<float>();
             dash_buff_ = new Queue<float>();
+            button_down_ = new Dictionary<ButtonCode, bool>();
+            button_released_ = new Dictionary<ButtonCode, bool>();
+            action_down_ = new Dictionary<ActionCode, bool>();
+            action_released_ = new Dictionary<ActionCode, bool>();
+
+
+            //初期化
+            foreach (ButtonCode code in System.Enum.GetValues(typeof(ButtonCode)))
+            {
+                button_down_.Add(code, false);
+                button_released_.Add(code, false);
+            }
+
+            foreach (ActionCode code in System.Enum.GetValues(typeof(ActionCode)))
+            {
+                action_down_.Add(code, false);
+                action_released_.Add(code, false);
+            }
         }
 
         private void Update()
@@ -40,8 +65,21 @@ namespace TadaInput
                 return;
             }
 
+            foreach (ButtonCode code in System.Enum.GetValues(typeof(ButtonCode)))
+            {
+                if (ActionInput.GetButtonDown(code)) button_down_[code] = true;
+                if (ActionInput.GetButtonUp(code)) button_released_[code] = true;
+            }
+
+            foreach (ActionCode code in System.Enum.GetValues(typeof(ActionCode)))
+            {
+                if (ActionInput.GetButtonDown(code)) action_down_[code] = true;
+                if (ActionInput.GetButtonUp(code)) action_released_[code] = true;
+            }
+
+
             // 制限時間を超えているものはあるか
-            while(jump_buff_.Count >= 1)
+            while (jump_buff_.Count >= 1)
             {
                 if (Time.unscaledTime - jump_buff_.Peek() > persude_time_) jump_buff_.Dequeue();
                 else break;
@@ -56,6 +94,22 @@ namespace TadaInput
             if (ActionInput.GetButtonDown(ActionCode.Dash)) dash_buff_.Enqueue(Time.unscaledTime);
         }
 
+
+        // 入力状態をリセットする
+        public override void Reset()
+        {
+            foreach (ButtonCode code in System.Enum.GetValues(typeof(ButtonCode)))
+            {
+                button_down_[code] = false;
+                button_released_[code] = false;
+            }
+
+            foreach (ActionCode code in System.Enum.GetValues(typeof(ActionCode)))
+            {
+                action_down_[code] = false;
+                action_released_[code] = false;
+            }
+        }
 
         public override float GetAxis(AxisCode code)
         {
@@ -78,7 +132,7 @@ namespace TadaInput
         public override bool GetButtonDown(ButtonCode code, bool use = true)
         {
             if (!ActionEnabled) return false;
-            return ActionInput.GetButtonDown(code);
+            return button_down_[code];
         }
 
         public override bool GetButtonDown(ActionCode code, bool use = true)
@@ -96,19 +150,19 @@ namespace TadaInput
                 if (use && res) dash_buff_.Dequeue();
                 return res;
             }
-            return ActionInput.GetButtonDown(code);
+            return action_down_[code];
         }
 
         public override bool GetButtonUp(ButtonCode code)
         {
             if (!ActionEnabled) return false;
-            return ActionInput.GetButtonUp(code);
+            return button_released_[code];
         }
 
         public override bool GetButtonUp(ActionCode code)
         {
             if (!ActionEnabled) return false;
-            return ActionInput.GetButtonUp(code);
+            return action_released_[code];
         }
     }
 }

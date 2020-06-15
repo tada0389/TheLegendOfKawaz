@@ -88,7 +88,7 @@ namespace Actor.Enemy.Thousand
         }
 
         // Update is called once per frame
-        private void Update()
+        private void FixedUpdate()
         {
             // ステートの更新
             state_machine_.Proc();

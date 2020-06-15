@@ -17,6 +17,11 @@ namespace TadaInput
         float hoge = 0;
         float foo = 0f;
 
+        public override void Reset()
+        {
+
+        }
+
         public override float GetAxis(AxisCode code)
         {
             flag = !flag;

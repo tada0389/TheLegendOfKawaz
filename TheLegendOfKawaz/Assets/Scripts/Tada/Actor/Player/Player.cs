@@ -551,6 +551,9 @@ namespace Actor.Player
 
             // 弾を撃つかどうか決める
             CheckShot();
+
+            // 入力情報をリセット (UpdateとFixedUpdateを同期させるため)
+            input_.Reset();
         }
 
         // ショットするかをチェックする
@@ -563,7 +566,7 @@ namespace Actor.Player
             }
             else if (input_.GetButton(ActionCode.Shot))
             {
-                charge_timer_ += Time.deltaTime;
+                charge_timer_ += Time.fixedDeltaTime;
                 if(charge_timer_ >= data_.ChargeEndTime / 4f && !charge_shot_pre_.activeSelf)
                 {
                     charge_shot_pre_.SetActive(true);

@@ -114,7 +114,7 @@ namespace Actor.Enemy.Thousand
                     return;
                 }
 
-                talk_end_timer_ += Time.deltaTime;
+                talk_end_timer_ += Time.fixedDeltaTime;
 
                 if (talk_end_timer_ > scene_transition_time_)
                 {

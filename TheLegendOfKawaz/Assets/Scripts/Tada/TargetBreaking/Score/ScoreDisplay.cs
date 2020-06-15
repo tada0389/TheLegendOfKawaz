@@ -71,7 +71,7 @@ namespace Result
             string res = "";
             //res += game_name + "\n";
             res += "<size=26>【スコアランキング】</size>\n";
-            res += "<size=6>\n</size>";
+            res += "<size=2>\n</size>";
             Score score = score_manager_.GetScoreData(game_scene_name);
             for (int i = 0, n = score.Scores.Count; i < n; ++i)
             {
