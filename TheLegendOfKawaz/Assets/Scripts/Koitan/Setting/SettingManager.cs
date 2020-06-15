@@ -110,9 +110,12 @@ public class SettingManager : MonoBehaviour
     Action nowMenu;
 
     //チュートリアル
-    [SerializeField]
-    TutorialManager tutorial;
     int pageIndex;
+    [SerializeField]
+    private TutorialBook[] books;
+    private List<TutorialBook> unlockedBooks = new List<TutorialBook>();
+    private GameObject opendPageObj;
+    private TutorialBook nowBook;
 
     [SerializeField]
     private AudioClip decisionSe;
@@ -187,16 +190,18 @@ public class SettingManager : MonoBehaviour
                 }
                 */
 
-                /*
+
                 if (Input.GetKeyDown(KeyCode.R))
                 {
-                    RequestOpenTutorial(0);
+                    //RequestOpenTutorial(0);
+                    //RequestOpenTutorial(0);
                 }
                 if (Input.GetKeyDown(KeyCode.T))
                 {
-                    RequestOpenTutorial(1);
+                    //RequestOpenTutorial(1);
+                    //RequestOpenTutorial(1);
                 }
-                */
+
 
                 break;
             case OpenState.Opened:
@@ -342,7 +347,7 @@ public class SettingManager : MonoBehaviour
             })
             .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.25f)).SetEase(ease).SetUpdate(true)
             .Join(curtain.DOColor(targetColor, 0.25f)).SetEase(ease).SetUpdate(true)
-            .Join(blurMat.DOFloat(targetBlur,"_Blur",0.25f)).SetEase(ease).SetUpdate(true)
+            .Join(blurMat.DOFloat(targetBlur, "_Blur", 0.25f)).SetEase(ease).SetUpdate(true)
             .AppendCallback(() =>
             {
                 item.SetActive(true);
@@ -363,8 +368,8 @@ public class SettingManager : MonoBehaviour
                 Instance.pageActStack.Clear();
                 Instance.pageIndexStack.Clear();
 
-                pageIndex = index;
-                Instance.TutorialPageOpenFirst();
+                OpenTutorialBookFirst(index);
+
 
                 //テキストの更新
                 titleUi.text = textStr();
@@ -387,8 +392,9 @@ public class SettingManager : MonoBehaviour
 
     public static void RequestOpenTutorial(int index)
     {
-        if (!Instance.tutorial.pages[index].isOpen)
+        if (!Instance.books[index].isUnlocked)
         {
+            Instance.books[index].isUnlocked = true;
             Instance.OpenTutorial(index);
         }
     }
@@ -461,68 +467,82 @@ public class SettingManager : MonoBehaviour
 
     void TutorialTop()
     {
-        tutorial.OpenedPageUpdate();
-        maxIndex = tutorial.openedList.Count;
+        maxIndex = unlockedBooks.Count;
         nowIndex = 0;
         headUi.text = "チュートリアル";
-        string str = "";
-        if (tutorial.openedList.Count > 0)
+        string str = string.Empty;
+        if (maxIndex > 0)
         {
-            for (int i = 0; i < tutorial.openedList.Count; i++)
-            {
-                str += tutorial.openedList[i].pageTitle + "\n";
-                onSelecteds[i] = SetButtonPush(TutorialPageOpen);
-            }
             cursor.gameObject.SetActive(true);
+            for (int i = 0; i < maxIndex; i++)
+            {
+                //デリゲートの仕様？
+                int tmp = i;
+                str += unlockedBooks[tmp].bookTitle + "\n";
+                onSelecteds[tmp] = SetButtonPush(() => OpenTutorialBook(tmp));
+            }
         }
         else
         {
-            str = "まだありません…";
             cursor.gameObject.SetActive(false);
+            str = "まだありません…";
         }
         textStr = () => str;
     }
 
-    void TutorialPageOpen()
+    void OpenTutorialBook(int index)
     {
-        pageIndex = nowIndex;
+        cursor.gameObject.SetActive(false);
         maxIndex = 1;
         nowIndex = 0;
-        headUi.text = tutorial.openedList[pageIndex].pageTitle;
+        onSelecteds[0] = SlideTutorialPage();
+        nowBook = unlockedBooks[index];
+        pageIndex = 0;
+        opendPageObj = nowBook.pages[pageIndex];
+        opendPageObj.SetActive(true);
+        onCancel += () => opendPageObj.SetActive(false);
+        headUi.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
         textStr = () => "";
-        tutorial.PageOpen(pageIndex);
-        onSelecteds[0] = TutorialPage();
-        onCancel = tutorial.PageClose;
-        cursor.gameObject.SetActive(false);
     }
 
-    void TutorialPageOpenFirst()
+    void OpenTutorialBookFirst(int index)
     {
-        //フラグを建てる
-        tutorial.pages[pageIndex].isOpen = true;
-        maxIndex = 0;
-        nowIndex = 0;
-        headUi.text = tutorial.pages[pageIndex].pageTitle;
-        textStr = () => "";
-        tutorial.PageOpenFirst(pageIndex);
-        onCancel = tutorial.PageClose;
+        nowBook = books[index];
+        /*
+        if (!nowBook.isUnlocked)
+        {
+            nowBook.isUnlocked = true;
+            unlockedBooks.Add(nowBook);
+        }
+        */
+        //RequestOpenTutorialで保証されている
+        unlockedBooks.Add(nowBook);
         cursor.gameObject.SetActive(false);
+        maxIndex = 1;
+        nowIndex = 0;
+        onSelecteds[0] = SlideTutorialPage();
+        pageIndex = 0;
+        opendPageObj = nowBook.pages[pageIndex];
+        opendPageObj.SetActive(true);
+        onCancel += () => opendPageObj.SetActive(false);
+        headUi.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
+        textStr = () => "";
     }
 
-    OnSelected TutorialPage()
+    OnSelected SlideTutorialPage()
     {
         return () =>
         {
             if (ActionInput.GetButtonDown(ButtonCode.Right))
             {
-                if (pageIndex < tutorial.openedList.Count - 1)
+                if (pageIndex < nowBook.pages.Length - 1)
                 {
+                    opendPageObj.SetActive(false);
                     pageIndex++;
-                    tutorial.PageNext();
+                    opendPageObj = nowBook.pages[pageIndex];
+                    opendPageObj.SetActive(true);
+                    headUi.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
                     PlaySe(drumSe);
-                    headUi.text = tutorial.openedList[pageIndex].pageTitle;
-                    pageIndexStack.Pop();
-                    pageIndexStack.Push(pageIndex);
                 }
                 else
                 {
@@ -533,12 +553,12 @@ public class SettingManager : MonoBehaviour
             {
                 if (pageIndex > 0)
                 {
+                    opendPageObj.SetActive(false);
                     pageIndex--;
-                    tutorial.PagePrev();
+                    opendPageObj = nowBook.pages[pageIndex];
+                    opendPageObj.SetActive(true);
+                    headUi.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
                     PlaySe(drumSe);
-                    headUi.text = tutorial.openedList[pageIndex].pageTitle;
-                    pageIndexStack.Pop();
-                    pageIndexStack.Push(pageIndex);
                 }
                 else
                 {
@@ -665,10 +685,10 @@ public class SettingManager : MonoBehaviour
         achievementItem.gameObject.SetActive(false);
         maxIndex = 6;
         headUi.text = "メニュー";
-        textStr = () => "リトライ\nあきらめる\nそうさほうほう\nオプション\nじっせき\nメニューをとじる";
+        textStr = () => "リトライ\nあきらめる\nチュートリアル\nオプション\nじっせき\nメニューをとじる";
         onSelecteds[0] = SetButtonPush(Retry);
         onSelecteds[1] = SetButtonPush(ExitScene);
-        onSelecteds[2] = SetButtonPush(Manual);
+        onSelecteds[2] = SetButtonPush(TutorialTop);
         onSelecteds[3] = SetButtonPush(Option);
         onSelecteds[4] = SetButtonPush(AchievementScreen);
         onSelecteds[5] = SetButtonPush(CloseWindow);
@@ -832,12 +852,16 @@ public class SettingManager : MonoBehaviour
 
     OnSelected SetDefaultVol()
     {
-        return SetButtonPush(() =>
+        return (() =>
         {
-            data.masterVol = data.bgmVol = data.seVol = 8;
-            audioMixer.SetFloat("MasterVol", VolToDb(data.masterVol / 10f));
-            audioMixer.SetFloat("BGMVol", VolToDb(data.bgmVol / 10f));
-            audioMixer.SetFloat("SEVol", VolToDb(data.seVol / 10f));
+            if (ActionInput.GetButtonDown(ActionCode.Decide))
+            {
+                data.masterVol = data.bgmVol = data.seVol = 8;
+                audioMixer.SetFloat("MasterVol", VolToDb(data.masterVol / 10f));
+                audioMixer.SetFloat("BGMVol", VolToDb(data.bgmVol / 10f));
+                audioMixer.SetFloat("SEVol", VolToDb(data.seVol / 10f));
+                PlaySe(decisionSe);
+            }
         });
     }
 
@@ -891,5 +915,14 @@ public class SettingManager : MonoBehaviour
         Opening,
         Opened,
         Closing
+    }
+
+    //チュートリアル要素用クラス
+    [Serializable]
+    public class TutorialBook
+    {
+        public string bookTitle;
+        public GameObject[] pages;
+        public bool isUnlocked = false;
     }
 }
