@@ -47,7 +47,7 @@ namespace Actor.Player
                 else data.audio.PlayOneShot(jump_se_2);
 
                 // 上向きに速度を加える
-                data.velocity = new Vector2(data.velocity.x, jump_power);
+                data.velocity.y = jump_power;
                 // 地上でダッシュジャンプすると急加速 Celesteみたいな
                 //if(data.IsGround) data.velocity.x *= 1.5f;
                 // 計算式変更

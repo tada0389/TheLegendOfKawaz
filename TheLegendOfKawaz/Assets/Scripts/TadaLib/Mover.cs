@@ -12,7 +12,7 @@ namespace TadaLib
     {
         // 現在の座標
         private Vector2 current_pos_;
-        // 1フレーム前の座標
+        // 数フレーム前の座標
         private Vector2 prev_pos_;
 
         // 移動量
@@ -27,8 +27,13 @@ namespace TadaLib
         protected virtual void Update()
         {
             // 座標の更新
-            prev_pos_ = current_pos_;
+            //prev_pos_ = current_pos_;
             current_pos_ = transform.position;
+        }
+
+        public void RideOn()
+        {
+            prev_pos_ = transform.position;
         }
     }
 }

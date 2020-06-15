@@ -15,6 +15,9 @@ namespace TadaLib
     [RequireComponent(typeof(BoxCollider2D))]
     public class TadaRigidbody : MonoBehaviour
     {
+        // 更新されたか
+        public bool IsUpdated { private set; get; }
+
         // 速度
         [System.NonSerialized]
         public Vector2 Velocity = Vector2.zero;
@@ -64,10 +67,14 @@ namespace TadaLib
             hit_box_ = GetComponent<BoxCollider2D>();
 
             riding_mover_ = null;
+
+            IsUpdated = false;
         }
 
-        private void LateUpdate()
+        private void FixedUpdate()
         {
+            IsUpdated = true;
+
             Move();
 
             // 水中にいるか
@@ -91,7 +98,7 @@ namespace TadaLib
             Vector2 half_size = hit_box_.size * scale * 0.5f;
 
             // 移動量
-            Vector2 d = InitSpeed * Velocity * Time.deltaTime * 60f;
+            Vector2 d = InitSpeed * Velocity * Time.fixedDeltaTime * 60f;
 
             // 名前思いつかなかった・・・ すり抜ける床を含めないのはmask_1
             bool through = IsThrough || d.y > 0f; // 床をすり抜けるかどうか 上から来た場合はfalse 下から来た場合はtrue
@@ -149,7 +156,10 @@ namespace TadaLib
 
                 // 移動する床に載っているか確かめる
                 if (ButtomCollide && (most_top_hit.collider.gameObject.layer == 10 || most_top_hit.collider.gameObject.layer == 11))
+                {
                     riding_mover_ = most_top_hit.collider.gameObject.GetComponent<Mover>();
+                    riding_mover_.RideOn();
+                }
                 else riding_mover_ = null;
 
                 // 床の摩擦係数を取得する

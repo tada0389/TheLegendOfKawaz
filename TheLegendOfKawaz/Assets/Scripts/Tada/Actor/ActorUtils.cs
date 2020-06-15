@@ -13,7 +13,7 @@ namespace Actor
         // 速度に加速度を加える ただし，一定の速度を超えていたら加算しない
         public static void ProcSpeed(ref Vector2 velocity, Vector2 accel, Vector2 max_abs_speed, float friction = 1.0f)
         {
-            accel *= Time.deltaTime * 60f;
+            accel *= Time.fixedDeltaTime * 60f;
             // 加速度を加算するか
             //if (accel.x > 0f) velocity.x = Mathf.Min(velocity.x + accel.x, max_abs_speed.x); 
             //if (accel.x < 0f) velocity.x = Mathf.Max(velocity.x + accel.x, -max_abs_speed.x); 
@@ -22,7 +22,7 @@ namespace Actor
 
             velocity += accel;
 
-            float rate = Mathf.Pow(0.93f, Time.deltaTime / 0.016666f * friction);
+            float rate = Mathf.Pow(0.93f, Time.fixedDeltaTime / 0.016666f * friction);
             if (velocity.x > max_abs_speed.x) velocity.x = Mathf.Max(velocity.x * rate, max_abs_speed.x);
             if (velocity.x < -max_abs_speed.x) velocity.x = Mathf.Min(velocity.x * rate, -max_abs_speed.x);
             if (velocity.y > max_abs_speed.y) velocity.y = Mathf.Max(velocity.y * rate, max_abs_speed.y);

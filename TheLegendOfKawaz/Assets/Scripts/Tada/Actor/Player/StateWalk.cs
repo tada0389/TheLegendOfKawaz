@@ -51,18 +51,18 @@ namespace Actor.Player
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
-                // ジャンプ入力ならジャンプステートへ
-                if (Parent.input_.GetButtonDown(ActionCode.Jump))
-                {
-                    ChangeState((int)eState.Jump);
-                    return;
-                }
-
                 // ダッシュステート
                 if (data.CanGroundDash() && Parent.input_.GetButtonDown(ActionCode.Dash))
                 {
                     data.DashCalled();
                     ChangeState((int)eState.Dush);
+                    return;
+                }
+
+                // ジャンプ入力ならジャンプステートへ
+                if (Parent.input_.GetButtonDown(ActionCode.Jump))
+                {
+                    ChangeState((int)eState.Jump);
                     return;
                 }
 

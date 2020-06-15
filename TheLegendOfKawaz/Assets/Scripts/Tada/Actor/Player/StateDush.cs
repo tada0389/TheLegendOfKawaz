@@ -43,7 +43,6 @@ namespace Actor.Player
 
                 data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
                 data.velocity.y = 0f;
-                data.velocity = new Vector2(0f, 0f);
 
                 EffectPlayer.Play(dash_effect_, data.transform.position, new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f));
 

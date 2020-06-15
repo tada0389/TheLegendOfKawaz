@@ -39,7 +39,7 @@ namespace Actor.Player
     public class Data
     {
         // プレイヤーの物理演算
-        private TadaRigidbody trb;
+        public TadaRigidbody trb { private set; get; }
 
         public Transform transform;
 
@@ -400,6 +400,7 @@ namespace Actor.Player
         // ダッシュ時間がどれくらい残っているか ダッシュジャンプに使う
         private float dash_remain_time_;
 
+
         // 初期スキル
         #region debug
         [System.Serializable]
@@ -481,7 +482,7 @@ namespace Actor.Player
         }
 
         // Update is called once per frame
-        private void Update()
+        private void FixedUpdate()
         {
             if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
             {

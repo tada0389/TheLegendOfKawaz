@@ -58,7 +58,7 @@ namespace Actor.Player
                 is_kicked_ = (PrevStateId == (int)eState.Wall);
 
                 // 上向きに速度を加える
-                data.velocity = new Vector2(data.velocity.x, jump_power);
+                data.velocity.y = jump_power;
             }
 
             // ステートが終了したときに呼ばれるメソッド
