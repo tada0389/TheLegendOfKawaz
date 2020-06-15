@@ -16,7 +16,7 @@ namespace TadaLib
     {
         private TadaLib.MultiSet<float> values_;
 
-        private void Awake()
+        protected override void Awake()
         {
             base.Awake();
             values_ = new MultiSet<float>();

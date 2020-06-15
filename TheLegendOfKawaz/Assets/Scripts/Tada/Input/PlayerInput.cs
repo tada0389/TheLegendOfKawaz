@@ -31,6 +31,8 @@ namespace TadaInput
         private Dictionary<ActionCode, bool> action_down_;
         private Dictionary<ActionCode, bool> action_released_;
 
+        private Dictionary<AxisCode, float> axis_;
+
 
         private void Awake()
         {
@@ -41,6 +43,7 @@ namespace TadaInput
             action_down_ = new Dictionary<ActionCode, bool>();
             action_released_ = new Dictionary<ActionCode, bool>();
 
+            axis_ = new Dictionary<AxisCode, float>();
 
             //初期化
             foreach (ButtonCode code in System.Enum.GetValues(typeof(ButtonCode)))
@@ -53,6 +56,11 @@ namespace TadaInput
             {
                 action_down_.Add(code, false);
                 action_released_.Add(code, false);
+            }
+
+            foreach (AxisCode code in System.Enum.GetValues(typeof(AxisCode)))
+            {
+                axis_.Add(code, 0.0f);
             }
         }
 
@@ -77,6 +85,10 @@ namespace TadaInput
                 if (ActionInput.GetButtonUp(code)) action_released_[code] = true;
             }
 
+            foreach (AxisCode code in System.Enum.GetValues(typeof(AxisCode)))
+            {
+                axis_[code] = ActionInput.GetAxis(code);
+            }
 
             // 制限時間を超えているものはあるか
             while (jump_buff_.Count >= 1)
@@ -114,7 +126,7 @@ namespace TadaInput
         public override float GetAxis(AxisCode code)
         {
             if (!ActionEnabled) return 0.0f;
-            return ActionInput.GetAxis(code);
+            return axis_[code];// ActionInput.GetAxis(code);
         }
 
         public override bool GetButton(ButtonCode code)

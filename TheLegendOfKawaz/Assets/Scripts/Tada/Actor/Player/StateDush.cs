@@ -41,6 +41,12 @@ namespace Actor.Player
 
                 is_air_dash_ = !data.IsGround;
 
+                // どちらを向いているか
+                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
+                if (Mathf.Abs(dir) < 0.2f) dir = 0f;
+                if (dir < -0.1f) data.ChangeDirection(eDir.Left);
+                if (dir > 0.1f) data.ChangeDirection(eDir.Right);
+
                 data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
                 data.velocity.y = 0f;
 

@@ -51,6 +51,18 @@ namespace Actor.Player
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
+                // 移動している方向に速度を加える
+                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
+                if (Mathf.Abs(dir) < 0.2f) dir = 0f;
+                if (dir == 0.0f)
+                { // 良くない
+                    // 何も押していないならWait状態に
+                    ChangeState((int)eState.Wait);
+                    return;
+                }
+                if (dir < -0f) data.ChangeDirection(eDir.Left);
+                if (dir > 0f) data.ChangeDirection(eDir.Right);
+
                 // ダッシュステート
                 if (data.CanGroundDash() && Parent.input_.GetButtonDown(ActionCode.Dash))
                 {
@@ -72,17 +84,6 @@ namespace Actor.Player
 
                 // 壁に当たってるなら速度ゼロ
                 if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
-
-                // 移動している方向に速度を加える
-                float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
-                if (Mathf.Abs(dir) < 0.2f) dir = 0f;
-                if (dir == 0.0f) { // 良くない
-                    // 何も押していないならWait状態に
-                    ChangeState((int)eState.Wait);
-                    return;
-                }
-                if (dir < -0f) data.ChangeDirection(eDir.Left);
-                if (dir > 0f) data.ChangeDirection(eDir.Right);
 
                 ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, 1f) * Accel * data.GroundFriction, MaxAbsSpeed * (1 / (Mathf.Max(0.5f, data.GroundFriction))));
 

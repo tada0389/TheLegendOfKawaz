@@ -40,13 +40,14 @@ namespace SkillItem
                 else
                     explonation_text_.text = "<size=24>Lv" + (skill.Level + 1).ToString() + "</size>  <color=red>" + skill.Name + "</color> <size=24>値段 " + skill.NeedPoint().ToString() + "SP</size>";
                 delete_requests_ = 0;
-                money_text_.text = "<size=24></size> <sprite index=0> " + SkillManager.Instance.SkillPoint.ToString();
+                //money_text_.text = "<size=24></size> <sprite index=0> " + SkillManager.Instance.SkillPoint.ToString();
             }
             else if(delete_requests_ >= 1)
             {
                 delete_requests_ = 0;
                 explonation_text_.text = "";
             }
+            money_text_.text = "<size=24></size> <sprite index=0> " + SkillManager.Instance.SkillPoint.ToString();
         }
 
         public void ChangeExplonation(eSkill skill)

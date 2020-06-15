@@ -11350,6 +11350,8 @@ MonoBehaviour:
   message: "\u30B9\u30AD\u30EB\u8CB7\u3048\u308B\u3088\n\u30B9\u30AD\u30EB\u306E\u4F53\u9A13\u3082\u3067\u304D\u308B\u3088\n(\u30B9\u30AD\u30EB\u306E\u80CC\u666F\u306E\u30D6\u30ED\u30C3\u30AF\u306B\u5165\u308B\u3068\u4E00\u6642\u7684\u306B\u30B9\u30AD\u30EB\u304C\u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u3055\u308C\u307E\u3059)"
   dead_message: "\u6BBA\u3057\u307E\u3057\u305F"
   player_: {fileID: 0}
+  IsDropCoin: 1
+  DropCoin: 500
 --- !u!1 &481556322
 GameObject:
   m_ObjectHideFlags: 0
@@ -39794,6 +39796,8 @@ MonoBehaviour:
   message: "\u3053\u308C\u304C\u904E\u53BB\u306E\u304A\u524D\u3060\n(\u5DE6\u53F3\u306E\u30B9\u30AD\u30EB\u306E\u8A66\u3057\u6253\u3061\u7528\u306E\u30AB\u30AB\u30B7)\n(\u6BBA\u3059\u3068\u30DA\u30CA\u30EB\u30C6\u30A3\u3064\u3051\u308B\u305E)"
   dead_message: "\u6BBA\u3057\u307E\u3057\u305F"
   player_: {fileID: 1624376392}
+  IsDropCoin: 0
+  DropCoin: 0
 --- !u!61 &1349196954
 BoxCollider2D:
   m_ObjectHideFlags: 0

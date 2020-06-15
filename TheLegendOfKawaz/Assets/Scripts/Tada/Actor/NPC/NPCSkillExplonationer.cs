@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using KoitanLib;
+using Actor.Player;
 
 /// <summary>
 /// スキル購入シーンで説明をしてくれるNPC
@@ -20,6 +21,12 @@ namespace Actor.NPC
         [SerializeField]
         private Transform player_;
 
+
+        [SerializeField]
+        private bool IsDropCoin = false;
+        [SerializeField]
+        private int DropCoin = 0;
+
         private void Update()
         {
             if (player_)
@@ -36,6 +43,7 @@ namespace Actor.NPC
             else if (damage >= 2) type = TadaLib.DamageDisplayer.eDamageType.Normal;
             TadaLib.DamageDisplayer.Instance.ShowDamage(damage, transform.position, type);
 
+            if (HP <= 0) return;
             HP -= damage;
             if (HP <= 0) Dead();
         }
@@ -43,6 +51,7 @@ namespace Actor.NPC
         private void Dead()
         {
             message = dead_message;
+            if(IsDropCoin) SkillManager.Instance.GainSkillPoint(DropCoin, transform.position, 0.5f);
         }
 
         void OnTriggerEnter2D(Collider2D col)
