@@ -34102,6 +34102,7 @@ MonoBehaviour:
     dush_speed_: 0.27
     dash_effect_: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
       type: 3}
+    reverse_enable_time_: 0.04
   dashjump_state_:
     MaxAbsSpeed: {x: 0.27, y: 0.28}
     Accel: {x: 0.01, y: -0.04}

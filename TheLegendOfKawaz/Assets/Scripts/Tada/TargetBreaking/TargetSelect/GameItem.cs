@@ -98,6 +98,8 @@ namespace TargetBreaking
         private List<float> tag_timer_;
         private float tag_position_y_;
 
+        private float timer_;
+
         TargetSelectManager parent_;
 
         public override void Init(TargetSelectManager parent)
@@ -131,8 +133,10 @@ namespace TargetBreaking
                 color.a = 0.3f;
                 tag_shadow_[i].color = color;
             }
-
+            
             ShowExplonation(index_);
+
+            timer_ = 0.0f;
         }
 
         public override void Proc()
@@ -182,6 +186,7 @@ namespace TargetBreaking
                 return;
             }
 
+            timer_ += Time.deltaTime;
             if (ActionInput.GetButtonDown(ButtonCode.Left) || ActionInput.GetButtonDown(ButtonCode.Right))
             {
                 index_ = 1 - index_;
@@ -205,7 +210,7 @@ namespace TargetBreaking
         private void ShowExplonation(int index, int prev = -1)
         {
             if (prev == -1) for (int i = 0, n = tag_.Count; i < n; ++i) tag_timer_[i] = tag_jump_duration_ - tag_timer_[i];
-            else
+            else if(timer_ > tag_jump_duration_ / 2f) // バグ防止 
             {
                 tag_timer_[prev] = tag_jump_duration_ - tag_timer_[prev];
                 tag_timer_[index] = tag_jump_duration_ - tag_timer_[index];

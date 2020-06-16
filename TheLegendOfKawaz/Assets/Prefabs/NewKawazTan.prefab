@@ -751,6 +751,7 @@ MonoBehaviour:
     jump_power: 0.26
     jump_input_time: 0.25
     wall_thr: 0.05
+    jump_reuse_time_: 0.1
     jump_se_1: {fileID: 8300000, guid: 146da4b8bebfb42bbbd74612d92bfcfe, type: 3}
     jump_se_2: {fileID: 8300000, guid: 7ac5fdf38a07a4a018c0691d2c398bf5, type: 3}
     kick_wait_time_: 0.1
@@ -771,6 +772,7 @@ MonoBehaviour:
     dush_speed_: 0.27
     dash_effect_: {fileID: 8108838445995919459, guid: f5d441cf1bccd9c4e85a05f61bfbc151,
       type: 3}
+    reverse_enable_time_: 0.06
   dashjump_state_:
     MaxAbsSpeed: {x: 0.27, y: 0.28}
     Accel: {x: 0.01, y: -0.04}
@@ -820,6 +822,7 @@ MonoBehaviour:
   not_reverse_: {fileID: 819803753}
   muteki_time_: 2
   mesh_: {fileID: 5644076340926306882}
+  enemy_tag_: Enemy
   is_minigame_mode_: 0
   demo_skills_: []
 --- !u!114 &2131037086634868346
@@ -983,6 +986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb48c49bc5bbdf4eac62c0aca422d93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActionEnabled: 1
   persude_time_: 0.1
 --- !u!1 &2137500911764863794
 GameObject:
@@ -3843,11 +3847,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heal_always
       objectReference: {fileID: 0}
-    - target: {fileID: 6850620256162399257, guid: 50d7a42776b8a4f92885ff1eedc12443,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6850620256161912891, guid: 50d7a42776b8a4f92885ff1eedc12443,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3903,6 +3902,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6850620256162399257, guid: 50d7a42776b8a4f92885ff1eedc12443,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50d7a42776b8a4f92885ff1eedc12443, type: 3}
 --- !u!4 &6850620255999401478 stripped
@@ -3928,11 +3932,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Heal
-      objectReference: {fileID: 0}
-    - target: {fileID: 4188868256673871528, guid: e7e350bfb76b84ff69e06c1991b258b6,
-        type: 3}
-      propertyPath: playOnAwake
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4188868256655520744, guid: e7e350bfb76b84ff69e06c1991b258b6,
         type: 3}
@@ -3992,6 +3991,11 @@ PrefabInstance:
     - target: {fileID: 4188868256655421386, guid: e7e350bfb76b84ff69e06c1991b258b6,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4188868256673871528, guid: e7e350bfb76b84ff69e06c1991b258b6,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

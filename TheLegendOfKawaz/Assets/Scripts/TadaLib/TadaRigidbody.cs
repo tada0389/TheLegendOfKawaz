@@ -15,9 +15,6 @@ namespace TadaLib
     [RequireComponent(typeof(BoxCollider2D))]
     public class TadaRigidbody : MonoBehaviour
     {
-        // 更新されたか
-        public bool IsUpdated { private set; get; }
-
         // 速度
         [System.NonSerialized]
         public Vector2 Velocity = Vector2.zero;
@@ -54,6 +51,11 @@ namespace TadaLib
         // 現在載っている移動する床 一つだけ持つ
         private Mover riding_mover_;
 
+        //// 実際のポジション
+        //private Vector3 position_;
+        //private Vector3 prev_pos_;
+        //private float prev_update_time_;
+
         private void Start()
         {
             // 衝突の初期化
@@ -68,13 +70,19 @@ namespace TadaLib
 
             riding_mover_ = null;
 
-            IsUpdated = false;
+            //position_ = transform.position;
+            //prev_pos_ = position_;
         }
+
+        //private void Update()
+        //{
+        //    // 補間する
+        //    float t = (Time.time - prev_update_time_) / Time.fixedDeltaTime;
+        //    transform.position = prev_pos_ * (1f - t) + position_ * t;
+        //}
 
         private void FixedUpdate()
         {
-            IsUpdated = true;
-
             Move();
 
             // 水中にいるか
@@ -83,6 +91,7 @@ namespace TadaLib
 
         private void Move()
         {
+            //prev_update_time_ = Time.time;
             // 衝突の初期化
             LeftCollide = false;
             RightCollide = false;
@@ -319,6 +328,9 @@ namespace TadaLib
                     if (hit_right) RightCollide = true;
                 }
             }
+            //transform.position = prev_pos_;
+            //prev_pos_ = position_;
+            //position_ += (Vector3)d;
             transform.position += (Vector3)d;
         }
 

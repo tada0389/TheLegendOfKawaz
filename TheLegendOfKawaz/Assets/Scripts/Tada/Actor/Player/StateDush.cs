@@ -30,6 +30,13 @@ namespace Actor.Player
             [SerializeField]
             private BaseParticle dash_effect_;
 
+            // ダッシュ後，わずかな時間だけ方向転換が可能
+            [SerializeField]
+            private float reverse_enable_time_ = 0.04f;
+            private bool reversed_;
+
+            private BaseParticle tmp_eff_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -41,6 +48,8 @@ namespace Actor.Player
 
                 is_air_dash_ = !data.IsGround;
 
+                reversed_ = false;
+
                 // どちらを向いているか
                 float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
                 if (Mathf.Abs(dir) < 0.2f) dir = 0f;
@@ -50,7 +59,7 @@ namespace Actor.Player
                 data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
                 data.velocity.y = 0f;
 
-                EffectPlayer.Play(dash_effect_, data.transform.position, new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f));
+                tmp_eff_ = EffectPlayer.Play(dash_effect_, data.transform.position, new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f));
 
                 // カメラを揺らす
                 CameraSpace.CameraShaker.Shake(0.05f, 0.1f);
@@ -88,6 +97,28 @@ namespace Actor.Player
                     if (data.IsGround) ChangeState((int)eState.Walk);
                     else ChangeState((int)eState.Fall);
                     return;
+                }
+
+                // ダッシュ後，わずかな時間だけ反転が可能
+                if (Timer < reverse_enable_time_ && !reversed_)
+                {
+                    float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
+                    if (Mathf.Abs(dir) < 0.2f) dir = 0f;
+                    if (dir < -0.1f && data.Dir == eDir.Right)
+                    {
+                        data.ChangeDirection(eDir.Left);
+                        reversed_ = true;
+                        // エフェクトも反転
+                        tmp_eff_.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir) * 90f - 90f, 0f);
+                        data.velocity.x = -dush_speed_;
+                    }
+                    else if (dir > 0.1f && data.Dir == eDir.Left)
+                    {
+                        data.ChangeDirection(eDir.Right);
+                        reversed_ = true;
+                        tmp_eff_.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir) * 90f - 90f, 0f);
+                        data.velocity.x = dush_speed_;
+                    }
                 }
 
                 // ジャンプ
