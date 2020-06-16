@@ -95,8 +95,13 @@ namespace Actor.Player
                 if (data.CanWallKick &&
                     ((data.IsLeft && Parent.input_.GetButton(ButtonCode.Left)) || (data.IsRight && Parent.input_.GetButton(ButtonCode.Right))))
                 {
-                    ChangeState((int)eState.Wall);
-                    return;
+                    // 前回Wallだった & Fallになったばっかの時は遷移できない (壁張り付きでカクカクになるのを防止)
+                    int prev_id = PrevStateId;
+                    if (Timer > 0.10f || (prev_id != (int)eState.Wall && prev_id != (int)eState.Walk))
+                    {
+                        ChangeState((int)eState.Wall);
+                        return;
+                    }
                 }
 
                 // 空中ジャンプ

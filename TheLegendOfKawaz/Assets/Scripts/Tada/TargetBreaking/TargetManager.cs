@@ -159,9 +159,10 @@ namespace Target
                 else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
             }
 
-            float time_change_duration = 3.0f * new_time_scale;
-            //// もしポイントを獲得していたならもうちょい伸ばす
-            //if(get_point) time_change_duration += 0.03f;
+            float time_change_duration = 1.5f;
+            // もしポイントを獲得していたならもうちょい伸ばす
+            if(get_point) time_change_duration += 1.5f;
+            time_change_duration *= new_time_scale;
             TimeScaler.Instance.RequestChange(new_time_scale, time_change_duration);
 
             //clear_text_.rectTransform.DOPunchScale(Vector3.one, 3.0f * Time.timeScale);
