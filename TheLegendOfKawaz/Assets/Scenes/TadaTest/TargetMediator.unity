@@ -181,7 +181,7 @@ MonoBehaviour:
     <BronzeBoaderTime>k__BackingField: 30
     <BronzeReward>k__BackingField: 50
     <OtherReward>k__BackingField: 0
-    <DeveloperTime>k__BackingField: 6.91
+    <DeveloperTime>k__BackingField: 6.65
     <DeveloperScore>k__BackingField: 0
     <AchievementKey>k__BackingField: Target_Clear_shokyu
   <NextScene>k__BackingField: TargetTest
@@ -1078,7 +1078,7 @@ MonoBehaviour:
     <BronzeBoaderTime>k__BackingField: 60
     <BronzeReward>k__BackingField: 60
     <OtherReward>k__BackingField: 0
-    <DeveloperTime>k__BackingField: 9.15
+    <DeveloperTime>k__BackingField: 7.88
     <DeveloperScore>k__BackingField: 0
     <AchievementKey>k__BackingField: Target_Clear_tyukyu
   <NextScene>k__BackingField: TargetZakkyMiddleLevel
@@ -1319,7 +1319,7 @@ MonoBehaviour:
     <BronzeBoaderTime>k__BackingField: 100
     <BronzeReward>k__BackingField: 75
     <OtherReward>k__BackingField: 0
-    <DeveloperTime>k__BackingField: 9.26
+    <DeveloperTime>k__BackingField: 8.54
     <DeveloperScore>k__BackingField: 0
     <AchievementKey>k__BackingField: Target_Clear_jokyu
   <NextScene>k__BackingField: Target_jokyu

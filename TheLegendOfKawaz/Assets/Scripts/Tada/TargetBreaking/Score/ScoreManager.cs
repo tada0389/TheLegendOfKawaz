@@ -35,7 +35,7 @@ public class Score
     public int AddScore(int score)
     {
         // ランクインしているかどうか
-        if(scores_[rank_length_ - 1] > score)
+        if(scores_[rank_length_ - 1] >= score)
         {
             return -1;
         }
