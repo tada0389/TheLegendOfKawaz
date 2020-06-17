@@ -94,11 +94,11 @@ public class SettingData : TadaLib.Save.BaseSaver<SettingData>
     // データが変更されたか取得する
     public bool DataChanged()
     {
-        if(prev_vSyncCount != vSyncCount) return true;
+        if (prev_vSyncCount != vSyncCount) return true;
         if (prev_bgmVol != bgmVol) return true;
         if (prev_seVol != seVol) return true;
         if (prev_masterVol != masterVol) return true;
-        if(prev_screenSizeNum != screenSizeNum) return true;
+        if (prev_screenSizeNum != screenSizeNum) return true;
         if (prev_isFullScreen != isFullScreen) return true;
         if (prev_postEffectEnable != postEffectEnable) return true;
         if (prev_unlocked_cnt != unlockedIndices.Count) return true;
@@ -108,8 +108,10 @@ public class SettingData : TadaLib.Save.BaseSaver<SettingData>
 
 public class SettingManager : MonoBehaviour
 {
-    public TextMeshProUGUI titleUi;
-    public TextMeshProUGUI headUi;
+    public TextMeshProUGUI[] bodyTextMesh;
+    public TextMeshProUGUI titleTextMesh;
+    [SerializeField]
+    private TextMeshProUGUI detailTextMesh;
     public Image cursor;
     public Image window;
     public Image curtain;
@@ -125,7 +127,7 @@ public class SettingManager : MonoBehaviour
     private OpenState openState = OpenState.Closed;
     public float width;
     private int nowIndex = 0;
-    private int maxIndex;
+    private int maxIndex = 0;
     private Vector3 cursorDefaultPos;
     public Vector2 defaultDeltaSize;
     public Vector2 targetDeltaSize;
@@ -135,11 +137,12 @@ public class SettingManager : MonoBehaviour
     public Material blurMat;
     public float defaultBlur;
     public float targetBlur;
+    public float bodyTextShiftLocalX = -10f;
 
     delegate void OnPush();
     delegate void OnSelected();
     OnSelected[] onSelecteds;
-    Func<string> textStr;
+    Func<string>[] textStr = new Func<string>[6];
     string exitSceneStr;
     Action onCancel;
 
@@ -157,6 +160,10 @@ public class SettingManager : MonoBehaviour
     private List<TutorialBook> unlockedBooks = new List<TutorialBook>();
     private GameObject opendPageObj;
     private TutorialBook nowBook;
+    [SerializeField]
+    private Image rightIm;
+    [SerializeField]
+    private Image leftIm;
 
     [SerializeField]
     private AudioClip decisionSe;
@@ -217,7 +224,7 @@ public class SettingManager : MonoBehaviour
         SceneManager.sceneLoaded += SetPost;
 
         // 既に登録されたチュートリアルを入れる by tada
-        foreach(var index in data.unlockedIndices)
+        foreach (var index in data.unlockedIndices)
         {
             unlockedBooks.Add(books[index]);
             books[index].isUnlocked = true;
@@ -279,7 +286,7 @@ public class SettingManager : MonoBehaviour
                     }
                 }
                 //テキストの更新
-                titleUi.text = textStr();
+                UpdateBodyText();
 
                 //キャンセル
                 if (ActionInput.GetButtonDown(ActionCode.Back))
@@ -388,7 +395,7 @@ public class SettingManager : MonoBehaviour
 
                 nowIndex = 0;
                 //テキストの更新
-                titleUi.text = textStr();
+                UpdateBodyText();
                 //カーソルの更新
                 cursor.transform.localPosition = cursorDefaultPos + Vector3.down * width * nowIndex;
 
@@ -420,7 +427,7 @@ public class SettingManager : MonoBehaviour
 
 
                 //テキストの更新
-                titleUi.text = textStr();
+                UpdateBodyText();
 
             })
             .Append(window.rectTransform.DOSizeDelta(targetDeltaSize, 0.25f)).SetEase(ease).SetUpdate(true)
@@ -460,7 +467,7 @@ public class SettingManager : MonoBehaviour
             .OnStart(() =>
             {
                 // セーブ申請を送る by tada
-                if(changed) data.RequestSave();
+                if (changed) data.RequestSave();
                 nowIndex = 0;
                 item.SetActive(false);
                 openState = OpenState.Closing;
@@ -474,7 +481,7 @@ public class SettingManager : MonoBehaviour
                 window.gameObject.SetActive(false);
                 TadaLib.TimeScaler.Instance.DismissRequest(0.0f);
                 // セーブする
-                if(changed) TadaLib.Save.SaveManager.Instance.Save();
+                if (changed) TadaLib.Save.SaveManager.Instance.Save();
             });
     }
 
@@ -484,6 +491,53 @@ public class SettingManager : MonoBehaviour
         audioSource.clip = clip;
         audioSource.time = 0;
         audioSource.Play();
+    }
+
+    void AppearanceBodyText()
+    {
+        //maxIndexが0の時だけ挙動が特殊
+        for (int i = 0; i < bodyTextMesh.Length; i++)
+        {
+            if (i < maxIndex)
+            {
+                bodyTextMesh[i].gameObject.SetActive(true);
+                bodyTextMesh[i].DOKill();
+                bodyTextMesh[i].rectTransform.DOKill();
+                var pos = bodyTextMesh[i].rectTransform.localPosition;
+                pos.x = -bodyTextShiftLocalX;
+                bodyTextMesh[i].rectTransform.localPosition = pos;
+                bodyTextMesh[i].color = new Color(1, 1, 1, 0);
+                //bodyTextMesh[i].rectTransform.localScale = new Vector3(1, 1, 1);                
+                bodyTextMesh[i].DOFade(1, 0.1f).SetDelay(0.05f * i).SetUpdate(true);
+                bodyTextMesh[i].rectTransform.DOLocalMoveX(bodyTextShiftLocalX, 0.1f).SetEase(Ease.OutCubic).SetRelative().SetDelay(0.05f * i).SetUpdate(true);
+            }
+            else
+            {
+                bodyTextMesh[i].text = string.Empty;
+                bodyTextMesh[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    void UpdateBodyText()
+    {
+        //maxIndexが0の時だけ挙動が特殊
+        if (maxIndex == 0)
+        {
+            bodyTextMesh[0].text = textStr[0]();
+            return;
+        }
+        for (int i = 0; i < bodyTextMesh.Length; i++)
+        {
+            if (i < maxIndex)
+            {
+                bodyTextMesh[i].text = textStr[i]();
+            }
+            else
+            {
+                bodyTextMesh[i].text = string.Empty;
+            }
+        }
     }
 
     OnSelected SetButtonPush(Action onPush)
@@ -507,20 +561,23 @@ public class SettingManager : MonoBehaviour
         //skillItem.SetActive(true);
         achievementItem.gameObject.SetActive(false);
         maxIndex = 4;
-        headUi.text = "メニュー";
-        textStr = () => "チュートリアル\nオプション\nじっせき\nメニューをとじる";
+        titleTextMesh.text = "メニュー";
+        textStr[0] = () => "チュートリアル";
+        textStr[1] = () => "オプション";
+        textStr[2] = () => "じっせき";
+        textStr[3] = () => "メニューをとじる";
         onSelecteds[0] = SetButtonPush(TutorialTop);
         onSelecteds[1] = SetButtonPush(Option);
         onSelecteds[2] = SetButtonPush(AchievementScreen);
-        onSelecteds[3] = SetButtonPush(CloseWindow);
+        onSelecteds[3] = SetButtonPush(CloseWindow);        
+        AppearanceBodyText();
     }
 
     void TutorialTop()
     {
         maxIndex = unlockedBooks.Count;
         nowIndex = 0;
-        headUi.text = "チュートリアル";
-        string str = string.Empty;
+        titleTextMesh.text = "チュートリアル";
         if (maxIndex > 0)
         {
             cursor.gameObject.SetActive(true);
@@ -528,16 +585,16 @@ public class SettingManager : MonoBehaviour
             {
                 //デリゲートの仕様？
                 int tmp = i;
-                str += unlockedBooks[tmp].bookTitle + "\n";
+                textStr[tmp] = () => unlockedBooks[tmp].bookTitle;
                 onSelecteds[tmp] = SetButtonPush(() => OpenTutorialBook(tmp));
             }
         }
         else
         {
             cursor.gameObject.SetActive(false);
-            str = "まだありません…";
+            textStr[0] = () => "まだありません…";
         }
-        textStr = () => str;
+        AppearanceBodyText();
     }
 
     void OpenTutorialBook(int index)
@@ -551,8 +608,10 @@ public class SettingManager : MonoBehaviour
         opendPageObj = nowBook.pages[pageIndex];
         opendPageObj.SetActive(true);
         onCancel += () => opendPageObj.SetActive(false);
-        headUi.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
-        textStr = () => "";
+        onCancel += () => rightIm.gameObject.SetActive(false);
+        onCancel += () => leftIm.gameObject.SetActive(false);
+        titleTextMesh.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
+        textStr[0] = () => "";
     }
 
     void OpenTutorialBookFirst(int index)
@@ -576,15 +635,17 @@ public class SettingManager : MonoBehaviour
         opendPageObj = nowBook.pages[pageIndex];
         opendPageObj.SetActive(true);
         onCancel += () => opendPageObj.SetActive(false);
-        headUi.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
-        textStr = () => "";
+        onCancel += () => rightIm.gameObject.SetActive(false);
+        onCancel += () => leftIm.gameObject.SetActive(false);
+        titleTextMesh.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
+        textStr[0] = () => "";
     }
 
     OnSelected SlideTutorialPage()
     {
         return () =>
         {
-            if (ActionInput.GetButtonDown(ButtonCode.Right))
+            if (ActionInput.GetButtonDown(ButtonCode.Right) || ActionInput.GetButtonDown(ActionCode.Decide))
             {
                 if (pageIndex < nowBook.pages.Length - 1)
                 {
@@ -592,7 +653,7 @@ public class SettingManager : MonoBehaviour
                     pageIndex++;
                     opendPageObj = nowBook.pages[pageIndex];
                     opendPageObj.SetActive(true);
-                    headUi.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
+                    titleTextMesh.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
                     PlaySe(drumSe);
                 }
                 else
@@ -608,7 +669,7 @@ public class SettingManager : MonoBehaviour
                     pageIndex--;
                     opendPageObj = nowBook.pages[pageIndex];
                     opendPageObj.SetActive(true);
-                    headUi.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
+                    titleTextMesh.text = nowBook.bookTitle + "(" + (pageIndex + 1) + "/" + nowBook.pages.Length + ")";
                     PlaySe(drumSe);
                 }
                 else
@@ -616,28 +677,49 @@ public class SettingManager : MonoBehaviour
                     PlaySe(cancelSe);
                 }
             }
+            if (pageIndex > 0)
+            {
+                leftIm.gameObject.SetActive(true);
+            }
+            else
+            {
+                leftIm.gameObject.SetActive(false);
+            }
+            if (pageIndex < nowBook.pages.Length - 1)
+            {
+                rightIm.gameObject.SetActive(true);
+            }
+            else
+            {
+                rightIm.gameObject.SetActive(false);
+            }
         };
     }
 
+    /*
     void Manual()
     {
         maxIndex = 0;
         nowIndex = 0;
-        headUi.text = "そうさほうほう";
+        titleTextMesh.text = "そうさほうほう";
         textStr = () => ActionInput.GetSpriteCode(ActionCode.Jump) + "ジャンプ\n" + ActionInput.GetSpriteCode(ActionCode.Shot) + "ショット\n" + ActionInput.GetSpriteCode(ActionCode.Dash) + "ダッシュ";
         cursor.gameObject.SetActive(false);
     }
+    */
 
     void Option()
     {
         cursor.gameObject.SetActive(true);
-        headUi.text = "オプション";
-        textStr = () => "がめんせってい\nおんりょうせってい\nタイトルにもどる";
+        titleTextMesh.text = "オプション";
         maxIndex = 3;
         nowIndex = 0;
+        textStr[0] = () => "がめんせってい";
+        textStr[1] = () => "おんりょうせってい";
+        textStr[2] = () => "タイトルにもどる";
         onSelecteds[0] = SetButtonPush(VideoOption);
         onSelecteds[1] = SetButtonPush(BgmOption);
         onSelecteds[2] = SetButtonPush(ReturnTitle);
+        AppearanceBodyText();
     }
 
     void VideoOption()
@@ -645,12 +727,16 @@ public class SettingManager : MonoBehaviour
         cursor.gameObject.SetActive(true);
         maxIndex = 4;
         nowIndex = 0;
-        headUi.text = "がめんせってい";
-        textStr = () => "フルスクリーン\u3000< " + ScreenIsFull() + " >\nかいぞうど < " + ScreenSizeString() + " >\nポストエフェクト < " + PostEffectString() + " >\n垂直同期 < " + VsyncString() + " >";
+        titleTextMesh.text = "がめんせってい";
+        textStr[0] = () => "フルスクリーン\u3000< " + ScreenIsFull() + " >";
+        textStr[1] = () => "かいぞうど < " + ScreenSizeString() + " >";
+        textStr[2] = () => "ポストエフェクト < " + PostEffectString() + " >";
+        textStr[3] = () => "垂直同期 < " + VsyncString() + " >";
         onSelecteds[0] = SetFullScreen();
         onSelecteds[1] = SetScreenSize();
         onSelecteds[2] = SetPostEffect();
         onSelecteds[3] = SetVsync();
+        AppearanceBodyText();
     }
 
     void BgmOption()
@@ -663,12 +749,16 @@ public class SettingManager : MonoBehaviour
         audioMixer.GetFloat("BGMVol", out bgmVol);
         audioMixer.GetFloat("SEVol", out seVol);
         */
-        headUi.text = "おんりょうせってい";
-        textStr = () => "全体 < " + (data.masterVol) + " >\nBGM < " + (data.bgmVol) + " >\nこうかおん < " + (data.seVol) + " >\n元にもどす";
+        titleTextMesh.text = "おんりょうせってい";
+        textStr[0] = () => "全体 < " + (data.masterVol) + " >";
+        textStr[1] = () => "BGM < " + (data.bgmVol) + " >";
+        textStr[2] = () => "こうかおん < " + (data.seVol) + " >";
+        textStr[3] = () => "元にもどす";
         onSelecteds[0] = () => SetVol("MasterVol", ref data.masterVol);
         onSelecteds[1] = () => SetVol("BGMVol", ref data.bgmVol);
         onSelecteds[2] = () => SetVol("SEVol", ref data.seVol);
         onSelecteds[3] = SetDefaultVol();
+        AppearanceBodyText();
     }
 
     void AchievementScreen()
@@ -683,8 +773,8 @@ public class SettingManager : MonoBehaviour
         AchievementManager.UpdateUis();
         scrollMaxY = AchievementManager.GetScrollMaxY();
         onSelecteds[0] = ScrollView;
-        headUi.text = "じっせき";
-        textStr = () => "";
+        titleTextMesh.text = "じっせき";
+        textStr[0] = () => "";
     }
 
     void ScrollView()
@@ -735,14 +825,20 @@ public class SettingManager : MonoBehaviour
         //skillItem.SetActive(true);
         achievementItem.gameObject.SetActive(false);
         maxIndex = 6;
-        headUi.text = "メニュー";
-        textStr = () => "リトライ\nあきらめる\nチュートリアル\nオプション\nじっせき\nメニューをとじる";
+        titleTextMesh.text = "メニュー";
+        textStr[0] = () => "リトライ";
+        textStr[1] = () => "あきらめる";
+        textStr[2] = () => "チュートリアル";
+        textStr[3] = () => "オプション";
+        textStr[4] = () => "じっせき";
+        textStr[5] = () => "メニューをとじる";
         onSelecteds[0] = SetButtonPush(Retry);
         onSelecteds[1] = SetButtonPush(ExitScene);
         onSelecteds[2] = SetButtonPush(TutorialTop);
         onSelecteds[3] = SetButtonPush(Option);
         onSelecteds[4] = SetButtonPush(AchievementScreen);
         onSelecteds[5] = SetButtonPush(CloseWindow);
+        AppearanceBodyText();
     }
 
 
