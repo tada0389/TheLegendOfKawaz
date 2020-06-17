@@ -37,7 +37,7 @@ namespace KoitanLib
                 instance = this;
                 //DontDestroyOnLoad(instance);
                 DontDestroyOnLoad(gameObject);
-                DontDestroyOnLoad(fadeCanvas);
+                DontDestroyOnLoad(fadeCanvas);                
             }
             else Destroy(gameObject);
         }
