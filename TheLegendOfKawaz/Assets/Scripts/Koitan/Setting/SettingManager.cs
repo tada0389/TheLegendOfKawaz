@@ -23,7 +23,20 @@ public class SettingData : TadaLib.Save.BaseSaver<SettingData>
     public bool isFullScreen = false;
     public bool postEffectEnable = true;
 
+    // チュートリアル
+    public List<int> unlockedIndices = new List<int>();
+
     private const string kFileName = "Setting";
+
+    // セーブ前のデータ
+    private int prev_vSyncCount = 1;
+    private int prev_bgmVol = 8;
+    private int prev_seVol = 8;
+    private int prev_masterVol = 8;
+    private int prev_screenSizeNum = 1;
+    private bool prev_isFullScreen = false;
+    private bool prev_postEffectEnable = true;
+    private int prev_unlocked_cnt = 0;
 
     // ロードする ロードが正常に完了したら true それ以外は false
     public bool Load()
@@ -37,6 +50,8 @@ public class SettingData : TadaLib.Save.BaseSaver<SettingData>
         screenSizeNum = data.screenSizeNum;
         isFullScreen = data.isFullScreen;
         postEffectEnable = data.postEffectEnable;
+        unlockedIndices = data.unlockedIndices;
+        prev_unlocked_cnt = unlockedIndices.Count;
         return true;
     }
 
@@ -48,6 +63,16 @@ public class SettingData : TadaLib.Save.BaseSaver<SettingData>
             save_completed_ = false;
             TadaLib.Save.SaveManager.Instance.RequestSave(() => { Save(kFileName); save_completed_ = true; });
         }
+
+        // めんどくさい
+        prev_vSyncCount = vSyncCount;
+        prev_bgmVol = bgmVol;
+        prev_seVol = seVol;
+        prev_masterVol = masterVol;
+        prev_screenSizeNum = screenSizeNum;
+        prev_isFullScreen = isFullScreen;
+        prev_postEffectEnable = postEffectEnable;
+        prev_unlocked_cnt = unlockedIndices.Count;
     }
 
     // セーブデータを削除する
@@ -62,6 +87,22 @@ public class SettingData : TadaLib.Save.BaseSaver<SettingData>
         screenSizeNum = 1;
         isFullScreen = false;
         postEffectEnable = true;
+        unlockedIndices.Clear();
+        prev_unlocked_cnt = 0;
+    }
+
+    // データが変更されたか取得する
+    public bool DataChanged()
+    {
+        if(prev_vSyncCount != vSyncCount) return true;
+        if (prev_bgmVol != bgmVol) return true;
+        if (prev_seVol != seVol) return true;
+        if (prev_masterVol != masterVol) return true;
+        if(prev_screenSizeNum != screenSizeNum) return true;
+        if (prev_isFullScreen != isFullScreen) return true;
+        if (prev_postEffectEnable != postEffectEnable) return true;
+        if (prev_unlocked_cnt != unlockedIndices.Count) return true;
+        return false;
     }
 }
 
@@ -174,6 +215,13 @@ public class SettingManager : MonoBehaviour
         audioMixer.SetFloat("SEVol", VolToDb(data.seVol / 10f));
 
         SceneManager.sceneLoaded += SetPost;
+
+        // 既に登録されたチュートリアルを入れる by tada
+        foreach(var index in data.unlockedIndices)
+        {
+            unlockedBooks.Add(books[index]);
+            books[index].isUnlocked = true;
+        }
     }
 
     // Update is called once per frame
@@ -406,11 +454,13 @@ public class SettingManager : MonoBehaviour
 
     void CloseWindow()
     {
+        bool changed = data.DataChanged();
+
         Sequence seq = DOTween.Sequence()
             .OnStart(() =>
             {
                 // セーブ申請を送る by tada
-                data.RequestSave();
+                if(changed) data.RequestSave();
                 nowIndex = 0;
                 item.SetActive(false);
                 openState = OpenState.Closing;
@@ -424,7 +474,7 @@ public class SettingManager : MonoBehaviour
                 window.gameObject.SetActive(false);
                 TadaLib.TimeScaler.Instance.DismissRequest(0.0f);
                 // セーブする
-                TadaLib.Save.SaveManager.Instance.Save();
+                if(changed) TadaLib.Save.SaveManager.Instance.Save();
             });
     }
 
@@ -517,6 +567,7 @@ public class SettingManager : MonoBehaviour
         */
         //RequestOpenTutorialで保証されている
         unlockedBooks.Add(nowBook);
+        data.unlockedIndices.Add(index);
         cursor.gameObject.SetActive(false);
         maxIndex = 1;
         nowIndex = 0;

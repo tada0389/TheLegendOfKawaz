@@ -29,6 +29,7 @@ namespace TadaLib
         {
             if (values_.Count() == 0) Time.timeScale = 1.0f;
             else Time.timeScale = values_.ElementAt(0);
+            Time.fixedDeltaTime = 0.01f * Time.timeScale;
         }
 
         /// <summary>
