@@ -28,7 +28,7 @@ namespace Actor.Player
                 if(data == null) data = Parent.data_;
 
                 // 落下アニメーション開始
-                data.animator.Play("Fall");
+                Parent.AnimPlay("Fall");
 
             }
 

@@ -35,6 +35,15 @@ namespace Actor.Player
         Right,
     }
 
+    public enum ShotType
+    {
+        Normal,
+        DashNormal,
+        Charge,
+        DashCharge,
+        None,
+    }
+
     // ステート間で共有するデータ
     public class Data
     {
@@ -400,6 +409,10 @@ namespace Actor.Player
         // ダッシュ時間がどれくらい残っているか ダッシュジャンプに使う
         private float dash_remain_time_;
 
+        // ゴースト作るのに使う
+        public string AnimCalled { private set; get; }
+        public ShotType ShotCalled { private set; get; }
+
 
         // 初期スキル
         #region debug
@@ -484,13 +497,6 @@ namespace Actor.Player
         // Update is called once per frame
         private void FixedUpdate()
         {
-            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
-            {
-                //TadaLib.Save.SaveManager.Instance.DeleteAllData();
-                //AchievementManager.DeleteSaveData();
-                ScoreManager.Instance.DeleteSaveData();
-            }
-
             if (Time.timeScale < 1e-6) return;
 
             if (!Global.GlobalPlayerInfo.ActionEnabled)
@@ -508,6 +514,9 @@ namespace Actor.Player
             {
                 SettingManager.RequestOpenWindow();
             }
+
+            AnimCalled = "";
+            ShotCalled = ShotType.None;
 
             // 接地しているかどうかなどで，状態を変更する
             RefectRigidbody();
@@ -610,6 +619,24 @@ namespace Actor.Player
             }
             if (is_charged) data_.animator.Play("ChargeShot", 1, 0);
             else data_.animator.Play("Shot", 1, 0);
+
+            // 以下ゴースト作るのに使う
+            if (is_charged)
+            {
+                if (dashed) ShotCalled = ShotType.DashCharge;
+                else ShotCalled = ShotType.Charge;
+            }
+            else
+            {
+                if (dashed) ShotCalled = ShotType.DashNormal;
+                else ShotCalled = ShotType.Normal;
+            }
+        }
+
+        public void AnimPlay(string anim)
+        {
+            data_.animator.Play(anim);
+            AnimCalled = anim;
         }
 
         // コライド情報などで状態を更新する

@@ -24,7 +24,7 @@ namespace Actor.Player
                 if(data == null) data = Parent.data_;
 
                 // 待機アニメーション開始
-                data.animator.Play("Idle");
+                Parent.AnimPlay("Idle");
 
                 // 速度をゼロにする
                 //data.velocity = Vector2.zero;

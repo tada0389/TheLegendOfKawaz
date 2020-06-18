@@ -63,6 +63,10 @@ namespace Target
 
         private List<UnityEngine.UI.Image> target_icons_ = new List<UnityEngine.UI.Image>();
 
+        // ゴースト
+        [SerializeField]
+        private GhostSaver ghost_saver_;
+
         private void Start()
         {
             timer_ = 0.0f;
@@ -80,6 +84,7 @@ namespace Target
                 {
                     started_ = true;
                     player_.GetComponent<Actor.Player.Player>().enabled = true;
+                    if(ghost_saver_) ghost_saver_.RecordStart();
                 }
             }
 
@@ -112,6 +117,7 @@ namespace Target
         private void Finish(bool clear)
         {
             finished_ = true;
+            if(ghost_saver_) ghost_saver_.RecordEnd();
             StartCoroutine(FinishFlow(clear));
         }
 

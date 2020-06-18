@@ -43,7 +43,7 @@ namespace Actor.Player
                 if (data == null) data = Parent.data_;
 
                 // 待機アニメーション開始
-                data.animator.Play("Dash");
+                Parent.AnimPlay("Dash");
                 data.animator.SetBool("isDash", true);
 
                 is_air_dash_ = !data.IsGround;

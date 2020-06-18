@@ -33,7 +33,7 @@ namespace Actor.Player
                 data.ResetArialJump();
 
                 // アニメーション開始
-                data.animator.Play("Wall");
+                Parent.AnimPlay("Wall");
                 data.animator.SetBool("isWall", true);
 
                 // 壁に接していないほうを向く
