@@ -680,6 +680,7 @@ namespace Actor.Enemy
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
                 MessageManager.OpenMessageWindow(message[0], im);
+                MessageManager.StartMessageAnimation();
                 ObjectPoolManager.Init(par, Parent, 1);
                 Global.GlobalPlayerInfo.ActionEnabled = false;
             }
@@ -723,6 +724,7 @@ namespace Actor.Enemy
             private void EndSeq()
             {
                 MessageManager.FinishMessage();
+                MessageManager.StopMessageAnimation();
                 MessageManager.CloseMessageWindow();
                 // プレイヤー動けなくさせる
                 Global.GlobalPlayerInfo.ActionEnabled = true;
