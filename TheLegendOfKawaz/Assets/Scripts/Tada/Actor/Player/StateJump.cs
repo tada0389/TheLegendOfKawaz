@@ -46,8 +46,8 @@ namespace Actor.Player
                 if (data == null) data = Parent.data_;
 
                 // ジャンプアニメーション開始
-                data.animator.Play("Jump", 0, 0f);
-                Parent.AnimCalled = "Jump";
+                //data.animator.Play("Jump", 0, 0f);
+                Parent.PlayAnim("Jump", eAnimType.Restart);
 
                 // 音を鳴らす
                 if (PrevStateId == (int)eState.Wall)

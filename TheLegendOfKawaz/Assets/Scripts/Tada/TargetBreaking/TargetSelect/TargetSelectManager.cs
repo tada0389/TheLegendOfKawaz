@@ -40,6 +40,10 @@ namespace TargetBreaking
         public static RewardData CurStageData = null;
         // 前回に選んだ難易度のインデックス
         private static int[] prev_game_index_ = new int[3] { 0, 0, 0 };
+
+        public static GhostData PrevGameGhost = null;
+        public static bool GhostEnabled = true;
+
         [SerializeField]
         private int game_index_ = 0;
 

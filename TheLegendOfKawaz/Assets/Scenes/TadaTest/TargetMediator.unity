@@ -196,22 +196,27 @@ MonoBehaviour:
   tag_:
   - {fileID: 1682820379}
   - {fileID: 1294671271}
+  - {fileID: 1709233204}
   tag_text_:
   - {fileID: 1590996884}
   - {fileID: 1895437005}
-  tag_font_size_: 1400000012000000
+  - {fileID: 1838475122}
+  tag_font_size_: 14000000120000000f000000
   tag_comments_:
   - GO
   - RANK
+  - GHOST
   tag_shadow_:
   - {fileID: 1689774370}
   - {fileID: 640863391}
+  - {fileID: 1683161045}
   tag_jump_power_: 30
   tag_jump_duration_: 0.25
   tag_distance_: 100
   score_displayer_: {fileID: 1181422142}
   explonation_font_size_: 16
   ranking_font_size_: 20
+  item_num_: 3
 --- !u!114 &63404833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +360,7 @@ RectTransform:
   m_GameObject: {fileID: 153330489}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.15, z: 1}
   m_Children: []
   m_Father: {fileID: 1133269346}
   m_RootOrder: 0
@@ -383,7 +388,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: c618df1d907022e4c873f4198c3c8956, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1093,22 +1098,27 @@ MonoBehaviour:
   tag_:
   - {fileID: 1682820379}
   - {fileID: 1294671271}
+  - {fileID: 1709233204}
   tag_text_:
   - {fileID: 1590996884}
   - {fileID: 1895437005}
-  tag_font_size_: 1400000012000000
+  - {fileID: 1838475122}
+  tag_font_size_: 14000000120000000f000000
   tag_comments_:
   - GO
   - RANK
+  - GHOST
   tag_shadow_:
   - {fileID: 1689774370}
   - {fileID: 640863391}
+  - {fileID: 1683161045}
   tag_jump_power_: 30
   tag_jump_duration_: 0.25
   tag_distance_: 100
   score_displayer_: {fileID: 1181422142}
   explonation_font_size_: 16
   ranking_font_size_: 20
+  item_num_: 3
 --- !u!114 &410636712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1335,22 +1345,27 @@ MonoBehaviour:
   tag_:
   - {fileID: 1682820379}
   - {fileID: 1294671271}
+  - {fileID: 1709233204}
   tag_text_:
   - {fileID: 1590996884}
   - {fileID: 1895437005}
-  tag_font_size_: 1400000012000000
+  - {fileID: 1838475122}
+  tag_font_size_: 14000000120000000f000000
   tag_comments_:
   - GO
   - RANK
+  - GHOST
   tag_shadow_:
   - {fileID: 1689774370}
   - {fileID: 640863391}
+  - {fileID: 1683161045}
   tag_jump_power_: 30
   tag_jump_duration_: 0.25
   tag_distance_: 100
   score_displayer_: {fileID: 1181422142}
   explonation_font_size_: 16
   ranking_font_size_: 20
+  item_num_: 3
 --- !u!114 &561050656
 MonoBehaviour:
   m_ObjectHideFlags: 0

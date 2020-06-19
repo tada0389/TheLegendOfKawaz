@@ -22,7 +22,7 @@ namespace TargetBreaking
         // 呼ばれた時間とアニメーションの名前
         [SerializeField]
         [HideInInspector]
-        public List<Tuple<float, string>> Anim;
+        public List<Tuple<float, string, int>> Anim;
 
         [SerializeField]
         [HideInInspector]
@@ -35,7 +35,7 @@ namespace TargetBreaking
         public GhostData()
         {
             Pos = new List<Tuple<float, float, float>>(100 * 10); // とりあえず10秒分確保
-            Anim = new List<Tuple<float, string>>();
+            Anim = new List<Tuple<float, string, int>>();
             Shot = new List<Tuple<float, int>>();
             RecordFailed = true;
         }
@@ -91,8 +91,8 @@ namespace TargetBreaking
 
                 Vector3 pos = target_.transform.position;
                 data_.Pos.Add(Tuple.Create(time, pos.x, pos.y));
-                if (target_.AnimCalled != "") data_.Anim.Add(Tuple.Create(time, target_.AnimCalled));
-                if (target_.ShotCalled != ShotType.None) data_.Shot.Add(Tuple.Create(time, (int)target_.ShotCalled));
+                if (target_.AnimCalled != "") data_.Anim.Add(Tuple.Create(time, target_.AnimCalled, (int)target_.AnimType));
+                if (target_.ShotCalled != eShotType.None) data_.Shot.Add(Tuple.Create(time, (int)target_.ShotCalled));
             }
         }
 
@@ -105,9 +105,18 @@ namespace TargetBreaking
             data_.RecordFailed = false;
         }
 
-        public void RecordEnd()
+        public void RecordFinish(bool success)
         {
             running_ = false;
+            if (!success) RecordFailed();
+            else TargetSelectManager.PrevGameGhost = data_;
+        }
+
+        public void RecordFailed()
+        {
+            running_ = false;
+            data_.RecordFailed = true;
+            data_.Reset();
         }
     }
 }

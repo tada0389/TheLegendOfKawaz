@@ -46,7 +46,7 @@ namespace Actor.Player
                 if(!flag_ && Timer > start_animation_time_)
                 {
                     flag_ = true;
-                    Parent.AnimPlay("CloseEar");
+                    Parent.PlayAnim("CloseEar");
                 }
                 if(Timer > close_duration_)
                 {

@@ -24,7 +24,7 @@ namespace Actor.Player
                 if(data == null) data = Parent.data_;
 
                 // 待機アニメーション開始
-                Parent.AnimPlay("Idle");
+                //Parent.PlayAnim("Idle");
 
                 // 速度をゼロにする
                 //data.velocity = Vector2.zero;
@@ -58,6 +58,12 @@ namespace Actor.Player
                     return;
                 }
 
+                // 地面から離れたらふぉるステートへ
+                if (!data.IsGround)
+                {
+                    ChangeState((int)eState.Fall);
+                    return;
+                }
 
                 // 左右に押したら歩くステートに変更
                 if (Mathf.Abs(Parent.input_.GetAxis(AxisCode.Horizontal)) > 0.2f)
@@ -66,12 +72,6 @@ namespace Actor.Player
                     return;
                 }
 
-                // 地面から離れたらふぉるステートへ
-                if (!data.IsGround)
-                {
-                    ChangeState((int)eState.Fall);
-                    return;
-                }
 
                 ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
                 if (data.GroundFriction < 0.25f) return;

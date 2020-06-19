@@ -36,7 +36,7 @@ namespace Actor.Player
             {
                 if (data == null) data = Parent.data_;
 
-                Parent.AnimPlay("Cry");
+                Parent.PlayAnim("Cry");
 
                 is_feed_ = false;
 

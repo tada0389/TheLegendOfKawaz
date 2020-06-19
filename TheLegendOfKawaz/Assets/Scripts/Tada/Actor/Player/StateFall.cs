@@ -28,14 +28,14 @@ namespace Actor.Player
                 if(data == null) data = Parent.data_;
 
                 // 落下アニメーション開始
-                Parent.AnimPlay("Fall");
+                Parent.PlayAnim("isFall", eAnimType.SetBoolTrue);
 
             }
 
             // ステートが終了したときに呼ばれるメソッド
             public override void OnEnd()
             {
-
+                Parent.PlayAnim("isFall", eAnimType.SetBoolFalse);
             }
 
             // 毎フレーム呼ばれる関数

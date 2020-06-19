@@ -213,6 +213,7 @@ MonoBehaviour:
   score_displayer_: {fileID: 64665596}
   explonation_font_size_: 16
   ranking_font_size_: 20
+  item_num_: 2
 --- !u!114 &26717538
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -43,8 +43,7 @@ namespace Actor.Player
                 if (data == null) data = Parent.data_;
 
                 // 待機アニメーション開始
-                Parent.AnimPlay("Dash");
-                data.animator.SetBool("isDash", true);
+                Parent.PlayAnim("isDash", eAnimType.SetBoolTrue);
 
                 is_air_dash_ = !data.IsGround;
 
@@ -68,7 +67,7 @@ namespace Actor.Player
             // ステートが終了したときに呼ばれるメソッド
             public override void OnEnd()
             {
-                data.animator.SetBool("isDash", false);
+                Parent.PlayAnim("isDash", eAnimType.SetBoolFalse);
                 // 急に落ちないように少し上昇する
                 if (!data.IsGround) data.velocity.y += 0.1f;
                 else data.velocity.y -= 0.02f;

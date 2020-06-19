@@ -29,7 +29,7 @@ namespace Actor.Player
 
                 // 歩きアニメーション開始
                 //data.animator.Play("Walk");
-                data.animator.SetBool("isWalk", true);
+                Parent.PlayAnim("isWalk", eAnimType.SetBoolTrue);
 
                 // 移動している方向に速度を加える
                 data.velocity = new Vector2(data.velocity.x, -0.02f);
@@ -43,7 +43,7 @@ namespace Actor.Player
             // ステートが終了したときに呼ばれるメソッド
             public override void OnEnd()
             {
-                data.animator.SetBool("isWalk", false);
+                Parent.PlayAnim("isWalk", eAnimType.SetBoolFalse);
                 // 下向きの速度をもとにもどす (がくつかないために下向きに速度を加えていた)
                 data.velocity.y = 0f;
             }

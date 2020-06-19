@@ -34,8 +34,8 @@ namespace Actor.Player
                 if (data == null) data = Parent.data_;
 
                 // 待機アニメーション開始
-                if (data.IsGround) Parent.AnimPlay("Damage2");
-                else Parent.AnimPlay("Damage");
+                if (data.IsGround) Parent.PlayAnim("Damage2");
+                else Parent.PlayAnim("Damage");
 
                 // 速度ダメージを受けた方向に飛ぶ いまは左だけ
                 data.velocity.x = power_.x;
