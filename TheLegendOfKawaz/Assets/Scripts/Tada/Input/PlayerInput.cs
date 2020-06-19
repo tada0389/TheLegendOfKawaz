@@ -66,12 +66,15 @@ namespace TadaInput
 
         private void Update()
         {
-            if (!ActionEnabled)
+            // 入力もないことにする
+            if(Time.timeScale < 1e-6 || !ActionEnabled || !Global.GlobalPlayerInfo.ActionEnabled)
             {
                 jump_buff_.Clear();
                 dash_buff_.Clear();
+                Reset();
                 return;
             }
+
 
             foreach (ButtonCode code in System.Enum.GetValues(typeof(ButtonCode)))
             {

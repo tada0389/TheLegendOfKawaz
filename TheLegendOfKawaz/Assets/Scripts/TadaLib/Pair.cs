@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace TadaLib
 {
+    [System.Serializable]
     public class Pair<T, U>
     {
         public T first;

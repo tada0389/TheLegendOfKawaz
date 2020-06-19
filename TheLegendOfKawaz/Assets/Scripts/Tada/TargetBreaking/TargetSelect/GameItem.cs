@@ -92,6 +92,9 @@ namespace TargetBreaking
         [SerializeField]
         private int ranking_font_size_ = 20;
 
+        [SerializeField]
+        private int item_num_ = 2;
+
         private int index_;
         private bool is_fading_;
 
@@ -187,11 +190,19 @@ namespace TargetBreaking
             }
 
             timer_ += Time.deltaTime;
-            if (ActionInput.GetButtonDown(ButtonCode.Left) || ActionInput.GetButtonDown(ButtonCode.Right))
+
+            int prev_index = index_;
+            if (ActionInput.GetButtonDown(ButtonCode.Right))
             {
-                index_ = 1 - index_;
-                ShowExplonation(index_, 1 - index_);
+                index_ = (index_ + 1) % item_num_;
             }
+            else if (ActionInput.GetButtonDown(ButtonCode.Left))
+            {
+                index_ = (index_ - 1 + item_num_) % item_num_;
+            }
+
+            if(index_ != prev_index)
+                ShowExplonation(index_, prev_index);
         }
 
         public override void OnEnd()
@@ -248,7 +259,7 @@ namespace TargetBreaking
                     x += icon_distance_;
                 }
             }
-            else
+            else if(index == 1)
             {
                 foreach (var icon in skill_icons_)
                 {
@@ -271,6 +282,15 @@ namespace TargetBreaking
                 }
                 parent_.explonation_text_.text = text;
                 parent_.explonation_text_.fontSize = ranking_font_size_;
+            }
+            else if(index == 2)
+            {
+                string text = "<size=20>【ゴースト】</size>\n";
+                text += "前回のプレイのゴーストを保存できます\n";
+                text += "〈保存する (前回の分は消えます)〉\n";
+                text += "プレイ中にゴーストを表示する\n";
+                text += "〈はい〉 〈いいえ〉\n";
+                parent_.explonation_text_.text = text;
             }
         }
 

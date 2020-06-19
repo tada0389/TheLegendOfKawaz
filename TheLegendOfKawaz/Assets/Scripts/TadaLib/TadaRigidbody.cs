@@ -84,7 +84,6 @@ namespace TadaLib
         private void FixedUpdate()
         {
             Move();
-
             // 水中にいるか
             IsUnderWater = hit_box_.IsTouchingLayers(1 << 14);
         }

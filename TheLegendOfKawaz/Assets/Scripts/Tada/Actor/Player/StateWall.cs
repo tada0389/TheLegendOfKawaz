@@ -33,8 +33,8 @@ namespace Actor.Player
                 data.ResetArialJump();
 
                 // アニメーション開始
-                data.animator.Play("Wall");
-                data.animator.SetBool("isWall", true);
+                Parent.PlayAnim("isWall", eAnimType.SetBoolTrue);
+                //Parent.PlayAnim("Wall");
 
                 // 壁に接していないほうを向く
                 if (data.IsRight)
@@ -57,7 +57,7 @@ namespace Actor.Player
             // ステートが終了したときに呼ばれるメソッド
             public override void OnEnd()
             {
-                data.animator.SetBool("isWall", false);
+                Parent.PlayAnim("isWall", eAnimType.SetBoolFalse);
             }
 
             // 毎フレーム呼ばれる関数

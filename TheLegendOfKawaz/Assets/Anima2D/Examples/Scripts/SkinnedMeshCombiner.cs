@@ -5,6 +5,9 @@ using Anima2D;
 public class SkinnedMeshCombiner : MonoBehaviour
 {
 	[SerializeField]
+	private Color color = Color.white;
+
+	[SerializeField]
 	private SpriteMeshInstance[] m_SpriteMeshInstances;
 	private MaterialPropertyBlock m_MaterialPropertyBlock;
 	private SkinnedMeshRenderer m_CachedSkinnedRenderer;
@@ -128,6 +131,7 @@ public class SkinnedMeshCombiner : MonoBehaviour
 		combinedSkinnedRenderer.sharedMesh.RecalculateBounds();
 
 		combinedSkinnedRenderer.materials = spriteMeshInstances[0].sharedMaterials;
+		combinedSkinnedRenderer.material.color = color;
 
 		transform.position = l_position;
 		transform.rotation = l_rotation;

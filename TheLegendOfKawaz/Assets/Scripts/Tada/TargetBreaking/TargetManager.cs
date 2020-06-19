@@ -63,12 +63,30 @@ namespace Target
 
         private List<UnityEngine.UI.Image> target_icons_ = new List<UnityEngine.UI.Image>();
 
+        // ゴーストの行動を保存するインスタンス
+        [SerializeField]
+        private GhostSaver ghost_saver_;
+
+        // ゴーストを呼び出すインスタンス
+        [SerializeField]
+        private GhostEmbodyer ghost_embodyer_;
+
+        private bool ghost_invoked_ = false;
+
         private void Start()
         {
             timer_ = 0.0f;
             started_ = false;
 
             KoitanLib.ObjectPoolManager.Init(target_break_eff_, this, 5);
+
+            Global.GlobalPlayerInfo.ActionEnabled = false;
+
+            if(ghost_embodyer_ != null && TargetSelectManager.GhostEnabled && TargetSelectManager.PrevGameGhost != null)
+            {
+                ghost_embodyer_.LoadGhost(TargetSelectManager.PrevGameGhost);
+                ghost_invoked_ = true;
+            }
         }
 
         private void Update()
@@ -79,7 +97,9 @@ namespace Target
                 if(ready_duration_ <= 0f)
                 {
                     started_ = true;
-                    player_.GetComponent<Actor.Player.Player>().enabled = true;
+                    if(ghost_saver_) ghost_saver_.RecordStart();
+                    if (ghost_invoked_) ghost_embodyer_.EmbodyStart();
+                    Global.GlobalPlayerInfo.ActionEnabled = true;
                 }
             }
 
@@ -112,6 +132,8 @@ namespace Target
         private void Finish(bool clear)
         {
             finished_ = true;
+            if(ghost_saver_) ghost_saver_.RecordFinish(clear);
+            if (ghost_invoked_) ghost_embodyer_.EmbodyFinish();
             StartCoroutine(FinishFlow(clear));
         }
 

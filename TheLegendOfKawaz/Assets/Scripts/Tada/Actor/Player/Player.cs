@@ -35,6 +35,24 @@ namespace Actor.Player
         Right,
     }
 
+    public enum eShotType
+    {
+        Normal,
+        DashNormal,
+        Charge,
+        DashCharge,
+        None,
+    }
+
+    public enum eAnimType
+    {
+        Play, 
+        SetBoolTrue,
+        SetBoolFalse,
+        Restart,
+        None,
+    }
+
     // ステート間で共有するデータ
     public class Data
     {
@@ -400,6 +418,11 @@ namespace Actor.Player
         // ダッシュ時間がどれくらい残っているか ダッシュジャンプに使う
         private float dash_remain_time_;
 
+        // ゴースト作るのに使う
+        public string AnimCalled { private set; get; }
+        public eAnimType AnimType { private set; get; }
+        public eShotType ShotCalled { private set; get; }
+
 
         // 初期スキル
         #region debug
@@ -484,20 +507,11 @@ namespace Actor.Player
         // Update is called once per frame
         private void FixedUpdate()
         {
-            if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
-            {
-                //TadaLib.Save.SaveManager.Instance.DeleteAllData();
-                //AchievementManager.DeleteSaveData();
-                ScoreManager.Instance.DeleteSaveData();
-            }
-
-            if (Time.timeScale < 1e-6) return;
-
             if (!Global.GlobalPlayerInfo.ActionEnabled)
             {
                 input_.ActionEnabled = false;
-                // 速度をゼロに
-                data_.velocity = Vector2.zero;
+                // 速度をデフォルトに (重力で少し下に)
+                data_.velocity = new Vector2(0f, -0.1f);
                 data_.ReflectVelocity(true);
                 return;
             }
@@ -508,6 +522,10 @@ namespace Actor.Player
             {
                 SettingManager.RequestOpenWindow();
             }
+
+            AnimCalled = "";
+            AnimType = eAnimType.None;
+            ShotCalled = eShotType.None;
 
             // 接地しているかどうかなどで，状態を変更する
             RefectRigidbody();
@@ -610,6 +628,43 @@ namespace Actor.Player
             }
             if (is_charged) data_.animator.Play("ChargeShot", 1, 0);
             else data_.animator.Play("Shot", 1, 0);
+
+            // 以下ゴースト作るのに使う
+            if (is_charged)
+            {
+                if (dashed) ShotCalled = eShotType.DashCharge;
+                else ShotCalled = eShotType.Charge;
+            }
+            else
+            {
+                if (dashed) ShotCalled = eShotType.DashNormal;
+                else ShotCalled = eShotType.Normal;
+            }
+        }
+
+        public void PlayAnim(string anim, eAnimType type = eAnimType.Play)
+        {
+            switch (type)
+            {
+                case eAnimType.Play:
+                    data_.animator.Play(anim);
+                    break;
+                case eAnimType.SetBoolTrue:
+                    data_.animator.SetBool(anim, true);
+                    break;
+                case eAnimType.SetBoolFalse:
+                    data_.animator.SetBool(anim, false);
+                    break;
+                case eAnimType.Restart:
+                    data_.animator.Play(anim, 0, 0.0f);
+                    break;
+                default:
+                    break;
+            }
+
+            data_.animator.Play(anim);
+            AnimCalled = anim;
+            AnimType = type;
         }
 
         // コライド情報などで状態を更新する
@@ -618,13 +673,16 @@ namespace Actor.Player
 
             data_.IsThrough = (input_.GetAxis(AxisCode.Vertical) < -0.5f);
 
-            data_.animator.SetBool("isGround", data_.IsGround);
+            //data_.animator.SetBool("isGround", data_.IsGround);
+
             if (data_.IsGround)
             {
                 // 空中ジャンプ回数をリセットする
                 data_.ResetArialJump();
                 data_.ResetDash();
+                PlayAnim("isGround", eAnimType.SetBoolTrue);
             }
+            else PlayAnim("isGround", eAnimType.SetBoolFalse);
         }
 
         // 方向転換するか確かめる
@@ -669,7 +727,6 @@ namespace Actor.Player
             if (HP == 0)
             {
                 state_machine_.ChangeState((int)eState.Dead);
-                Debug.Log("Defeated");
             }
             muteki_timer_.TimeReset();
             StartCoroutine(Tenmetu());
