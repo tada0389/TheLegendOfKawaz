@@ -495,6 +495,17 @@ public class SettingManager : MonoBehaviour
 
     void AppearanceBodyText()
     {
+        //タイトル
+        titleTextMesh.DOKill();
+        titleTextMesh.rectTransform.DOKill();
+        var pos = titleTextMesh.rectTransform.localPosition;
+        pos.x = -bodyTextShiftLocalX;
+        titleTextMesh.rectTransform.localPosition = pos;
+        titleTextMesh.color = new Color(1, 1, 1, 0);                      
+        titleTextMesh.DOFade(1, 0.1f).SetUpdate(true);
+        titleTextMesh.rectTransform.DOLocalMoveX(bodyTextShiftLocalX, 0.1f).SetEase(Ease.OutCubic).SetRelative().SetUpdate(true);
+
+
         //maxIndexが0の時だけ挙動が特殊
         for (int i = 0; i < bodyTextMesh.Length; i++)
         {
@@ -503,7 +514,7 @@ public class SettingManager : MonoBehaviour
                 bodyTextMesh[i].gameObject.SetActive(true);
                 bodyTextMesh[i].DOKill();
                 bodyTextMesh[i].rectTransform.DOKill();
-                var pos = bodyTextMesh[i].rectTransform.localPosition;
+                pos = bodyTextMesh[i].rectTransform.localPosition;
                 pos.x = -bodyTextShiftLocalX;
                 bodyTextMesh[i].rectTransform.localPosition = pos;
                 bodyTextMesh[i].color = new Color(1, 1, 1, 0);
@@ -824,20 +835,20 @@ public class SettingManager : MonoBehaviour
         cursor.gameObject.SetActive(true);
         //skillItem.SetActive(true);
         achievementItem.gameObject.SetActive(false);
-        maxIndex = 6;
+        maxIndex = 4;
         titleTextMesh.text = "メニュー";
         textStr[0] = () => "リトライ";
         textStr[1] = () => "あきらめる";
-        textStr[2] = () => "チュートリアル";
-        textStr[3] = () => "オプション";
-        textStr[4] = () => "じっせき";
-        textStr[5] = () => "メニューをとじる";
+        //textStr[2] = () => "チュートリアル";
+        textStr[2] = () => "オプション";
+        //textStr[4] = () => "じっせき";
+        textStr[3] = () => "メニューをとじる";
         onSelecteds[0] = SetButtonPush(Retry);
         onSelecteds[1] = SetButtonPush(ExitScene);
-        onSelecteds[2] = SetButtonPush(TutorialTop);
-        onSelecteds[3] = SetButtonPush(Option);
-        onSelecteds[4] = SetButtonPush(AchievementScreen);
-        onSelecteds[5] = SetButtonPush(CloseWindow);
+        //onSelecteds[2] = SetButtonPush(TutorialTop);
+        onSelecteds[2] = SetButtonPush(Option);
+        //onSelecteds[4] = SetButtonPush(AchievementScreen);
+        onSelecteds[3] = SetButtonPush(CloseWindow);
         AppearanceBodyText();
     }
 
