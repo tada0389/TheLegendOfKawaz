@@ -12,8 +12,7 @@ public class TMProAnimator2 : MonoBehaviour
     private TMP_Text m_TextComponent;
     private bool hasTextChanged;
 
-    public bool breakFlag;
-    public bool isAnim;
+    public bool breakFlag;    
     public int animStartIndex;
     public int animLength;
 
@@ -43,12 +42,16 @@ public class TMProAnimator2 : MonoBehaviour
         TMPro_EventManager.TEXT_CHANGED_EVENT.Remove(ON_TEXT_CHANGED);
     }
 
-
-    void Start()
+    public void StartAnimation()
     {
+        breakFlag = false;
         StartCoroutine(AnimateVertexColors());
     }
 
+    public void StopAnimation()
+    {
+        breakFlag = true;
+    }
 
     void ON_TEXT_CHANGED(Object obj)
     {
@@ -154,8 +157,8 @@ public class TMProAnimator2 : MonoBehaviour
                 destinationVertices[vertexIndex + 3] = sourceVertices[vertexIndex + 3] - offset;
 
                 vertAnim.angle = Mathf.SmoothStep(-vertAnim.angleRange, vertAnim.angleRange, Mathf.PingPong(loopCount / 25f * vertAnim.speed, 1f));
-                //Vector3 jitterOffset = new Vector3(Random.Range(-.25f, .25f), Random.Range(-.25f, .25f), 0);
-                Vector3 jitterOffset = new Vector3(0, Mathf.Sin(Time.time), 0);
+                Vector3 jitterOffset = new Vector3(Random.Range(-.25f, .25f), Random.Range(-.25f, .25f), 0);
+                //Vector3 jitterOffset = new Vector3(0, Mathf.Sin(Time.time), 0);
 
                 matrix = Matrix4x4.TRS(jitterOffset * CurveScale, Quaternion.Euler(0, 0, Random.Range(-5f, 5f) * AngleMultiplier), Vector3.one);
 

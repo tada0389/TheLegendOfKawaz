@@ -10,6 +10,7 @@ public class MessageWindow : MonoBehaviour
     public Image windowImage;
     public Image narratorImage;
     public TextMeshProUGUI messageTextMesh;
+    private TMProAnimator2 animator;
     public string text;
     private AudioSource audioSource;
     public int intervalFrame = 1;
@@ -33,6 +34,7 @@ public class MessageWindow : MonoBehaviour
         seq.SetUpdate(true);
         targetDeltaSize = windowImage.rectTransform.sizeDelta;
         audioSource = GetComponent<AudioSource>();
+        animator = messageTextMesh.GetComponent<TMProAnimator2>();
         WindowInit();
         windowImage.enabled = false;
     }
@@ -152,5 +154,15 @@ public class MessageWindow : MonoBehaviour
     {
         messageTextMesh.maxVisibleCharacters = messageTextMesh.textInfo.characterCount;
         isSending = false;
+    }
+
+    public void StartAnimation()
+    {
+        animator.StartAnimation();
+    }
+
+    public void StopAnimation()
+    {
+        animator.StopAnimation();
     }
 }

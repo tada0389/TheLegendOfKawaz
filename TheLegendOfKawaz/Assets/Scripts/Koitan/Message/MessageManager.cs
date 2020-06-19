@@ -38,6 +38,16 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
         Instance.messageWindow.WindowClose(true);
     }
 
+    public static void StartMessageAnimation()
+    {
+        Instance.messageWindow.StartAnimation();
+    }
+
+    public static void StopMessageAnimation()
+    {
+        Instance.messageWindow.StopAnimation();
+    }
+
     public static void OpenKanbanWindow(string textStr)
     {
         Instance.kanbanWindow.gameObject.SetActive(true);
@@ -47,6 +57,16 @@ public class MessageManager : SingletonMonoBehaviour<MessageManager>
     public static void CloseKanbanWindow()
     {
         Instance.kanbanWindow.WindowClose();
+    }
+
+    public static void StartkanbanAnimation()
+    {
+        Instance.kanbanWindow.StartAnimation();
+    }
+
+    public static void StopkanbanAnimation()
+    {
+        Instance.kanbanWindow.StopAnimation();
     }
 
     public static void InitMessage(string textStr)
