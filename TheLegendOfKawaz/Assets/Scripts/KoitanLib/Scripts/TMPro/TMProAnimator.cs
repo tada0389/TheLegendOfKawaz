@@ -17,6 +17,8 @@ public class TMProAnimator : MonoBehaviour
     public int animStartIndex;
     public int animLength;
 
+    private Coroutine coroutine;
+
     /// <summary>
     /// Structure to hold pre-computed animation data.
     /// </summary>
@@ -46,12 +48,18 @@ public class TMProAnimator : MonoBehaviour
     public void StartAnimation()
     {
         breakFlag = false;
-        StartCoroutine(AnimateVertexColors());
+        coroutine = StartCoroutine(AnimateVertexColors());
     }
 
     public void StopAnimation()
     {
         breakFlag = true;
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+        m_TextComponent.ForceMeshUpdate();
     }
 
 
@@ -192,7 +200,7 @@ public class TMProAnimator : MonoBehaviour
             loopCount += 1;
 
             //yield return new WaitForSeconds(0.1f);
-            t += Time.unscaledDeltaTime;           
+            t += Time.unscaledDeltaTime;
             yield return null;
         }
     }

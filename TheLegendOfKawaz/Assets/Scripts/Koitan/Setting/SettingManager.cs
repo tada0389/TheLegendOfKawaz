@@ -306,7 +306,8 @@ public class SettingManager : MonoBehaviour
                         bodyAnimator[nowIndex].StopAnimation();
                         nowMenu = pageActStack.Pop();
                         nowMenu();                        
-                        nowIndex = pageIndexStack.Pop();                        
+                        nowIndex = pageIndexStack.Pop();
+                        //bodyAnimator[nowIndex].StartAnimation();
                     }
                     else
                     {
@@ -420,6 +421,7 @@ public class SettingManager : MonoBehaviour
             {
                 item.SetActive(true);
                 openState = OpenState.Opened;
+                bodyAnimator[nowIndex].StartAnimation();
             });
     }
 
@@ -575,6 +577,7 @@ public class SettingManager : MonoBehaviour
                 bodyAnimator[nowIndex].StopAnimation();
                 nowMenu = onPush;
                 onPush();
+                bodyAnimator[nowIndex].StartAnimation();
                 PlaySe(decisionSe);
             }
         };
