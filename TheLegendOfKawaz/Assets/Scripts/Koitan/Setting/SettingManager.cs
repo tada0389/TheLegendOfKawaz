@@ -110,6 +110,7 @@ public class SettingManager : MonoBehaviour
 {
     public TextMeshProUGUI[] bodyTextMesh;
     public TextMeshProUGUI titleTextMesh;
+    public TMProAnimator[] bodyAnimator;
     [SerializeField]
     private TextMeshProUGUI detailTextMesh;
     public Image cursor;
@@ -200,6 +201,11 @@ public class SettingManager : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        bodyAnimator = new TMProAnimator[bodyTextMesh.Length];
+        for (int i = 0; i < bodyAnimator.Length; i++)
+        {
+            bodyAnimator[i] = bodyTextMesh[i].GetComponent<TMProAnimator>();
+        }
         cursorDefaultPos = cursor.transform.localPosition;
         onSelecteds = new OnSelected[6];
         StartPlacement();
@@ -265,16 +271,20 @@ public class SettingManager : MonoBehaviour
                 {
                     if (ActionInput.GetButtonDown(ButtonCode.Up))
                     {
+                        bodyAnimator[nowIndex].StopAnimation();
                         nowIndex--;
                         nowIndex = (nowIndex + maxIndex) % maxIndex;
                         PlaySe(drumSe);
+                        bodyAnimator[nowIndex].StartAnimation();
                     }
 
                     if (ActionInput.GetButtonDown(ButtonCode.Down))
                     {
+                        bodyAnimator[nowIndex].StopAnimation();
                         nowIndex++;
                         nowIndex %= maxIndex;
                         PlaySe(drumSe);
+                        bodyAnimator[nowIndex].StartAnimation();
                     }
                 }
 
@@ -293,12 +303,14 @@ public class SettingManager : MonoBehaviour
                 {
                     if (pageActStack.Count > 0)
                     {
+                        bodyAnimator[nowIndex].StopAnimation();
                         nowMenu = pageActStack.Pop();
-                        nowMenu();
-                        nowIndex = pageIndexStack.Pop();
+                        nowMenu();                        
+                        nowIndex = pageIndexStack.Pop();                        
                     }
                     else
                     {
+                        bodyAnimator[nowIndex].StopAnimation();
                         CloseWindow();
                     }
                     if (onCancel != null)
@@ -325,6 +337,7 @@ public class SettingManager : MonoBehaviour
                     CloseWindow();
                     if (onCancel != null)
                     {
+                        bodyAnimator[nowIndex].StopAnimation();
                         onCancel();
                     }
                     onCancel = null;
@@ -501,7 +514,7 @@ public class SettingManager : MonoBehaviour
         var pos = titleTextMesh.rectTransform.localPosition;
         pos.x = -bodyTextShiftLocalX;
         titleTextMesh.rectTransform.localPosition = pos;
-        titleTextMesh.color = new Color(1, 1, 1, 0);                      
+        titleTextMesh.color = new Color(1, 1, 1, 0);
         titleTextMesh.DOFade(1, 0.1f).SetUpdate(true);
         titleTextMesh.rectTransform.DOLocalMoveX(bodyTextShiftLocalX, 0.1f).SetEase(Ease.OutCubic).SetRelative().SetUpdate(true);
 
@@ -559,6 +572,7 @@ public class SettingManager : MonoBehaviour
             {
                 pageActStack.Push(new Action(nowMenu));
                 pageIndexStack.Push(nowIndex);
+                bodyAnimator[nowIndex].StopAnimation();
                 nowMenu = onPush;
                 onPush();
                 PlaySe(decisionSe);
@@ -580,7 +594,7 @@ public class SettingManager : MonoBehaviour
         onSelecteds[0] = SetButtonPush(TutorialTop);
         onSelecteds[1] = SetButtonPush(Option);
         onSelecteds[2] = SetButtonPush(AchievementScreen);
-        onSelecteds[3] = SetButtonPush(CloseWindow);        
+        onSelecteds[3] = SetButtonPush(CloseWindow);
         AppearanceBodyText();
     }
 

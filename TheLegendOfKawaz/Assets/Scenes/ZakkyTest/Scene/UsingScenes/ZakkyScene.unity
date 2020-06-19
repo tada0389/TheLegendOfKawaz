@@ -5177,6 +5177,26 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7574431916415669657, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7574431916415669657, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7574431916415669657, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7574431916415669657, guid: 185d8f59bce6ce0409df1fca3665c769,
+        type: 3}
+      propertyPath: color.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 185d8f59bce6ce0409df1fca3665c769, type: 3}
 --- !u!1 &1572999354
