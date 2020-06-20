@@ -132,7 +132,7 @@ namespace Target
         private void Finish(bool clear)
         {
             finished_ = true;
-            if(ghost_saver_) ghost_saver_.RecordFinish(clear);
+            if(ghost_saver_) ghost_saver_.RecordFinish(clear, (int)((timer_ + 0.005f) * 100.0f));
             if (ghost_invoked_) ghost_embodyer_.EmbodyFinish();
             StartCoroutine(FinishFlow(clear));
         }
@@ -150,7 +150,7 @@ namespace Target
                 if (clear)
                 {
                     get_point = true;
-                    ScoreManager.Instance.RegisterScore((int)(-(timer_ + 0.005f) * 100.0f), SceneManager.GetActiveScene().name);
+                    ScoreManager.Instance.RegisterScore((int)(-(timer_ + 0.005f)* 100.0f), SceneManager.GetActiveScene().name);
                     new_time_scale = 0.06f;
                     var data = TargetSelectManager.CurStageData;
                     int reward = data.OtherReward;

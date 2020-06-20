@@ -15,23 +15,12 @@ using TadaLib;
 
 namespace TargetBreaking
 { 
-    // List<tuple>をシリアライズできないので強引に
-    [System.Serializable]
-    public class ShotData
-    {
-        public float t;
-        public short v;
-
-        public ShotData(float time, short xpos)
-        {
-            t = time;
-            v = xpos;
-        }
-    }
-
     [Serializable]
     public class GhostData : TadaLib.Save.BaseSaver<GhostData>
     {
+        // クリア時間
+        public int ClearTime = 9999;
+
         // 座標情報　セーブのために変数名を短くしている
         // 時間情報 + 座標の符号情報 + x座標情報 + y座標情報 を14文字の文字列で表す
         [SerializeField]
@@ -45,9 +34,6 @@ namespace TargetBreaking
         // 時間情報 + アニメーション情報
         [SerializeField]
         public List<string> A;
-
-        [SerializeField]
-        public List<ShotData> S;
 
         [System.NonSerialized]
         public bool RecordFailed;
@@ -68,7 +54,7 @@ namespace TargetBreaking
 
             P = data.P;
             A = data.A;
-            S = data.S;
+            ClearTime = data.ClearTime;
 
             return true;
         }
@@ -86,7 +72,6 @@ namespace TargetBreaking
         {
             P = new List<string>(100 * 10); // とりあえず10秒分確保
             A = new List<string>();
-            S = new List<ShotData>();
         }
 
         public void AddPosData(int dt, int dx, int dy, int dir)
@@ -102,10 +87,11 @@ namespace TargetBreaking
             dx = Mathf.Abs(dx);
             dy = Mathf.Abs(dy);
 
-            string add = dt.ToString("D3") + sign.ToString() + dx.ToString("D2") + dy.ToString("D2");
+            //string add = dt.ToString("D3") + sign.ToString() + dx.ToString("D2") + dy.ToString("D2");
+            int add = dt * 100000 + sign * 10000 + dx * 100 + dy;
 
             // これを64進数に変換して保存
-            string num = GhostUtils.NumTo64Ary(int.Parse(add));
+            string num = GhostUtils.NumTo64Ary(add);
 
             P.Add(num);
         }
@@ -115,12 +101,20 @@ namespace TargetBreaking
             int id = GhostUtils.Name2Index(anim);
             id += (int)type;
             int it = (int)(t * 1000.0f + 0.1f);
-            string add = it.ToString("D5") + id.ToString("D2");
+            //string add = it.ToString("D5") + id.ToString("D2");
+            int add = it * 100 + id;
 
             // これを64進数に変換して保存
-            string num = GhostUtils.NumTo64Ary(int.Parse(add));
+            string num = GhostUtils.NumTo64Ary(add);
 
             A.Add(num);
+        }
+
+        public void AddShotData(float t, eShotType type)
+        {
+            // ショットもアニメーションのみにする
+            if (type == eShotType.Charge) AddAnimData(t, "ChargeShot", eAnimType.Play);
+            else AddAnimData(t, "Shot", eAnimType.Play);
         }
 
         public void ResetData()
@@ -128,7 +122,6 @@ namespace TargetBreaking
             // 全てのデータを破棄
             P.Clear();
             A.Clear();
-            S.Clear();
             RecordFailed = true;
         }
     }
@@ -184,7 +177,7 @@ namespace TargetBreaking
                 {
                     data_.AddAnimData(time, target_.AnimCalled[i], target_.AnimType[i]);
                 }
-                //if (target_.ShotCalled != eShotType.None) data_.S.Add(new ShotData(time, (short)target_.ShotCalled));
+                if (target_.ShotCalled != eShotType.None) data_.AddShotData(time, target_.ShotCalled);
 
                 // 座標データは一定間隔ごとに
 
@@ -224,11 +217,15 @@ namespace TargetBreaking
             prev_pos_y_ = target_.transform.position.y;
         }
 
-        public void RecordFinish(bool success)
+        public void RecordFinish(bool success, int clear_time)
         {
             running_ = false;
             if (!success) RecordFailed();
-            else TargetSelectManager.PrevGameGhost = data_;
+            else
+            {
+                data_.ClearTime = clear_time;
+                TargetSelectManager.PrevGameGhost = data_;
+            }
         }
 
         public void RecordFailed()

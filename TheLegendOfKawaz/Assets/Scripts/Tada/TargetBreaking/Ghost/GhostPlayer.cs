@@ -16,36 +16,61 @@ namespace TargetBreaking
         [SerializeField]
         private GameObject body_;
 
+        [SerializeField]
+        private bool IsTenmetsu = true;
+
+        private TadaLib.Timer shot_timer_;
+
         private void Awake()
         {
             animator_ = GetComponent<Animator>();
-            StartCoroutine(Tenmetu());
+            shot_timer_ = new TadaLib.Timer(0.3f);
+            if(IsTenmetsu) StartCoroutine(Tenmetu());
+        }
+
+        private void FixedUpdate()
+        {
+            // ショット後のアニメーション変更
+            if (animator_.GetLayerWeight(1) == 1 && shot_timer_.IsTimeout()) animator_.SetLayerWeight(1, 0);
         }
 
         public void PlayAnim(string anim, int type)
         {
             //Debug.Log(anim);
             //Debug.Log(type);
-            switch (type)
+
+            // ショットだけ特別
+            if (anim == "ChargeShot" || anim == "Shot")
             {
-                case 0: // Start
-                    animator_.Play(anim);
-                    break;
-                case 1: // SetBoolTrue
-                    animator_.SetBool(anim, true);
-                    break;
-                case 2:
-                    animator_.SetBool(anim, false);
-                    break; // SetBoolFalse
-                case 3:
-                    animator_.Play(anim, 0, 0.0f);
-                    break; // Restart
+                if (animator_.GetLayerWeight(1) == 0)
+                {
+                    shot_timer_.TimeReset();
+                    animator_.SetLayerWeight(1, 1);
+                }
+                else
+                {
+                    animator_.SetLayerWeight(1, 0);
+                }
+                animator_.Play(anim, 1, 0);
             }
-        }
-
-        public void Shot(int shot_type)
-        {
-
+            else
+            {
+                switch (type)
+                {
+                    case 0: // Start
+                        animator_.Play(anim);
+                        break;
+                    case 1: // SetBoolTrue
+                        animator_.SetBool(anim, true);
+                        break;
+                    case 2:
+                        animator_.SetBool(anim, false);
+                        break; // SetBoolFalse
+                    case 3:
+                        animator_.Play(anim, 0, 0.0f);
+                        break; // Restart
+                }
+            }
         }
 
         //点滅

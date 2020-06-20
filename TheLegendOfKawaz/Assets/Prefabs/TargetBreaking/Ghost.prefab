@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body_: {fileID: 6798527575730533965}
+  IsTenmetsu: 1
 --- !u!1 &982660518597990205
 GameObject:
   m_ObjectHideFlags: 0
@@ -2937,7 +2938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target_: {fileID: 0}
-  record_max_time_: 20
+  record_max_time_: 30
   record_interval_: 0.0199
 --- !u!1 &7900805955387830523
 GameObject:

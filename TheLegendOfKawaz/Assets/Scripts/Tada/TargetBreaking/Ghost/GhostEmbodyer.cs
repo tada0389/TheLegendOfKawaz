@@ -21,11 +21,9 @@ namespace TargetBreaking
 
         int pos_index_;
         int anim_index_;
-        int shot_index_;
 
         int pos_count_;
         int anim_count_;
-        int shot_count_;
 
         private float next_pos_time_;
         private float next_pos_x_;
@@ -40,12 +38,13 @@ namespace TargetBreaking
 
         private float pos_timer_;
 
+        private Vector3 prev_ghost_pos_;
+
         public void LoadGhost(GhostData data)
         {
             data_ = data;
             pos_count_ = data.P.Count;
             anim_count_ = data.A.Count;
-            shot_count_ = data.S.Count;
         }
 
         private void FixedUpdate()
@@ -55,6 +54,8 @@ namespace TargetBreaking
                 ghost_.gameObject.SetActive(true);
                 float time = Time.time - start_time_;
 
+                bool pos_changed = false;
+
                 // 座標の更新
                 while (true)
                 {
@@ -62,12 +63,21 @@ namespace TargetBreaking
                     if (!pos_decoded_) DecodePosData(data_.P[pos_index_]);
                     if (pos_timer_ + next_pos_time_ > time) break;
 
+                    pos_changed = true;
                     pos_decoded_ = false;
                     pos_timer_ += next_pos_time_;
 
-                    ghost_.transform.position += new Vector3(next_pos_x_, next_pos_y_);
+                    ghost_.transform.position = prev_ghost_pos_ + new Vector3(next_pos_x_, next_pos_y_);
                     ghost_.transform.localScale = new Vector3(next_pos_dir_, ghost_.transform.localScale.y, ghost_.transform.localScale.z);
+                    prev_ghost_pos_ = ghost_.transform.position;
                     ++pos_index_;
+                }
+
+                // 線形補間する
+                if (!pos_changed)
+                {
+                    float t = (time - pos_timer_) / next_pos_time_;
+                    ghost_.transform.position = prev_ghost_pos_ + new Vector3(next_pos_x_ * t, next_pos_y_ * t);
                 }
 
                 // アニメーションの更新
@@ -83,17 +93,7 @@ namespace TargetBreaking
                     ++anim_index_;
                 }
 
-                // ショットの更新
-                while (true)
-                {
-                    if (shot_index_ >= shot_count_) break;
-                    if (data_.S[shot_index_].t > time) break;
-
-                    ghost_.Shot(data_.S[shot_index_].v);
-                    ++shot_index_;
-                }
-
-                bool finish = (pos_index_ == pos_count_ && anim_index_ == anim_count_ && shot_index_ == shot_count_);
+                bool finish = (pos_index_ == pos_count_ && anim_index_ == anim_count_);
                 if (finish)
                 {
                     EmbodyFinish();
@@ -105,7 +105,6 @@ namespace TargetBreaking
         {
             pos_index_ = 0;
             anim_index_ = 0;
-            shot_index_ = 0;
             pos_timer_ = 0.0f;
         }
 
@@ -117,6 +116,7 @@ namespace TargetBreaking
             running_ = true;
             ghost_.gameObject.SetActive(true);
             pos_decoded_ = false;
+            prev_ghost_pos_ = ghost_.transform.position;
         }
 
         // ゴーストの具現化を終了する
