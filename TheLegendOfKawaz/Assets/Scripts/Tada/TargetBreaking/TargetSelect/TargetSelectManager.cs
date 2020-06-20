@@ -20,8 +20,10 @@ namespace TargetBreaking
         [System.NonSerialized]
         public RectTransform rectTransform;
 
+        protected int ItemIndex;
+
         // 初期化
-        public abstract void Init(TargetSelectManager parent);
+        public abstract void Init(TargetSelectManager parent, int index);
 
         // 始まった時
         public abstract void OnStart();
@@ -39,13 +41,15 @@ namespace TargetBreaking
         // 現在のステージを得る
         public static RewardData CurStageData = null;
         // 前回に選んだ難易度のインデックス
-        private static int[] prev_game_index_ = new int[3] { 0, 0, 0 };
+        public static int[] PrevGameIndex = new int[3] { -1, -1, -1 };
 
+        public static GhostData LoadGameGhost = null;
         public static GhostData PrevGameGhost = null;
-        public static bool GhostEnabled = true;
+        public static bool GhostEnabled = false;
+        public static bool IsLoadGhost = false;
 
-        [SerializeField]
-        private int game_index_ = 0;
+        [field:SerializeField]
+        public int GameIndex { private set; get; }
 
         [SerializeField]
         private List<BaseItem> items_;
@@ -97,9 +101,12 @@ namespace TargetBreaking
             item_num_ = items_.Count;
             index_ = 0;
             // もしすでにこのゲームを遊んだことがあったら，前回の選択肢に合わせる
-            if (game_index_ < prev_game_index_.Length) index_ = prev_game_index_[game_index_];
+            if (GameIndex < PrevGameIndex.Length && PrevGameIndex[GameIndex] != -1) index_ = PrevGameIndex[GameIndex];
 
-            foreach (var item in items_) item.Init(this);
+            for(int i = 0, n = items_.Count; i < n; ++i)
+            {
+                items_[i].Init(this, i);
+            }
 
             cur_item_ = null;
             ChangeIndex();
@@ -140,12 +147,15 @@ namespace TargetBreaking
             if (index_ != prev_index) ChangeIndex();
         }
 
+        private void OnDestroy()
+        {
+            
+        }
+
         private void GoNext()
         {
             SelectItem();
             cur_item_ = items_[index_];
-            // やめるの場合は保存しない　よくない
-            if(index_ != item_num_ - 1) prev_game_index_[game_index_] = index_;
             cur_item_.OnStart();
         }
 

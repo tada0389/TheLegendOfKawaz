@@ -512,6 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fc50df0fc5b4b968a73718ea584282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   m_SpriteMeshInstances:
   - {fileID: 1212568988}
   - {fileID: 840135913}
@@ -8119,6 +8120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fc50df0fc5b4b968a73718ea584282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   m_SpriteMeshInstances:
   - {fileID: 662211287}
   - {fileID: 1437892543}
@@ -11672,6 +11674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fc50df0fc5b4b968a73718ea584282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   m_SpriteMeshInstances:
   - {fileID: 7536641}
   - {fileID: 1798864545}
@@ -13449,6 +13452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fc50df0fc5b4b968a73718ea584282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   m_SpriteMeshInstances:
   - {fileID: 2132757265}
   - {fileID: 1896941460}
@@ -20015,6 +20019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fc50df0fc5b4b968a73718ea584282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   m_SpriteMeshInstances:
   - {fileID: 1113461781}
   - {fileID: 2143203839}
@@ -20937,6 +20942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fc50df0fc5b4b968a73718ea584282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   m_SpriteMeshInstances:
   - {fileID: 5793128236640395318}
   - {fileID: 366579079856144576}

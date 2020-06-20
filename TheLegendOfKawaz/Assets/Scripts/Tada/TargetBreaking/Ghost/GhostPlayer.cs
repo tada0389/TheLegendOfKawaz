@@ -13,13 +13,19 @@ namespace TargetBreaking
     {
         private Animator animator_;
 
+        [SerializeField]
+        private GameObject body_;
+
         private void Awake()
         {
             animator_ = GetComponent<Animator>();
+            StartCoroutine(Tenmetu());
         }
 
         public void PlayAnim(string anim, int type)
         {
+            //Debug.Log(anim);
+            //Debug.Log(type);
             switch (type)
             {
                 case 0: // Start
@@ -40,6 +46,18 @@ namespace TargetBreaking
         public void Shot(int shot_type)
         {
 
+        }
+
+        //点滅
+        private IEnumerator Tenmetu()
+        {
+            while (true)
+            {
+                body_.SetActive(false);
+                yield return new WaitForSeconds(0.01f);
+                body_.SetActive(true);
+                yield return new WaitForSeconds(0.01f);
+            }
         }
     }
 }

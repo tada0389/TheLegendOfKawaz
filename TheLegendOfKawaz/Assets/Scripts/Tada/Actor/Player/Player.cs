@@ -31,8 +31,8 @@ namespace Actor.Player
     // 方向
     public enum eDir
     {
-        Left,
-        Right,
+        Left = 0,
+        Right = 1,
     }
 
     public enum eShotType
@@ -341,6 +341,8 @@ namespace Actor.Player
             CloseEar, // 咆哮とうで耳をふさぐステート
         }
 
+        public eDir Dir => data_.Dir;
+
         // ステートマシン
         private StateMachine<Player> state_machine_;
 
@@ -419,9 +421,11 @@ namespace Actor.Player
         private float dash_remain_time_;
 
         // ゴースト作るのに使う
-        public string AnimCalled { private set; get; }
-        public eAnimType AnimType { private set; get; }
+        public List<string> AnimCalled { private set; get; }
+        public List<eAnimType> AnimType { private set; get; }
         public eShotType ShotCalled { private set; get; }
+
+        private bool prev_is_ground_;
 
 
         // 初期スキル
@@ -451,6 +455,10 @@ namespace Actor.Player
         // Start is called before the first frame update
         private void Start()
         {
+            AnimCalled = new List<string>();
+            AnimType = new List<eAnimType>();
+            prev_is_ground_ = true;
+
             shot_anim_timer_ = new Timer(0.3f);
             muteki_timer_ = new Timer(muteki_time_);
 
@@ -489,7 +497,6 @@ namespace Actor.Player
             GetSkillSet();
 
             // ショットのプーリング
-            KoitanLib.ObjectPoolManager.Release(normal_bullet_);
             KoitanLib.ObjectPoolManager.Init(normal_bullet_, this, data_.MaxShotNum);
 
             Vector3 new_pos = TadaScene.TadaSceneManager.GetPrevPosition();
@@ -523,8 +530,8 @@ namespace Actor.Player
                 SettingManager.RequestOpenWindow();
             }
 
-            AnimCalled = "";
-            AnimType = eAnimType.None;
+            AnimCalled.Clear();
+            AnimType.Clear();
             ShotCalled = eShotType.None;
 
             // 接地しているかどうかなどで，状態を変更する
@@ -663,8 +670,8 @@ namespace Actor.Player
             }
 
             data_.animator.Play(anim);
-            AnimCalled = anim;
-            AnimType = type;
+            AnimCalled.Add(anim);
+            AnimType.Add(type);
         }
 
         // コライド情報などで状態を更新する
@@ -680,9 +687,11 @@ namespace Actor.Player
                 // 空中ジャンプ回数をリセットする
                 data_.ResetArialJump();
                 data_.ResetDash();
-                PlayAnim("isGround", eAnimType.SetBoolTrue);
+                if(!prev_is_ground_) PlayAnim("isGround", eAnimType.SetBoolTrue);
             }
-            else PlayAnim("isGround", eAnimType.SetBoolFalse);
+            else if(prev_is_ground_) PlayAnim("isGround", eAnimType.SetBoolFalse);
+
+            prev_is_ground_ = data_.IsGround;
         }
 
         // 方向転換するか確かめる

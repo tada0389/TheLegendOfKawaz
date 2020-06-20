@@ -46,9 +46,10 @@ namespace TargetBreaking
 
         TargetSelectManager parent_;
 
-        public override void Init(TargetSelectManager parent)
+        public override void Init(TargetSelectManager parent, int index)
         {
             parent_ = parent;
+            ItemIndex = index;
             rectTransform = GetComponent<RectTransform>();
 
             tag_timer_ = new List<float>();
