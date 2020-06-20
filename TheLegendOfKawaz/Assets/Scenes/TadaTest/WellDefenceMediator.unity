@@ -214,6 +214,7 @@ MonoBehaviour:
   explonation_font_size_: 16
   ranking_font_size_: 20
   item_num_: 2
+  kFileName: Ghost
 --- !u!114 &26717538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1365,7 +1366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e938aeaddeec5742b5c999ed399d0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game_index_: 1
+  <GameIndex>k__BackingField: 1
   items_:
   - {fileID: 1416061695}
   - {fileID: 26717537}

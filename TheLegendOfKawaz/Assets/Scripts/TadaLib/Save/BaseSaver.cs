@@ -15,7 +15,7 @@ namespace TadaLib
     {
         abstract public class BaseSaver<T> where T : BaseSaver<T>, new()
         {
-            protected static T instance;
+            protected T instance;
             // 最初にロードすることでインスタンスを生成するための制御
             private bool isLoaded = true;
             // セーブ中であるかどうか
@@ -105,7 +105,7 @@ namespace TadaLib
             }
 
             // JsonUnitilityを用いてインスタンスを取得
-            public static void LoadFromJSON(string json)
+            public void LoadFromJSON(string json)
             {
                 try
                 {
@@ -123,12 +123,36 @@ namespace TadaLib
             // パスを読み取る
             static string GetFilePath(string fileName)
             {
-                string directoryPath = Application.persistentDataPath + "/" + DIRECTORY_NAME;
+                string directoryPath;
+                // IOS, Androidの場合は仕様上 persistentDataPath
+                // UnityEditorの場合は gitで競合したくないんので persistentDataPath
+                // Build後は，実行ファイルの近くにデータを置きたいので dataPath
+#if UNITY_IOS
+                directoryPath= Application.persistentDataPath + "/" + DIRECTORY_NAME;
+#elif UNITY_ANDROID
+                directoryPath= Application.persistentDataPath + "/" + DIRECTORY_NAME;
+#elif UNITY_EDITOR
+                directoryPath = Application.persistentDataPath + "/" + DIRECTORY_NAME;
+#else
+                directoryPath = Application.dataPath + "/" + DIRECTORY_NAME;
+#endif
+
                 if (!Directory.Exists(directoryPath))
                 {
                     Directory.CreateDirectory(directoryPath);
                 }
-                return directoryPath + "/" + fileName;
+
+                string res = directoryPath + "/" + fileName;
+
+                // 本当はすべてに.jsonを付与したいけど，いままでつけてなかったからビルド済みゲームだけ
+#if UNITY_IOS
+#elif UNITY_ANDROID
+#elif UNITY_EDITOR
+#else
+                res += ".json";
+#endif
+
+                return res;
             }
 
             // 暗号化する まだ未使用

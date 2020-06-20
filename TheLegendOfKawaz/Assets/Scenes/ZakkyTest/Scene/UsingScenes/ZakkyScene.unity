@@ -5185,12 +5185,12 @@ PrefabInstance:
     - target: {fileID: 7574431916415669657, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7574431916415669657, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7574431916415669657, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}

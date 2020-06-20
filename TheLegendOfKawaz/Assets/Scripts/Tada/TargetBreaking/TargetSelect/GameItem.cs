@@ -95,6 +95,9 @@ namespace TargetBreaking
         [SerializeField]
         private int item_num_ = 2;
 
+        [SerializeField]
+        private string kFileName = "Ghost";
+
         private int index_;
         private bool is_fading_;
 
@@ -105,9 +108,10 @@ namespace TargetBreaking
 
         TargetSelectManager parent_;
 
-        public override void Init(TargetSelectManager parent)
+        public override void Init(TargetSelectManager parent, int index)
         {
             parent_ = parent;
+            ItemIndex = index;
             rectTransform = GetComponent<RectTransform>();
             tag_timer_ = new List<float>();
             for (int i = 0, n = tag_.Count; i < n; ++i) tag_timer_.Add(tag_jump_duration_);
@@ -287,28 +291,91 @@ namespace TargetBreaking
             {
                 string text = "<size=20>【ゴースト】</size>\n";
                 text += "前回のプレイのゴーストを保存できます\n";
-                text += "〈保存する (前回の分は消えます)〉\n";
-                text += "プレイ中にゴーストを表示する\n";
-                text += "〈はい〉 〈いいえ〉\n";
+                text += "〈決定で保存(仮)〉\n";
+                text += "プレイ中にゴーストを表示する(まだ)\n";
                 parent_.explonation_text_.text = text;
             }
         }
 
         private void GoNext()
         {
-            if(index_ == 1)
+            if(index_ == 0)
+            {
+                is_fading_ = true;
+                // 実際に遊ぶ
+
+                // 前回のを破棄する
+                TargetSelectManager.PrevGameGhost = null;
+
+                // ゴーストをロードする
+                if (TargetSelectManager.PrevGameIndex[parent_.GameIndex] != ItemIndex)
+                {
+                    TargetSelectManager.LoadGameGhost = null;
+                    GhostData ghost = new GhostData();
+                    if (ghost.LoadObj(kFileName))
+                    {
+                        TargetSelectManager.IsLoadGhost = true;
+                        TargetSelectManager.LoadGameGhost = ghost;
+                        TargetSelectManager.GhostEnabled = true;
+                    }
+                    else
+                    {
+                        TargetSelectManager.IsLoadGhost = false;
+                        TargetSelectManager.GhostEnabled = false;
+                    }
+                }
+                else
+                {
+                    // 同じゲーム
+                    if (TargetSelectManager.LoadGameGhost != null && TargetSelectManager.IsLoadGhost)
+                    {
+                        TargetSelectManager.GhostEnabled = true;
+                    }
+                    else
+                    {
+                        TargetSelectManager.IsLoadGhost = false;
+                        TargetSelectManager.GhostEnabled = false;
+                    }
+                }
+
+                TargetSelectManager.PrevGameIndex[parent_.GameIndex] = ItemIndex;
+
+                //CurStageData = stages_[index_.first];
+                //if (IsTargetMode) prev_stage_index_ = index_.first;
+                KoitanLib.FadeManager.FadeIn(0.5f, NextScene);
+                TargetSelectManager.CurStageData = reward_;
+            }
+            else if (index_ == 1)
             {
                 index_ = 0;
                 ShowExplonation(index_);
                 return;
             }
+            else if (index_ == 2)
+            {
+                // ゴーストが有効　かつ 前回のゲームと同じならセーブできる
+                var ghost = TargetSelectManager.PrevGameGhost;
+                if (ghost != null && !ghost.RecordFailed && ItemIndex == TargetSelectManager.PrevGameIndex[parent_.GameIndex])
+                {
+                    Debug.Log("Ghostをセーブ");
+                    TargetSelectManager.PrevGameGhost.SaveRequest(kFileName);
+                    TadaLib.Save.SaveManager.Instance.Save();
 
-            is_fading_ = true;
-            // 実際に遊ぶ
-            //CurStageData = stages_[index_.first];
-            //if (IsTargetMode) prev_stage_index_ = index_.first;
-            KoitanLib.FadeManager.FadeIn(0.5f, NextScene);
-            TargetSelectManager.CurStageData = reward_;
+                    // 新しいゴーストをロードしたことにする
+                    TargetSelectManager.IsLoadGhost = true;
+                    TargetSelectManager.LoadGameGhost = ghost;
+                    TargetSelectManager.GhostEnabled = true;
+
+                    // もう一度セーブできないようにする
+                    TargetSelectManager.PrevGameGhost = null;
+
+                    string text = "<size=20>【ゴースト】</size>\n";
+                    text += "前回のプレイのゴーストを保存できます\n";
+                    text += "〈保存しました〉\n";
+                    text += "プレイ中にゴーストを表示する(まだ)\n";
+                    parent_.explonation_text_.text = text;
+                }
+            }
         }
 
         private void GoBack()

@@ -65,7 +65,7 @@ namespace Target
 
         // ゴーストの行動を保存するインスタンス
         [SerializeField]
-        private GhostSaver ghost_saver_;
+        private GhostRecorder ghost_saver_;
 
         // ゴーストを呼び出すインスタンス
         [SerializeField]
@@ -82,9 +82,9 @@ namespace Target
 
             Global.GlobalPlayerInfo.ActionEnabled = false;
 
-            if(ghost_embodyer_ != null && TargetSelectManager.GhostEnabled && TargetSelectManager.PrevGameGhost != null)
+            if(TargetSelectManager.GhostEnabled)
             {
-                ghost_embodyer_.LoadGhost(TargetSelectManager.PrevGameGhost);
+                ghost_embodyer_.LoadGhost(TargetSelectManager.LoadGameGhost);
                 ghost_invoked_ = true;
             }
         }

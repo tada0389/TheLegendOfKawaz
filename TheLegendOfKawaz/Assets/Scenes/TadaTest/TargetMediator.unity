@@ -217,6 +217,7 @@ MonoBehaviour:
   explonation_font_size_: 16
   ranking_font_size_: 20
   item_num_: 3
+  kFileName: GhostLow
 --- !u!114 &63404833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1119,6 +1120,7 @@ MonoBehaviour:
   explonation_font_size_: 16
   ranking_font_size_: 20
   item_num_: 3
+  kFileName: GhostMid
 --- !u!114 &410636712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1366,6 +1368,7 @@ MonoBehaviour:
   explonation_font_size_: 16
   ranking_font_size_: 20
   item_num_: 3
+  kFileName: GhostHigh
 --- !u!114 &561050656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2357,7 +2360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e938aeaddeec5742b5c999ed399d0f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game_index_: 0
+  <GameIndex>k__BackingField: 0
   items_:
   - {fileID: 1739949867}
   - {fileID: 63404832}

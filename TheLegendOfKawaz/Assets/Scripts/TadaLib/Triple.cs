@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// C++のstd::pair型とほぼ同じ機能を持つ これは嘘ばっかり
-/// シリアライズできるのでJsonUtilityでセーブできる できなかった
+/// 3つの型を格納できるクラス
+/// シリアライズできるのでJsonUtilityでセーブできる
 /// </summary>
 
 namespace TadaLib
 {
     [System.Serializable]
-    public class Pair<T, U>
+    public class Triple<T, U, V>
     {
         [SerializeField]
         private T f;
@@ -20,10 +20,15 @@ namespace TadaLib
         private U s;
         public U second => s;
 
-        public Pair(T v1, U v2)
+        [SerializeField]
+        private V t;
+        public V third => t;
+
+        public Triple(T v1, U v2, V v3)
         {
             f = v1;
             s = v2;
+            t = v3;
         }
     }
 }

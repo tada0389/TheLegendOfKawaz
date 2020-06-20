@@ -27,14 +27,25 @@ namespace TargetBreaking
         int anim_count_;
         int shot_count_;
 
-        string prev_anim_ = "";
+        private float next_pos_time_;
+        private float next_pos_x_;
+        private float next_pos_y_;
+        private float next_pos_dir_;
+        private bool pos_decoded_;
+
+        private float next_anim_time_;
+        private string next_anim_name_;
+        private int next_anim_type_;
+        private bool anim_decoded_;
+
+        private float pos_timer_;
 
         public void LoadGhost(GhostData data)
         {
             data_ = data;
-            pos_count_ = data.Pos.Count;
-            anim_count_ = data.Anim.Count;
-            shot_count_ = data.Shot.Count;
+            pos_count_ = data.P.Count;
+            anim_count_ = data.A.Count;
+            shot_count_ = data.S.Count;
         }
 
         private void FixedUpdate()
@@ -48,9 +59,14 @@ namespace TargetBreaking
                 while (true)
                 {
                     if (pos_index_ >= pos_count_) break;
-                    if (data_.Pos[pos_index_].Item1 > time) break;
+                    if (!pos_decoded_) DecodePosData(data_.P[pos_index_]);
+                    if (pos_timer_ + next_pos_time_ > time) break;
 
-                    ghost_.transform.position = new Vector3(data_.Pos[pos_index_].Item2, data_.Pos[pos_index_].Item3);
+                    pos_decoded_ = false;
+                    pos_timer_ += next_pos_time_;
+
+                    ghost_.transform.position += new Vector3(next_pos_x_, next_pos_y_);
+                    ghost_.transform.localScale = new Vector3(next_pos_dir_, ghost_.transform.localScale.y, ghost_.transform.localScale.z);
                     ++pos_index_;
                 }
 
@@ -58,12 +74,12 @@ namespace TargetBreaking
                 while (true)
                 {
                     if (anim_index_ >= anim_count_) break;
-                    if (data_.Anim[anim_index_].Item1 > time) break;
+                    if (!anim_decoded_) DecodeAnimData(data_.A[anim_index_]);
+                    if (next_anim_time_ > time) break;
 
-                    bool same = prev_anim_ == data_.Anim[anim_index_].Item2;
-                    ghost_.PlayAnim(data_.Anim[anim_index_].Item2, data_.Anim[anim_index_].Item3);
-                    prev_anim_ = data_.Anim[anim_index_].Item2;
+                    anim_decoded_ = false;
 
+                    ghost_.PlayAnim(next_anim_name_, next_anim_type_);
                     ++anim_index_;
                 }
 
@@ -71,9 +87,9 @@ namespace TargetBreaking
                 while (true)
                 {
                     if (shot_index_ >= shot_count_) break;
-                    if (data_.Shot[shot_index_].Item1 > time) break;
+                    if (data_.S[shot_index_].t > time) break;
 
-                    ghost_.Shot(data_.Shot[shot_index_].Item2);
+                    ghost_.Shot(data_.S[shot_index_].v);
                     ++shot_index_;
                 }
 
@@ -90,6 +106,7 @@ namespace TargetBreaking
             pos_index_ = 0;
             anim_index_ = 0;
             shot_index_ = 0;
+            pos_timer_ = 0.0f;
         }
 
         // ゴーストの具現化を開始する
@@ -99,6 +116,7 @@ namespace TargetBreaking
             start_time_ = Time.time;
             running_ = true;
             ghost_.gameObject.SetActive(true);
+            pos_decoded_ = false;
         }
 
         // ゴーストの具現化を終了する
@@ -106,6 +124,52 @@ namespace TargetBreaking
         {
             running_ = false;
             ghost_.gameObject.SetActive(false);
+        }
+
+        // 座標データを解凍する
+        private void DecodePosData(string target)
+        {
+            if (pos_decoded_) return;
+
+            // 64進数から10進数に変換
+            long num = GhostUtils.Ary64ToNum(target);
+            // 左寄せで8文字にする
+            target = num.ToString().PadLeft(8, '0');
+
+            int time = int.Parse(target.Substring(0, 3));
+            int sign = int.Parse(target.Substring(3, 1));
+            int x = int.Parse(target.Substring(4, 2));
+            int y = int.Parse(target.Substring(6, 2));
+
+            next_pos_time_ = time / 1000.0f;
+            next_pos_x_ = x / 100.0f;
+            next_pos_y_ = y / 100.0f;
+            if((sign & 1) >= 1) next_pos_x_ *= -1f;
+            if((sign & 2) >= 1) next_pos_y_ *= -1f;
+            if ((sign & 4) >= 1) next_pos_dir_ = 1; // 1で右
+            else next_pos_dir_ = -1;
+
+            pos_decoded_ = true;
+        }
+
+        // アニメーションデータを解凍する
+        private void DecodeAnimData(string target)
+        {
+            if (anim_decoded_) return;
+
+            // 64進数から10進数に変換
+            long num = GhostUtils.Ary64ToNum(target);
+            // 左寄せで7文字にする
+            target = num.ToString().PadLeft(7, '0');
+
+            int time = int.Parse(target.Substring(0, 5));
+            int anim = int.Parse(target.Substring(5, 2));
+
+            next_anim_time_ = time / 1000.0f;
+            next_anim_name_ = GhostUtils.Index2Name(anim);
+            next_anim_type_ = anim % 4;
+
+            anim_decoded_ = true;
         }
     }
 }
