@@ -51,10 +51,8 @@ namespace TargetBreaking
         {
             if (running_)
             {
-                ghost_.gameObject.SetActive(true);
+                if(!ghost_.gameObject.activeSelf) ghost_.gameObject.SetActive(true);
                 float time = Time.time - start_time_;
-
-                bool pos_changed = false;
 
                 // 座標の更新
                 while (true)
@@ -63,7 +61,6 @@ namespace TargetBreaking
                     if (!pos_decoded_) DecodePosData(data_.P[pos_index_]);
                     if (pos_timer_ + next_pos_time_ > time) break;
 
-                    pos_changed = true;
                     pos_decoded_ = false;
                     pos_timer_ += next_pos_time_;
 
@@ -71,10 +68,12 @@ namespace TargetBreaking
                     ghost_.transform.localScale = new Vector3(next_pos_dir_, ghost_.transform.localScale.y, ghost_.transform.localScale.z);
                     prev_ghost_pos_ = ghost_.transform.position;
                     ++pos_index_;
+                    if (pos_index_ < pos_count_) DecodePosData(data_.P[pos_index_]);
                 }
 
                 // 線形補間する
-                if (!pos_changed)
+                //if (!pos_changed)
+                if(pos_index_ < pos_count_)
                 {
                     float t = (time - pos_timer_) / next_pos_time_;
                     ghost_.transform.position = prev_ghost_pos_ + new Vector3(next_pos_x_ * t, next_pos_y_ * t);

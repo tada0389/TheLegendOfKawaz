@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body_: {fileID: 6798527575730533965}
-  IsTenmetsu: 1
+  IsTenmetsu: 0
 --- !u!1 &982660518597990205
 GameObject:
   m_ObjectHideFlags: 0
