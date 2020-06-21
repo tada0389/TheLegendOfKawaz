@@ -305,7 +305,7 @@ public class SettingManager : MonoBehaviour
                     {
                         bodyAnimator[nowIndex].StopAnimation();
                         nowMenu = pageActStack.Pop();
-                        nowMenu();                        
+                        nowMenu();
                         nowIndex = pageIndexStack.Pop();
                         //bodyAnimator[nowIndex].StartAnimation();
                     }
@@ -739,14 +739,16 @@ public class SettingManager : MonoBehaviour
     {
         cursor.gameObject.SetActive(true);
         titleTextMesh.text = "オプション";
-        maxIndex = 3;
+        maxIndex = 4;
         nowIndex = 0;
         textStr[0] = () => "がめんせってい";
         textStr[1] = () => "おんりょうせってい";
-        textStr[2] = () => "タイトルにもどる";
+        textStr[2] = () => "コントローラーせってい";
+        textStr[3] = () => "タイトルにもどる";
         onSelecteds[0] = SetButtonPush(VideoOption);
         onSelecteds[1] = SetButtonPush(BgmOption);
-        onSelecteds[2] = SetButtonPush(ReturnTitle);
+        onSelecteds[2] = SetButtonPush(ControllerOption);
+        onSelecteds[3] = SetButtonPush(ReturnTitle);
         AppearanceBodyText();
     }
 
@@ -788,6 +790,18 @@ public class SettingManager : MonoBehaviour
         onSelecteds[3] = SetDefaultVol();
         AppearanceBodyText();
     }
+
+    void ControllerOption()
+    {
+        cursor.gameObject.SetActive(true);
+        maxIndex = 1;
+        nowIndex = 0;
+        titleTextMesh.text = "コントローラーせってい";
+        textStr[0] = () => "ゲームパッド < " + GamepadUseString() + " >";
+        onSelecteds[0] = SetGamepadUse;
+        AppearanceBodyText();
+    }
+
 
     void AchievementScreen()
     {
@@ -1045,6 +1059,22 @@ public class SettingManager : MonoBehaviour
     float VolToDb(float vol)
     {
         return Mathf.Sqrt(vol) * 80f - 80f;
+    }
+
+
+    void SetGamepadUse()
+    {
+        if (ActionInput.GetButtonDown(ButtonCode.Right) || ActionInput.GetButtonDown(ButtonCode.Left))
+        {
+            ActionInput.isGamepadUse = !ActionInput.isGamepadUse;
+            PlaySe(drumSe);
+        }
+    }
+
+    string GamepadUseString()
+    {
+        if (ActionInput.isGamepadUse) return "有効";
+        return "無効";
     }
 
 

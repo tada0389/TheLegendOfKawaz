@@ -26,6 +26,9 @@ public class ActionInput : MonoBehaviour
     Gamepad gamepad;
     Joystick joystick;
 
+    //ゲームパッド有効設定
+    public static bool isGamepadUse = true;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -52,7 +55,7 @@ public class ActionInput : MonoBehaviour
                 oldActionValue.Add(code, false);
                 actionFlag.Add(code, false);
             }
-
+            
         }
         else
         {
@@ -70,7 +73,7 @@ public class ActionInput : MonoBehaviour
     void Start()
     {
         gamepad = Gamepad.current;
-        joystick = Joystick.current;
+        joystick = Joystick.current;        
         /*
         DebugTextManager.Display(() => "leftTrigger:" + gamepad.leftTrigger.ReadValue().ToString() + "\n");
         DebugTextManager.Display(() => "leftShoulder:" + gamepad.leftShoulder.ReadValue().ToString() + "\n");
@@ -161,49 +164,101 @@ public class ActionInput : MonoBehaviour
 
     private bool currentButtonValue(ButtonCode code)
     {
-        switch (code)
+        if(isGamepadUse)
         {
-            case ButtonCode.Up:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y > deadline;
-            case ButtonCode.Down:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y < -deadline;
-            case ButtonCode.Left:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x < -deadline;
-            case ButtonCode.Right:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x > deadline;
+            switch (code)
+            {
+                case ButtonCode.Up:
+                    return Instance.input.PlatformActionGamepadPlus.Move.ReadValue<Vector2>().y > deadline;
+                case ButtonCode.Down:
+                    return Instance.input.PlatformActionGamepadPlus.Move.ReadValue<Vector2>().y < -deadline;
+                case ButtonCode.Left:
+                    return Instance.input.PlatformActionGamepadPlus.Move.ReadValue<Vector2>().x < -deadline;
+                case ButtonCode.Right:
+                    return Instance.input.PlatformActionGamepadPlus.Move.ReadValue<Vector2>().x > deadline;
+            }
         }
+        else
+        {
+            switch (code)
+            {
+                case ButtonCode.Up:
+                    return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y > deadline;
+                case ButtonCode.Down:
+                    return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y < -deadline;
+                case ButtonCode.Left:
+                    return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x < -deadline;
+                case ButtonCode.Right:
+                    return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x > deadline;
+            }
+        }        
         return false;
     }
 
     private bool currentButtonValue(ActionCode code)
     {
-        switch (code)
+        if(isGamepadUse)
         {
-            case ActionCode.Jump:
-                return input.PlatformAction.Jump.ReadValue<float>() > 0;
-            case ActionCode.Shot:
-                return input.PlatformAction.Shot.ReadValue<float>() > 0;
-            case ActionCode.Dash:
-                return input.PlatformAction.Dash.ReadValue<float>() > 0;
-            case ActionCode.Decide:
-                return input.PlatformAction.Decide.ReadValue<float>() > 0;
-            case ActionCode.Back:
-                return input.PlatformAction.Back.ReadValue<float>() > 0;
-            case ActionCode.Pause:
-                return input.PlatformAction.Pause.ReadValue<float>() > 0;
+            switch (code)
+            {
+                case ActionCode.Jump:
+                    return input.PlatformActionGamepadPlus.Jump.ReadValue<float>() > 0;
+                case ActionCode.Shot:
+                    return input.PlatformActionGamepadPlus.Shot.ReadValue<float>() > 0;
+                case ActionCode.Dash:
+                    return input.PlatformActionGamepadPlus.Dash.ReadValue<float>() > 0;
+                case ActionCode.Decide:
+                    return input.PlatformActionGamepadPlus.Decide.ReadValue<float>() > 0;
+                case ActionCode.Back:
+                    return input.PlatformActionGamepadPlus.Back.ReadValue<float>() > 0;
+                case ActionCode.Pause:
+                    return input.PlatformActionGamepadPlus.Pause.ReadValue<float>() > 0;
+            }
         }
+        else
+        {
+            switch (code)
+            {
+                case ActionCode.Jump:
+                    return input.PlatformAction.Jump.ReadValue<float>() > 0;
+                case ActionCode.Shot:
+                    return input.PlatformAction.Shot.ReadValue<float>() > 0;
+                case ActionCode.Dash:
+                    return input.PlatformAction.Dash.ReadValue<float>() > 0;
+                case ActionCode.Decide:
+                    return input.PlatformAction.Decide.ReadValue<float>() > 0;
+                case ActionCode.Back:
+                    return input.PlatformAction.Back.ReadValue<float>() > 0;
+                case ActionCode.Pause:
+                    return input.PlatformAction.Pause.ReadValue<float>() > 0;
+            }
+        }
+        
         return false;
     }
 
     private float currentAxisValue(AxisCode code)
     {
-        switch (code)
+        if(isGamepadUse)
         {
-            case AxisCode.Horizontal:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x;
-            case AxisCode.Vertical:
-                return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y;
+            switch (code)
+            {
+                case AxisCode.Horizontal:
+                    return Instance.input.PlatformActionGamepadPlus.Move.ReadValue<Vector2>().x;
+                case AxisCode.Vertical:
+                    return Instance.input.PlatformActionGamepadPlus.Move.ReadValue<Vector2>().y;
+            }
         }
+        else
+        {
+            switch (code)
+            {
+                case AxisCode.Horizontal:
+                    return Instance.input.PlatformAction.Move.ReadValue<Vector2>().x;
+                case AxisCode.Vertical:
+                    return Instance.input.PlatformAction.Move.ReadValue<Vector2>().y;
+            }
+        }        
         return 0;
     }
 
