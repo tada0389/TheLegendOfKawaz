@@ -40,6 +40,8 @@ namespace Actor.Player
             // 前回壁ジャンプをしていた
             private bool is_kicked_;
 
+            private float cant_jump_time_ = 0.15f;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -114,13 +116,16 @@ namespace Actor.Player
 
 
                 // 空中ジャンプ
-                if (data.RequestArialJump())
+                if (Timer > cant_jump_time_)
                 {
-                    if (Parent.input_.GetButtonDown(ActionCode.Jump))
+                    if (data.RequestArialJump())
                     {
-                        data.ArialJumpCalled();
-                        ChangeState((int)eState.Jump);
-                        return;
+                        if (Parent.input_.GetButtonDown(ActionCode.Jump))
+                        {
+                            data.ArialJumpCalled();
+                            ChangeState((int)eState.Jump);
+                            return;
+                        }
                     }
                 }
 

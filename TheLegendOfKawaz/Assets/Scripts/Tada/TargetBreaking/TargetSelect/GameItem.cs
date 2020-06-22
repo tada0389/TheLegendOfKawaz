@@ -308,7 +308,7 @@ namespace TargetBreaking
                 TargetSelectManager.PrevGameGhost = null;
 
                 // ゴーストをロードする
-                if (TargetSelectManager.PrevGameIndex[parent_.GameIndex] != ItemIndex)
+                if (TargetSelectManager.PrevGameIndex[parent_.GameIndex] != ItemIndex || TargetSelectManager.LoadGameGhost == null)
                 {
                     TargetSelectManager.LoadGameGhost = null;
                     GhostData ghost = new GhostData();

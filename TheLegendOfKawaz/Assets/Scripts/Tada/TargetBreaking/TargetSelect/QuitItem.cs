@@ -25,6 +25,7 @@ namespace TargetBreaking
             // ゴーストを消す
             TargetSelectManager.LoadGameGhost = null;
             TargetSelectManager.IsLoadGhost = false;
+            TargetSelectManager.PrevGameGhost = null;
             // 即戻る
             KoitanLib.FadeManager.FadeIn(0.5f, next_scene_);
             parent_.box_.DOKill();

@@ -1331,7 +1331,7 @@ MonoBehaviour:
     <BronzeBoaderTime>k__BackingField: 100
     <BronzeReward>k__BackingField: 75
     <OtherReward>k__BackingField: 0
-    <DeveloperTime>k__BackingField: 7.32
+    <DeveloperTime>k__BackingField: 6.61
     <DeveloperScore>k__BackingField: 0
     <AchievementKey>k__BackingField: Target_Clear_jokyu
   <NextScene>k__BackingField: Target_jokyu
