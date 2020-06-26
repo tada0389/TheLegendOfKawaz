@@ -57,6 +57,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ZakkyTest/Scene/UsingScenes/WellDefenceMiniGame.unity
     guid: 49f0d8be658a3094ca24e43fa149b7d8
   - enabled: 1
+    path: Assets/Scenes/TadaTest/BossRush/RushWatingScene.unity
+    guid: 8e1df526a4b3b92469f49f126bca74d3
+  - enabled: 1
     path: Assets/Scenes/ManagerScene.unity
     guid: 028de9ea77cb0406493cd2c75368ddff
   - enabled: 1

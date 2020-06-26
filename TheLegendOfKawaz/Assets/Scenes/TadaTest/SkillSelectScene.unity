@@ -819,7 +819,7 @@ Transform:
   - {fileID: 355244662}
   - {fileID: 843047779}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &192039184
 GameObject:
@@ -874,7 +874,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &218442778
 GameObject:
@@ -11065,6 +11065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill_: 2
+  open_type_: 2
   player_: {fileID: 1624376389}
   otameshi_text_: {fileID: 1902333196}
   buy_text_: {fileID: 481556323}
@@ -11191,6 +11192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill_: 4
+  open_type_: 1
   player_: {fileID: 1624376389}
   otameshi_text_: {fileID: 1902333196}
   buy_text_: {fileID: 481556323}
@@ -11441,11 +11443,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437191043}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.8, y: -29.58, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalPosition: {x: -0.9000001, y: -2.58, z: 0}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children: []
-  m_Father: {fileID: 1349196952}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &437191046
 BoxCollider2D:
@@ -18044,6 +18046,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill_: 8
+  open_type_: 0
   player_: {fileID: 1624376389}
   otameshi_text_: {fileID: 1902333196}
   buy_text_: {fileID: 481556323}
@@ -34454,7 +34457,7 @@ Transform:
   - {fileID: 336414194}
   - {fileID: 1388036427}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1225028461
 GameObject:
@@ -39789,7 +39792,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1308261984
 GameObject:
@@ -40177,10 +40180,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5, y: 12.21, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
-  m_Children:
-  - {fileID: 437191045}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1349196953
 MonoBehaviour:
@@ -45915,6 +45917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill_: 7
+  open_type_: 0
   player_: {fileID: 1624376389}
   otameshi_text_: {fileID: 1902333196}
   buy_text_: {fileID: 481556323}
@@ -46296,6 +46299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill_: 5
+  open_type_: 1
   player_: {fileID: 1624376389}
   otameshi_text_: {fileID: 1902333196}
   buy_text_: {fileID: 481556323}
@@ -46470,6 +46474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill_: 3
+  open_type_: 0
   player_: {fileID: 1624376389}
   otameshi_text_: {fileID: 1902333196}
   buy_text_: {fileID: 481556323}
@@ -46596,6 +46601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill_: 6
+  open_type_: 1
   player_: {fileID: 1624376389}
   otameshi_text_: {fileID: 1902333196}
   buy_text_: {fileID: 481556323}
@@ -46986,6 +46992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill_: 1
+  open_type_: 1
   player_: {fileID: 1624376389}
   otameshi_text_: {fileID: 1902333196}
   buy_text_: {fileID: 481556323}
@@ -48172,7 +48179,7 @@ Transform:
   - {fileID: 1775385796}
   - {fileID: 855023099}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1806366805
 GameObject:
@@ -51131,6 +51138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill_: 0
+  open_type_: 0
   player_: {fileID: 1624376389}
   otameshi_text_: {fileID: 1902333196}
   buy_text_: {fileID: 481556323}
@@ -51358,7 +51366,7 @@ RectTransform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

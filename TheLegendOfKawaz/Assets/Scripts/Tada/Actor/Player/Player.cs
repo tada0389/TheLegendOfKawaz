@@ -342,6 +342,7 @@ namespace Actor.Player
         }
 
         public eDir Dir => data_.Dir;
+        public Vector2 Velocity => data_.velocity;
 
         // ステートマシン
         private StateMachine<Player> state_machine_;

@@ -1988,7 +1988,7 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     knock_down_damage_: 1
-    charge_duration_: 3.5
+    charge_duration_: 5
     kekkai_eff_: {fileID: 277508066}
     charge_eff_: {fileID: 175721033}
     background_prev_: {fileID: 1105352640}
