@@ -1741,7 +1741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b79d10a67c204cbbb115c8a5ee48830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialBookIndex: 1
+  tutorialBookIndex: 3
 --- !u!50 &810595019
 Rigidbody2D:
   serializedVersion: 4
@@ -4159,7 +4159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b79d10a67c204cbbb115c8a5ee48830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialBookIndex: 1
+  tutorialBookIndex: 4
 --- !u!50 &1421317085
 Rigidbody2D:
   serializedVersion: 4
