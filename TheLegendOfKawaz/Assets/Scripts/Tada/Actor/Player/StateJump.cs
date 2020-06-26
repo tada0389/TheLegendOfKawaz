@@ -42,6 +42,8 @@ namespace Actor.Player
 
             private float cant_jump_time_ = 0.15f;
 
+            private bool jump_button_finished_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -62,6 +64,8 @@ namespace Actor.Player
 
                 // 上向きに速度を加える
                 data.velocity.y = jump_power;
+
+                jump_button_finished_ = false;
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -154,7 +158,8 @@ namespace Actor.Player
                 ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed);
 
                 // ある程度の時間はジャンプボタン長押しでジャンプ飛距離を伸ばせる
-                if (Timer < jump_input_time && !data.IsHead && Parent.input_.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
+                if (!jump_button_finished_ && Timer < jump_input_time && !data.IsHead && Parent.input_.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
+                else jump_button_finished_ = true;
             }
         }
     }

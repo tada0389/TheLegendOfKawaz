@@ -92,7 +92,7 @@ namespace Actor.Player
 
         private void OnEnter()
         {
-            ui_manager_.ChangeExplonation(skill_);
+            ui_manager_.ChangeExplonation(skill_, transform.position);
 
             if (is_level_max_) return;
             prev_level_ = SkillManager.Instance.Skills[(int)skill_].Level;

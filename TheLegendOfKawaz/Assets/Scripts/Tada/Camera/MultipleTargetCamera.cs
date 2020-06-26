@@ -27,26 +27,19 @@ namespace CameraSpace
         private Vector3 offset_;
         public Vector3 Offset => offset_;
 
-        // カメラの有効範囲 範囲内だけカメラボーダーとZoom量に従う
-        [SerializeField]
-        private Rect view_port_ = new Rect(0f, 0f, 1f, 1f);
-        public Rect ViewPort => view_port_;
-
-        public float ZoomRate => 1f / Mathf.Clamp(Mathf.Min(view_port_.width - view_port_.x, view_port_.height - view_port_.y), 0.1f, 1f);//1f /Mathf.Min(view_port_.width - view_port_.x, view_port_.height - view_port_.x);
-
         [SerializeField]
         private float smooth_time_ = 0.3f;
         public float SmoothTime => smooth_time_;
 
         [SerializeField]
         private float min_zoom_ = 85f;
-        public float MinZoom => min_zoom_ * ZoomRate;
+        public float MinZoom => min_zoom_;
         [SerializeField]
         private float max_zoom_ = 75f;
-        public float MaxZoom => max_zoom_ * ZoomRate;
+        public float MaxZoom => max_zoom_;
         [SerializeField]
         private float zoom_limiter_ = 60f;
-        public float ZoomLimiter => zoom_limiter_ * ZoomRate;
+        public float ZoomLimiter => zoom_limiter_;
     }
 
     [RequireComponent(typeof(Camera))]
@@ -154,12 +147,12 @@ namespace CameraSpace
                 float width = height * cam_.aspect;
 
                 Vector2 origin = (Vector2)data_.Boader.transform.position + data_.Boader.offset * data_.Boader.transform.localScale;
-                Vector2 size = data_.Boader.size * data_.Boader.transform.localScale / 2.0f * data_.ZoomRate;
+                Vector2 size = data_.Boader.size * data_.Boader.transform.localScale / 2.0f;
 
                 // ボーダーの左,下,右,上の順
-                float left_limit = origin.x - size.x +-data_.ViewPort.x;
+                float left_limit = origin.x - size.x;
                 float bottom_limit = origin.y - size.y;
-                float right_limit = origin.x + size.x + (1f - data_.ViewPort.width);
+                float right_limit = origin.x + size.x;
                 float top_limit = origin.y + size.y;
 
                 // 現在の左，下，右，上
