@@ -26,6 +26,7 @@ namespace CameraSpace
         [SerializeField]
         private Vector3 offset_;
         public Vector3 Offset => offset_;
+
         [SerializeField]
         private float smooth_time_ = 0.3f;
         public float SmoothTime => smooth_time_;
