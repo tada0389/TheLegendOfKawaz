@@ -64,11 +64,11 @@ namespace SkillItem
         public void Open(eOpenType type, Skill skill)
         {
             frame_.rectTransform.localScale = Vector3.one * 0.5f;
-            Vector3 target_pos;
+            Vector3 target_pos = frame_.rectTransform.localPosition;
 
             if (type == eOpenType.Right) target_pos = open_right_pos_;
             else if (type == eOpenType.RightDown) target_pos = open_rightdown_pos_;
-            else target_pos = open_left_pos_;
+            else if(type == eOpenType.Left) target_pos = open_left_pos_;
 
             frame_.rectTransform.localPosition = target_pos;
 
@@ -114,14 +114,14 @@ namespace SkillItem
         [SerializeField]
         private SkillUI skill_ui_;
 
-        private Queue<TadaLib.Pair<eSkill, Vector3>> skill_queue_;
+        private Queue<TadaLib.Pair<eSkill, eOpenType>> skill_queue_;
         private int delete_requests_;
 
         // Start is called before the first frame update
         void Start()
         {
             skill_ui_.Init();
-            skill_queue_ = new Queue<TadaLib.Pair<eSkill, Vector3>>();
+            skill_queue_ = new Queue<TadaLib.Pair<eSkill, eOpenType>>();
             delete_requests_ = 0;
         }
 
@@ -132,14 +132,10 @@ namespace SkillItem
                 while (skill_queue_.Count != 1) skill_queue_.Dequeue();
                 var item = skill_queue_.Dequeue();
                 eSkill skill_item = item.first;
-                Vector3 pos = item.second;  
+                eOpenType type = item.second;  
 
                 Skill skill = SkillManager.Instance.GetSkill((int)skill_item);
 
-                eOpenType type = eOpenType.Left;
-                if (pos.x < 0f && pos.y < 0f) type = eOpenType.None;
-                else if (pos.x < 480f) type = eOpenType.Right;
-                if (skill_item == eSkill.Attack) type = eOpenType.RightDown;
                 skill_ui_.Open(type, skill);
                 delete_requests_ = 0;
             }
@@ -150,10 +146,9 @@ namespace SkillItem
             }
         }
 
-        public void ChangeExplonation(eSkill skill, Vector3 spawn_pos)
+        public void ChangeExplonation(eSkill skill, eOpenType type)
         {
-            Vector3 ui_pos = Camera.main.WorldToScreenPoint(spawn_pos);
-            skill_queue_.Enqueue(new TadaLib.Pair<eSkill, Vector3>(skill, ui_pos));
+            skill_queue_.Enqueue(new TadaLib.Pair<eSkill, eOpenType>(skill, type));
         }
 
         public void DeleteExplonation()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using SkillItem;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ namespace Actor.Player
         private eSkill skill_;
 
         [SerializeField]
+        private eOpenType open_type_ = eOpenType.Left;
+
+        [SerializeField]
         private Player player_;
 
         private BoxCollider2D hit_box_;
@@ -18,8 +22,6 @@ namespace Actor.Player
         private bool in_player_;
 
         private float left_, right_, bottom_, top_;
-
-        private string message_;
 
         [SerializeField]
         private TMPro.TextMeshPro otameshi_text_;
@@ -49,14 +51,6 @@ namespace Actor.Player
             right_ = transform.position.x + hit_box_.size.x * scale.x / 2f;
             bottom_ = transform.position.y - hit_box_.size.y * scale.y / 2f;
             top_ = transform.position.y + hit_box_.size.y * scale.y / 2f;
-
-            message_ = "<color=red>";
-            var skills = SkillManager.Instance.Skills;
-            message_ += skills[(int)skill_].Name + '\n';
-            message_ += "レベル " + (skills[(int)skill_].Level + 1).ToString() + '\n';
-            message_ += "必要ポイント " + skills[(int)skill_].NeedPoint().ToString() + "SP\n";
-            message_ += skills[(int)skill_].Explonation + '\n';
-            message_ += "</color>";
         }
 
         private void Update()
@@ -92,7 +86,14 @@ namespace Actor.Player
 
         private void OnEnter()
         {
-            ui_manager_.ChangeExplonation(skill_, transform.position);
+            eOpenType type = open_type_;
+            if(type == eOpenType.None)
+            {
+                // プレイヤーの移動方向にする
+                if (player_.Velocity.x > 0f) type = eOpenType.Left;
+                else type = eOpenType.Right;
+            }
+            ui_manager_.ChangeExplonation(skill_, type);
 
             if (is_level_max_) return;
             prev_level_ = SkillManager.Instance.Skills[(int)skill_].Level;

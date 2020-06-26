@@ -128,7 +128,7 @@ namespace SkillItem
                 //    body_.fillAmount = 0.0f;
                 //});
                 body_.fillAmount = 0.0f;
-                ui_manager_.ChangeExplonation(cur_skill_, new Vector3(-100f, -100f, 0f));
+                ui_manager_.ChangeExplonation(cur_skill_, eOpenType.None);
 
                 levelup_text_.rectTransform.position = player_.transform.position + Vector3.up * 2.5f;
 
