@@ -18,7 +18,7 @@ public class DebugTextManager : MonoBehaviour
         DontDestroyOnLoad(debugCanvas);
 
 #if UNITY_EDITOR
-        debugCanvas.SetActive(true);
+        debugCanvas.SetActive(false);
 #else
         debugCanvas.SetActive(false);
 #endif
@@ -32,6 +32,7 @@ public class DebugTextManager : MonoBehaviour
             debugCanvas.SetActive(!debugCanvas.activeSelf);
         }
 
+        /*
         if (Input.GetKey(KeyCode.W))
         {
             debugText.fontSize += 1;
@@ -41,6 +42,7 @@ public class DebugTextManager : MonoBehaviour
         {
             debugText.fontSize -= 1;
         }
+        */
 
         //debugText.text = str();
         debugText.text = string.Empty;
