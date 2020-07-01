@@ -57,7 +57,7 @@ namespace SkillItem
             group_ = frame_.GetComponent<CanvasGroup>();
             group_.alpha = 0.0f;
             frame_.rectTransform.localScale = Vector3.one * 0.5f;
-        
+            open_start_time_ = Time.time - open_duration_;
         }
 
         // 開く
@@ -75,14 +75,19 @@ namespace SkillItem
             frame_.rectTransform.DOKill();
             group_.DOKill();
 
-            frame_.rectTransform.DOScale(max_scale_, open_duration_).SetEase(open_ease_);
-            group_.DOFade(1f, open_duration_);
+            float duration = Mathf.Min(open_duration_, Time.time - open_start_time_);
+            frame_.rectTransform.DOScale(max_scale_, duration).SetEase(open_ease_);
+            group_.DOFade(1f, duration);
 
             if (skill.ReachLevelLimit)
             {
                 SkillName.text = skill.Name.ToString() + " LvMax";
                 SkillBody.text = skill.Explonation;
-                SkillPoint.text = "<size=36>値段</size> <sprite index=0> ∞";
+                // 値段の横文字を所持コインの数と合わせる
+                string price = "";
+                int len = (int)(SkillManager.Instance.SkillPoint.ToString().Length * 1.5f);
+                for (int i = 0; i < len; ++i) price += "-";
+                SkillPoint.text = "<size=36>値段</size> <sprite index=0> " + price;
                 HavePoint.text = "<size=36>所持</size> <sprite index=0> " + SkillManager.Instance.SkillPoint.ToString();
             }
             else
@@ -106,6 +111,8 @@ namespace SkillItem
             float duration = Mathf.Min(open_duration_, Time.time - open_start_time_);
             frame_.rectTransform.DOScale(0.5f, duration).SetEase(open_ease_);
             group_.DOFade(0f, duration);
+
+            open_start_time_ = Time.time;
         }
     }
 

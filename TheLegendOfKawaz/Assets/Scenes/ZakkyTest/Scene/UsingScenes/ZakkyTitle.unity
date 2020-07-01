@@ -2858,12 +2858,6 @@ MonoBehaviour:
     boader_: {fileID: 0}
     targets_: []
     offset_: {x: 0, y: 0, z: 0}
-    view_port_:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
     smooth_time_: 0.3
     min_zoom_: 85
     max_zoom_: 75
