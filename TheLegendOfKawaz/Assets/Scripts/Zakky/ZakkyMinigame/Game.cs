@@ -92,7 +92,7 @@ namespace WallDefence
         // ゲーム終了処理
         private IEnumerator FinishFlow()
         {
-            // if(ui_animator_) ui_animator_.Play("finish");
+            if(ui_animator_) ui_animator_.Play("clear");
 
             float new_time_scale = 0.06f;
 
