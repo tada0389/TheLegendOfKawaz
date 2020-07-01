@@ -389,7 +389,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c618df1d907022e4c873f4198c3c8956, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4683e90f1be19ed49a54b4b1275c010b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -731,12 +731,6 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
     offset_: {x: 0, y: 0, z: 0}
-    view_port_:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 1
-      height: 1
     smooth_time_: 0.3
     min_zoom_: 80
     max_zoom_: 80
