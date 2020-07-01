@@ -380,7 +380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &50790392
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15994,10 +15994,20 @@ MonoBehaviour:
     body: "\u30BF\u30FC\u30B2\u30C3\u30C8\u7834\u58CA\u30DE\u30B9\u30BF\u30FC(\u4E0A\u7D1A)"
     detail: "\u300C\u30BF\u30FC\u30B2\u30C3\u30C8\u3092\u58CA\u305B\uFF01(\u4E0A\u7D1A)\u300D\u3067Gold\u3092\u53D6\u308B\u3002"
     isUnlocked: 0
-  - key: Hidden
+  - key: Ido_game_Gold
     icon: {fileID: 21300000, guid: abd35b09ca1053e449319ee4b35d2eff, type: 3}
-    body: "\u6167\u773C\u306E\u6301\u3061\u4E3B"
-    detail: "\u672A\u77E5\u306A\u308B\u9053\u3092\u958B\u62D3\u3059\u308B\u3002"
+    body: "\u4E95\u6238\u30C7\u30A3\u30D5\u30A7\u30F3\u30B9\u30B2\u30FC\u30E0\u30DE\u30B9\u30BF\u30FC"
+    detail: "\u4E95\u6238\u30C7\u30A3\u30D5\u30A7\u30F3\u30B9\u30DF\u30CB\u30B2\u30FC\u30E0\u3067Gold\u3092\u53D6\u308B\u3002"
+    isUnlocked: 0
+  - key: Level99
+    icon: {fileID: 21300000, guid: abd35b09ca1053e449319ee4b35d2eff, type: 3}
+    body: "\u304B\u308F\u305A\u305F\u3093Lv99"
+    detail: "\u5168\u3066\u306E\u30B9\u30AD\u30EB\u3092\u53D6\u308B\u3002"
+    isUnlocked: 0
+  - key: Hero
+    icon: {fileID: 21300000, guid: 544383b480ac14b66b9eb3114bd92ce6, type: 3}
+    body: "\u307F\u3093\u306A\u306E\u30D2\u30FC\u30ED\u30FC\uFF01"
+    detail: "\u3059\u3079\u3066\u306E\u5B9F\u7E3E\u3092\u89E3\u9664\u3059\u308B\u3002"
     isUnlocked: 0
   achievementPrefab: {fileID: 417135360115433026, guid: 6fb672fea3b36425a88a15a4e63af580,
     type: 3}
