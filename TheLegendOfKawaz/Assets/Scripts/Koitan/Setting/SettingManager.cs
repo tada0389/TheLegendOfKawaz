@@ -1096,6 +1096,13 @@ public class SettingManager : MonoBehaviour
     // セーブデータを削除する
     public static void DeleteSaveData()
     {
+        foreach (var index in Instance.data.unlockedIndices)
+        {
+            Instance.unlockedBooks.Add(Instance.books[index]);
+            Instance.books[index].isUnlocked = false;
+        }
+        Instance.unlockedBooks.Clear();
+
         Instance.data.DeleteSaveData();
         // 設定データをもとに戻す
         Instance.InitSetting();
