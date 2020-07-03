@@ -61,7 +61,7 @@ namespace CameraSpace
         // 揺れの大きさの集合 大きい順
         TadaLib.MultiSet<float> shake_powers_;
 
-        private void Start()
+        private void Awake()
         {
             cam_ = GetComponent<Camera>();
 

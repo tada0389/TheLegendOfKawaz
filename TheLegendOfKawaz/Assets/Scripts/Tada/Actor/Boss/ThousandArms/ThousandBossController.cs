@@ -83,6 +83,18 @@ namespace Actor.Enemy.Thousand
             if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.VernmDrake) >= 1) ++boss_defeat_num;
             if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.KawazTanBeta) >= 1) ++boss_defeat_num;
 
+            // ボスをいくつか倒していたならカメラを揺らす
+            if(boss_defeat_num >= 1)
+            {
+                float rate = Mathf.Sqrt(1f / boss_defeat_num) * 0.8f;
+                float inv_rate = 1f / rate;
+                // 時間もゆっくりにする
+                TadaLib.TimeScaler.Instance.RequestChange(0.05f * rate, 0.05f);
+                // 最初だけ大きく揺らす
+                CameraSpace.CameraShaker.Shake(1f * inv_rate, 0.03f, 0.005f);
+                CameraSpace.CameraShaker.Shake(0.2f * inv_rate, 0.25f * inv_rate);
+            }
+
             int arm_num = arm_num_[boss_defeat_num];
             arms_ = new List<ArmController>(arm_num);
             for (int i = 0; i < arm_num; ++i)
@@ -90,6 +102,15 @@ namespace Actor.Enemy.Thousand
                 ArmController arm = Instantiate(arm_prefab_);
                 arm.Init(i, arm_num, transform, player_);
                 arms_.Add(arm);
+            }
+
+            // 破壊される分の手も作る
+            int burst_arm_num = arm_num_[0] - arm_num;
+            if(burst_arm_num >= 1)
+            for(int i = 0; i < burst_arm_num; ++i)
+            {
+                ArmController arm = Instantiate(arm_prefab_);
+                arm.Init(i, burst_arm_num, transform, player_, true);
             }
 
             // ステートの登録
