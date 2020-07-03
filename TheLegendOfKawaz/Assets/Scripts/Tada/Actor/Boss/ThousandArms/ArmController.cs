@@ -23,6 +23,7 @@ namespace Actor.Enemy.Thousand
             Throw3,
             Burst1,
             Burst2,
+            InitialBurst,
         }
 
         private StateMachine<ArmController> state_machine_;
@@ -65,6 +66,8 @@ namespace Actor.Enemy.Thousand
         private BurstState1 burst_state1_;
         [SerializeField]
         private BurstState2 burst_state2_;
+        [SerializeField]
+        private InitialBurstState initial_burst_state_;
         #endregion
 
         private float degree_ = 0f;
@@ -77,7 +80,9 @@ namespace Actor.Enemy.Thousand
 
         private Vector3 default_scale_;
 
-        public void Init(int arm_index, int arm_sum, Transform boss, Transform player)
+        private eState initial_state_;
+
+        public void Init(int arm_index, int arm_sum, Transform boss, Transform player, bool burst = false)
         {
             boss_ = boss;
             player_ = player;
@@ -86,8 +91,16 @@ namespace Actor.Enemy.Thousand
 
             default_scale_ = transform.localScale;
 
-            transform.position = boss_.position + radius_ * new Vector3(Mathf.Cos(degree_ * Mathf.Deg2Rad), Mathf.Sin(degree_ * Mathf.Deg2Rad), 0f);
-            transform.localEulerAngles = new Vector3(0f, 0f, degree_ - 90f);
+            //transform.position = boss_.position + radius_ * new Vector3(Mathf.Cos(degree_ * Mathf.Deg2Rad), Mathf.Sin(degree_ * Mathf.Deg2Rad), 0f);
+            //transform.localEulerAngles = new Vector3(0f, 0f, degree_ - 90f);
+
+            float degree = degree_;
+            transform.position = boss_.position + radius_ * new Vector3(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad), 0f);
+            transform.localEulerAngles = new Vector3(0f, 0f, degree);
+
+            // 最初に破壊されるかどうか
+            if (burst) initial_state_ = eState.InitialBurst;
+            else initial_state_ = eState.Idle;
         }
 
         private void Start()
@@ -107,8 +120,9 @@ namespace Actor.Enemy.Thousand
             state_machine_.AddState((int)eState.Throw3, throw_state3_);
             state_machine_.AddState((int)eState.Burst1, burst_state1_);
             state_machine_.AddState((int)eState.Burst2, burst_state2_);
+            state_machine_.AddState((int)eState.InitialBurst, initial_burst_state_);
 
-            state_machine_.SetInitialState((int)eState.Idle);
+            state_machine_.SetInitialState((int)initial_state_);
 
             // デバッグ表示
             //DebugBoxManager.Display(this).SetSize(new Vector2(500, 400)).SetOffset(new Vector2(0, 0));
@@ -213,10 +227,6 @@ namespace Actor.Enemy.Thousand
         [System.Serializable]
         private class IdleState : StateMachine<ArmController>.StateBase
         {
-            // 半径
-            [SerializeField]
-            private float radius_ = 5f;
-
             // ほかの腕との間隔 degree
             private float arm_interval_;
 
@@ -237,7 +247,7 @@ namespace Actor.Enemy.Thousand
 
                 Parent.degree_ += Time.fixedDeltaTime * speed_;
                 float degree = Parent.degree_;
-                Parent.transform.position = Parent.boss_.position + radius_ * new Vector3(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad), 0f);
+                Parent.transform.position = Parent.boss_.position + Parent.radius_ * new Vector3(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad), 0f);
                 Parent.transform.localEulerAngles = new Vector3(0f, 0f, degree);
             }
 
@@ -662,6 +672,69 @@ namespace Actor.Enemy.Thousand
                 if (Parent.transform.position.x < stage_boader_x.x && velocity_.x < 0f) return true;
                 if (Parent.transform.position.x > stage_boader_x.y && velocity_.x > 0f) return true;
                 return false;
+            }
+        }
+
+        // 千手観音戦の初めに手が吹き飛ぶステート
+        [System.Serializable]
+        private class InitialBurstState : StateMachine<ArmController>.StateBase
+        {
+            private Vector2 velocity_ = new Vector2(0f, 0f);
+
+            [SerializeField]
+            private Vector2 power_ = new Vector2(0f, 1f);
+
+            [SerializeField]
+            private float gravity_ = -0.98f;
+
+            // 反転するまでの時間 上に上がってもとに位置に戻るまでの時間
+            private float flip_time_;
+
+            private float face_down_degree_per_s_;
+
+            [SerializeField]
+            private float ground_boader_ = -5f;
+
+            [SerializeField]
+            private BaseParticle dead_eff_;
+
+            public override void OnStart()
+            {
+                Parent.dead_ = true;
+
+                velocity_ = power_;
+
+                flip_time_ = 2f * velocity_.y / -gravity_;
+
+                while (Parent.degree_ > 360f) Parent.degree_ -= 360f;
+
+                // 真下を向くまでの角度 真下は180° + 90
+                face_down_degree_per_s_ = (180f - Parent.degree_) / flip_time_;
+
+                EffectPlayer.Play(dead_eff_, Parent.transform.position, Vector3.zero, Parent.transform);
+
+                //Parent.body_.DOFade(0.25f, 1.5f);
+            }
+
+            public override void Proc()
+            {
+                if (Timer < flip_time_)
+                {
+                    Parent.degree_ += face_down_degree_per_s_ * Time.fixedDeltaTime;
+                    Parent.transform.localEulerAngles = new Vector3(0f, 0f, Parent.degree_);
+                }
+
+                if (Parent.transform.position.y < ground_boader_)
+                {
+                    //ChangeState((int)eState.Dead2);
+                    // 終了
+                    Destroy(Parent.gameObject);
+                    return;
+                }
+
+                velocity_.y += gravity_ * Time.fixedDeltaTime;
+
+                Parent.transform.position += (Vector3)velocity_ * Time.fixedDeltaTime;
             }
         }
 

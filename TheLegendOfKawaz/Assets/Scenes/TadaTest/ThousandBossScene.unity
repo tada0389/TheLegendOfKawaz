@@ -863,7 +863,7 @@ MonoBehaviour:
     MaxAbsSpeed: {x: 0.5, y: 0}
     Accel: {x: 0, y: 0}
     knock_down_damage_: 1
-    charge_duration_: 5
+    charge_duration_: 3.5
     kekkai_eff_: {fileID: 277508066}
     charge_eff_: {fileID: 175721033}
     background_prev_: {fileID: 1105352640}
@@ -908,7 +908,7 @@ MonoBehaviour:
   pre_pooled_effects_:
   - effect_: {fileID: 5668754949085646629, guid: 576d4b4501d7e3b4883d2891a6c52d83,
       type: 3}
-    max_num_: 6
+    max_num_: 12
   - effect_: {fileID: 3831388817837009957, guid: cbf56024ced58b7489def4e1b26e3749,
       type: 3}
     max_num_: 8

@@ -159,10 +159,7 @@ MonoBehaviour:
   muteki_time_: 1
   mesh_: {fileID: 6632273060697375408}
   not_reverse_: {fileID: 0}
-  boss_: {fileID: 0}
-  index_: 0
-  arm_sum_: 25
-  radius_: 2
+  radius_: 3
   body_: {fileID: 6632273060697375414}
   idle_state_:
     MaxAbsSpeed: {x: 0.5, y: 0}
@@ -228,6 +225,14 @@ MonoBehaviour:
     accel_: 100
     stage_boader_x: {x: -10, y: 15}
     stage_boader_y: {x: -5, y: 7}
+  initial_burst_state_:
+    MaxAbsSpeed: {x: 0.5, y: 0}
+    Accel: {x: 0, y: 0}
+    power_: {x: 0, y: 10}
+    gravity_: -15
+    ground_boader_: -10
+    dead_eff_: {fileID: 5668754949085646629, guid: 576d4b4501d7e3b4883d2891a6c52d83,
+      type: 3}
 --- !u!50 &6632273060754124531
 Rigidbody2D:
   serializedVersion: 4
