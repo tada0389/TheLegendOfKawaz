@@ -8,6 +8,15 @@ using UnityEngine;
 
 namespace Global
 {
+    public enum BossType
+    {
+        Purin = 0,
+        VernmDrake = 1,
+        KawazTanBeta = 2,
+        Senju = 3,
+        ExPurin = 4,
+    }
+
     [System.Serializable]
     public class GlobalGameData : TadaLib.Save.BaseSaver<GlobalGameData>
     {
@@ -30,6 +39,11 @@ namespace Global
         [SerializeField]
         private int boss_defeat_cnt_ = 0;
         public int BossDefeatCnt => boss_defeat_cnt_;
+
+        // ボスを倒した回数　ボスごとに
+        [SerializeField]
+        private List<int> each_boss_defeat_cnt_;
+        public List<int> EachBossDefeatCnt;
 
         // エンディングを迎えた回数
         [SerializeField]
@@ -65,6 +79,7 @@ namespace Global
             story_timer_ = data.story_timer_;
             death_cnt_ = data.death_cnt_;
             boss_defeat_cnt_ = data.boss_defeat_cnt_;
+            each_boss_defeat_cnt_ = data.each_boss_defeat_cnt_;
             ending_cnt_ = data.ending_cnt_;
 
             return true;
@@ -91,6 +106,10 @@ namespace Global
             death_cnt_ = 0;
             boss_defeat_cnt_ = 0;
             ending_cnt_ = 0;
+            for(int i = 0, n = each_boss_defeat_cnt_.Count; i < n; ++i)
+            {
+                each_boss_defeat_cnt_[i] = 0;
+            }
         }
 
         // 死亡回数を加算する
@@ -115,6 +134,8 @@ namespace Global
             eternal_timer_ += Time.time - prev_time_;
             prev_time_ = Time.time;
             is_story_timer_stoped_ = false;
+
+            // ついでにボスのカウントも
         }
 
         public void StopStoryTimer()
