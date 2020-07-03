@@ -519,7 +519,7 @@ namespace Actor.Player
             {
                 input_.ActionEnabled = false;
                 // 速度をデフォルトに (重力で少し下に)
-                data_.velocity = new Vector2(0f, -0.1f);
+                data_.velocity = new Vector2(0f, Mathf.Min(-0.1f, data_.velocity.y));
                 data_.ReflectVelocity(true);
                 return;
             }
@@ -670,7 +670,6 @@ namespace Actor.Player
                     break;
             }
 
-            data_.animator.Play(anim);
             AnimCalled.Add(anim);
             AnimType.Add(type);
         }

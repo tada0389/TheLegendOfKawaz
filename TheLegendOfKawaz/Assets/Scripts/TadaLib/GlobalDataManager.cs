@@ -8,6 +8,18 @@ using UnityEngine;
 
 namespace Global
 {
+    public enum eBossType
+    {
+        Purin = 0,
+        VernmDrake = 1,
+        KawazTanBeta = 2,
+        Senju = 3,
+        ExPurin = 4,
+        ExVernmDrake = 5,
+        ExKawazTanBeta = 6,
+        ExSenju = 7,
+    }
+
     [System.Serializable]
     public class GlobalGameData : TadaLib.Save.BaseSaver<GlobalGameData>
     {
@@ -25,11 +37,20 @@ namespace Global
         [SerializeField]
         private int death_cnt_ = 0;
         public int DeathCnt => death_cnt_;
+        // ボスごとの死亡回数
+        [SerializeField]
+        private List<int> death_cnts_;
+        public List<int> DeathCnts => death_cnts_;
 
         // ボスを倒した回数
         [SerializeField]
         private int boss_defeat_cnt_ = 0;
         public int BossDefeatCnt => boss_defeat_cnt_;
+
+        // ボスを倒した回数　ボスごとに
+        [SerializeField]
+        private List<int> each_boss_defeat_cnt_;
+        public List<int> EachBossDefeatCnt => each_boss_defeat_cnt_;
 
         // エンディングを迎えた回数
         [SerializeField]
@@ -59,13 +80,35 @@ namespace Global
 
             var data = Load(kFileName);
 
-            if (data == null) return false;
+            if (data == null)
+            {
+                // 初期化
+                each_boss_defeat_cnt_ = new List<int>(8);
+                each_boss_defeat_cnt_.AddRange(System.Linq.Enumerable.Repeat(0, 8));
+                death_cnts_ = new List<int>(8);
+                death_cnts_.AddRange(System.Linq.Enumerable.Repeat(0, 8));
+                return false;
+            }
 
             eternal_timer_ = data.eternal_timer_;
             story_timer_ = data.story_timer_;
             death_cnt_ = data.death_cnt_;
             boss_defeat_cnt_ = data.boss_defeat_cnt_;
             ending_cnt_ = data.ending_cnt_;
+
+            // ちゃんとロードできなかったら一から生成する
+            if (data.death_cnts_ != null && data.death_cnts_.Count == 8) death_cnts_ = data.death_cnts_;
+            else
+            {
+                death_cnts_ = new List<int>(8);
+                death_cnts_.AddRange(System.Linq.Enumerable.Repeat(0, 8));
+            }
+            if (data.each_boss_defeat_cnt_ != null && data.each_boss_defeat_cnt_.Count == 8) each_boss_defeat_cnt_ = data.each_boss_defeat_cnt_;
+            else
+            {
+                each_boss_defeat_cnt_ = new List<int>(8);
+                each_boss_defeat_cnt_.AddRange(System.Linq.Enumerable.Repeat(0, 8));
+            }
 
             return true;
         }
@@ -91,17 +134,24 @@ namespace Global
             death_cnt_ = 0;
             boss_defeat_cnt_ = 0;
             ending_cnt_ = 0;
+            for(int i = 0, n = each_boss_defeat_cnt_.Count; i < n; ++i)
+            {
+                each_boss_defeat_cnt_[i] = 0;
+                death_cnts_[i] = 0;
+            }
         }
 
         // 死亡回数を加算する
-        public void AddDeathCnt()
+        public void AddDeathCnt(eBossType id)
         {
             ++death_cnt_;
+            ++death_cnts_[(int)id];
         }
 
-        public void AddBossDefeatCnt()
+        public void AddBossDefeatCnt(eBossType id)
         {
             ++boss_defeat_cnt_;
+            ++each_boss_defeat_cnt_[(int)id];
         }
 
         public void AddEndingCnt()
@@ -115,6 +165,13 @@ namespace Global
             eternal_timer_ += Time.time - prev_time_;
             prev_time_ = Time.time;
             is_story_timer_stoped_ = false;
+
+            // ついでにボスのカウントも
+            for (int i = 0, n = each_boss_defeat_cnt_.Count; i < n; ++i)
+            {
+                each_boss_defeat_cnt_[i] = 0;
+                death_cnts_[i] = 0;
+            }
         }
 
         public void StopStoryTimer()
@@ -163,16 +220,27 @@ namespace Global
         // 現在のエンディングを迎えた回数を取得する
         public static int EndingCnt => Instance.data_.EndingCnt;
 
-        // プレイヤーの死亡回数を加算する
-        public static void AddDeathCnt()
+        // ボスを倒した回数を取得する
+        public static int EachBossDefeatCnt(eBossType id)
         {
-            Instance.data_.AddDeathCnt();
+            return Instance.data_.EachBossDefeatCnt[(int)id];
+        }
+
+        // プレイヤーの死亡回数を加算する
+        public static void AddDeathCnt(eBossType id)
+        {
+            Instance.data_.AddDeathCnt(id);
+        }
+
+        public static int DeathCnts(eBossType id)
+        {
+            return Instance.data_.DeathCnts[(int)id];
         }
 
         // ボスを撃破した回数を加算する
-        public static void AddBossDefeatCnt()
+        public static void AddBossDefeatCnt(eBossType id)
         {
-            Instance.data_.AddBossDefeatCnt();
+            Instance.data_.AddBossDefeatCnt(id);
         }
 
         // エンディングを迎えた回数を加算する

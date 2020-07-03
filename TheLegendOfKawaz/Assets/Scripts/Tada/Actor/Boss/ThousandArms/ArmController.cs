@@ -27,12 +27,9 @@ namespace Actor.Enemy.Thousand
 
         private StateMachine<ArmController> state_machine_;
 
-        [SerializeField]
         private Transform boss_;
 
-        [SerializeField]
         private int index_ = 0;
-        [SerializeField]
         private int arm_sum_ = 16;
 
         [SerializeField]
@@ -80,14 +77,21 @@ namespace Actor.Enemy.Thousand
 
         private Vector3 default_scale_;
 
-        private void Start()
+        public void Init(int arm_index, int arm_sum, Transform boss, Transform player)
         {
+            boss_ = boss;
+            player_ = player;
+            index_ = arm_index;
+            degree_ = (360f / arm_sum) * index_;
+
             default_scale_ = transform.localScale;
 
-            degree_ = (360f / arm_sum_) * index_;
             transform.position = boss_.position + radius_ * new Vector3(Mathf.Cos(degree_ * Mathf.Deg2Rad), Mathf.Sin(degree_ * Mathf.Deg2Rad), 0f);
             transform.localEulerAngles = new Vector3(0f, 0f, degree_ - 90f);
+        }
 
+        private void Start()
+        {
             hit_box_ = GetComponent<BoxCollider2D>();
 
             state_machine_ = new StateMachine<ArmController>(this);

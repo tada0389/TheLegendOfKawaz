@@ -39,8 +39,14 @@ namespace Actor.Enemy.Thousand
         // アニメータ
         private Animator animator_;
 
-        // 手たち
         [SerializeField]
+        private List<int> arm_num_;
+
+        // 手のプレハブ
+        [SerializeField]
+        private ArmController arm_prefab_;
+
+        // 手たち
         private List<ArmController> arms_;
 
         #region state
@@ -70,6 +76,21 @@ namespace Actor.Enemy.Thousand
             animator_ = GetComponent<Animator>();
 
             state_machine_ = new StateMachine<ThousandBossController>(this);
+
+            // 手を生成する
+            int boss_defeat_num = 0;
+            if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.Purin) >= 1) ++boss_defeat_num;
+            if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.VernmDrake) >= 1) ++boss_defeat_num;
+            if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.KawazTanBeta) >= 1) ++boss_defeat_num;
+
+            int arm_num = arm_num_[boss_defeat_num];
+            arms_ = new List<ArmController>(arm_num);
+            for (int i = 0; i < arm_num; ++i)
+            {
+                ArmController arm = Instantiate(arm_prefab_);
+                arm.Init(i, arm_num, transform, player_);
+                arms_.Add(arm);
+            }
 
             // ステートの登録
             state_machine_.AddState((int)eState.Think, think_state_);

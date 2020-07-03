@@ -1742,6 +1742,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialBookIndex: 3
+  bossType: 1
+  needDeathCnt: 3
 --- !u!50 &810595019
 Rigidbody2D:
   serializedVersion: 4
@@ -2118,6 +2120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialBookIndex: 2
+  bossType: 0
+  needDeathCnt: 3
 --- !u!50 &895874956
 Rigidbody2D:
   serializedVersion: 4
@@ -4160,6 +4164,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialBookIndex: 4
+  bossType: 2
+  needDeathCnt: 3
 --- !u!50 &1421317085
 Rigidbody2D:
   serializedVersion: 4
@@ -4823,6 +4829,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialBookIndex: 0
+  bossType: 0
+  needDeathCnt: 0
 --- !u!50 &1535669565
 Rigidbody2D:
   serializedVersion: 4
@@ -5050,7 +5058,7 @@ PrefabInstance:
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.65
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 2131037086634868351, guid: 185d8f59bce6ce0409df1fca3665c769,
         type: 3}
@@ -11566,6 +11574,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tutorialBookIndex: 5
+  bossType: 3
+  needDeathCnt: 3
 --- !u!50 &1748123899
 Rigidbody2D:
   serializedVersion: 4

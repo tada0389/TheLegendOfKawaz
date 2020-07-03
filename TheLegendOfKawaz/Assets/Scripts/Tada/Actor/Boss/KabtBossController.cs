@@ -441,7 +441,7 @@ namespace Actor.Enemy
                 Global.GlobalPlayerInfo.BossDefeated = true;
 
                 // ボスが死んだ回数を加算する
-                Global.GlobalDataManager.AddBossDefeatCnt();
+                Global.GlobalDataManager.AddBossDefeatCnt(Global.eBossType.KawazTanBeta);
             }
 
             // 毎フレーム呼ばれる
@@ -1081,6 +1081,7 @@ namespace Actor.Enemy
                 Parent.trb_.Velocity = Vector2.zero;
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                Global.GlobalDataManager.AddDeathCnt(Global.eBossType.KawazTanBeta);
             }
 
             // 毎フレーム呼ばれる

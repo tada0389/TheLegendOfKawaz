@@ -66,7 +66,7 @@ namespace Actor.Enemy.Thousand
                 }
 
                 // ボスが死んだ回数を加算する
-                Global.GlobalDataManager.AddBossDefeatCnt();
+                Global.GlobalDataManager.AddBossDefeatCnt(Global.eBossType.Senju);
             }
 
             // 毎フレーム呼ばれる

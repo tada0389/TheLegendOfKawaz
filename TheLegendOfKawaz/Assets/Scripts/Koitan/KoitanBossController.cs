@@ -237,7 +237,7 @@ namespace Actor.Enemy
         }
 
         // このボスにぶつかるとダメージを受ける
-        private void OnTriggerEnter2D(Collider2D collider)
+        private void OnTriggerStay2D(Collider2D collider)
         {
             if (collider.tag == "Player")
             {
@@ -927,7 +927,7 @@ namespace Actor.Enemy
                 Parent.animator.CrossFade(hashDead, 0.5f);
 
                 // ボスが死んだ回数を加算する
-                Global.GlobalDataManager.AddBossDefeatCnt();
+                Global.GlobalDataManager.AddBossDefeatCnt(Global.eBossType.VernmDrake);
             }
 
             // 毎フレーム呼ばれる
@@ -1027,6 +1027,7 @@ namespace Actor.Enemy
                 Parent.trb_.Velocity = Vector2.zero;
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                Global.GlobalDataManager.AddDeathCnt(Global.eBossType.VernmDrake);
             }
 
             // 毎フレーム呼ばれる

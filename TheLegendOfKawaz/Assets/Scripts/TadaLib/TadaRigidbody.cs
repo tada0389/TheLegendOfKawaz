@@ -62,7 +62,7 @@ namespace TadaLib
             LeftCollide = false;
             RightCollide = false;
             TopCollide = false;
-            ButtomCollide = false;
+            ButtomCollide = true;
 
             GroundFriction = 1.0f;
 
