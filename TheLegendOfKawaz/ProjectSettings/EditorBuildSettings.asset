@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TadaTest/TadaBossScene.unity
     guid: f9b3881125156064e8fc71edd17d4ab8
   - enabled: 1
+    path: Assets/Scenes/Koitan/SenjuMovie.unity
+    guid: 682f3643d4eed4c87a1aa8fa640a136f
+  - enabled: 1
     path: Assets/Scenes/TadaTest/ThousandBossScene.unity
     guid: 96c566c1d6a39db4a96f3fbf71d72292
   - enabled: 1
