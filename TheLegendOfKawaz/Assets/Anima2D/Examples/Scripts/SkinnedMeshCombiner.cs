@@ -4,150 +4,160 @@ using Anima2D;
 
 public class SkinnedMeshCombiner : MonoBehaviour
 {
-	[SerializeField]
-	private Color color = Color.white;
+    [SerializeField]
+    private Color color = Color.white;
 
-	[SerializeField]
-	private SpriteMeshInstance[] m_SpriteMeshInstances;
-	private MaterialPropertyBlock m_MaterialPropertyBlock;
-	private SkinnedMeshRenderer m_CachedSkinnedRenderer;
+    [SerializeField]
+    private SpriteMeshInstance[] m_SpriteMeshInstances;
+    private MaterialPropertyBlock m_MaterialPropertyBlock;
+    private SkinnedMeshRenderer m_CachedSkinnedRenderer;
+    private SkinnedMeshRenderer skin;//追加　by koitan
 
-	public SpriteMeshInstance[] spriteMeshInstances
-	{
-		get { return m_SpriteMeshInstances; }
-		set { m_SpriteMeshInstances = value; }
-	}
+    public SpriteMeshInstance[] spriteMeshInstances
+    {
+        get { return m_SpriteMeshInstances; }
+        set { m_SpriteMeshInstances = value; }
+    }
 
-	private MaterialPropertyBlock materialPropertyBlock
-	{
-		get {
-			if(m_MaterialPropertyBlock == null)
-			{
-				m_MaterialPropertyBlock = new MaterialPropertyBlock();
-			}
-			
-			return m_MaterialPropertyBlock;
-		}
-	}
+    private MaterialPropertyBlock materialPropertyBlock
+    {
+        get
+        {
+            if (m_MaterialPropertyBlock == null)
+            {
+                m_MaterialPropertyBlock = new MaterialPropertyBlock();
+            }
 
-	public SkinnedMeshRenderer cachedSkinnedRenderer
-	{
-		get
-		{
-			if(!m_CachedSkinnedRenderer)
-			{
-				m_CachedSkinnedRenderer = GetComponent<SkinnedMeshRenderer>();
-			}
-			
-			return m_CachedSkinnedRenderer;
-		}
-	}
+            return m_MaterialPropertyBlock;
+        }
+    }
 
-	void Start()
-	{        
-		Vector3 l_position = transform.position;
-		Quaternion l_rotation = transform.rotation;
-		Vector3 l_scale = transform.localScale;
+    public SkinnedMeshRenderer cachedSkinnedRenderer
+    {
+        get
+        {
+            if (!m_CachedSkinnedRenderer)
+            {
+                m_CachedSkinnedRenderer = GetComponent<SkinnedMeshRenderer>();
+            }
 
-		transform.position = Vector3.zero;
-		transform.rotation = Quaternion.identity;
-		transform.localScale = Vector3.one;
+            return m_CachedSkinnedRenderer;
+        }
+    }
 
-		List<Transform> bones = new List<Transform>();        
-		List<BoneWeight> boneWeights = new List<BoneWeight>();        
-		List<CombineInstance> combineInstances = new List<CombineInstance>();
+    void Start()
+    {
+        Vector3 l_position = transform.position;
+        Quaternion l_rotation = transform.rotation;
+        Vector3 l_scale = transform.localScale;
 
-		int numSubmeshes = 0;
-		
-		for (int i = 0; i < spriteMeshInstances.Length; i++)
-		{
-			SpriteMeshInstance spriteMeshInstance = spriteMeshInstances[i];
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
 
-			if(spriteMeshInstance.cachedSkinnedRenderer)
-			{
-				numSubmeshes += spriteMeshInstance.mesh.subMeshCount;
-			}
-		}
-		
-		int[] meshIndex = new int[numSubmeshes];
-		int boneOffset = 0;
-		for( int i = 0; i < m_SpriteMeshInstances.Length; ++i)
-		{
-			SpriteMeshInstance spriteMeshInstance = spriteMeshInstances[i];
+        List<Transform> bones = new List<Transform>();
+        List<BoneWeight> boneWeights = new List<BoneWeight>();
+        List<CombineInstance> combineInstances = new List<CombineInstance>();
 
-			if(spriteMeshInstance.cachedSkinnedRenderer)
-			{
-				SkinnedMeshRenderer skinnedMeshRenderer = spriteMeshInstance.cachedSkinnedRenderer;          
+        int numSubmeshes = 0;
 
-				BoneWeight[] meshBoneweight = spriteMeshInstance.sharedMesh.boneWeights;
-				
-				// May want to modify this if the renderer shares bones as unnecessary bones will get added.
-				for (int j = 0; j < meshBoneweight.Length; ++j)
-				{
-					BoneWeight bw = meshBoneweight[j];
-					BoneWeight bWeight = bw;
-					bWeight.boneIndex0 += boneOffset;
-					bWeight.boneIndex1 += boneOffset;
-					bWeight.boneIndex2 += boneOffset;
-					bWeight.boneIndex3 += boneOffset;
-					boneWeights.Add (bWeight);
-				}
+        for (int i = 0; i < spriteMeshInstances.Length; i++)
+        {
+            SpriteMeshInstance spriteMeshInstance = spriteMeshInstances[i];
 
-				boneOffset += spriteMeshInstance.bones.Count;
-				
-				Transform[] meshBones = skinnedMeshRenderer.bones;
-				for (int j = 0; j < meshBones.Length; j++)
-				{
-					Transform bone = meshBones[j];
-					bones.Add (bone);
-				}
+            if (spriteMeshInstance.cachedSkinnedRenderer)
+            {
+                numSubmeshes += spriteMeshInstance.mesh.subMeshCount;
+            }
+        }
 
-				CombineInstance combineInstance = new CombineInstance();
-				Mesh mesh = new Mesh();
-				skinnedMeshRenderer.BakeMesh(mesh);
-				mesh.uv = spriteMeshInstance.spriteMesh.sprite.uv;
-				combineInstance.mesh = mesh;
-				meshIndex[i] = combineInstance.mesh.vertexCount;
-				combineInstance.transform = skinnedMeshRenderer.localToWorldMatrix;
-				combineInstances.Add(combineInstance);
-				
-				skinnedMeshRenderer.gameObject.SetActive(false);
-			}
-		}
-		
-		List<Matrix4x4> bindposes = new List<Matrix4x4>();
-		
-		for( int b = 0; b < bones.Count; b++ ) {
-			bindposes.Add( bones[b].worldToLocalMatrix * transform.worldToLocalMatrix );
-		}
-		
-		SkinnedMeshRenderer combinedSkinnedRenderer = gameObject.AddComponent<SkinnedMeshRenderer>();
-		Mesh combinedMesh = new Mesh();
-		combinedMesh.CombineMeshes( combineInstances.ToArray(), true, true );
-		combinedSkinnedRenderer.sharedMesh = combinedMesh;
-		combinedSkinnedRenderer.bones = bones.ToArray();
-		combinedSkinnedRenderer.sharedMesh.boneWeights = boneWeights.ToArray();
-		combinedSkinnedRenderer.sharedMesh.bindposes = bindposes.ToArray();
-		combinedSkinnedRenderer.sharedMesh.RecalculateBounds();
+        int[] meshIndex = new int[numSubmeshes];
+        int boneOffset = 0;
+        for (int i = 0; i < m_SpriteMeshInstances.Length; ++i)
+        {
+            SpriteMeshInstance spriteMeshInstance = spriteMeshInstances[i];
 
-		combinedSkinnedRenderer.materials = spriteMeshInstances[0].sharedMaterials;
-		combinedSkinnedRenderer.material.color = color;
+            if (spriteMeshInstance.cachedSkinnedRenderer)
+            {
+                SkinnedMeshRenderer skinnedMeshRenderer = spriteMeshInstance.cachedSkinnedRenderer;
 
-		transform.position = l_position;
-		transform.rotation = l_rotation;
-		transform.localScale = l_scale;
-	}
+                BoneWeight[] meshBoneweight = spriteMeshInstance.sharedMesh.boneWeights;
 
-	void OnWillRenderObject()
-	{
-		if(cachedSkinnedRenderer)
-		{
-			if(materialPropertyBlock != null)
-			{
-				materialPropertyBlock.SetTexture("_MainTex", spriteMeshInstances[0].spriteMesh.sprite.texture);
-				
-				cachedSkinnedRenderer.SetPropertyBlock(materialPropertyBlock);
-			}
-		}
-	}
+                // May want to modify this if the renderer shares bones as unnecessary bones will get added.
+                for (int j = 0; j < meshBoneweight.Length; ++j)
+                {
+                    BoneWeight bw = meshBoneweight[j];
+                    BoneWeight bWeight = bw;
+                    bWeight.boneIndex0 += boneOffset;
+                    bWeight.boneIndex1 += boneOffset;
+                    bWeight.boneIndex2 += boneOffset;
+                    bWeight.boneIndex3 += boneOffset;
+                    boneWeights.Add(bWeight);
+                }
+
+                boneOffset += spriteMeshInstance.bones.Count;
+
+                Transform[] meshBones = skinnedMeshRenderer.bones;
+                for (int j = 0; j < meshBones.Length; j++)
+                {
+                    Transform bone = meshBones[j];
+                    bones.Add(bone);
+                }
+
+                CombineInstance combineInstance = new CombineInstance();
+                Mesh mesh = new Mesh();
+                skinnedMeshRenderer.BakeMesh(mesh);
+                mesh.uv = spriteMeshInstance.spriteMesh.sprite.uv;
+                combineInstance.mesh = mesh;
+                meshIndex[i] = combineInstance.mesh.vertexCount;
+                combineInstance.transform = skinnedMeshRenderer.localToWorldMatrix;
+                combineInstances.Add(combineInstance);
+
+                skinnedMeshRenderer.gameObject.SetActive(false);
+            }
+        }
+
+        List<Matrix4x4> bindposes = new List<Matrix4x4>();
+
+        for (int b = 0; b < bones.Count; b++)
+        {
+            bindposes.Add(bones[b].worldToLocalMatrix * transform.worldToLocalMatrix);
+        }
+
+        SkinnedMeshRenderer combinedSkinnedRenderer = gameObject.AddComponent<SkinnedMeshRenderer>();
+        skin = combinedSkinnedRenderer;
+        Mesh combinedMesh = new Mesh();
+        combinedMesh.CombineMeshes(combineInstances.ToArray(), true, true);
+        combinedSkinnedRenderer.sharedMesh = combinedMesh;
+        combinedSkinnedRenderer.bones = bones.ToArray();
+        combinedSkinnedRenderer.sharedMesh.boneWeights = boneWeights.ToArray();
+        combinedSkinnedRenderer.sharedMesh.bindposes = bindposes.ToArray();
+        combinedSkinnedRenderer.sharedMesh.RecalculateBounds();
+
+        combinedSkinnedRenderer.materials = spriteMeshInstances[0].sharedMaterials;
+        combinedSkinnedRenderer.material.color = color;
+
+        transform.position = l_position;
+        transform.rotation = l_rotation;
+        transform.localScale = l_scale;
+    }
+
+    //追加 by koitan
+    private void Update()
+    {
+        skin.material.color = color;
+    }
+
+    void OnWillRenderObject()
+    {
+        if (cachedSkinnedRenderer)
+        {
+            if (materialPropertyBlock != null)
+            {
+                materialPropertyBlock.SetTexture("_MainTex", spriteMeshInstances[0].spriteMesh.sprite.texture);
+
+                cachedSkinnedRenderer.SetPropertyBlock(materialPropertyBlock);
+            }
+        }
+    }
 }
