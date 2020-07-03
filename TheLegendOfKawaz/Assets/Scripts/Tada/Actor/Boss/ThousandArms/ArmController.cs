@@ -728,7 +728,8 @@ namespace Actor.Enemy.Thousand
                 {
                     //ChangeState((int)eState.Dead2);
                     // 終了
-                    Destroy(Parent.gameObject);
+                    Parent.gameObject.SetActive(false);
+                    //Destroy(Parent.gameObject);
                     return;
                 }
 

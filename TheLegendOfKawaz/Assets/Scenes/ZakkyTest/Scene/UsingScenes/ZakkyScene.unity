@@ -3452,7 +3452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorNum: 6
-  next_scene_: ThousandBossScene
+  next_scene_: SenjuMovie
   message: "\u3058\u3054\u304F"
   save_position_: 1
 --- !u!50 &1127758497

@@ -24,12 +24,14 @@ namespace Actor.Enemy.Thousand
             private int index = 0;
             private bool isEnd;
 
+            private bool not_open_ = true;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
-                MessageManager.OpenMessageWindow(message[0], im);
+
 
                 Global.GlobalPlayerInfo.ActionEnabled = false;
             }
@@ -37,6 +39,14 @@ namespace Actor.Enemy.Thousand
             // 毎フレーム呼ばれる
             public override void Proc()
             {
+                if (Timer < 0.15f) return;
+
+                if (not_open_)
+                {
+                    MessageManager.OpenMessageWindow(message[0], im);
+                    not_open_ = false;
+                }
+
                 if (!isEnd)
                 {
                     if (ActionInput.GetButtonDown(ActionCode.Decide))
