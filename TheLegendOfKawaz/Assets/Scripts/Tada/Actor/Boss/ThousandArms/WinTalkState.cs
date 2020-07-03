@@ -32,6 +32,7 @@ namespace Actor.Enemy.Thousand
             {
                 float dir = Mathf.Sign(Parent.player_.position.x - Parent.transform.position.x);
                 Parent.SetDirection((dir < 0f) ? eDir.Left : eDir.Right);
+                Global.GlobalDataManager.AddDeathCnt(Global.eBossType.Senju);
             }
 
             // 毎フレーム呼ばれる

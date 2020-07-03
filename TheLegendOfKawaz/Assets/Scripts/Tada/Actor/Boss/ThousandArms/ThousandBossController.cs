@@ -78,7 +78,11 @@ namespace Actor.Enemy.Thousand
             state_machine_ = new StateMachine<ThousandBossController>(this);
 
             // 手を生成する
-            int boss_defeat_num = 3;
+            int boss_defeat_num = 0;
+            if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.Purin) >= 1) ++boss_defeat_num;
+            if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.VernmDrake) >= 1) ++boss_defeat_num;
+            if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.KawazTanBeta) >= 1) ++boss_defeat_num;
+
             int arm_num = arm_num_[boss_defeat_num];
             arms_ = new List<ArmController>(arm_num);
             for (int i = 0; i < arm_num; ++i)

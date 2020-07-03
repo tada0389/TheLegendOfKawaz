@@ -58,7 +58,7 @@ namespace Actor.Enemy.Purin
                 Parent.animator_.Play("Dead");
 
                 // ボスが死んだ回数を加算する
-                Global.GlobalDataManager.AddBossDefeatCnt();
+                Global.GlobalDataManager.AddBossDefeatCnt(Global.eBossType.Purin);
             }
 
             // 毎フレーム呼ばれる
