@@ -65,7 +65,8 @@ public class EndingManager : MonoBehaviour
             .AppendCallback(() => lastObj.SetActive(true))
             .Append(makuSpr.DOFade(0f, 2f))
             .AppendInterval(1f)
-            .Append(makuSpr.DOFade(1f, 1f))
+            /*
+            .Append(makuSpr.DOFade(1f, 1f))            
             .AppendCallback(() =>
             {
                 makuSpr.sortingOrder = 30;
@@ -73,6 +74,7 @@ public class EndingManager : MonoBehaviour
                 exObj.SetActive(true);
             })
             .Append(makuSpr.DOFade(0f, 1f))
+            */
             .AppendCallback(() =>
             {
                 canSkip = true;
