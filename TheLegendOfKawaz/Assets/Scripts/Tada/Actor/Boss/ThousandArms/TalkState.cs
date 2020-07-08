@@ -39,7 +39,7 @@ namespace Actor.Enemy.Thousand
             // 毎フレーム呼ばれる
             public override void Proc()
             {
-                if (Timer < 0.15f) return;
+                if (Timer < 0.1f) return;
 
                 if (not_open_)
                 {

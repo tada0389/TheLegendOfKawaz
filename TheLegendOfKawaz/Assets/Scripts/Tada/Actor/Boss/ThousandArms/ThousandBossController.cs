@@ -89,10 +89,10 @@ namespace Actor.Enemy.Thousand
                 float rate = Mathf.Sqrt(1f / boss_defeat_num) * 0.8f;
                 float inv_rate = 1f / rate;
                 // 時間もゆっくりにする
-                TadaLib.TimeScaler.Instance.RequestChange(0.05f * rate, 0.05f);
+                TadaLib.TimeScaler.Instance.RequestChange(0.05f * rate, 0.03f);
                 // 最初だけ大きく揺らす
-                CameraSpace.CameraShaker.Shake(1f * inv_rate, 0.03f, 0.005f);
-                CameraSpace.CameraShaker.Shake(0.2f * inv_rate, 0.25f * inv_rate);
+                CameraSpace.CameraShaker.Shake(1f * inv_rate, 0.03f, 0.0035f);
+                CameraSpace.CameraShaker.Shake(0.2f * inv_rate, 0.2f * inv_rate);
             }
 
             int arm_num = arm_num_[boss_defeat_num];
