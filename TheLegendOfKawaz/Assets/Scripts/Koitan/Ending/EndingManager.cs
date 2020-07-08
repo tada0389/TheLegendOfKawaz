@@ -103,7 +103,7 @@ public class EndingManager : MonoBehaviour
         // セーブもする
         TadaLib.Save.SaveManager.Instance.Save();
         isLoaded = true;
-        FadeManager.FadeIn(2f, "ZakkyTitle");
+        FadeManager.FadeIn(2f, "Gojitudan");
     }
 
     // ノースキルでクリアしたかをチェックする by tada
