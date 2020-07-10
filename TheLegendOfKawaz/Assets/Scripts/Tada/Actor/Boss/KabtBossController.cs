@@ -187,6 +187,9 @@ namespace Actor.Enemy
             private int index = 0;
             private bool isEnd;
 
+            [SerializeField]
+            private Animator name_display_ui_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
@@ -225,6 +228,13 @@ namespace Actor.Enemy
             // 終了時に呼ばれる
             public override void OnEnd()
             {
+                // ボス名を表示させる
+                if (name_display_ui_ != null)
+                {
+                    name_display_ui_.gameObject.SetActive(true);
+                    name_display_ui_.Play("BossText");
+                }
+
                 MessageManager.CloseMessageWindow();
                 Global.GlobalPlayerInfo.ActionEnabled = true;
             }

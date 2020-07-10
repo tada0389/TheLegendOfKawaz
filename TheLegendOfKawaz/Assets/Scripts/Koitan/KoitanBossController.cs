@@ -674,6 +674,9 @@ namespace Actor.Enemy
             [SerializeField]
             private Transform parPos;
 
+            [SerializeField]
+            private Animator name_display_ui_;
+
             // 開始時に呼ばれる
             public override void OnStart()
             {
@@ -718,6 +721,12 @@ namespace Actor.Enemy
             public override void OnEnd()
             {
                 Parent.seq.Kill();
+                // ボス名を表示させる
+                if (name_display_ui_ != null)
+                {
+                    name_display_ui_.gameObject.SetActive(true);
+                    name_display_ui_.Play("BossText");
+                }
                 //Parent.animator.Play(hashStart);
             }
 
