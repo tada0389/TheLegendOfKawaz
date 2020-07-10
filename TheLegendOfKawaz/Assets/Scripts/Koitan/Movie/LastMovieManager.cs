@@ -36,11 +36,25 @@ namespace KoitanLib
             animator = GetComponent<Animator>();
             //必要なムービー要素を読み込む
             //仮
-            for (int i = 0; i < anims.Length; i++)
+            movies.Enqueue(anims[0]);
+            int cnt = Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.Purin) + Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.VernmDrake) + Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.KawazTanBeta);
+            if(cnt >= 1)
             {
-                //条件分岐で含めるか決める
-                movies.Enqueue(anims[i]);
+                movies.Enqueue(anims[1]);
             }
+            if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.Purin) >= 1)
+            {
+                movies.Enqueue(anims[2]);
+            }
+            if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.VernmDrake) >= 1)
+            {
+                movies.Enqueue(anims[3]);
+            }
+            if (Global.GlobalDataManager.EachBossDefeatCnt(Global.eBossType.KawazTanBeta) >= 1)
+            {
+                movies.Enqueue(anims[4]);
+            }
+
             upperTextMesh.color = new Color(1, 1, 1, 0);
             bottomTextMesh.maxVisibleCharacters = 0;
             upperCurtain.rectTransform.sizeDelta = new Vector2(1920, 0);
