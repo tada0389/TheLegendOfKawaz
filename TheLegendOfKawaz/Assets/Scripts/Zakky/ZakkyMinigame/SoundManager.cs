@@ -46,6 +46,9 @@ public class SoundManager : MonoBehaviour
 
     void audioSetter(Game.STATE state)
     {
+        // by tada
+        if (!soundDictionary.ContainsKey((int)state)) return;
+
         //一旦再生を止める
         audioSource.Stop();
         //ここDictionaryのKeyになかった時の処理書いた方がいいかも

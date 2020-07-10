@@ -19,6 +19,11 @@ public class BossDoor : MonoBehaviour
     [SerializeField]
     private bool save_position_ = true;
 
+    //[SerializeField]
+    //private CameraSpace.MultipleTargetCamera camera_;
+    //[SerializeField]
+    //private CameraSpace.CameraData new_data_;
+
     // Start is called before the first frame update
     void Start()
     {
