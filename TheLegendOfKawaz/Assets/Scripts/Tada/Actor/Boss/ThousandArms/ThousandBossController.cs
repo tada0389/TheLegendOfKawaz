@@ -91,7 +91,7 @@ namespace Actor.Enemy.Thousand
                 // 時間もゆっくりにする
                 TadaLib.TimeScaler.Instance.RequestChange(0.05f * rate, 0.03f);
                 // 最初だけ大きく揺らす
-                CameraSpace.CameraShaker.Shake(1f * inv_rate, 0.03f, 0.0035f);
+                CameraSpace.CameraShaker.Shake(0.5f * inv_rate, 0.03f, 0.0035f);
                 CameraSpace.CameraShaker.Shake(0.2f * inv_rate, 0.2f * inv_rate);
             }
 
