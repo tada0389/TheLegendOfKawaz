@@ -785,7 +785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorNum: 4
   next_scene_: TadaBossScene
-  message: "<size=300>\u304B\u3076\u3068</size>"
+  message: "<size=150%>\u304B\u308F\u305A\u305F\u3093\u03B2</size=>\n\u5F37\u3055\u3000\u2606\u2606\u2606\n\u30B3\u30A4\u30F3\u30001000"
   save_position_: 1
 --- !u!50 &500287395
 Rigidbody2D:
@@ -3643,7 +3643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorNum: 6
   next_scene_: SenjuMovie
-  message: "\u3058\u3054\u304F"
+  message: "<size=400%><color=red>\u3058\u3054\u304F</color></size>"
   save_position_: 1
 --- !u!50 &1127758497
 Rigidbody2D:
@@ -4769,7 +4769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorNum: 0
   next_scene_: KoitanBossTestScene
-  message: "<size=300>\u3078\u3073</size>"
+  message: "<size=150%>\u3057\u3052\u308B</size>\n\u5F37\u3055\u3000\u2606\u2606\n\u30B3\u30A4\u30F3\u3000750"
   save_position_: 1
 --- !u!50 &1484562387
 Rigidbody2D:
@@ -5395,7 +5395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorNum: 5
   next_scene_: PurinBossScene
-  message: "<size=300>\u30D7\u30EA\u30F3</size>"
+  message: "<size=150%>\u30D7\u30EA\u30F3</size>\n\u5F37\u3055\u3000\u2606\n\u30B3\u30A4\u30F3\u3000500"
   save_position_: 1
 --- !u!50 &1538607563
 Rigidbody2D:
