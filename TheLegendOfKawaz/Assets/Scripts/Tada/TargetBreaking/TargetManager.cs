@@ -139,64 +139,69 @@ namespace Target
 
         private IEnumerator FinishFlow(bool clear)
         {
-            if(clear) ui_animator_.Play("clear");
-            else ui_animator_.Play("failed");
-
-            float new_time_scale = 0.1f;
-
-            bool get_point = false;
-            if (TargetSelectManager.CurStageData != null)
+            // シーンフェード中とかだと実行しない
+            if (!KoitanLib.FadeManager.is_fading)
             {
-                if (clear)
+
+                if (clear) ui_animator_.Play("clear");
+                else ui_animator_.Play("failed");
+
+                float new_time_scale = 0.1f;
+
+                bool get_point = false;
+                if (TargetSelectManager.CurStageData != null)
                 {
-                    get_point = true;
-                    ScoreManager.Instance.RegisterScore((int)(-(timer_ + 0.005f)* 100.0f), SceneManager.GetActiveScene().name);
-                    new_time_scale = 0.06f;
-                    var data = TargetSelectManager.CurStageData;
-                    int reward = data.OtherReward;
-                    string grade_name = "Other";
-                    if (timer_ <= data.GoldBoaderTime)
+                    if (clear)
                     {
-                        reward = data.GoldReward;
-                        grade_name = "Gold";
+                        get_point = true;
+                        ScoreManager.Instance.RegisterScore((int)(-(timer_ + 0.005f) * 100.0f), SceneManager.GetActiveScene().name);
+                        new_time_scale = 0.06f;
+                        var data = TargetSelectManager.CurStageData;
+                        int reward = data.OtherReward;
+                        string grade_name = "Other";
+                        if (timer_ <= data.GoldBoaderTime)
+                        {
+                            reward = data.GoldReward;
+                            grade_name = "Gold";
+                        }
+                        else if (timer_ <= data.SilverBoaderTime)
+                        {
+                            reward = data.SilverReward;
+                            grade_name = "Silver";
+                        }
+                        else if (timer_ <= data.BronzeBoaderTime)
+                        {
+                            reward = data.BronzeReward;
+                            grade_name = "Bronze";
+                        }
+                        Vector3 spawn_pos = (coin_spwan_pos_ != null) ? coin_spwan_pos_.position : Camera.main.transform.position;
+                        if (grade_ui_animator_ != null) grade_ui_animator_.Play(grade_name);
+                        if (grade_name != "Other") SkillManager.Instance.GainSkillPoint(reward, spawn_pos, 0.02f);
+                        else SkillManager.Instance.SpendSkillPoint(-reward, 0.03f);
+                        // 実績解除
+                        AchievementManager.FireAchievement(data.AchievementKey);
+                        if (grade_name == "Gold") AchievementManager.FireAchievement(data.AchievementKey + "_Gold");
                     }
-                    else if (timer_ <= data.SilverBoaderTime)
-                    {
-                        reward = data.SilverReward;
-                        grade_name = "Silver";
-                    }
-                    else if (timer_ <= data.BronzeBoaderTime)
-                    {
-                        reward = data.BronzeReward;
-                        grade_name = "Bronze";
-                    }
-                    Vector3 spawn_pos = (coin_spwan_pos_ != null) ? coin_spwan_pos_.position : Camera.main.transform.position;
-                    if (grade_ui_animator_ != null) grade_ui_animator_.Play(grade_name);
-                    if (grade_name != "Other") SkillManager.Instance.GainSkillPoint(reward, spawn_pos, 0.02f);
-                    else SkillManager.Instance.SpendSkillPoint(-reward, 0.03f);
-                    // 実績解除
-                    AchievementManager.FireAchievement(data.AchievementKey);
-                    if(grade_name == "Gold") AchievementManager.FireAchievement(data.AchievementKey+ "_Gold");
+                    else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
                 }
-                else SkillManager.Instance.SpendSkillPoint(-TargetSelectManager.CurStageData.OtherReward, 0.05f);
+
+                float time_change_duration = 1.5f;
+                // もしポイントを獲得していたならもうちょい伸ばす
+                if (get_point) time_change_duration += 1.5f;
+                time_change_duration *= new_time_scale;
+                TimeScaler.Instance.RequestChange(new_time_scale, time_change_duration);
+
+                //clear_text_.rectTransform.DOPunchScale(Vector3.one, 3.0f * Time.timeScale);
+
+                yield return new WaitForSeconds(time_change_duration);
+
+                // お試し
+                TadaLib.Save.SaveManager.Instance.Save();
+
+                // もどったゆ「
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                KoitanLib.FadeManager.FadeIn(0.5f, "TargetMediator");
             }
-
-            float time_change_duration = 1.5f;
-            // もしポイントを獲得していたならもうちょい伸ばす
-            if(get_point) time_change_duration += 1.5f;
-            time_change_duration *= new_time_scale;
-            TimeScaler.Instance.RequestChange(new_time_scale, time_change_duration);
-
-            //clear_text_.rectTransform.DOPunchScale(Vector3.one, 3.0f * Time.timeScale);
-
-            yield return new WaitForSeconds(time_change_duration);
-            
-            // お試し
-            TadaLib.Save.SaveManager.Instance.Save();
-
-            // もどったゆ「
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            KoitanLib.FadeManager.FadeIn(0.5f, "TargetMediator");
         }
     }
 }
