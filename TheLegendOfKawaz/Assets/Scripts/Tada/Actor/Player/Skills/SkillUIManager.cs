@@ -75,7 +75,8 @@ namespace SkillItem
             frame_.rectTransform.DOKill();
             group_.DOKill();
 
-            float duration = Mathf.Min(open_duration_, Time.time - open_start_time_);
+            frame_.rectTransform.localScale = Vector3.one * 0.5f;
+            float duration = open_duration_; // Mathf.Min(open_duration_, Time.time - open_start_time_);
             frame_.rectTransform.DOScale(max_scale_, duration).SetEase(open_ease_);
             group_.DOFade(1f, duration);
 

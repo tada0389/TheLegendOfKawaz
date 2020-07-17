@@ -161,4 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target_: {fileID: 8803086771443180327}
+  default_height: 12
   init_size_: 32
+  change_duration_: 0.075
+  red_heat_thr_: 0.2
