@@ -23,6 +23,7 @@ public class MessageWindow : MonoBehaviour
     public Vector2 initDeltaSize;
     private Vector2 targetDeltaSize;
     public Color initColor;
+    public Color targetColor = Color.black;
 
     private Sequence seq;
 
@@ -84,7 +85,7 @@ public class MessageWindow : MonoBehaviour
             //.Append(windowImage.DOFade(1,duration))
             //.Join(narratorImage.DOFade(1, duration))
             .Append(windowImage.rectTransform.DOSizeDelta(targetDeltaSize, duration)).SetEase(ease).SetUpdate(true)
-            .Join(windowImage.DOColor(Color.white, duration))
+            .Join(windowImage.DOColor(targetColor, duration))
             //.Join(windowImage.rectTransform.DORotate(new Vector3(0, 0, 360), duration).SetRelative())
             .AppendCallback(() =>
             {
