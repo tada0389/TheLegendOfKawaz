@@ -58,6 +58,9 @@ namespace SkillItem
             group_.alpha = 0.0f;
             frame_.rectTransform.localScale = Vector3.one * 0.5f;
             open_start_time_ = Time.time - open_duration_;
+
+            // スキルポイントUIを表示する
+            SkillManager.Instance.ShowUIEternal();
         }
 
         // 開く

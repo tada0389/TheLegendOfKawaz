@@ -67,6 +67,9 @@ namespace SkillUI
         [SerializeField]
         private RectTransform skill_icon_pos_;
 
+        // UIが常に表示されるかどうか
+        private bool is_eternal_ui_ = false;
+
         private void Update()
         {
             //// デバッグ
@@ -92,6 +95,9 @@ namespace SkillUI
             point_ = Actor.Player.SkillManager.Instance.SkillPoint;
             point_text_.text = point_.ToString();
             added_point_ = 0;
+
+            // シーン変更時にスキルポイントUIを強制的に非表示にする
+            UnityEngine.SceneManagement.SceneManager.sceneUnloaded += CancelUIEternal;
         }
 
         // ポイントの取得を開始する
@@ -220,6 +226,8 @@ namespace SkillUI
         // UIをフェードで出現させる
         private void FeedUI(bool feedin, float time_scale = 1.0f)
         {
+            if (is_eternal_ui_) return;
+
             if (feedin)
             {
                 point_icon_.DOFade(1.0f, feed_duration_ * time_scale);
@@ -321,6 +329,35 @@ namespace SkillUI
                     });
                 });
             }
+        }
+
+        // ポイントUIを常に表示する
+        public void ShowUIEternal()
+        {
+            if (is_eternal_ui_) return;
+
+            FeedUI(true);
+
+            is_eternal_ui_ = true;
+        }
+
+        // ポイントUIを隠す
+        public void CancelUIEternal(UnityEngine.SceneManagement.Scene scene)
+        {
+            if (!is_eternal_ui_) return;
+
+            is_eternal_ui_ = false;
+
+            FeedUI(false);
+        }
+        // ポイントUIを隠す
+        public void CancelUIEternal()
+        {
+            if (!is_eternal_ui_) return;
+
+            is_eternal_ui_ = false;
+
+            FeedUI(false);
         }
     }
 }

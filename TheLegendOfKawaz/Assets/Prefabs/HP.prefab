@@ -164,4 +164,4 @@ MonoBehaviour:
   default_height: 12
   init_size_: 32
   change_duration_: 0.075
-  red_heat_thr_: 0.2
+  red_heat_thr_: 0.26

@@ -141,6 +141,24 @@ namespace SkillItem
                     20f,
                     0.75f).SetEase(Ease.OutBack).OnComplete(() => levelup_text_.DOFade(0f, 0.2f));
 
+                // もしすべてのスキルが開放されたなら実績取得
+                {
+                    bool collect_all_skill = true;
+                    foreach (var skill in SkillManager.Instance.Skills)
+                    {
+                        //Debug.Log(skill.Name + " " + skill.Level + " " + skill.LevelLimit + " " + skill.ReachLevelLimit);
+                        if (!skill.ReachLevelLimit)
+                        {
+                            collect_all_skill = false;
+                            break;
+                        }
+                    }
+                    if (collect_all_skill)
+                    {
+                        AchievementManager.FireAchievement("Level99");
+                    }
+                }
+
                 return;
             }
             body_.fillAmount = timer_.GetTime() / purchase_wait_time_;

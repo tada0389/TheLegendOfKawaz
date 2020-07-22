@@ -23,7 +23,7 @@ namespace Actor
 
         // HPバーが赤く点滅する閾値
         [SerializeField]
-        private float red_heat_thr_ = 0.2f;
+        private float red_heat_thr_ = 0.26f;
 
         private Image image_;
 
@@ -60,6 +60,8 @@ namespace Actor
 
         private IEnumerator ChangeValue()
         {
+            yield return new WaitForSeconds(0.05f);
+
             damage_running_ = true;
             while(prev_hp_ != target_hp_)
             {
@@ -68,7 +70,7 @@ namespace Actor
 
                 target_.sizeDelta = new Vector2(target_.sizeDelta.x, prev_hp_ * init_size_); // Mathf.Min(max_hp_, hp * init_size_));
 
-                yield return new WaitForSeconds(change_duration_);
+                yield return new WaitForSeconds(change_duration_ * Time.timeScale);
             }
             damage_running_ = false;
         }

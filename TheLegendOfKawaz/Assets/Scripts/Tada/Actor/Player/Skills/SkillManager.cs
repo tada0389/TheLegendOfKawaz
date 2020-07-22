@@ -152,6 +152,18 @@ namespace Actor.Player
             data_.Save();
         }
 
+        // スキルポイントのUIを常に表示する
+        public void ShowUIEternal()
+        {
+            skill_point_ctrl_.ShowUIEternal();
+        }
+
+        // スキルポイントのUIの常時表示をキャンセル
+        public void CancelUIEternal()
+        {
+            skill_point_ctrl_.CancelUIEternal();
+        }
+
         // スコアのセーブデータを削除する
         public void DeleteSaveData()
         {
