@@ -901,14 +901,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e92990dab04141fea49661edcc00314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleUi: {fileID: 507056569}
-  headUi: {fileID: 826102802}
+  bodyTextMesh: []
+  titleTextMesh: {fileID: 0}
+  bodyAnimator: []
+  detailTextMesh: {fileID: 0}
   cursor: {fileID: 2091333970}
   window: {fileID: 442590686}
+  curtain: {fileID: 0}
   item: {fileID: 423697205}
+  skillItem: {fileID: 0}
+  achievementItem: {fileID: 0}
+  scrollMinY: 0
+  scrollSpeed: 100
   width: 120
+  defaultDeltaSize: {x: 0, y: 0}
   targetDeltaSize: {x: 1800, y: 1020}
   ease: 30
+  defaultColor: {r: 0, g: 0, b: 0, a: 0}
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
+  blurMat: {fileID: 0}
+  defaultBlur: 0
+  targetBlur: 0
+  bodyTextShiftLocalX: -10
+  books: []
+  rightIm: {fileID: 0}
+  leftIm: {fileID: 0}
   decisionSe: {fileID: 8300000, guid: 4b1283488ffeb4b2aa892d97d9301a4e, type: 3}
   cancelSe: {fileID: 8300000, guid: 5b97853db0a6a4db1a84d426db6ba52d, type: 3}
   drumSe: {fileID: 8300000, guid: fe7bfd2f2b7fa4428b424dae032ac536, type: 3}
@@ -2019,6 +2036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8fc50df0fc5b4b968a73718ea584282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   m_SpriteMeshInstances:
   - {fileID: 5928990379567037289}
   - {fileID: 521022952122817439}
