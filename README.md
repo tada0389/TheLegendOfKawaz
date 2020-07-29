@@ -1,6 +1,9 @@
 # TheLegendOfKawaz
 2D横スクロールアクションゲーム         学校祭，TGSに向けての作品
 
+## Requirements
+Unity 2019.2.8f1
+
 ## ゲームの概要
 「The Legend of Kawaz」は北海道大学の学校祭向けに作られたゲームです。 \
 私が好きな「ロックマン」というゲームシリーズをリスペクトしました。 \
@@ -33,3 +36,15 @@
 
 ## 今後の予定
 今後更にスキルやボス、ミニゲームを追加する予定です。 
+
+## Contributing
+Contributions, issues and feature requests are welcome.
+
+## Author
+Twitter: [@kawaz_student](https://twitter.com/kawaz_student)
+
+## Show your support
+Please STAR this repository if this software helped you!
+
+## License
+This software is released under the MIT License.
