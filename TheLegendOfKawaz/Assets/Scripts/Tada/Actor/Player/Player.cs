@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using TadaLib;
 using Bullet;
-using TadaInput;
 
 /// <summary>
 /// キャラクターを動かす元となるクラス
 /// 
 /// 操作方法
 /// 十字キー右，左で移動
-/// 高速で二回移動キーを押すとダッシュ
-/// スペースでジャンプ
-/// 
-/// このクラスは触らなくても大丈夫
-/// 勝手にやってくれる (いじりたければどうぞ)
-/// Data(実質グローバル変数)には，変数付け加えてもいいかも
+/// zキーでジャンプ
+/// xキーでショット
+/// cキーでダッシュ
 /// 
 /// DataのVelocityを各ステートクラスでいじると，
 /// その速度に応じて座標移動してくれる
-/// 
-/// 今回のUnityのInspectorで変数をいじれない仕様になってるのは許して
 /// 
 /// それと，各ステートでPlayerクラスのprivate変数をいじれるようになってる 内部クラスは外部クラスの変数をすべて見れる
 /// 
@@ -405,7 +399,7 @@ namespace Actor.Player
 
         private void Awake()
         {
-            input_ = GetComponent<BasePlayerInput>();
+            input_ = GetComponent<TadaInput.BasePlayerInput>();
             logger_ = GetComponent<PlayerDataLogger>();
 
             inited_ = false;
@@ -600,6 +594,7 @@ namespace Actor.Player
             }
         }
 
+        // アニメーションの状態を変更する
         public void PlayAnim(string anim, eAnimType type = eAnimType.Play)
         {
             switch (type)
@@ -623,7 +618,7 @@ namespace Actor.Player
             if (logger_ != null) logger_.AddLog(anim, type);
         }
 
-        // コライド情報などで状態を更新する
+        // コライダー情報などで状態を更新する
         private void RefectRigidbody()
         {
 
