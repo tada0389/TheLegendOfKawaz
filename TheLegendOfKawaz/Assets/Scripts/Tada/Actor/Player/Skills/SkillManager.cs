@@ -120,7 +120,7 @@ namespace Actor.Player
                 data_.SkillPoint = initial_skill_point_;
             }
 
-            PlayerSkills reader_2 = new PlayerSkills(file_name_); // Skillが値渡しになってるからもう一度...
+            PlayerSkills reader_2 = new PlayerSkills(file_name_); // Skillが参照渡しになってるからもう一度...
             LevelOneSkills = new List<Skill>(reader_2.Skills);
         }
 

@@ -137,17 +137,17 @@ namespace Actor.Player
             if (is_minigame_mode) Skills = SkillManager.Instance.LevelOneSkills;
             else Skills = SkillManager.Instance.Skills;
 
-            MaxHP = Skills[(int)eSkill.HP].Value;
+            MaxHP = PlayerUtils.GetSkillValue(Skills, eSkill.HP);
             HP = MaxHP;
-            Power = Skills[(int)eSkill.Attack].Value / (float)100f;
-            InitSpeed = Skills[(int)eSkill.Speed].Value / (float)100f;
-            CanWallKick = Skills[(int)eSkill.WallKick].Value != 0;
-            AutoHealInterval = Skills[(int)eSkill.AutoHeal].Value;
-            MaxShotNum = Skills[(int)eSkill.ShotNum].Value;
-            ChargeEndTime = Skills[(int)eSkill.ChargeShot].Value / 10f;
-            AirJumpNumMax = Skills[(int)eSkill.AirJumpNum].Value;
+            Power = PlayerUtils.GetSkillValue(Skills, eSkill.Attack);
+            InitSpeed = PlayerUtils.GetSkillValue(Skills, eSkill.Speed);
+            CanWallKick = PlayerUtils.GetSkillValue(Skills, eSkill.WallKick);
+            AutoHealInterval = PlayerUtils.GetSkillValue(Skills, eSkill.AutoHeal);
+            MaxShotNum = PlayerUtils.GetSkillValue(Skills, eSkill.ShotNum);
+            ChargeEndTime = PlayerUtils.GetSkillValue(Skills, eSkill.ChargeShot);
+            AirJumpNumMax = PlayerUtils.GetSkillValue(Skills, eSkill.AirJumpNum);
             air_jump_num_ = AirJumpNumMax;
-            CanAirDashMove = Skills[(int)eSkill.AirDushNum].Value != 0;
+            CanAirDashMove = PlayerUtils.GetSkillValue(Skills, eSkill.AirDushNum);
             prev_dash_time_ = 0f;
 
             int sz = System.Enum.GetNames(typeof(eSkill)).Length;
@@ -228,43 +228,7 @@ namespace Actor.Player
 
             int v = ++temporary_skills_[(int)skill];
 
-            // くそこーど
-            switch (skill)
-            {
-                case eSkill.HP:
-                    MaxHP = Skills[(int)skill].NextsValue(v);
-                    HP = MaxHP;
-                    break;
-                case eSkill.Speed:
-                    InitSpeed = Skills[(int)skill].NextsValue(v) / (float)100f;
-                    break;
-                case eSkill.Attack:
-                    Power = Skills[(int)skill].NextsValue(v) / (float)100f;
-                    break;
-                case eSkill.AirJumpNum:
-                    AirJumpNumMax = Skills[(int)skill].NextsValue(v);
-                    air_jump_num_ = AirJumpNumMax;
-                    break;
-                case eSkill.AirDushNum:
-                    CanAirDashMove = Skills[(int)skill].NextsValue(v) != 0;
-                    break;
-                case eSkill.AutoHeal:
-                    AutoHealInterval = Skills[(int)skill].NextsValue(v);
-                    break;
-                case eSkill.WallKick:
-                    CanWallKick = Skills[(int)skill].NextsValue(v) != 0;
-                    break;
-                case eSkill.ChargeShot:
-                    ChargeEndTime = Skills[(int)skill].NextsValue(v) / 10f;
-                    break;
-                case eSkill.ShotNum:
-                    MaxShotNum = Skills[(int)skill].NextsValue(v);
-                    break;
-                default:
-                    return false;
-            }
-
-            return true;
+            return ChangeTmpSkill(Skills, skill, v);
         }
 
         public bool ReleaseTmpSkill(eSkill skill, bool is_minigame_mode)
@@ -276,42 +240,47 @@ namespace Actor.Player
 
             int v = --temporary_skills_[(int)skill];
 
+            return ChangeTmpSkill(Skills, skill, v);
+        }
+
+        // スキルの値を一時的に変更する
+        private bool ChangeTmpSkill(List<Skill> Skills, eSkill skill, int v)
+        {
             // くそこーど
             switch (skill)
             {
                 case eSkill.HP:
-                    MaxHP = Skills[(int)skill].NextsValue(v);
+                    MaxHP = PlayerUtils.GetSkillValue(Skills, skill, v);
                     HP = Mathf.Min(HP, MaxHP);
                     break;
                 case eSkill.Speed:
-                    InitSpeed = Skills[(int)skill].NextsValue(v) / (float)100f;
+                    InitSpeed = PlayerUtils.GetSkillValue(Skills, skill, v);
                     break;
                 case eSkill.Attack:
-                    Power = Skills[(int)skill].NextsValue(v) / (float)100f;
+                    Power = PlayerUtils.GetSkillValue(Skills, skill, v);
                     break;
                 case eSkill.AirJumpNum:
-                    AirJumpNumMax = Skills[(int)skill].NextsValue(v);
+                    AirJumpNumMax = PlayerUtils.GetSkillValue(Skills, skill, v);
                     air_jump_num_ = Mathf.Min(air_jump_num_, AirJumpNumMax);
                     break;
                 case eSkill.AirDushNum:
-                    CanAirDashMove = Skills[(int)skill].NextsValue(v) != 0;
+                    CanAirDashMove = PlayerUtils.GetSkillValue(Skills, skill, v);
                     break;
                 case eSkill.AutoHeal:
-                    AutoHealInterval = Skills[(int)skill].NextsValue(v);
+                    AutoHealInterval = PlayerUtils.GetSkillValue(Skills, skill, v);
                     break;
                 case eSkill.WallKick:
-                    CanWallKick = Skills[(int)skill].NextsValue(v) != 0;
+                    CanWallKick = PlayerUtils.GetSkillValue(Skills, skill, v);
                     break;
                 case eSkill.ChargeShot:
-                    ChargeEndTime = Skills[(int)skill].NextsValue(v) / 10f;
+                    ChargeEndTime = PlayerUtils.GetSkillValue(Skills, skill, v);
                     break;
                 case eSkill.ShotNum:
-                    MaxShotNum = Skills[(int)skill].NextsValue(v);
+                    MaxShotNum = PlayerUtils.GetSkillValue(Skills, skill, v);
                     break;
                 default:
                     return false;
             }
-
             return true;
         }
     }
