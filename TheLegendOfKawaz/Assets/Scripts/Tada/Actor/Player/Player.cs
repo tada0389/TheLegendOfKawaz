@@ -350,7 +350,7 @@ namespace Actor.Player
         [SerializeField]
         private StateCloseEar close_ear_state_;
 #endregion
-
+        
         private Timer shot_anim_timer_;
         private float charge_timer_;
 
@@ -390,11 +390,6 @@ namespace Actor.Player
         // ダッシュ時間がどれくらい残っているか ダッシュジャンプに使う
         private float dash_remain_time_;
 
-        // ゴースト作るのに使う
-        public List<string> AnimCalled { private set; get; }
-        public List<eAnimType> AnimType { private set; get; }
-        public eShotType ShotCalled { private set; get; }
-
         private bool prev_is_ground_;
 
 
@@ -413,6 +408,8 @@ namespace Actor.Player
         // プレイヤーの入力クラス
         private TadaInput.BasePlayerInput input_;
 
+        private PlayerDataLogger logger_;
+
         private void Awake()
         {
             Global.GlobalPlayerInfo.IsMuteki = false;
@@ -420,13 +417,12 @@ namespace Actor.Player
             Global.GlobalPlayerInfo.BossDefeated = false;
 
             input_ = GetComponent<BasePlayerInput>();
+            logger_ = GetComponent<PlayerDataLogger>();
         }
 
         // Start is called before the first frame update
         private void Start()
         {
-            AnimCalled = new List<string>();
-            AnimType = new List<eAnimType>();
             prev_is_ground_ = true;
 
             shot_anim_timer_ = new Timer(0.3f);
@@ -476,11 +472,6 @@ namespace Actor.Player
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ZakkyScene") TadaLib.Save.SaveManager.Instance.Save();
         }
 
-        private void OnDestroy()
-        {
-            ReleaseSkillSet();
-        }
-
         // Update is called once per frame
         private void FixedUpdate()
         {
@@ -500,20 +491,12 @@ namespace Actor.Player
                 SettingManager.RequestOpenWindow();
             }
 
-            AnimCalled.Clear();
-            AnimType.Clear();
-            ShotCalled = eShotType.None;
-
             // 接地しているかどうかなどで，状態を変更する
             RefectRigidbody();
 
             // 変更された速度を取得する
             data_.ReflectVelocity(false);
 
-            //if (UnityEngine.InputSystem.Keyboard.current[UnityEngine.InputSystem.Key.N].wasPressedThisFrame)
-            //{
-            //    state_machine_.ChangeState((int)eState.Dead);
-            //}
 
             // 状態を更新する
             state_machine_.Proc();
@@ -607,15 +590,21 @@ namespace Actor.Player
             else data_.animator.Play("Shot", 1, 0);
 
             // 以下ゴースト作るのに使う
-            if (is_charged)
+            if (logger_ != null)
             {
-                if (dashed) ShotCalled = eShotType.DashCharge;
-                else ShotCalled = eShotType.Charge;
-            }
-            else
-            {
-                if (dashed) ShotCalled = eShotType.DashNormal;
-                else ShotCalled = eShotType.Normal;
+                eShotType type = eShotType.None;
+                if (is_charged)
+                {
+                    if (dashed) type = eShotType.DashCharge;
+                    else type = eShotType.Charge;
+                }
+                else
+                {
+                    if (dashed) type = eShotType.DashNormal;
+                    else type = eShotType.Normal;
+                }
+
+                logger_.AddLog(type);
             }
         }
 
@@ -639,8 +628,7 @@ namespace Actor.Player
                     break;
             }
 
-            AnimCalled.Add(anim);
-            AnimType.Add(type);
+            if (logger_ != null) logger_.AddLog(anim, type);
         }
 
         // コライド情報などで状態を更新する
@@ -733,18 +721,6 @@ namespace Actor.Player
                     data_.AquireTmpSkill(skill.type_, is_minigame_mode_);
                 }
             }
-        }
-
-        // デバッグで最初に入手したスキルを開放する
-        private void ReleaseSkillSet()
-        {
-            //foreach (InitialSkill skill in demo_skills_)
-            //{
-            //    for (int i = 0; i < skill.level_; ++i)
-            //    {
-            //        data_.ReleaseTmpSkill(skill.type_);
-            //    }
-            //}
         }
 
         // スキルを一時的に取得する

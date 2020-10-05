@@ -26,9 +26,6 @@ namespace TargetBreaking
         [SerializeField]
         public List<string> P;
 
-        //[SerializeField]
-        //[HideInInspector]
-        //public List<Tuple<float, int>> Dir;
 
         // 呼ばれた時間とアニメーションの名前
         // 時間情報 + アニメーション情報
@@ -131,7 +128,7 @@ namespace TargetBreaking
         private GhostData data_;
 
         [SerializeField]
-        private Player target_;
+        private PlayerDataLogger target_;
 
         [SerializeField]
         private float record_max_time_ = 30f;
@@ -173,11 +170,17 @@ namespace TargetBreaking
                     data_.ResetData();
                 }
 
-                for (int i = 0, n = target_.AnimCalled.Count; i < n; ++i)
+                foreach(var log in target_.AnimLog)
                 {
-                    data_.AddAnimData(time, target_.AnimCalled[i], target_.AnimType[i]);
+                    data_.AddAnimData(time, log.first, log.second);
                 }
-                if (target_.ShotCalled != eShotType.None) data_.AddShotData(time, target_.ShotCalled);
+
+                foreach(var log in target_.ShotLog)
+                {
+                    data_.AddShotData(time, log);
+                }
+
+                target_.Reset();
 
                 // 座標データは一定間隔ごとに
 
@@ -197,7 +200,7 @@ namespace TargetBreaking
                     int i_dt = (int)(dt * 1000.0f + 0.1f);
                     prev_pos_time_ += i_dt / 1000f;
 
-                    data_.AddPosData(i_dt, i_dx, i_dy, (int)target_.Dir);
+                    data_.AddPosData(i_dt, i_dx, i_dy, (int)target_.GetComponent<Player>().Dir);
 
                     while (elapsed_time_ >= record_interval_) elapsed_time_ -= record_interval_;
                 }
