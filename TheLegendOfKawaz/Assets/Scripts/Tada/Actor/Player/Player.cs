@@ -122,8 +122,10 @@ namespace Actor.Player
         // スキルの一時的な強化数
         private List<int> temporary_skills_;
 
+        private List<Skill> skills_;
+
         // コンストラクタ
-        public Data(Player body, bool is_minigame_mode)
+        public Data(Player body, List<Skill> skills)
         {
             Dir = eDir.Right;
             transform = body.transform;
@@ -133,21 +135,19 @@ namespace Actor.Player
             trb = body.GetComponent<TadaRigidbody>();
             bullet_spawner_ = body.GetComponent<BulletSpawner>();
 
-            List<Skill> Skills;// = SkillManager.Instance.Skills;
-            if (is_minigame_mode) Skills = SkillManager.Instance.LevelOneSkills;
-            else Skills = SkillManager.Instance.Skills;
+            skills_ = skills;
 
-            MaxHP = PlayerUtils.GetSkillValue(Skills, eSkill.HP);
+            MaxHP = PlayerUtils.GetSkillValue(skills_, eSkill.HP);
             HP = MaxHP;
-            Power = PlayerUtils.GetSkillValue(Skills, eSkill.Attack);
-            InitSpeed = PlayerUtils.GetSkillValue(Skills, eSkill.Speed);
-            CanWallKick = PlayerUtils.GetSkillValue(Skills, eSkill.WallKick);
-            AutoHealInterval = PlayerUtils.GetSkillValue(Skills, eSkill.AutoHeal);
-            MaxShotNum = PlayerUtils.GetSkillValue(Skills, eSkill.ShotNum);
-            ChargeEndTime = PlayerUtils.GetSkillValue(Skills, eSkill.ChargeShot);
-            AirJumpNumMax = PlayerUtils.GetSkillValue(Skills, eSkill.AirJumpNum);
+            Power = PlayerUtils.GetSkillValue(skills_, eSkill.Attack);
+            InitSpeed = PlayerUtils.GetSkillValue(skills_, eSkill.Speed);
+            CanWallKick = PlayerUtils.GetSkillValue(skills_, eSkill.WallKick);
+            AutoHealInterval = PlayerUtils.GetSkillValue(skills_, eSkill.AutoHeal);
+            MaxShotNum = PlayerUtils.GetSkillValue(skills_, eSkill.ShotNum);
+            ChargeEndTime = PlayerUtils.GetSkillValue(skills_, eSkill.ChargeShot);
+            AirJumpNumMax = PlayerUtils.GetSkillValue(skills_, eSkill.AirJumpNum);
             air_jump_num_ = AirJumpNumMax;
-            CanAirDashMove = PlayerUtils.GetSkillValue(Skills, eSkill.AirDushNum);
+            CanAirDashMove = PlayerUtils.GetSkillValue(skills_, eSkill.AirDushNum);
             prev_dash_time_ = 0f;
 
             int sz = System.Enum.GetNames(typeof(eSkill)).Length;
@@ -222,25 +222,16 @@ namespace Actor.Player
 
         public bool AquireTmpSkill(eSkill skill, bool is_minigame_mode)
         {
-            List<Skill> Skills;// = SkillManager.Instance.Skills;
-            if (is_minigame_mode) Skills = SkillManager.Instance.LevelOneSkills;
-            else Skills = SkillManager.Instance.Skills;
-
             int v = ++temporary_skills_[(int)skill];
 
-            return ChangeTmpSkill(Skills, skill, v);
+            return ChangeTmpSkill(skills_, skill, v);
         }
 
         public bool ReleaseTmpSkill(eSkill skill, bool is_minigame_mode)
         {
-
-            List<Skill> Skills;// = SkillManager.Instance.Skills;
-            if (is_minigame_mode) Skills = SkillManager.Instance.LevelOneSkills;
-            else Skills = SkillManager.Instance.Skills;
-
             int v = --temporary_skills_[(int)skill];
 
-            return ChangeTmpSkill(Skills, skill, v);
+            return ChangeTmpSkill(skills_, skill, v);
         }
 
         // スキルの値を一時的に変更する
@@ -261,7 +252,7 @@ namespace Actor.Player
                     break;
                 case eSkill.AirJumpNum:
                     AirJumpNumMax = PlayerUtils.GetSkillValue(Skills, skill, v);
-                    air_jump_num_ = Mathf.Min(air_jump_num_, AirJumpNumMax);
+                    air_jump_num_ = AirJumpNumMax;
                     break;
                 case eSkill.AirDushNum:
                     CanAirDashMove = PlayerUtils.GetSkillValue(Skills, skill, v);
@@ -392,6 +383,8 @@ namespace Actor.Player
 
         private bool prev_is_ground_;
 
+        private bool inited_;
+
 
         // 初期スキル
         #region debug
@@ -412,23 +405,23 @@ namespace Actor.Player
 
         private void Awake()
         {
-            Global.GlobalPlayerInfo.IsMuteki = false;
-            Global.GlobalPlayerInfo.ActionEnabled = true;
-            Global.GlobalPlayerInfo.BossDefeated = false;
-
             input_ = GetComponent<BasePlayerInput>();
             logger_ = GetComponent<PlayerDataLogger>();
+
+            inited_ = false;
         }
 
-        // Start is called before the first frame update
-        private void Start()
+        // プレイヤーを初期化する どのスキル群を使うか指定する
+        public void Init(List<Skill> skills)
         {
+            inited_ = true;
+
             prev_is_ground_ = true;
 
             shot_anim_timer_ = new Timer(0.3f);
             muteki_timer_ = new Timer(muteki_time_);
 
-            data_ = new Data(this, is_minigame_mode_);
+            data_ = new Data(this, skills);
             HP = data_.HP;
             if (data_.AutoHealInterval > 0.01f)
             {
@@ -467,14 +460,13 @@ namespace Actor.Player
 
             Vector3 new_pos = TadaScene.TadaSceneManager.GetPrevPosition();
             if (new_pos != Vector3.zero) transform.position = new_pos;
-
-            // 現在のシーンがステージセレクト画面だったらセーブする
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ZakkyScene") TadaLib.Save.SaveManager.Instance.Save();
         }
 
         // Update is called once per frame
         private void FixedUpdate()
         {
+            if (!inited_) return;
+
             if (!Global.GlobalPlayerInfo.ActionEnabled)
             {
                 input_.ActionEnabled = false;
