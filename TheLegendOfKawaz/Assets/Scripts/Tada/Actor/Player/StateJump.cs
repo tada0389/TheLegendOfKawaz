@@ -63,7 +63,7 @@ namespace Actor.Player
                 is_kicked_ = (PrevStateId == (int)eState.Wall);
 
                 // 上向きに速度を加える
-                data.velocity.y = jump_power;
+                data.trb.Velocity.y = jump_power;
 
                 jump_button_finished_ = false;
             }
@@ -101,7 +101,7 @@ namespace Actor.Player
                 }
 
                 // 壁に沿っている ただし，速度が一定以下の時
-                if(data.CanWallKick && data.velocity.y < wall_thr &&
+                if(data.CanWallKick && data.trb.Velocity.y < wall_thr &&
                     ((data.IsLeft && Parent.input_.GetButton(ButtonCode.Left)) || (data.IsRight && Parent.input_.GetButton(ButtonCode.Right))))
                 {
                     ChangeState((int)eState.Wall);
@@ -144,21 +144,21 @@ namespace Actor.Player
                 }
 
                 // 天井に頭がついていたら落ちる
-                if (data.IsHead && data.velocity.y > 0f)
+                if (data.IsHead && data.trb.Velocity.y > 0f)
                 {
-                    data.velocity = new Vector2(data.velocity.x, 0f);
+                    data.trb.Velocity = new Vector2(data.trb.Velocity.x, 0f);
                 }
 
                 // 壁に当たってるなら速度ゼロ
-                if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
+                if ((data.trb.Velocity.x > 0f && data.IsRight) || (data.trb.Velocity.x < 0f && data.IsLeft)) data.trb.Velocity.x = 0f;
 
                 // ただし，頂点付近だと加速度を弱める
                 float accel_rate_y = 1.0f;
-                if (data.velocity.y < 0.08f && data.velocity.y > -0.06f) accel_rate_y = 0.75f;
-                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed);
+                if (data.trb.Velocity.y < 0.08f && data.trb.Velocity.y > -0.06f) accel_rate_y = 0.75f;
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed);
 
                 // ある程度の時間はジャンプボタン長押しでジャンプ飛距離を伸ばせる
-                if (!jump_button_finished_ && Timer < jump_input_time && !data.IsHead && Parent.input_.GetButton(ActionCode.Jump)) data.velocity = new Vector2(data.velocity.x, jump_power);
+                if (!jump_button_finished_ && Timer < jump_input_time && !data.IsHead && Parent.input_.GetButton(ActionCode.Jump)) data.trb.Velocity = new Vector2(data.trb.Velocity.x, jump_power);
                 else jump_button_finished_ = true;
             }
         }

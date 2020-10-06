@@ -102,17 +102,17 @@ namespace Actor.Player
                 float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
 
                 float accel_dir = 1.0f;
-                if (data.velocity.y < -MaxAbsSpeed.y) accel_dir = -1f;
+                if (data.trb.Velocity.y < -MaxAbsSpeed.y) accel_dir = -1f;
                 // 加速度に応じて速度を変更する
-                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, accel_dir) * Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, accel_dir) * Accel, MaxAbsSpeed);
             }
 
             private void WallKick()
             {
                 EffectPlayer.Play(kick_effect_, data.transform.position + new Vector3((data.Dir == eDir.Left) ? 1.0f : -1.0f, 0f, 0f), new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f));
 
-                data.velocity = kick_power_;
-                if (data.IsRight) data.velocity *= -1;
+                data.trb.Velocity = kick_power_;
+                if (data.IsRight) data.trb.Velocity *= -1;
                 ChangeState((int)eState.Jump);
                 // ダッシュ回数リセット
                 data.ResetDash();

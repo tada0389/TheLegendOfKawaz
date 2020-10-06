@@ -30,14 +30,14 @@ namespace Actor.Player
                 //data.velocity = Vector2.zero;
 
                 // がくつかないために下向きに速度を加える
-                data.velocity.y = -MaxAbsSpeed.y;
+                data.trb.Velocity.y = -MaxAbsSpeed.y;
             }
 
             // ステートが終了したときに呼ばれるメソッド
             public override void OnEnd()
             {
                 // 下向き速度を戻す
-                data.velocity.y = 0f;
+                data.trb.Velocity.y = 0f;
             }
 
             // 毎フレーム呼ばれる関数
@@ -73,11 +73,12 @@ namespace Actor.Player
                 }
 
 
-                ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
+                // 地面の摩擦係数によって速度減衰を早める
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
                 if (data.GroundFriction < 0.25f) return;
-                ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
                 if (data.GroundFriction < 0.5f) return;
-                ActorUtils.ProcSpeed(ref data.velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, Vector2.zero, MaxAbsSpeed, data.GroundFriction);
             }
         }
     }

@@ -86,8 +86,6 @@ namespace Actor.Player
 
         private float prev_dash_time_;
 
-        // プレイヤーの速度
-        public Vector2 velocity;
         //public Vector2 velocity => rigidbody_.Velocity;
         // 向いている方向 1.0で右, -1.0で左
         public eDir Dir { private set; get; }
@@ -202,12 +200,6 @@ namespace Actor.Player
             air_jump_num_ = Mathf.Min(air_jump_num_ + 1, AirJumpNumMax);
         }
 
-        public void ReflectVelocity(bool is_in)
-        {
-            if (is_in) trb.Velocity = velocity;
-            else velocity = trb.Velocity;
-        }
-
         // 向いている方向を反転する
         public void ReverseFaceDirection() => Dir = (Dir == eDir.Left) ? eDir.Right : eDir.Left;
         public void ChangeDirection(eDir dir) => Dir = dir;
@@ -296,7 +288,7 @@ namespace Actor.Player
         }
 
         public eDir Dir => data_.Dir;
-        public Vector2 Velocity => data_.velocity;
+        public Vector2 Velocity => data_.trb.Velocity;
 
         // ステートマシン
         private StateMachine<Player> state_machine_;
@@ -465,8 +457,7 @@ namespace Actor.Player
             {
                 input_.ActionEnabled = false;
                 // 速度をデフォルトに (重力で少し下に)
-                data_.velocity = new Vector2(0f, Mathf.Min(-0.1f, data_.velocity.y));
-                data_.ReflectVelocity(true);
+                data_.trb.Velocity = new Vector2(0f, Mathf.Min(-0.1f, data_.trb.Velocity.y));
                 return;
             }
             else input_.ActionEnabled = true;
@@ -480,18 +471,11 @@ namespace Actor.Player
             // 接地しているかどうかなどで，状態を変更する
             RefectRigidbody();
 
-            // 変更された速度を取得する
-            data_.ReflectVelocity(false);
-
-
             // 状態を更新する
             state_machine_.Proc();
 
             // 向いている方向を正しくする
             CheckFaceDirChange();
-
-            // 速度に応じて移動する
-            data_.ReflectVelocity(true);
 
             if (state_machine_.CurrentStateId == (int)eState.Dead) return;
 
@@ -750,7 +734,7 @@ namespace Actor.Player
 
         public override string ToString()
         {
-            return "(" + data_.velocity.x.ToString("F2") + ", " + data_.velocity.y.ToString("F2") + ")" +
+            return "(" + Velocity.x.ToString("F2") + ", " + Velocity.y.ToString("F2") + ")" +
                 "\nHP : " + data_.HP.ToString() + "/" + data_.MaxHP.ToString() +
                 "\nSpeed : " + data_.InitSpeed.ToString() + 
                 "\nPower : " + data_.Power.ToString() + 

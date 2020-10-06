@@ -32,12 +32,12 @@ namespace Actor.Player
                 Parent.PlayAnim("isWalk", eAnimType.SetBoolTrue);
 
                 // 移動している方向に速度を加える
-                data.velocity = new Vector2(data.velocity.x, -0.02f);
+                data.trb.Velocity = new Vector2(data.trb.Velocity.x, -0.02f);
 
                 not_ground_time_ = 0.0f;
 
                 // がくつかないために下向きに速度を加える
-                data.velocity.y = -MaxAbsSpeed.y;
+                data.trb.Velocity.y = -MaxAbsSpeed.y;
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -45,7 +45,7 @@ namespace Actor.Player
             {
                 Parent.PlayAnim("isWalk", eAnimType.SetBoolFalse);
                 // 下向きの速度をもとにもどす (がくつかないために下向きに速度を加えていた)
-                data.velocity.y = 0f;
+                data.trb.Velocity.y = 0f;
             }
 
             // 毎フレーム呼ばれる関数
@@ -83,9 +83,9 @@ namespace Actor.Player
                 else not_ground_time_ = 0.0f;
 
                 // 壁に当たってるなら速度ゼロ
-                if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
+                if ((data.trb.Velocity.x > 0f && data.IsRight) || (data.trb.Velocity.x < 0f && data.IsLeft)) data.trb.Velocity.x = 0f;
 
-                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, 1f) * Accel * data.GroundFriction, MaxAbsSpeed * (1 / (Mathf.Max(0.5f, data.GroundFriction))));
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, 1f) * Accel * data.GroundFriction, MaxAbsSpeed * (1 / (Mathf.Max(0.5f, data.GroundFriction))));
 
                 if (not_ground_time_ > 0.0f)
                 {

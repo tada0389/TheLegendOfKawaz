@@ -38,8 +38,8 @@ namespace Actor.Player
                 else Parent.PlayAnim("Damage");
 
                 // 速度ダメージを受けた方向に飛ぶ いまは左だけ
-                data.velocity.x = power_.x;
-                data.velocity.y = power_.y;
+                data.trb.Velocity.x = power_.x;
+                data.trb.Velocity.y = power_.y;
 
                 // カメラを揺らす
                 CameraSpace.CameraShaker.Shake(0.20f, 0.15f, 0.03f);
@@ -72,7 +72,7 @@ namespace Actor.Player
                     }
                     return;
                 }
-                ActorUtils.ProcSpeed(ref data.velocity, Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, Accel, MaxAbsSpeed);
             }
         }
     }

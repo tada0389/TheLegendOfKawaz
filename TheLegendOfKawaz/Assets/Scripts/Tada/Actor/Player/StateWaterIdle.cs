@@ -60,9 +60,9 @@ namespace Actor.Player
                 }
 
                 float gravity_dir = 1f;
-                if (data.velocity.y + Accel.y < -MaxAbsSpeed.y) gravity_dir = -1f;
+                if (data.trb.Velocity.y + Accel.y < -MaxAbsSpeed.y) gravity_dir = -1f;
 
-                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(1f, gravity_dir) * Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(1f, gravity_dir) * Accel, MaxAbsSpeed);
             }
         }
     }

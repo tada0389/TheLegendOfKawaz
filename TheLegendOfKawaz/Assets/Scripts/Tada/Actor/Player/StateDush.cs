@@ -56,8 +56,8 @@ namespace Actor.Player
                 if (dir < -0.1f) data.ChangeDirection(eDir.Left);
                 if (dir > 0.1f) data.ChangeDirection(eDir.Right);
 
-                data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
-                data.velocity.y = 0f;
+                data.trb.Velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
+                data.trb.Velocity.y = 0f;
 
                 tmp_eff_ = EffectPlayer.Play(dash_effect_, data.transform.position, new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f));
 
@@ -70,8 +70,8 @@ namespace Actor.Player
             {
                 Parent.PlayAnim("isDash", eAnimType.SetBoolFalse);
                 // 急に落ちないように少し上昇する
-                if (!data.IsGround) data.velocity.y += 0.1f;
-                else data.velocity.y -= 0.02f;
+                if (!data.IsGround) data.trb.Velocity.y += 0.1f;
+                else data.trb.Velocity.y -= 0.02f;
             }
 
             // 毎フレーム呼ばれる関数
@@ -110,14 +110,14 @@ namespace Actor.Player
                         reversed_ = true;
                         // エフェクトも反転
                         tmp_eff_.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir) * 90f - 90f, 0f);
-                        data.velocity.x = -dush_speed_;
+                        data.trb.Velocity.x = -dush_speed_;
                     }
                     else if (dir > 0.1f && data.Dir == eDir.Left)
                     {
                         data.ChangeDirection(eDir.Right);
                         reversed_ = true;
                         tmp_eff_.transform.localEulerAngles = new Vector3(0f, Mathf.Sign(dir) * 90f - 90f, 0f);
-                        data.velocity.x = dush_speed_;
+                        data.trb.Velocity.x = dush_speed_;
                     }
                 }
 
@@ -132,10 +132,10 @@ namespace Actor.Player
 
 
                 // 壁に当たってるなら速度ゼロ
-                if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
+                if ((data.trb.Velocity.x > 0f && data.IsRight) || (data.trb.Velocity.x < 0f && data.IsLeft)) data.trb.Velocity.x = 0f;
 
-                if (!is_air_dash_) ActorUtils.ProcSpeed(ref data.velocity, new Vector2(0f, Accel.y), MaxAbsSpeed);
-                data.velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
+                if (!is_air_dash_) ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(0f, Accel.y), MaxAbsSpeed);
+                data.trb.Velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
                 //ActorUtils.ProcSpeed(ref data.velocity, new Vector2(Mathf.Sign(-data.velocity.x), 1f) * Accel, MaxAbsSpeed);
             }
         }

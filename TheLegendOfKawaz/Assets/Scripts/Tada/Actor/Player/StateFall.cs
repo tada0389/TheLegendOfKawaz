@@ -112,7 +112,7 @@ namespace Actor.Player
                 }
 
                 // 壁に当たってるなら速度ゼロ
-                if ((data.velocity.x > 0f && data.IsRight) || (data.velocity.x < 0f && data.IsLeft)) data.velocity.x = 0f;
+                if ((data.trb.Velocity.x > 0f && data.IsRight) || (data.trb.Velocity.x < 0f && data.IsLeft)) data.trb.Velocity.x = 0f;
 
                 // 移動している方向に速度を加える
                 float dir = Parent.input_.GetAxis(AxisCode.Horizontal);
@@ -120,7 +120,7 @@ namespace Actor.Player
                 if (dir < -0f) data.ChangeDirection(eDir.Left);
                 if (dir > 0f) data.ChangeDirection(eDir.Right);
 
-                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed);
             }
         }
     }

@@ -37,8 +37,8 @@ namespace Actor.Player
                 data.animator.Play("Jump", 0, 0f);
 
                 // 上向きに速度を加える
-                data.velocity = new Vector2(data.velocity.x, jump_power_);
-                data.velocity.y = Mathf.Min(data.velocity.y + jump_power_, MaxAbsSpeed.y);
+                data.trb.Velocity = new Vector2(data.trb.Velocity.x, jump_power_);
+                data.trb.Velocity.y = Mathf.Min(data.trb.Velocity.y + jump_power_, MaxAbsSpeed.y);
             }
 
             // ステートが終了したときに呼ばれるメソッド
@@ -64,9 +64,9 @@ namespace Actor.Player
                 }
 
                 // 天井に頭がついていたら落ちる
-                if (data.IsHead && data.velocity.y > 0f)
+                if (data.IsHead && data.trb.Velocity.y > 0f)
                 {
-                    data.velocity = new Vector2(data.velocity.x, 0f);
+                    data.trb.Velocity = new Vector2(data.trb.Velocity.x, 0f);
                 }
 
                 // 移動している方向に速度を加える
@@ -75,7 +75,7 @@ namespace Actor.Player
                 if (dir < -0f) data.ChangeDirection(eDir.Left);
                 if (dir > 0f) data.ChangeDirection(eDir.Right);
 
-                ActorUtils.ProcSpeed(ref data.velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed);
             }
         }
     }

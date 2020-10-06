@@ -55,7 +55,7 @@ namespace Actor.Player
             // 毎フレーム呼ばれる関数
             public override void Proc()
             {
-                ActorUtils.ProcSpeed(ref data.velocity, Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, Accel, MaxAbsSpeed);
 
                 if (!GoNextScene) return;
 

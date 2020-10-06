@@ -37,7 +37,7 @@ namespace Actor.Player
             // ステートが終了したときに呼ばれるメソッド
             public override void OnEnd()
             {
-                data.velocity = Vector2.zero;
+                data.trb.Velocity = Vector2.zero;
             }
 
             // 毎フレーム呼ばれる関数
