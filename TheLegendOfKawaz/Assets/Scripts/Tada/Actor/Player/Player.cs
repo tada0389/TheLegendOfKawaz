@@ -206,14 +206,14 @@ namespace Actor.Player
 
         public void SetHP(int new_hp) => HP = Mathf.Clamp(new_hp, 0, MaxHP);
 
-        public bool AquireTmpSkill(eSkill skill, bool is_minigame_mode)
+        public bool AquireTmpSkill(eSkill skill)
         {
             int v = ++temporary_skills_[(int)skill];
 
             return ChangeTmpSkill(skills_, skill, v);
         }
 
-        public bool ReleaseTmpSkill(eSkill skill, bool is_minigame_mode)
+        public bool ReleaseTmpSkill(eSkill skill)
         {
             int v = --temporary_skills_[(int)skill];
 
@@ -361,8 +361,9 @@ namespace Actor.Player
         [SerializeField]
         private string enemy_tag_ = "Enemy";
 
+        // 空中での摩擦係数 空気抵抗みたいなもん
         [SerializeField]
-        private bool is_minigame_mode_ = false;
+        private float air_friction_ = 0.5f;
 
         // ダッシュ時間がどれくらい残っているか ダッシュジャンプに使う
         private float dash_remain_time_;
@@ -689,7 +690,7 @@ namespace Actor.Player
             {
                 for(int i = 0; i < skill.level_; ++i)
                 {
-                    data_.AquireTmpSkill(skill.type_, is_minigame_mode_);
+                    data_.AquireTmpSkill(skill.type_);
                 }
             }
         }
@@ -700,11 +701,11 @@ namespace Actor.Player
             if(skill == eSkill.ShotNum) // オブジェクトプーリングを再設定 強引
             {
                 KoitanLib.ObjectPoolManager.Release(normal_bullet_);
-                bool ok = data_.AquireTmpSkill(skill,is_minigame_mode_);
+                bool ok = data_.AquireTmpSkill(skill);
                 KoitanLib.ObjectPoolManager.Init(normal_bullet_, this, data_.MaxShotNum);
                 return ok;
             }
-            return data_.AquireTmpSkill(skill, is_minigame_mode_);
+            return data_.AquireTmpSkill(skill);
         }
 
         // 一時的に取得したスキルを開放する
@@ -713,11 +714,11 @@ namespace Actor.Player
             if (skill == eSkill.ShotNum) // オブジェクトプーリングを再設定 強引
             {
                 KoitanLib.ObjectPoolManager.Release(normal_bullet_);
-                bool ok = data_.ReleaseTmpSkill(skill, is_minigame_mode_);
+                bool ok = data_.ReleaseTmpSkill(skill);
                 KoitanLib.ObjectPoolManager.Init(normal_bullet_, this, data_.MaxShotNum);
                 return ok;
             }
-            return data_.ReleaseTmpSkill(skill, is_minigame_mode_);
+            return data_.ReleaseTmpSkill(skill);
         }
 
         // HPが最大かどうか

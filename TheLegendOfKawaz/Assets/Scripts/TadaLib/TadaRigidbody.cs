@@ -12,6 +12,12 @@ using TadaLib;
 
 namespace TadaLib
 {
+    public enum eForceMode
+    {
+        Accelation, // 速度を加える
+        VelocityChange, // 速度を変更する
+    }
+
     [RequireComponent(typeof(BoxCollider2D))]
     public class TadaRigidbody : MonoBehaviour
     {
@@ -28,6 +34,9 @@ namespace TadaLib
         // 最大何度までの角度を登れるか
         [SerializeField]
         private float MaxClimbDegree = 90f;
+
+        [SerializeField]
+        private Vector2 MaxVelocity = new Vector2(0.75f, 0.5f);
 
         // 左でぶつかっている
         public bool LeftCollide { private set; get; }
@@ -87,9 +96,30 @@ namespace TadaLib
             // 水中にいるか
             IsUnderWater = hit_box_.IsTouchingLayers(1 << 14);
         }
+        
+        // 外部から呼び出す
+        // 速度を加える
+        public void AddForce(Vector2 force, eForceMode mode = eForceMode.Accelation)
+        {
+            switch (mode)
+            {
+                case eForceMode.Accelation:
+                    Velocity += force;
+                    break;
+                case eForceMode.VelocityChange:
+                    Velocity = force;
+                    break;
+                default:
+                    break;
+            }
+        }
 
+        // 移動処理
         private void Move()
         {
+            Velocity.x = Mathf.Clamp(Velocity.x, -MaxVelocity.x, MaxVelocity.x);
+            Velocity.y = Mathf.Clamp(Velocity.y, -MaxVelocity.y, MaxVelocity.y);
+
             //prev_update_time_ = Time.time;
             // 衝突の初期化
             LeftCollide = false;

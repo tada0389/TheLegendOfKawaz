@@ -155,7 +155,7 @@ namespace Actor.Player
                 // ただし，頂点付近だと加速度を弱める
                 float accel_rate_y = 1.0f;
                 if (data.trb.Velocity.y < 0.08f && data.trb.Velocity.y > -0.06f) accel_rate_y = 0.75f;
-                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, accel_rate_y) * Accel, MaxAbsSpeed, Parent.air_friction_);
 
                 // ある程度の時間はジャンプボタン長押しでジャンプ飛距離を伸ばせる
                 if (!jump_button_finished_ && Timer < jump_input_time && !data.IsHead && Parent.input_.GetButton(ActionCode.Jump)) data.trb.Velocity = new Vector2(data.trb.Velocity.x, jump_power);

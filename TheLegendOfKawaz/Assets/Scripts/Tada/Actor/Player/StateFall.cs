@@ -120,7 +120,7 @@ namespace Actor.Player
                 if (dir < -0f) data.ChangeDirection(eDir.Left);
                 if (dir > 0f) data.ChangeDirection(eDir.Right);
 
-                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed);
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, 1f) * Accel, MaxAbsSpeed, Parent.air_friction_);
             }
         }
     }
