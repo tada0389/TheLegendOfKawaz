@@ -85,7 +85,8 @@ namespace Actor.Player
                 // 壁に当たってるなら速度ゼロ
                 if ((data.trb.Velocity.x > 0f && data.IsRight) || (data.trb.Velocity.x < 0f && data.IsLeft)) data.trb.Velocity.x = 0f;
 
-                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir, 1f) * Accel * data.GroundFriction, MaxAbsSpeed * (1 / (Mathf.Max(0.5f, data.GroundFriction))));
+                float can_handle = (Mathf.Abs(data.trb.Velocity.x) < Parent.cant_handle_velocity_shr_) ? 1.0f : 0.0f;
+                ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(dir * can_handle, 1f) * Accel * data.GroundFriction, MaxAbsSpeed * (1 / (Mathf.Max(0.5f, data.GroundFriction))));
 
                 if (not_ground_time_ > 0.0f)
                 {

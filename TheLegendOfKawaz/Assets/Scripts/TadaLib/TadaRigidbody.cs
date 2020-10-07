@@ -99,7 +99,7 @@ namespace TadaLib
         
         // 外部から呼び出す
         // 速度を加える
-        public void AddForce(Vector2 force, eForceMode mode = eForceMode.Accelation)
+        public void AddForce(Vector2 force, Vector2 MaxTargetVelocity, eForceMode mode = eForceMode.Accelation)
         {
             switch (mode)
             {
@@ -112,6 +112,8 @@ namespace TadaLib
                 default:
                     break;
             }
+            Velocity.x = Mathf.Clamp(Velocity.x, -MaxTargetVelocity.x, MaxTargetVelocity.x);
+            Velocity.y = Mathf.Clamp(Velocity.y, -MaxTargetVelocity.y, MaxTargetVelocity.y);
         }
 
         // 移動処理
@@ -197,6 +199,7 @@ namespace TadaLib
                 if (ButtomCollide && (most_top_hit.collider.gameObject.layer == 10 || most_top_hit.collider.gameObject.layer == 11))
                 {
                     riding_mover_ = most_top_hit.collider.gameObject.GetComponent<Mover>();
+                    riding_mover_.Rided();
                 }
                 else riding_mover_ = null;
 

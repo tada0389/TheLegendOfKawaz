@@ -29,6 +29,12 @@ namespace TadaLib
             return Time.time - start_time_ >= limit_time_;
         }
 
+        // 時間を巻き戻す
+        public void TimeReverse(float time)
+        {
+            start_time_ = Mathf.Min(start_time_ + time, Time.time);
+        }
+
         public float GetTime()
         {
             return Time.time - start_time_;

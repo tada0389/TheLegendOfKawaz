@@ -37,6 +37,9 @@ namespace Actor.Player
 
             private BaseParticle tmp_eff_;
 
+            // ダッシュ中の最低保証速度
+            private float dash_vel_x_;
+
             // ステートが始まった時に呼ばれるメソッド
             public override void OnStart()
             {
@@ -56,7 +59,10 @@ namespace Actor.Player
                 if (dir < -0.1f) data.ChangeDirection(eDir.Left);
                 if (dir > 0.1f) data.ChangeDirection(eDir.Right);
 
-                data.trb.Velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
+                // もし，高速状態でダッシュしたならばその速度を上乗せする
+                if (data.Dir == eDir.Right) dash_vel_x_ = Mathf.Max(dush_speed_, data.trb.Velocity.x * 1.2f);
+                else dash_vel_x_ = Mathf.Min(-dush_speed_, data.trb.Velocity.x * 1.2f);
+                data.trb.Velocity.x = dash_vel_x_;
                 data.trb.Velocity.y = 0f;
 
                 tmp_eff_ = EffectPlayer.Play(dash_effect_, data.transform.position, new Vector2((data.Dir == eDir.Left) ? -1.0f : 1.0f, 0f));
@@ -135,7 +141,9 @@ namespace Actor.Player
                 if ((data.trb.Velocity.x > 0f && data.IsRight) || (data.trb.Velocity.x < 0f && data.IsLeft)) data.trb.Velocity.x = 0f;
 
                 if (!is_air_dash_) ActorUtils.ProcSpeed(ref data.trb.Velocity, new Vector2(0f, Accel.y), MaxAbsSpeed);
-                data.trb.Velocity.x = (data.Dir == eDir.Left) ? -dush_speed_ : dush_speed_;
+                // ダッシュ中に速度が加算された場合はそのまま，減算された場合はダッシュ開始時の速度を維持
+                if (data.Dir == eDir.Right) data.trb.Velocity.x = Mathf.Max(dash_vel_x_, data.trb.Velocity.x);
+                else data.trb.Velocity.x = Mathf.Min(dash_vel_x_, data.trb.Velocity.x);
                 //ActorUtils.ProcSpeed(ref data.velocity, new Vector2(Mathf.Sign(-data.velocity.x), 1f) * Accel, MaxAbsSpeed);
             }
         }

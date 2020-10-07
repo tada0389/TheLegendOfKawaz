@@ -20,7 +20,7 @@ namespace Test
 
             if (trb != null)
             {
-                trb.AddForce(accelPower, mode);
+                //trb.AddForce(accelPower, mode);
                 Debug.Log("called");
             }
         }

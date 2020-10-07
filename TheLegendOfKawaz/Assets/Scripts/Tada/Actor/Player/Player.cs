@@ -365,6 +365,9 @@ namespace Actor.Player
         [SerializeField]
         private float air_friction_ = 0.5f;
 
+        // 一定速度以上だと移動操作を受け付けなくする
+        private float cant_handle_velocity_shr_ = 0.4f;
+
         // ダッシュ時間がどれくらい残っているか ダッシュジャンプに使う
         private float dash_remain_time_;
 

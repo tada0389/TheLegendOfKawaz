@@ -35,5 +35,11 @@ namespace TadaLib
             prev_pos_ = current_pos_;
             current_pos_ = transform.position;
         }
+
+        // オブジェクトに乗られている
+        public virtual void Rided()
+        {
+
+        }
     }
 }
