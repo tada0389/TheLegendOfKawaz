@@ -27,13 +27,13 @@ namespace Stage
         private TadaLib.Timer timer_;
 
         private SpriteRenderer renderer_;
-        private CircleCollider2D hit_box_;
+        private CapsuleCollider2D hit_box_;
 
         private void Start()
         {
             timer_ = new TadaLib.Timer(respawn_duration_);
             renderer_ = GetComponent<SpriteRenderer>();
-            hit_box_ = GetComponent<CircleCollider2D>();
+            hit_box_ = GetComponent<CapsuleCollider2D>();
         }
 
         private void Update()
