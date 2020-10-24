@@ -18,6 +18,7 @@ namespace Global
         ExVernmDrake = 5,
         ExKawazTanBeta = 6,
         ExSenju = 7,
+        TwoTon = 8, 
     }
 
     [System.Serializable]

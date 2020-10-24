@@ -37,7 +37,7 @@ namespace Actor.Enemy
         private Timer muteki_timer_;
         private bool timer_inited_ = false;
         [SerializeField]
-        private GameObject mesh_;
+        protected GameObject mesh_;
 
         [SerializeField]
         protected Transform not_reverse_;
@@ -118,6 +118,14 @@ namespace Actor.Enemy
             {
                 StartCoroutine(Tenmetu());
             }
+        }
+
+        // 死んでいるか
+        public virtual bool IsDead()
+        {
+            // 派生クラスで読んでね
+            UnityEngine.Assertions.Assert.IsTrue(false, "これは派生クラスから読んでください");
+            return true;
         }
     }
 } // namespace Actor.Enemy
